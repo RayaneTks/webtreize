@@ -1,8 +1,8 @@
-import Hero from '@/components/sections/Hero';
+import Hero from '@/components/Hero';
 import Services from '@/components/sections/Services';
 import Rassurance from '@/components/sections/Rassurance';
 import ContactSection from '@/components/sections/ContactSection';
-import StickyMobileCTA from '@/components/StickyMobileCTA';
+import StickyMobileFooter from '@/components/StickyMobileFooter';
 
 export default function HomePage() {
   return (
@@ -11,8 +11,7 @@ export default function HomePage() {
       <Services />
       <Rassurance />
       <ContactSection />
-      <StickyMobileCTA />
+      <StickyMobileFooter />
     </>
   );
 }
-

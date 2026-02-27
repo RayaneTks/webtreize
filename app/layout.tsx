@@ -1,20 +1,21 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { Montserrat, Open_Sans } from 'next/font/google';
-import Header from '@/components/Header';
+import Navbar from '@/components/Navbar';
+import ScrollProgressBar from '@/components/ScrollProgressBar';
 import Footer from '@/components/Footer';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
   variable: '--font-montserrat',
-  weight: ['600', '700', '800'],
+  weight: ['700', '800', '900'],
   display: 'swap',
 });
 
 const openSans = Open_Sans({
   subsets: ['latin'],
   variable: '--font-open-sans',
-  weight: ['400', '500'],
+  weight: ['400', '500', '600'],
   display: 'swap',
 });
 
@@ -22,36 +23,20 @@ const SITE_URL = 'https://www.webtreize.com';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: {
-    default: 'WebTreize - Agence digitale à Marseille',
-    template: '%s | WebTreize',
-  },
+  title: 'WebTreize | Agence Web Marseille - Site Vitrine & SEO',
   description:
-    'Attirez plus de clients grâce au digital. WebTreize crée des sites web vitrines performants, optimise votre visibilité Google et développe des applications sur mesure.',
-  alternates: {
-    canonical: '/',
-  },
+    'Attirez plus de clients grâce au digital. Création de sites vitrines, optimisation Google et SEO à Marseille. Devis gratuit.',
+  alternates: { canonical: '/' },
   openGraph: {
     type: 'website',
     url: SITE_URL,
-    title: 'WebTreize - Agence digitale à Marseille',
-    description:
-      'Agence digitale spécialisée en création de sites web vitrines, optimisation Google et solutions sur mesure pour particuliers et entreprises.',
+    title: 'WebTreize | Agence Web Marseille - Site Vitrine & SEO',
+    description: 'Agence digitale Marseille : site vitrine, SEO, optimisation Google. Devis gratuit.',
     siteName: 'WebTreize',
     locale: 'fr_FR',
-    images: [
-      {
-        url: '/flyer.png',
-        width: 1200,
-        height: 630,
-        alt: 'WebTreize - Agence digitale à Marseille',
-      },
-    ],
+    images: [{ url: '/flyer.png', width: 1200, height: 630, alt: 'WebTreize - Agence Web Marseille' }],
   },
-  robots: {
-    index: true,
-    follow: true,
-  },
+  robots: { index: true, follow: true },
 };
 
 const jsonLd = {
@@ -59,53 +44,34 @@ const jsonLd = {
   '@type': ['Organization', 'LocalBusiness'],
   name: 'WebTreize',
   url: SITE_URL,
-  description:
-    'Agence digitale à Marseille spécialisée dans la création de sites web vitrines, SEO et solutions digitales sur mesure.',
+  description: 'Agence web à Marseille : création de sites vitrines, SEO et optimisation Google.',
   email: 'contact@webtreize.com',
-  areaServed: {
-    '@type': 'City',
-    name: 'Marseille',
-  },
-  address: {
-    '@type': 'PostalAddress',
-    addressLocality: 'Marseille',
-    addressCountry: 'FR',
-  },
-  sameAs: [
-    'https://www.webtreize.com',
-    'https://webtreize.fr',
-    'https://www.snapchat.com/add/webtreize',
-  ],
+  areaServed: { '@type': 'City', name: 'Marseille' },
+  address: { '@type': 'PostalAddress', addressLocality: 'Marseille', addressCountry: 'FR' },
+  sameAs: [SITE_URL, 'https://webtreize.fr', 'https://www.snapchat.com/add/webtreize'],
   makesOffer: [
     { '@type': 'Offer', name: 'Création de site web vitrine' },
-    { '@type': 'Offer', name: 'Optimisation fiche Google Business Profile' },
-    { '@type': 'Offer', name: 'SEO & Référencement naturel' },
-    { '@type': 'Offer', name: 'Applications web sur mesure' },
+    { '@type': 'Offer', name: 'Optimisation fiche Google' },
+    { '@type': 'Offer', name: 'SEO & Référencement' },
+    { '@type': 'Offer', name: 'Applications sur mesure' },
   ],
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fr" className="dark">
-      <body
-        className={`${montserrat.variable} ${openSans.variable} page-gradient min-h-screen text-textSecondary`}
-      >
-        <div className="relative flex min-h-screen flex-col">
-          <Header />
-          <main className="flex-1 pt-20">{children}</main>
+      <body className={`${montserrat.variable} ${openSans.variable} min-h-screen`}>
+        <div className="relative z-10 flex min-h-screen flex-col">
+          <ScrollProgressBar />
+          <Navbar />
+          <main className="flex-1 pb-24 md:pb-0">{children}</main>
           <Footer />
         </div>
         <script
           type="application/ld+json"
-          // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </body>
     </html>
   );
 }
-

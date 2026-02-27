@@ -1,112 +1,123 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import {
-  Globe2,
-  MapPin,
-  MonitorSmartphone,
-  Search,
-  AppWindow,
-} from 'lucide-react';
+import { useRef, useState, useCallback } from 'react';
+import { motion, useInView } from 'framer-motion';
+import { MonitorSmartphone, MapPin, Search, AppWindow, type LucideIcon } from 'lucide-react';
 
-const services = [
+const SERVICES: { icon: LucideIcon; title: string; description: string }[] = [
   {
     icon: MonitorSmartphone,
-    title: 'Création de site web vitrine',
-    description:
-      'Un site professionnel, moderne et responsive qui inspire confiance et transforme vos visiteurs en clients.',
-    tag: 'Design & développement',
+    title: 'Création de Site Web',
+    description: 'Un site professionnel qui inspire confiance et convertit vos visiteurs en clients.',
   },
   {
     icon: MapPin,
-    title: 'Optimisation fiche Google',
-    description:
-      'Boostez votre fiche Google Business Profile pour générer plus d’appels et de visites en boutique.',
-    tag: 'Visibilité locale',
+    title: 'Optimisation Fiche Google',
+    description: 'Plus de visibilité locale, plus d\'appels et de passages en boutique.',
   },
   {
     icon: Search,
     title: 'SEO & Référencement',
-    description:
-      'Apparaissez devant vos concurrents sur Google grâce à une stratégie SEO adaptée à votre marché.',
-    tag: 'Acquisition durable',
+    description: 'Soyez affichés devant vos concurrents sur Google.',
   },
   {
     icon: AppWindow,
     title: 'Applications sur mesure',
-    description:
-      'Applications web et outils métiers pensés autour de votre processus et de vos objectifs.',
-    tag: 'Sur-mesure',
+    description: 'Des solutions adaptées à votre projet et à vos processus.',
   },
 ];
 
-export default function Services() {
-  return (
-    <section id="services" className="section-padding">
-      <div className="section-max-width space-y-8">
-        <div className="space-y-3">
-          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-accent">
-            Services
-          </p>
-          <h2 className="text-2xl font-bold text-textPrimary sm:text-3xl">
-            Tout ce dont vous avez besoin pour être visible en ligne.
-          </h2>
-          <p className="max-w-2xl text-sm text-textSecondary">
-            De la première idée à la mise en ligne, nous concevons des
-            expériences digitales qui donnent confiance à vos prospects et
-            facilitent le passage à l&apos;action.
-          </p>
-        </div>
+function SpotlightCard({
+  icon: Icon,
+  title,
+  description,
+  className = '',
+}: {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+  className?: string;
+}) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [xy, setXy] = useState({ x: 50, y: 50 });
 
-        <div className="grid gap-5 md:grid-cols-2">
-          {services.map((service, index) => {
-            const Icon = service.icon;
-            return (
-              <motion.article
-                key={service.title}
-                className="glass-card glass-card-hover relative overflow-hidden border border-white/10 bg-white/5 p-5"
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.25 }}
-                transition={{ duration: 0.45, delay: index * 0.05 }}
-              >
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-accent/10 via-transparent to-cta/10" />
-                <div className="relative space-y-3">
-                  <div className="flex items-center justify-between gap-3">
-                    <div className="flex items-center gap-3">
-                      <div className="flex h-9 w-9 items-center justify-center rounded-2xl bg-accent/15 text-accent shadow-neon-accent">
-                        <Icon className="h-4 w-4" />
-                      </div>
-                      <h3 className="text-sm font-semibold text-textPrimary">
-                        {service.title}
-                      </h3>
-                    </div>
-                    <span className="rounded-full bg-black/50 px-3 py-1 text-[10px] font-medium uppercase tracking-[0.18em] text-textSecondary/70">
-                      {service.tag}
-                    </span>
-                  </div>
-                  <p className="text-xs leading-relaxed text-textSecondary">
-                    {service.description}
-                  </p>
-                  {service.title === 'Création de site web vitrine' && (
-                    <p className="text-[11px] text-accent/90">
-                      <span className="font-semibold">Inclus :</span> nom de
-                      domaine, hébergement, suivi de performance.
-                    </p>
-                  )}
-                  {service.title === 'SEO & Référencement' && (
-                    <p className="flex items-center gap-1 text-[11px] text-textSecondary/80">
-                      <Globe2 className="h-3 w-3 text-accent" />
-                      Audit complet + plan d&apos;actions priorisé.
-                    </p>
-                  )}
-                </div>
-              </motion.article>
-            );
-          })}
-        </div>
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    setXy({ x, y });
+  }, []);
+
+  return (
+    <div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={() => setXy({ x: 50, y: 50 })}
+      className={`group relative overflow-hidden rounded-2xl border border-white/15 bg-white/[0.06] p-6 shadow-xl transition duration-300 hover:border-neon/25 sm:p-8 ${className}`}
+    >
+      <div
+        className="pointer-events-none absolute -inset-px opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        style={{
+          background: `radial-gradient(600px circle at ${xy.x}% ${xy.y}%, rgba(0, 194, 255, 0.08), transparent 40%)`,
+        }}
+      />
+      <div className="relative">
+        <span
+          className="inline-flex rounded-xl p-3"
+          style={{ boxShadow: '0 0 24px rgba(0, 194, 255, 0.2)' }}
+        >
+          <Icon className="h-6 w-6 text-neon" strokeWidth={1.8} />
+        </span>
+        <h3 className="mt-5 text-xl font-black tracking-tight text-white">
+          {title}
+        </h3>
+        <p className="mt-3 text-sm leading-relaxed text-slate-300">
+          {description}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+export default function Services() {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: '-80px' });
+
+  return (
+    <section
+      id="services"
+      ref={ref}
+      className="bg-void-depth/50 px-4 py-16 sm:py-20 md:px-6 md:py-28"
+      aria-labelledby="services-heading"
+    >
+      <div className="mx-auto max-w-6xl rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-8 backdrop-blur-sm sm:px-6 sm:py-10 md:px-10 md:py-12">
+        <motion.header
+          className="mb-16 text-center md:mb-20"
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5 }}
+        >
+          <h2 id="services-heading" className="text-3xl font-black tracking-tighter text-white md:text-4xl lg:text-5xl">
+            Nos services
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-slate-400 leading-relaxed">
+            Tout ce dont vous avez besoin pour être visible en ligne.
+          </p>
+        </motion.header>
+
+        <motion.div
+          className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:gap-6"
+          initial={{ opacity: 0, y: 24 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5, delay: 0.1 }}
+        >
+          <SpotlightCard {...SERVICES[0]} />
+          <SpotlightCard {...SERVICES[1]} />
+          <SpotlightCard {...SERVICES[2]} className="sm:col-span-2" />
+          <SpotlightCard {...SERVICES[3]} className="sm:col-span-2" />
+        </motion.div>
       </div>
     </section>
   );
 }
-
