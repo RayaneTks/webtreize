@@ -75,7 +75,14 @@ export default function Hero() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
         >
-          WebTreize · Agence digitale Marseille
+        </motion.p>
+        <motion.p
+          className="mb-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400 sm:text-xs"
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.3 }}
+        >
+          Votre croissance digitale simplifiée
         </motion.p>
         <motion.h1
           className="font-display text-hero font-black tracking-tighter text-white"

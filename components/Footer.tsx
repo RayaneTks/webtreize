@@ -6,6 +6,9 @@ export default function Footer() {
       <div className="mx-auto max-w-6xl flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <p className="font-semibold text-white">WebTreize · Agence digitale</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+            Votre croissance digitale simplifiée
+          </p>
           <p className="text-sm text-slate-400">contact@webtreize.com</p>
           <p className="text-xs text-slate-500">webtreize.com · webtreize.fr</p>
         </div>
