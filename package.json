@@ -1,0 +1,41 @@
+{
+  "name": "webtreize",
+  "version": "1.0.0",
+  "private": true,
+  "description": "WebTreize - Agence digitale à Marseille, création de sites web, SEO, optimisation Google et applications sur mesure.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint ."
+  },
+  "keywords": [
+    "nextjs",
+    "agence digitale",
+    "site vitrine",
+    "webtreize",
+    "marseille",
+    "seo",
+    "creation site web"
+  ],
+  "author": "WebTreize",
+  "license": "MIT",
+  "dependencies": {
+    "framer-motion": "^12.34.3",
+    "lucide-react": "^0.575.0",
+    "next": "^16.1.6",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
+  },
+  "devDependencies": {
+    "@types/node": "22.19.13",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "^19.0.3",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^9.39.3",
+    "eslint-config-next": "^16.1.6",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.16",
+    "typescript": "^5.7.3"
+  }
+}
