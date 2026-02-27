@@ -113,7 +113,13 @@ export default function ContactSection() {
               <p className="mt-4 text-sm text-slate-400">Réponse sous 24h ouvrées.</p>
             </div>
 
-            <article className="rounded-2xl bg-snap p-6 text-black">
+            <a
+              href="https://snapchat.com/t/GEQU4Svv"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block rounded-2xl bg-snap p-6 text-black transition opacity-95 hover:opacity-100"
+              aria-label="Ajouter WebTreize sur Snapchat"
+            >
               <div className="flex items-center gap-3">
                 <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-black/10">
                   <SnapIcon className="h-7 w-7 text-black" />
@@ -128,7 +134,7 @@ export default function ContactSection() {
               <p className="mt-3 text-sm font-medium opacity-90">
                 Suivez les coulisses, posez vos questions en direct ou envoyez une note vocale.
               </p>
-            </article>
+            </a>
           </motion.aside>
         </div>
       </div>
