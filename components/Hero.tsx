@@ -12,15 +12,27 @@ const container = {
     opacity: 1,
     transition: {
       staggerChildren: 0.028,
-      delayChildren: 0.08,
+      delayChildren: 0.12,
     },
   },
 };
 
 const letter = {
-  hidden: { opacity: 0, y: 24 },
+  hidden: { opacity: 0, y: 32 },
   visible: { opacity: 1, y: 0 },
 };
+
+const graceWrapper = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.028, delayChildren: 0 },
+  },
+};
+
+const BEFORE_H1 = "Attirez plus de clients ";
+const GRACE = "grâce";
+const AFTER_H1 = " au digital.";
 
 function scrollToContact() {
   document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -71,9 +83,29 @@ export default function Hero() {
           initial="hidden"
           animate="visible"
         >
-          {H1_TEXT.split('').map((char, i) => (
+          {BEFORE_H1.split('').map((char, i) => (
             <motion.span
-              key={i}
+              key={`b-${i}`}
+              variants={letter}
+              className="inline-block"
+              style={{ whiteSpace: char === ' ' ? 'pre' : 'normal' }}
+            >
+              {char}
+            </motion.span>
+          ))}
+          <motion.span
+            variants={graceWrapper}
+            className="inline-block whitespace-nowrap"
+          >
+            {GRACE.split('').map((char, i) => (
+              <motion.span key={`g-${i}`} variants={letter} className="inline-block">
+                {char}
+              </motion.span>
+            ))}
+          </motion.span>
+          {AFTER_H1.split('').map((char, i) => (
+            <motion.span
+              key={`a-${i}`}
               variants={letter}
               className="inline-block"
               style={{ whiteSpace: char === ' ' ? 'pre' : 'normal' }}
