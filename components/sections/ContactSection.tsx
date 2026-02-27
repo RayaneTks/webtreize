@@ -3,6 +3,7 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import Image from 'next/image';
+import { Mail } from 'lucide-react';
 
 function SnapIcon({ className }: { className?: string }) {
   return (
@@ -24,10 +25,10 @@ export default function ContactSection() {
     <section
       id="contact"
       ref={ref}
-      className="bg-void-depth/50 px-4 py-16 sm:py-20 md:py-28"
+      className="bg-void-depth/50 px-4 py-24 sm:py-28 md:py-32"
       aria-labelledby="contact-heading"
     >
-      <div className="mx-auto max-w-6xl rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-8 backdrop-blur-sm sm:px-6 sm:py-10 md:px-10 md:py-12">
+      <div className="mx-auto max-w-6xl rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-8 backdrop-blur-xl sm:px-6 sm:py-10 md:px-10 md:py-12">
         <motion.h2
           id="contact-heading"
           className="text-3xl font-black tracking-tighter text-white md:text-4xl"
@@ -106,16 +107,21 @@ export default function ContactSection() {
             transition={{ duration: 0.5, delay: 0.15 }}
           >
             <div className="rounded-2xl border border-white/15 bg-white/[0.06] p-6 backdrop-blur-xl">
-              <p className="text-xs font-medium uppercase tracking-wider text-slate-500">
-                Ou contactez-nous
-              </p>
+              <div className="mb-3 flex items-center gap-3">
+                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-neon">
+                  <Mail className="h-4 w-4" />
+                </span>
+                <p className="text-xs font-medium uppercase tracking-wider text-slate-400">
+                  Ou contactez-nous
+                </p>
+              </div>
               <a
                 href="mailto:contact@webtreize.com"
-                className="mt-2 block text-white hover:text-neon transition-colors"
+                className="block text-sm font-semibold text-white hover:text-neon transition-colors"
               >
                 contact@webtreize.com
               </a>
-              <p className="mt-4 text-sm text-slate-400">Réponse sous 24h ouvrées.</p>
+              <p className="mt-2 text-xs text-slate-400">Réponse sous 24h ouvrées.</p>
             </div>
 
             <a

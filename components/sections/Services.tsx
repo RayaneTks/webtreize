@@ -88,7 +88,7 @@ export default function Services() {
     <section
       id="services"
       ref={ref}
-      className="bg-void-depth/50 px-4 py-16 sm:py-20 md:px-6 md:py-28"
+      className="bg-void-depth/50 px-4 py-24 sm:py-28 md:px-6 md:py-32"
       aria-labelledby="services-heading"
     >
       <div className="mx-auto max-w-6xl rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-8 backdrop-blur-sm sm:px-6 sm:py-10 md:px-10 md:py-12">

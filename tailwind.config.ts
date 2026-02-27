@@ -17,7 +17,7 @@ const config: Config = {
         snap: '#FFFC00',
       },
       fontSize: {
-        'hero': ['clamp(1.875rem, 5.5vw, 4rem)', { lineHeight: '1.1', letterSpacing: '-0.02em' }],
+        hero: ['clamp(2.05rem, 5.5vw, 4.5rem)', { lineHeight: '1.05', letterSpacing: '-0.02em' }],
       },
       fontFamily: {
         display: ['var(--font-montserrat)', 'system-ui', 'sans-serif'],

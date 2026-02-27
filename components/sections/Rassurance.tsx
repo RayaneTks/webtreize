@@ -36,7 +36,7 @@ export default function Rassurance() {
     <section
       id="rassurance"
       ref={ref}
-      className="bg-void-light/40 px-4 py-16 sm:py-20 md:py-28"
+      className="bg-void-light/40 px-4 py-24 sm:py-28 md:py-32"
       aria-labelledby="rassurance-heading"
     >
       <div className="mx-auto max-w-6xl">

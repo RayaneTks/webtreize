@@ -57,15 +57,6 @@ export default function Hero() {
             backgroundSize: 'min(3.5rem, 8vw) min(3.5rem, 8vw)',
           }}
         />
-        <div className="absolute right-0 top-0 mt-12 h-36 w-36 opacity-20 sm:mt-16 sm:h-44 sm:w-44 md:mr-8 md:mt-12 md:h-48 md:w-48">
-          <Image
-            src="/flyer.png"
-            alt=""
-            fill
-            className="object-cover blur-md"
-            priority
-          />
-        </div>
       </div>
 
       <div className="relative z-10 w-full max-w-3xl text-center">
