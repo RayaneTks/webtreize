@@ -139,7 +139,7 @@ export default function ContactSection() {
                   <p className="text-xs font-bold uppercase tracking-wider opacity-80">
                     Snapchat
                   </p>
-                  <p className="text-lg font-black">Ajoutez-nous : @Webtreize</p>
+                  <p className="text-lg font-black">Ajoutez-nous : @WebTreize</p>
                 </div>
               </div>
               <p className="mt-3 text-sm font-medium opacity-90">

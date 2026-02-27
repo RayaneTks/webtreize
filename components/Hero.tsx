@@ -22,7 +22,7 @@ const letter = {
   visible: { opacity: 1, y: 0 },
 };
 
-const graceWrapper = {
+const wordWrapper = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -30,9 +30,8 @@ const graceWrapper = {
   },
 };
 
-const BEFORE_H1 = "Attirez plus de clients ";
-const GRACE = "grâce";
-const AFTER_H1 = " au digital.";
+/* Mots avec espace après (sauf le dernier) pour éviter toute césure au milieu d'un mot */
+const H1_WORDS = ['Attirez ', 'plus ', 'de ', 'clients ', 'grâce ', 'au ', 'digital.'];
 
 function scrollToContact() {
   document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -42,11 +41,11 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-[85vh] min-h-[100dvh] flex-col items-center justify-center overflow-hidden px-5 py-20 sm:min-h-[88vh] sm:py-24 md:py-32"
+      className="relative flex min-h-[85vh] min-h-[100dvh] flex-col items-center justify-center overflow-x-hidden px-5 py-20 sm:min-h-[88vh] sm:py-24 md:py-32"
       aria-label="Accroche principale"
     >
-      {/* Grille néon très légère + visuel Marseille en fond */}
-      <div className="pointer-events-none absolute inset-0 opacity-[0.08]" aria-hidden>
+      {/* Grille néon : overflow-hidden pour ne pas déborder */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden opacity-[0.08]" aria-hidden>
         <div
           className="h-full w-full"
           style={{
@@ -59,14 +58,7 @@ export default function Hero() {
         />
       </div>
 
-      <div className="relative z-10 w-full max-w-3xl text-center">
-        <motion.p
-          className="mb-4 text-xs font-medium uppercase tracking-[0.2em] text-neon sm:text-sm"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-        >
-        </motion.p>
+      <div className="relative z-10 w-full max-w-3xl text-center overflow-x-hidden min-w-0">
         <motion.p
           className="mb-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400 sm:text-xs"
           initial={{ opacity: 0, y: 6 }}
@@ -81,34 +73,21 @@ export default function Hero() {
           initial="hidden"
           animate="visible"
         >
-          {BEFORE_H1.split('').map((char, i) => (
+          {H1_WORDS.map((word, wi) => (
             <motion.span
-              key={`b-${i}`}
-              variants={letter}
-              className="inline-block"
-              style={{ whiteSpace: char === ' ' ? 'pre' : 'normal' }}
+              key={wi}
+              variants={wordWrapper}
+              className={`inline-block whitespace-nowrap ${wi < H1_WORDS.length - 1 ? 'mr-[0.25em]' : ''}`}
             >
-              {char}
-            </motion.span>
-          ))}
-          <motion.span
-            variants={graceWrapper}
-            className="inline-block whitespace-nowrap"
-          >
-            {GRACE.split('').map((char, i) => (
-              <motion.span key={`g-${i}`} variants={letter} className="inline-block">
-                {char}
-              </motion.span>
-            ))}
-          </motion.span>
-          {AFTER_H1.split('').map((char, i) => (
-            <motion.span
-              key={`a-${i}`}
-              variants={letter}
-              className="inline-block"
-              style={{ whiteSpace: char === ' ' ? 'pre' : 'normal' }}
-            >
-              {char}
+              {word.trim().split('').map((char, i) => (
+                <motion.span
+                  key={`${wi}-${i}`}
+                  variants={letter}
+                  className="inline-block"
+                >
+                  {char}
+                </motion.span>
+              ))}
             </motion.span>
           ))}
         </motion.h1>
@@ -123,7 +102,7 @@ export default function Hero() {
         </motion.p>
 
         <motion.div
-          className="mt-8 sm:mt-10"
+          className="mt-8 sm:mt-10 py-6 sm:py-8"
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.75, duration: 0.35 }}
@@ -131,13 +110,15 @@ export default function Hero() {
           <button
             type="button"
             onClick={scrollToContact}
-            className="group relative inline-flex min-h-[48px] items-center justify-center overflow-hidden rounded-full bg-action px-8 py-4 text-base font-black text-white shadow-action transition hover:shadow-action-pulse sm:min-h-[52px] sm:px-10 sm:py-4 sm:text-lg"
+            className="group relative inline-flex min-h-[48px] items-center justify-center rounded-full border-0 bg-action px-8 py-4 text-base font-black text-white shadow-[0_0_20px_rgba(255,87,34,0.3)] outline-none ring-0 transition hover:shadow-[0_0_28px_rgba(255,87,34,0.45)] sm:min-h-[52px] sm:px-10 sm:py-4 sm:text-lg"
           >
+            <span className="absolute inset-0 overflow-hidden rounded-full" aria-hidden>
+              <span
+                className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition duration-700 group-hover:translate-x-full"
+                aria-hidden
+              />
+            </span>
             <span className="relative z-10">DEVIS GRATUIT</span>
-            <span
-              className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition duration-700 group-hover:translate-x-full"
-              aria-hidden
-            />
           </button>
         </motion.div>
       </div>
