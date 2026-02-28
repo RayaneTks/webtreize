@@ -60,3 +60,26 @@ main {
   from, to { border-color: transparent; }
   50% { border-color: #3b82f6; }
 }
+
+/* Lumière qui tourne sur la bordure - angle animé via @property */
+@property --border-light-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+.border-light-travel {
+  --border-light-angle: 0deg;
+  background: conic-gradient(
+    from var(--border-light-angle) at 50% 50%,
+    transparent 0deg,
+    transparent 240deg,
+    rgba(34, 211, 238, 0.25) 250deg,
+    rgba(34, 211, 238, 0.95) 270deg,
+    rgba(34, 211, 238, 0.25) 290deg,
+    transparent 360deg
+  );
+  animation: border-light-travel 3s linear infinite;
+}
+@keyframes border-light-travel {
+  to { --border-light-angle: 360deg; }
+}

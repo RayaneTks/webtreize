@@ -15,7 +15,7 @@ export function ContactSection() {
       <div className="container mx-auto max-w-5xl relative z-10">
         <Reveal className="text-center mb-16 md:mb-24">
           <h2 id="contact-title" className="text-5xl md:text-7xl font-black mb-6 tracking-tight">
-            Prêt à accélérer ?
+            Prêt à <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-600 bg-[length:200%_auto] animate-gradient">accélérer</span> ?
           </h2>
           <p className="text-lg md:text-2xl text-gray-400 max-w-2xl mx-auto font-light">
             Zéro friction. Choisissez le canal qui correspond à votre rythme.

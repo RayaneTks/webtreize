@@ -32,7 +32,7 @@ export function VisionFaqSection() {
         <div className="sticky top-32">
           <Reveal direction="right">
             <h2 id="vision-title" className="text-4xl md:text-6xl font-black mb-6 tracking-tight leading-[1.1]">
-              Un partenaire,<br /> pas juste un prestataire.
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-600 bg-[length:200%_auto] animate-gradient">Un partenaire</span>,<br /> pas juste un prestataire.
             </h2>
             <p className="text-lg text-gray-400 leading-relaxed">
               Le digital est complexe. Notre rôle est de filtrer ce bruit technique pour vous livrer une mélodie de performance. Nous investissons dans votre réussite à long terme.

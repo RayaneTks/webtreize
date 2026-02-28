@@ -109,6 +109,10 @@ const config: Config = {
           '90%': { opacity: '0.9' },
           '100%': { transform: 'translate(calc(100vw + 200px), calc(100vh + 200px))', opacity: '0' },
         },
+        'border-glow': {
+          '0%, 100%': { boxShadow: '0 0 0 2px rgba(34, 211, 238, 0.4), inset 0 0 0 1px rgba(34, 211, 238, 0.1)' },
+          '50%': { boxShadow: '0 0 0 2px rgba(34, 211, 238, 0.7), 0 0 20px rgba(34, 211, 238, 0.15), inset 0 0 0 1px rgba(34, 211, 238, 0.2)' },
+        },
       },
       animation: {
         marquee: 'marquee 25s linear infinite',

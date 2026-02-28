@@ -86,7 +86,7 @@ export default function StoryPage() {
             ))}
           </div>
 
-          {/* CTA — orange vif comme l&apos;exemple */}
+          {/* CTA */}
           <Link
             href="/#contact"
             className="w-full py-3.5 rounded-xl bg-gradient-to-r from-orange-500 via-rose-500 to-orange-600 text-white font-black text-center text-sm uppercase tracking-wider transition-all active:scale-[0.98] mb-4 shadow-[0_4px_24px_rgba(249,115,22,0.5)] border-0 flex-shrink-0"

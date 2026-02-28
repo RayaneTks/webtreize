@@ -82,7 +82,7 @@ export default function Rassurance() {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
         >
-          Un partenaire, pas juste un prestataire.
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-600 bg-[length:200%_auto] animate-gradient">Un partenaire</span>, pas juste un prestataire.
         </motion.h2>
 
         <motion.div
