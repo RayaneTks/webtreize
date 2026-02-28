@@ -23,11 +23,11 @@ export function HeroSection() {
           src="/nd-bg.webp"
           alt=""
           fill
-          sizes="(max-width: 768px) 384px, 100vw"
+          sizes="(max-width: 640px) 320px, (max-width: 768px) 384px, 100vw"
           className="object-cover object-center opacity-[0.1]"
           priority
           fetchPriority="high"
-          quality={50}
+          quality={35}
         />
       </div>
       <div className="container mx-auto max-w-5xl text-center relative z-10">
