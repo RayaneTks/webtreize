@@ -34,7 +34,7 @@ export function MarqueeSection() {
     <div className="w-full bg-black/40 border-y border-white/5 py-4 overflow-hidden backdrop-blur-md relative z-20" role="region" aria-label="Points forts">
       <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#030303] to-transparent z-10 pointer-events-none" aria-hidden />
       <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#030303] to-transparent z-10 pointer-events-none" aria-hidden />
-      <div className="animate-marquee whitespace-nowrap flex items-center gap-12 md:gap-24 w-max">
+      <div className="relative z-10 animate-marquee whitespace-nowrap flex items-center gap-12 md:gap-24 w-max">
         <MarqueeContent />
         <MarqueeContent />
       </div>

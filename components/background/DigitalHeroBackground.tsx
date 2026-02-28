@@ -1,23 +1,10 @@
 'use client';
 
 import React from 'react';
-import { cn } from '@/lib/utils';
 
 export function DigitalHeroBackground() {
   return (
     <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none perspective-[1000px]">
-      <div
-        className={cn(
-          'absolute bottom-[-20%] left-[-50%] w-[200%] h-[100%]',
-          'bg-[size:4rem_4rem] origin-bottom animate-grid-scroll'
-        )}
-        style={{
-          backgroundImage:
-            'linear-gradient(rgba(0,194,255,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(0,194,255,0.15) 1px, transparent 1px)',
-          transform: 'rotateX(75deg)',
-        }}
-        aria-hidden
-      />
       <div
         className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] max-w-[600px] aspect-square bg-blue-600/20 rounded-full blur-[100px] animate-pulse"
         aria-hidden

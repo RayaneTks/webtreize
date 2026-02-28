@@ -1,38 +1,49 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Globe, MapPin, TrendingUp, Code2, ChevronRight, Infinity } from 'lucide-react';
 import { Reveal } from '@/components/ui/Reveal';
 import { GlowCard } from '@/components/ui/GlowCard';
+import { ServiceModal } from '@/components/ui/ServiceModal';
 
 const SERVICES = [
   {
     icon: Globe,
     title: 'Sites Web Prestigieux',
     desc: 'Des expériences vitrines et e-commerce qui convertissent et marquent les esprits.',
+    extendedDesc: 'Nous concevons des sites web sur-mesure qui allient esthétique premium et performance technique. Chaque projet est unique : identité de marque forte, parcours utilisateur optimisé et technologies modernes pour une expérience mémorable.',
+    bullets: ['Sites vitrines & e-commerce', 'Design sur-mesure & identité visuelle', 'Performance & optimisations techniques', 'Formation & suivi post-mise en ligne'],
     delay: 0,
   },
   {
     icon: MapPin,
     title: 'Visibilité Locale',
     desc: "Optimisation de votre Fiche Google pour capter 100% de votre zone de chalandise.",
+    extendedDesc: "Votre Fiche Google Business Profile est le premier point de contact avec vos clients locaux. Nous l'optimisons pour qu'elle apparaisse en tête des recherches de votre secteur et convertisse en appels et visites.",
+    bullets: ['Optimisation complète Fiche Google', 'Photos professionnelles & contenu', 'Avis clients & réputation', 'Résultats mesurables sur votre zone'],
     delay: 100,
   },
   {
     icon: TrendingUp,
     title: 'Acquisition & SEO',
     desc: 'Stratégies de référencement chirurgicales pour écraser la concurrence sur les moteurs.',
+    extendedDesc: 'Le SEO est un investissement long terme qui paie. Nous mettons en place des stratégies de référencement naturelles, techniques et contentuelles pour positionner votre site devant vos concurrents sur Google.',
+    bullets: ['Audit SEO & stratégie sur-mesure', 'Optimisation technique & contenu', 'Netlinking & autorité de domaine', 'Suivi & reporting des positions'],
     delay: 200,
   },
   {
     icon: Code2,
     title: 'Logiciel Sur-Mesure',
     desc: "Développement d'applications web et mobiles pour automatiser votre métier.",
+    extendedDesc: "Des outils digitaux pensés pour votre métier : applications web, interfaces d'administration, automatisations. Nous développons des solutions sur-mesure qui simplifient vos process et augmentent votre productivité.",
+    bullets: ['Apps web & mobiles sur-mesure', 'Automatisation de process', 'Interfaces d\'administration', 'Intégrations & API'],
     delay: 300,
   },
 ] as const;
 
 export function ServicesSection() {
+  const [openModalIndex, setOpenModalIndex] = useState<number | null>(null);
+
   return (
     <section id="services" className="py-24 md:py-40 px-4 sm:px-6 relative z-10" aria-labelledby="services-title">
       <div className="container mx-auto max-w-6xl">
@@ -56,13 +67,28 @@ export function ServicesSection() {
                   <h3 className="text-2xl font-bold text-white mb-4 tracking-tight leading-snug">{srv.title}</h3>
                   <p className="text-gray-400 leading-relaxed text-sm md:text-base">{srv.desc}</p>
                 </div>
-                <div className="mt-8 pt-6 border-t border-white/5 flex items-center text-blue-400 font-semibold text-sm opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
+                <button
+                  type="button"
+                  onClick={() => setOpenModalIndex(idx)}
+                  className="mt-8 pt-6 border-t border-white/5 flex items-center text-blue-400 font-semibold text-sm opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 w-full text-left hover:text-cyan-300"
+                >
                   Savoir plus <ChevronRight className="w-4 h-4 ml-1" aria-hidden />
-                </div>
+                </button>
               </GlowCard>
             </Reveal>
           ))}
         </div>
+
+        {openModalIndex !== null && (
+          <ServiceModal
+            isOpen={openModalIndex !== null}
+            onClose={() => setOpenModalIndex(null)}
+            icon={SERVICES[openModalIndex].icon}
+            title={SERVICES[openModalIndex].title}
+            desc={SERVICES[openModalIndex].extendedDesc}
+            bullets={SERVICES[openModalIndex].bullets}
+          />
+        )}
 
         <Reveal delay={400} direction="up" className="mt-4 md:mt-6">
           <GlowCard className="p-8 md:p-12 relative overflow-hidden group">

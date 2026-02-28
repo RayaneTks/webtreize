@@ -16,6 +16,11 @@ export function HeroSection() {
       aria-labelledby="hero-title"
     >
       <DigitalHeroBackground />
+      <div
+        className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-[0.1]"
+        style={{ backgroundImage: 'url(/nd-bg.png)' }}
+        aria-hidden
+      />
       <div className="container mx-auto max-w-5xl text-center relative z-10">
         <Reveal delay={100} direction="up">
           <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-black/40 border border-white/10 text-gray-300 text-xs md:text-sm font-medium mb-8 backdrop-blur-md shadow-[0_0_20px_rgba(0,194,255,0.05)]">

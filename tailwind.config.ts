@@ -75,6 +75,10 @@ const config: Config = {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(-20px)' },
         },
+        'modal-in': {
+          from: { opacity: '0', transform: 'scale(0.96) translateY(10px)' },
+          to: { opacity: '1', transform: 'scale(1) translateY(0)' },
+        },
       },
       animation: {
         marquee: 'marquee 25s linear infinite',
@@ -93,6 +97,7 @@ const config: Config = {
         float: 'float 6s ease-in-out infinite',
         'float-delay-1': 'float 6s ease-in-out infinite 1s',
         'float-delay-2': 'float 6s ease-in-out infinite 2s',
+        'modal-in': 'modal-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards',
       },
       backgroundSize: {
         'gradient': '200% auto',
