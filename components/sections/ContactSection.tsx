@@ -3,13 +3,14 @@
 import React from 'react';
 import { Mail, Smartphone, ArrowRight } from 'lucide-react';
 import { Reveal } from '@/components/ui/Reveal';
+import { AccelerateBackground } from '@/components/background/AccelerateBackground';
 
 const SNAPCHAT_URL = 'https://snapchat.com/add/webtreize';
 
 export function ContactSection() {
   return (
     <section id="contact" className="py-24 md:py-40 px-4 sm:px-6 relative border-t border-white/5" aria-labelledby="contact-title">
-      <div className="absolute inset-0 bg-gradient-to-b from-[#030303] to-blue-950/20 z-0 pointer-events-none" aria-hidden />
+      <AccelerateBackground />
 
       <div className="container mx-auto max-w-5xl relative z-10">
         <Reveal className="text-center mb-16 md:mb-24">

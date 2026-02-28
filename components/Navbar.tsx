@@ -72,7 +72,7 @@ export function Navbar({ mobileMenuOpen: controlledOpen, setMobileMenuOpen: setC
           >
             <div className="relative">
               <div className="absolute inset-0 bg-blue-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" aria-hidden />
-              <LogoWebTreize className="w-11 h-11 md:w-14 md:h-14 relative z-10 transition-transform duration-500 ease-out group-hover:scale-105 group-active:scale-95" />
+              <LogoWebTreize decorative className="w-11 h-11 md:w-14 md:h-14 relative z-10 transition-transform duration-500 ease-out group-hover:scale-105 group-active:scale-95" />
             </div>
             <span className="text-xl md:text-2xl font-black tracking-tight text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-blue-200 transition-all duration-300">
               WebTreize
@@ -85,7 +85,7 @@ export function Navbar({ mobileMenuOpen: controlledOpen, setMobileMenuOpen: setC
                 key={label}
                 href={pathname === '/' ? href : `/#${href.slice(1)}`}
                 onClick={(e) => pathname === '/' && scroll(e, href)}
-                className="px-5 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 rounded-full transition-all duration-300"
+                className="px-5 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
               >
                 {label}
               </Link>
@@ -107,7 +107,7 @@ export function Navbar({ mobileMenuOpen: controlledOpen, setMobileMenuOpen: setC
 
           <button
             type="button"
-            className="md:hidden relative z-50 p-2 text-white active:scale-90 transition-transform"
+            className="md:hidden relative z-50 p-2 text-white active:scale-90 transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-lg"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-expanded={mobileMenuOpen}
             aria-controls="mobile-menu"
@@ -138,7 +138,7 @@ export function Navbar({ mobileMenuOpen: controlledOpen, setMobileMenuOpen: setC
                 if (pathname === '/') scroll(e, href);
                 setMobileMenuOpen(false);
               }}
-              className="text-4xl font-black text-gray-400 hover:text-white transition-colors py-4 border-b border-white/5"
+              className="text-4xl font-black text-gray-400 hover:text-white transition-colors py-4 border-b border-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-inset rounded"
               style={{
                 transform: mobileMenuOpen ? 'translateY(0)' : 'translateY(20px)',
                 opacity: mobileMenuOpen ? 1 : 0,
@@ -164,7 +164,7 @@ export function Navbar({ mobileMenuOpen: controlledOpen, setMobileMenuOpen: setC
             href={SNAPCHAT_URL}
             target="_blank"
             rel="noreferrer noopener"
-            className="flex items-center justify-center gap-3 w-full py-5 rounded-2xl bg-[#FFFC00] text-black font-bold text-lg active:scale-95 transition-transform min-h-[56px]"
+            className="flex items-center justify-center gap-3 w-full py-5 rounded-2xl bg-[#FFFC00] text-black font-bold text-lg active:scale-95 transition-transform min-h-[56px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#030303]"
           >
             <Smartphone className="w-6 h-6" aria-hidden /> Contacter sur Snapchat
           </a>
@@ -174,7 +174,7 @@ export function Navbar({ mobileMenuOpen: controlledOpen, setMobileMenuOpen: setC
               if (pathname === '/') scroll(e, '#contact');
               setMobileMenuOpen(false);
             }}
-            className="flex items-center justify-center gap-3 w-full py-5 rounded-2xl bg-white text-black font-black active:scale-95 transition-transform border border-white/20 min-h-[56px]"
+            className="flex items-center justify-center gap-3 w-full py-5 rounded-2xl bg-white text-black font-black active:scale-95 transition-transform border border-white/20 min-h-[56px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#030303]"
           >
             <MessageCircle className="w-6 h-6" aria-hidden /> Obtenir un Devis
           </Link>

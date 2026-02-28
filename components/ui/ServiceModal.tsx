@@ -23,18 +23,47 @@ export function ServiceModal({
   bullets = [],
 }: ServiceModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
+  const closeBtnRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
     if (isOpen) {
       document.addEventListener('keydown', handleEsc);
       document.body.style.overflow = 'hidden';
+      closeBtnRef.current?.focus();
     }
     return () => {
       document.removeEventListener('keydown', handleEsc);
       document.body.style.overflow = '';
     };
   }, [isOpen, onClose]);
+
+  useEffect(() => {
+    if (!isOpen || !modalRef.current) return;
+    const modal = modalRef.current;
+    const focusables = modal.querySelectorAll<HTMLElement>(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab') return;
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last?.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first?.focus();
+        }
+      }
+    };
+    modal.addEventListener('keydown', handleKeyDown);
+    return () => modal.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -74,9 +103,10 @@ export function ServiceModal({
             <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/70" />
           </div>
           <button
+            ref={closeBtnRef}
             type="button"
             onClick={onClose}
-            className="p-2 -m-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-colors"
+            className="p-2 -m-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0f1a]"
             aria-label="Fermer"
           >
             <X className="w-5 h-5" />
@@ -105,7 +135,7 @@ export function ServiceModal({
           <Link
             href="/#contact"
             onClick={onClose}
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm transition-all active:scale-95 shadow-[0_0_25px_rgba(37,99,235,0.3)]"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm transition-all active:scale-95 shadow-[0_0_25px_rgba(37,99,235,0.3)] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0f1a]"
           >
             Obtenir un devis <ArrowRight className="w-4 h-4" />
           </Link>

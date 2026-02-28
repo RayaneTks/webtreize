@@ -16,13 +16,13 @@ export function FaqItem({ question, answer, isOpen, onClick, id }: FaqItemProps)
   return (
     <div
       className="group border-b border-white/10 last:border-b-0 overflow-hidden"
-      role="group"
+      role="listitem"
       aria-expanded={isOpen}
     >
       <button
         type="button"
         id={id}
-        className="w-full py-6 flex justify-between items-center text-left transition-opacity gap-4"
+        className="w-full py-6 flex justify-between items-center text-left transition-opacity gap-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-inset rounded"
         onClick={onClick}
         aria-expanded={isOpen}
         aria-controls={id ? `${id}-answer` : undefined}

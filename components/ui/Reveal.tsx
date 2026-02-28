@@ -10,13 +10,16 @@ interface RevealProps {
   delay?: number;
   direction?: Direction;
   className?: string;
+  /** Contenu above-the-fold : visible immédiatement (améliore LCP mobile) */
+  immediate?: boolean;
 }
 
-export function Reveal({ children, delay = 0, direction = 'up', className = '' }: RevealProps) {
-  const [isVisible, setIsVisible] = useState(false);
+export function Reveal({ children, delay = 0, direction = 'up', className = '', immediate }: RevealProps) {
+  const [isVisible, setIsVisible] = useState(!!immediate);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (immediate) return;
     const el = ref.current;
     if (!el) return;
 
@@ -29,7 +32,7 @@ export function Reveal({ children, delay = 0, direction = 'up', className = '' }
 
     observer.observe(el);
     return () => observer.disconnect();
-  }, []);
+  }, [immediate]);
 
   const getTransform = (): string => {
     switch (direction) {
@@ -51,8 +54,7 @@ export function Reveal({ children, delay = 0, direction = 'up', className = '' }
   const style: React.CSSProperties = {
     opacity: isVisible ? 1 : 0,
     transform: isVisible ? 'translate(0,0) scale(1)' : getTransform(),
-    filter: isVisible ? 'blur(0px)' : 'blur(8px)',
-    transition: 'all 1s cubic-bezier(0.16, 1, 0.3, 1)',
+    transition: 'opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1)',
     transitionDelay: `${delay}ms`,
   };
 

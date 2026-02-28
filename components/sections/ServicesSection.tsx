@@ -70,9 +70,9 @@ export function ServicesSection() {
                 <button
                   type="button"
                   onClick={() => setOpenModalIndex(idx)}
-                  className="mt-8 pt-6 border-t border-white/5 flex items-center text-blue-400 font-semibold text-sm opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 w-full text-left hover:text-cyan-300"
+                  className="mt-8 pt-6 border-t border-white/5 flex items-center text-blue-400 font-semibold text-sm opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 w-full text-left hover:text-cyan-300 focus:outline-none focus-visible:opacity-100 focus-visible:translate-x-0 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-inset rounded"
                 >
-                  Savoir plus <ChevronRight className="w-4 h-4 ml-1" aria-hidden />
+                  En savoir plus <ChevronRight className="w-4 h-4 ml-1" aria-hidden />
                 </button>
               </GlowCard>
             </Reveal>

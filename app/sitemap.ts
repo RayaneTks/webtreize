@@ -19,7 +19,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.3,
     },
     {
-      url: `${BASE_URL}/legal/politique-de-confidentialite`,
+      url: `${BASE_URL}/legal/politique-confidentialite`,
       lastModified: now,
       changeFrequency: 'yearly',
       priority: 0.3,

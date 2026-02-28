@@ -79,6 +79,36 @@ const config: Config = {
           from: { opacity: '0', transform: 'scale(0.96) translateY(10px)' },
           to: { opacity: '1', transform: 'scale(1) translateY(0)' },
         },
+        'speed-lines': {
+          '0%': { backgroundPosition: '-100% 0' },
+          '100%': { backgroundPosition: '200% 0' },
+        },
+        'speed-lines-reverse': {
+          '0%': { backgroundPosition: '200% 0' },
+          '100%': { backgroundPosition: '-100% 0' },
+        },
+        'speed-stripes': {
+          '0%': { backgroundPosition: '0 0' },
+          '100%': { backgroundPosition: '100px 0' },
+        },
+        'speed-dot': {
+          '0%': { transform: 'translateX(0) scale(1)', opacity: '0' },
+          '10%': { opacity: '0.8' },
+          '90%': { opacity: '0.8' },
+          '100%': { transform: 'translateX(100vw) scale(0.3)', opacity: '0' },
+        },
+        'streak-pass': {
+          '0%': { transform: 'rotate(-15deg) translateX(-100%) translateY(-50%)', opacity: '0' },
+          '5%': { opacity: '0.6' },
+          '95%': { opacity: '0.6' },
+          '100%': { transform: 'rotate(-15deg) translateX(200vw) translateY(100%)', opacity: '0' },
+        },
+        'comet-fly': {
+          '0%': { transform: 'translate(-100px, -100px)', opacity: '0' },
+          '10%': { opacity: '0.9' },
+          '90%': { opacity: '0.9' },
+          '100%': { transform: 'translate(calc(100vw + 200px), calc(100vh + 200px))', opacity: '0' },
+        },
       },
       animation: {
         marquee: 'marquee 25s linear infinite',
@@ -98,6 +128,16 @@ const config: Config = {
         'float-delay-1': 'float 6s ease-in-out infinite 1s',
         'float-delay-2': 'float 6s ease-in-out infinite 2s',
         'modal-in': 'modal-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+        'speed-lines': 'speed-lines 4s linear infinite',
+        'speed-lines-fast': 'speed-lines 2s linear infinite',
+        'speed-lines-reverse': 'speed-lines-reverse 5s linear infinite',
+        'speed-stripes': 'speed-stripes 8s linear infinite',
+        'speed-dot': 'speed-dot 6s linear infinite',
+        'speed-dot-fast': 'speed-dot 3s linear infinite',
+        'streak-pass': 'streak-pass 4s linear infinite',
+        'streak-pass-fast': 'streak-pass 2s linear infinite',
+        'grid-scroll-fast': 'grid-scroll 8s linear infinite',
+        'comet-fly': 'comet-fly 8s linear infinite',
       },
       backgroundSize: {
         'gradient': '200% auto',

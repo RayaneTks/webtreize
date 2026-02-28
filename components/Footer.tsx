@@ -17,12 +17,12 @@ export function Footer() {
         <LogoWebTreize className="w-11 h-11 opacity-50" />
         <nav className="flex flex-wrap justify-center gap-6 text-sm font-medium" aria-label="Pied de page">
           {FOOTER_LINKS.map(({ label, href }) => (
-            <Link key={label} href={href} className="hover:text-white transition-colors">
+            <Link key={label} href={href} className="text-gray-400 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-[#030303] rounded-sm">
               {label}
             </Link>
           ))}
         </nav>
-        <p className="text-xs text-gray-600 font-semibold tracking-wider">
+        <p className="text-xs text-gray-400 font-semibold tracking-wider">
           © {year} WEBTREIZE. TOUS DROITS RÉSERVÉS.
         </p>
       </div>

@@ -43,7 +43,7 @@ export function VisionFaqSection() {
         <Reveal direction="left" delay={200}>
           <div className="bg-white/[0.02] border border-white/10 rounded-3xl p-6 md:p-10 backdrop-blur-xl shadow-2xl">
             <h3 className="text-2xl font-bold mb-8 text-white">Questions Fréquentes</h3>
-            <div className="flex flex-col" role="list">
+            <div className="flex flex-col" role="list" aria-label="Questions fréquentes">
               {FAQ_ITEMS.map((faq, i) => (
                 <FaqItem
                   key={i}

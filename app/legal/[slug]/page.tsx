@@ -12,17 +12,25 @@ const readableTitles: Record<string, string> = {
   cgv: 'Conditions générales de vente',
 };
 
+const SITE_URL = 'https://www.webtreize.com';
+
 export async function generateMetadata({ params }: LegalPageProps): Promise<Metadata> {
   const { slug } = await params;
   const baseTitle = readableTitles[slug] ?? 'Informations légales WebTreize';
+  const title = `${baseTitle} - WebTreize`;
+  const description =
+    'Rédaction en cours. Nos documents légaux seront bientôt disponibles. Retrouvez prochainement les mentions légales, la politique de confidentialité et les CGV de WebTreize.';
 
   return {
-    title: `${baseTitle} - Rédaction en cours`,
-    description:
-      'Rédaction en cours. Nos documents légaux seront bientôt disponibles. Retrouvez prochainement les mentions légales, la politique de confidentialité et les CGV de WebTreize.',
-    alternates: {
-      canonical: `/legal/${slug}`,
+    title,
+    description,
+    alternates: { canonical: `${SITE_URL}/legal/${slug}` },
+    openGraph: {
+      title,
+      description,
+      url: `${SITE_URL}/legal/${slug}`,
     },
+    twitter: { card: 'summary', title, description },
   };
 }
 

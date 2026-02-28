@@ -23,6 +23,14 @@ export const metadata: Metadata = {
   title: 'WebTreize | Agence digitale Marseille – Sites web, apps & SEO',
   description:
     "Votre croissance digitale simplifiée. WebTreize est une agence digitale basée à Marseille spécialisée en création de sites web, applications sur mesure, fiches Google Business Profile et SEO.",
+  keywords: [
+    'agence digitale Marseille',
+    'création site web Marseille',
+    'SEO Marseille',
+    'fiche Google Business',
+    'application web sur mesure',
+    'WebTreize',
+  ],
   alternates: { canonical: '/' },
   openGraph: {
     type: 'website',
@@ -32,14 +40,14 @@ export const metadata: Metadata = {
       "Agence digitale à Marseille : création de sites vitrines et applicatives, optimisation de fiche Google, SEO et accompagnement digital complet.",
     siteName: 'WebTreize',
     locale: 'fr_FR',
-    images: [{ url: '/logo-full.png', width: 1200, height: 630, alt: 'WebTreize - Agence digitale' }],
+    images: [{ url: '/logo.png', width: 1200, height: 630, alt: 'WebTreize - Agence digitale Marseille' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'WebTreize | Agence digitale – Sites web, apps, fiches Google & SEO',
     description:
       "Votre croissance digitale simplifiée. Création de sites web, applications sur mesure, fiches Google et SEO pour particuliers et entreprises.",
-    images: ['/logo-full.png'],
+    images: [{ url: '/logo.png', alt: 'WebTreize - Agence digitale Marseille' }],
   },
   robots: { index: true, follow: true },
 };
@@ -68,6 +76,45 @@ const jsonLd = {
   ],
 };
 
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: "Comment se déroule la création d'un site ?",
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: "Audit de vos besoins, conception UX/UI sur-mesure, développement technique optimisé, configuration SEO, puis mise en ligne et formation pour votre autonomie.",
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Intervenez-vous uniquement à Marseille ?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: "Notre base est à Marseille, mais notre expertise est sans frontière. Nous collaborons avec des entreprises dans toute la francophonie via des process ultra-optimisés.",
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Quels sont vos tarifs ?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: "Chaque projet est unique. Nous réalisons une proposition sur-mesure adaptée à vos enjeux de rentabilité et à vos objectifs sous 24h ouvrées.",
+      },
+    },
+    {
+      '@type': 'Question',
+      name: "Faut-il avoir une idée précise du projet ?",
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: "Absolument pas. C'est notre métier de traduire vos objectifs commerciaux en stratégie digitale performante. Venez avec un problème, nous construirons la solution.",
+      },
+    },
+  ],
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fr" className="dark">
@@ -78,6 +125,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
         />
       </body>
     </html>
