@@ -34,20 +34,9 @@ export function VisionFaqSection() {
             <h2 id="vision-title" className="text-4xl md:text-6xl font-black mb-6 tracking-tight leading-[1.1]">
               Un partenaire,<br /> pas juste un prestataire.
             </h2>
-            <p className="text-lg text-gray-400 mb-8 leading-relaxed">
+            <p className="text-lg text-gray-400 leading-relaxed">
               Le digital est complexe. Notre rôle est de filtrer ce bruit technique pour vous livrer une mélodie de performance. Nous investissons dans votre réussite à long terme.
             </p>
-            <div className="flex gap-4" aria-hidden>
-              <div className="w-12 h-12 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-400 font-bold border border-blue-500/20">
-                W
-              </div>
-              <div className="w-12 h-12 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-400 font-bold border border-blue-500/20">
-                1
-              </div>
-              <div className="w-12 h-12 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-400 font-bold border border-blue-500/20">
-                3
-              </div>
-            </div>
           </Reveal>
         </div>
 
