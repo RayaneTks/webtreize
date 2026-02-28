@@ -5,6 +5,7 @@ const config: Config = {
   content: [
     './app/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
+    './hooks/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {
@@ -15,40 +16,89 @@ const config: Config = {
         neon: '#00C2FF',
         action: '#FF5722',
         snap: '#FFFC00',
-      },
-      fontSize: {
-        hero: ['clamp(2.05rem, 5.5vw, 4.5rem)', { lineHeight: '1.05', letterSpacing: '-0.02em' }],
+        surface: '#030303',
       },
       fontFamily: {
         display: ['var(--font-montserrat)', 'system-ui', 'sans-serif'],
         sans: ['var(--font-open-sans)', 'system-ui', 'sans-serif'],
-      },
-      backgroundImage: {
-        'mesh': 'radial-gradient(ellipse 80% 50% at 20% 20%, rgba(10, 26, 63, 0.5), transparent 50%), radial-gradient(ellipse 60% 40% at 80% 80%, rgba(10, 26, 63, 0.3), transparent 50%)',
-      },
-      boxShadow: {
-        'neon': '0 0 20px rgba(0, 194, 255, 0.15), 0 0 40px rgba(0, 194, 255, 0.08)',
-        'action': '0 0 24px rgba(255, 87, 34, 0.35)',
-        'action-pulse': '0 0 32px rgba(255, 87, 34, 0.5)',
       },
       keyframes: {
         marquee: {
           '0%': { transform: 'translateX(0)' },
           '100%': { transform: 'translateX(-50%)' },
         },
-        'accordion-down': {
-          from: { height: '0' },
-          to: { height: 'var(--radix-accordion-content-height)' },
+        gradient: {
+          '0%, 100%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
         },
-        'accordion-up': {
-          from: { height: 'var(--radix-accordion-content-height)' },
-          to: { height: '0' },
+        stripes: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50px)' },
+        },
+        jiggle: {
+          '0%': { transform: 'rotate(0deg)' },
+          '25%': { transform: 'rotate(-1deg)' },
+          '50%': { transform: 'rotate(1.5deg)' },
+          '75%': { transform: 'rotate(-0.5deg)' },
+          '100%': { transform: 'rotate(0deg)' },
+        },
+        'blink-caret': {
+          'from, to': { borderColor: 'transparent' },
+          '50%': { borderColor: '#3b82f6' },
+        },
+        'spin-slow': {
+          from: { transform: 'rotate(0deg)' },
+          to: { transform: 'rotate(360deg)' },
+        },
+        'spin-slow-centered': {
+          from: { transform: 'translate(-50%, -50%) rotate(0deg)' },
+          to: { transform: 'translate(-50%, -50%) rotate(360deg)' },
+        },
+        'line-fade-in': {
+          from: { opacity: '0', transform: 'translateY(10px)' },
+          to: { opacity: '1', transform: 'translateY(0)' },
+        },
+        'grid-scroll': {
+          '0%': { backgroundPosition: '0 0' },
+          '100%': { backgroundPosition: '0 4rem' },
+        },
+        'spin-reverse-slow': {
+          from: { transform: 'translate(-50%, -50%) rotate(360deg)' },
+          to: { transform: 'translate(-50%, -50%) rotate(0deg)' },
+        },
+        'data-drop': {
+          '0%': { transform: 'translateY(-50%)', opacity: '0' },
+          '50%': { opacity: '1' },
+          '100%': { transform: 'translateY(100%)', opacity: '0' },
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-20px)' },
         },
       },
       animation: {
-        marquee: 'marquee 28s linear infinite',
-        'accordion-down': 'accordion-down 0.2s ease-out',
-        'accordion-up': 'accordion-up 0.2s ease-out',
+        marquee: 'marquee 25s linear infinite',
+        gradient: 'gradient 5s ease infinite',
+        stripes: 'stripes 1s linear infinite',
+        jiggle: 'jiggle 0.3s cubic-bezier(.36,.07,.19,.97) both',
+        'blink-caret': 'blink-caret 0.75s step-end infinite',
+        'spin-slow': 'spin-slow 8s linear infinite',
+        'spin-slow-centered': 'spin-slow-centered 40s linear infinite',
+        'spin-reverse-slow': 'spin-reverse-slow 60s linear infinite',
+        'line-fade-in': 'line-fade-in 0.3s ease-out forwards',
+        'grid-scroll': 'grid-scroll 15s linear infinite',
+        'data-drop': 'data-drop 3s ease-in-out infinite',
+        'data-drop-delay-1': 'data-drop 4s ease-in-out infinite 1s',
+        'data-drop-delay-2': 'data-drop 5s ease-in-out infinite 2.5s',
+        float: 'float 6s ease-in-out infinite',
+        'float-delay-1': 'float 6s ease-in-out infinite 1s',
+        'float-delay-2': 'float 6s ease-in-out infinite 2s',
+      },
+      backgroundSize: {
+        'gradient': '200% auto',
+      },
+      perspective: {
+        '1000': '1000px',
       },
     },
   },

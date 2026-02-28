@@ -1,9 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { Montserrat, Open_Sans } from 'next/font/google';
-import Navbar from '@/components/Navbar';
-import ScrollProgressBar from '@/components/ScrollProgressBar';
-import Footer from '@/components/Footer';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -74,12 +71,9 @@ const jsonLd = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fr" className="dark">
-      <body className={`${montserrat.variable} ${openSans.variable} min-h-screen`}>
-        <div className="relative z-10 flex min-h-screen min-w-0 flex-col overflow-x-hidden">
-          <ScrollProgressBar />
-          <Navbar />
-          <main className="flex-1 pb-8 md:pb-0 min-w-0">{children}</main>
-          <Footer />
+      <body className={`${montserrat.variable} ${openSans.variable} min-h-screen font-sans`}>
+        <div id="app-root" className="relative min-h-screen min-w-0 overflow-x-hidden">
+          {children}
         </div>
         <script
           type="application/ld+json"

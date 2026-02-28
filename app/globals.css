@@ -3,59 +3,60 @@
 @tailwind utilities;
 
 :root {
-  --void: #0d1525;
-  --void-depth: #152238;
+  --surface: #030303;
   --neon: #00c2ff;
-  --action: #ff5722;
 }
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 7rem;
   overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
-  @apply bg-void text-slate-300 antialiased;
+  @apply bg-surface text-white antialiased;
   font-family: var(--font-open-sans), system-ui, sans-serif;
   line-height: 1.6;
   overflow-x: hidden;
+  overscroll-behavior-y: none;
 }
 
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: radial-gradient(ellipse 80% 50% at 20% 20%, rgba(21, 34, 56, 0.6), transparent 55%),
-    radial-gradient(ellipse 60% 40% at 80% 80%, rgba(21, 34, 56, 0.35), transparent 50%);
-  pointer-events: none;
-  z-index: 0;
+/* Pages légales : permettre l'overflow pour le bandeau "chantier" */
+html:has([data-legal-page]),
+body:has([data-legal-page]),
+#app-root:has([data-legal-page]) {
+  overflow-x: visible !important;
+}
+
+::selection {
+  @apply bg-blue-500/30;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-montserrat), system-ui, sans-serif;
-  @apply font-black tracking-tighter text-white;
-  line-height: 1;
+  @apply font-black tracking-tight text-white;
 }
 
-/* Prevent CLS: reserve space for fixed elements */
 main {
   min-height: 100vh;
 }
 
-/* Éviter débordement horizontal et scrollbar parasite */
-html, body {
-  max-width: 100vw;
-}
-
-/* Boutons sans trait / underline par défaut */
-button {
-  -webkit-tap-highlight-color: transparent;
-}
-
-/* Scroll vers une section : laisser la place à la navbar fixe */
-[id='hero'],
+/* Scroll vers une section : place pour la navbar fixe (NAVBAR_OFFSET = 80) */
 [id='services'],
-[id='rassurance'],
+[id='vision'],
 [id='contact'] {
-  scroll-margin-top: 6rem;
+  scroll-margin-top: 5rem;
+}
+
+/* Page légale : effet caret qui clignote */
+.typing-effect {
+  overflow: hidden;
+  border-right: 2px solid #3b82f6;
+  white-space: pre-wrap;
+  animation: blink-caret 0.75s step-end infinite;
+}
+@keyframes blink-caret {
+  from, to { border-color: transparent; }
+  50% { border-color: #3b82f6; }
 }

@@ -1,256 +1,185 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
-import { NAV_ITEMS } from '@/components/NavBarDock';
+import { usePathname } from 'next/navigation';
+import { Menu, X, ArrowRight, Smartphone, MessageCircle } from 'lucide-react';
+import { LogoWebTreize } from '@/components/ui/LogoWebTreize';
+import { useSmoothScroll } from '@/hooks/useSmoothScroll';
+import { cn } from '@/lib/utils';
 
-const SCROLL_THRESHOLD = 32;
+const SNAPCHAT_URL = 'https://snapchat.com/add/webtreize';
 
-function scrollTo(id: string) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+const NAV_LINKS = [
+  { label: 'Services', href: '#services' },
+  { label: 'Vision', href: '#vision' },
+  { label: 'Contact', href: '#contact' },
+] as const;
+
+interface NavbarProps {
+  mobileMenuOpen?: boolean;
+  setMobileMenuOpen?: (open: boolean) => void;
 }
 
-function scrollToContact() {
-  scrollTo('contact');
-}
-
-export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState<string | null>(null);
-  const [mobileOpen, setMobileOpen] = useState(false);
+export function Navbar({ mobileMenuOpen: controlledOpen, setMobileMenuOpen: setControlledOpen }: NavbarProps = {}) {
+  const pathname = usePathname();
+  const scroll = useSmoothScroll();
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [internalOpen, setInternalOpen] = useState(false);
+  const mobileMenuOpen = controlledOpen !== undefined ? controlledOpen : internalOpen;
+  const setMobileMenuOpen = setControlledOpen ?? ((v: boolean) => setInternalOpen(v));
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > SCROLL_THRESHOLD);
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  /* Section active au scroll : la dernière section dont le haut a dépassé le haut de l’écran */
   useEffect(() => {
-    const HEADER_OFFSET = 100;
+    document.body.style.overflow = mobileMenuOpen ? 'hidden' : '';
+  }, [mobileMenuOpen]);
 
-    const updateActiveSection = () => {
-      let current: string | null = null;
-      for (const { id } of NAV_ITEMS) {
-        const el = document.getElementById(id);
-        if (!el) continue;
-        const top = el.getBoundingClientRect().top;
-        if (top <= HEADER_OFFSET) current = id;
-      }
-      setActiveSection(current);
-    };
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (pathname === '/') {
+      scroll(e, href);
+    }
+    setMobileMenuOpen(false);
+  };
 
-    updateActiveSection();
-    window.addEventListener('scroll', updateActiveSection, { passive: true });
-    window.addEventListener('resize', updateActiveSection);
-    return () => {
-      window.removeEventListener('scroll', updateActiveSection);
-      window.removeEventListener('resize', updateActiveSection);
-    };
-  }, []);
-
-  const closeMobile = () => setMobileOpen(false);
-
-  const ctaOrange = (
-    <button
-      type="button"
-      onClick={() => {
-        scrollToContact();
-        closeMobile();
-      }}
-      className="rounded-full bg-action px-5 py-2.5 text-sm font-bold text-white shadow-action transition hover:shadow-action-pulse whitespace-nowrap"
-    >
-      DEVIS GRATUIT
-    </button>
-  );
-
-  const logo = (
-    <Link href="/" className="flex shrink-0 items-center" aria-label="WebTreize - Accueil">
-      <Image
-        src="/logo-simple.png"
-        alt="W13 - WebTreize"
-        width={72}
-        height={32}
-        className="h-8 w-auto object-contain"
-        priority
-      />
-      <div className="ml-2 hidden flex-col leading-tight sm:flex">
-        <span className="font-display text-[13px] font-black tracking-tight text-white">
-          WebTreize
-        </span>
-        <span className="text-[10px] uppercase tracking-[0.2em] text-slate-500">
-          Agence digitale
-        </span>
-      </div>
-    </Link>
-  );
-
-  const logoMobile = (
-    <Link href="/" className="flex items-center" aria-label="WebTreize - Accueil">
-      <Image
-        src="/logo-simple.png"
-        alt="WebTreize"
-        width={56}
-        height={24}
-        className="h-6 w-auto object-contain sm:h-7"
-        priority
-      />
-      <span className="ml-2 font-display text-lg font-bold tracking-tight text-white sm:text-xl">
-        WebTreize
-      </span>
-    </Link>
-  );
-
-  const spring = { type: 'spring' as const, stiffness: 280, damping: 32, mass: 0.8 };
+  const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setMobileMenuOpen(false);
+  };
 
   return (
-    <>
-      {/* ========== MOBILE : pill centrée (logo + hamburger), bordure au scroll ========== */}
-      <header
-        className="fixed left-0 right-0 top-0 z-50 flex items-center justify-center px-4 py-4 md:hidden"
-        role="banner"
+    <header>
+      <nav
+        className={cn(
+          'fixed w-full z-50 transition-all duration-500',
+          isScrolled
+            ? 'py-3 bg-black/60 backdrop-blur-2xl border-b border-white/5 shadow-[0_4px_30px_rgba(0,0,0,0.5)]'
+            : 'py-5 md:py-8 bg-transparent'
+        )}
+        aria-label="Navigation principale"
       >
-        <motion.div
-          layout
-          transition={spring}
-          className={`flex min-h-[44px] max-w-lg w-full items-center justify-between rounded-full border bg-void/90 px-4 py-3 backdrop-blur-xl transition-[border-color,box-shadow] duration-300 ${
-            scrolled ? 'border-white/10 shadow-lg' : 'border-transparent shadow-none'
-          }`}
-        >
-          {logoMobile}
+        <div className="container mx-auto px-4 sm:px-8 max-w-7xl flex items-center justify-between">
+          <Link
+            href="#"
+            className="flex items-center gap-3 z-50 group"
+            onClick={handleLogoClick}
+            aria-label="WebTreize - Retour accueil"
+          >
+            <div className="relative">
+              <div className="absolute inset-0 bg-blue-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" aria-hidden />
+              <LogoWebTreize className="w-11 h-11 md:w-14 md:h-14 relative z-10 transition-transform duration-500 ease-out group-hover:scale-105 group-active:scale-95" />
+            </div>
+            <span className="text-xl md:text-2xl font-black tracking-tight text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-blue-200 transition-all duration-300">
+              WebTreize
+            </span>
+          </Link>
+
+          <div className="hidden md:flex items-center gap-1 bg-white/[0.03] border border-white/5 p-1.5 rounded-full backdrop-blur-md">
+            {NAV_LINKS.map(({ label, href }) => (
+              <Link
+                key={label}
+                href={pathname === '/' ? href : `/#${href.slice(1)}`}
+                onClick={(e) => pathname === '/' && scroll(e, href)}
+                className="px-5 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 rounded-full transition-all duration-300"
+              >
+                {label}
+              </Link>
+            ))}
+          </div>
+
+          <div className="hidden md:block">
+            <Link
+              href={pathname === '/' ? '#contact' : '/#contact'}
+              onClick={(e) => pathname === '/' && scroll(e, '#contact')}
+              className="group relative px-6 py-2.5 rounded-full bg-white text-black text-sm font-bold overflow-hidden transition-transform active:scale-95 block"
+            >
+              <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-blue-100 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" aria-hidden />
+              <span className="relative flex items-center gap-2">
+                Démarrer un projet <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" aria-hidden />
+              </span>
+            </Link>
+          </div>
+
           <button
             type="button"
-            onClick={() => setMobileOpen((o) => !o)}
-            className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full text-white transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-neon"
-            aria-label={mobileOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
-            aria-expanded={mobileOpen}
+            className="md:hidden relative z-50 p-2 text-white active:scale-90 transition-transform"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-menu"
+            aria-label={mobileMenuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
           >
-            {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            {mobileMenuOpen ? <X className="w-7 h-7" aria-hidden /> : <Menu className="w-7 h-7" aria-hidden />}
           </button>
-        </motion.div>
-      </header>
+        </div>
+      </nav>
 
-      {/* Overlay : sous la navbar uniquement, ne la superpose pas */}
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40 bg-void/60 backdrop-blur-sm md:hidden"
-            aria-hidden="true"
-            onClick={closeMobile}
-          />
+      <div
+        id="mobile-menu"
+        className={cn(
+          'fixed inset-0 z-40 bg-[#030303]/90 backdrop-blur-3xl transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col pt-28 px-6 overflow-y-auto',
+          mobileMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-full pointer-events-none'
         )}
-      </AnimatePresence>
-      {/* Menu mobile : s’ouvre sous la navbar, ne la recouvre pas */}
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.nav
-            initial={{ opacity: 0, y: -6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6 }}
-            transition={{ duration: 0.2 }}
-            className="fixed left-4 right-4 top-[5.5rem] z-50 rounded-2xl border border-white/10 bg-void/95 p-4 shadow-xl backdrop-blur-xl md:hidden"
-            aria-label="Menu principal"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <ul className="flex flex-col">
-              {NAV_ITEMS.map(({ id, name }) => (
-                <li key={id}>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      scrollTo(id);
-                      closeMobile();
-                    }}
-                    className="w-full rounded-xl px-4 py-3 text-left text-base font-medium text-slate-300 hover:bg-white/5 hover:text-white"
-                  >
-                    {name}
-                  </button>
-                </li>
-              ))}
-            </ul>
-            <div className="mt-3 border-t border-white/10 pt-4">
-              {ctaOrange}
-            </div>
-          </motion.nav>
-        )}
-      </AnimatePresence>
-
-      {/* ========== DESKTOP : même logique, bordure uniquement au scroll ========== */}
-      <header
-        className="fixed left-0 right-0 top-0 z-50 hidden px-4 pt-4 md:block"
-        role="banner"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Menu mobile"
+        hidden={!mobileMenuOpen}
       >
-        <motion.div
-          layout
-          transition={spring}
-          className={`mx-auto flex items-center transition-[background-color,border-color,box-shadow] duration-300 ${
-            scrolled
-              ? 'max-w-4xl justify-between gap-4 rounded-full border border-white/10 bg-void/80 px-6 py-2.5 shadow-[0_4px_24px_rgba(0,0,0,0.25)] backdrop-blur-xl'
-              : 'max-w-7xl rounded-none border-0 bg-transparent px-6 py-5 shadow-none sm:px-8'
-          }`}
+        <div className="flex flex-col gap-2 flex-shrink-0">
+          {NAV_LINKS.map(({ label, href }, i) => (
+            <Link
+              key={label}
+              href={pathname === '/' ? href : `/#${href.slice(1)}`}
+              onClick={(e) => {
+                if (pathname === '/') scroll(e, href);
+                setMobileMenuOpen(false);
+              }}
+              className="text-4xl font-black text-gray-400 hover:text-white transition-colors py-4 border-b border-white/5"
+              style={{
+                transform: mobileMenuOpen ? 'translateY(0)' : 'translateY(20px)',
+                opacity: mobileMenuOpen ? 1 : 0,
+                transition: `transform 0.5s ease-out ${mobileMenuOpen ? i * 100 : 0}ms, opacity 0.5s ease-out ${mobileMenuOpen ? i * 100 : 0}ms`,
+              }}
+            >
+              {label}
+            </Link>
+          ))}
+        </div>
+        <div
+          className="mt-auto flex-shrink-0 w-full pb-28 space-y-4"
+          style={{
+            transform: mobileMenuOpen ? 'translateY(0)' : 'translateY(20px)',
+            opacity: mobileMenuOpen ? 1 : 0,
+            transition: 'transform 0.5s ease-out 300ms, opacity 0.5s ease-out 300ms',
+          }}
         >
-          <motion.div layout transition={spring} className="shrink-0">
-            {logo}
-          </motion.div>
-
-          <motion.div
-            layout
-            transition={spring}
-            className={scrolled ? 'w-0 flex-none overflow-hidden' : 'min-w-0 flex-1'}
-            aria-hidden
-          />
-
-          <motion.nav
-            layout
-            transition={spring}
-            className={`flex shrink-0 items-center gap-6 sm:gap-8 ${scrolled ? 'flex-1 justify-center' : ''}`}
-            aria-label="Navigation principale"
+          <p className="text-gray-500 mb-4 text-sm font-semibold uppercase tracking-widest">
+            Une question rapide ?
+          </p>
+          <a
+            href={SNAPCHAT_URL}
+            target="_blank"
+            rel="noreferrer noopener"
+            className="flex items-center justify-center gap-3 w-full py-5 rounded-2xl bg-[#FFFC00] text-black font-bold text-lg active:scale-95 transition-transform min-h-[56px]"
           >
-            {NAV_ITEMS.map(({ id, name }) => {
-              const isActive = activeSection === id;
-              return (
-                <button
-                  key={id}
-                  type="button"
-                  onClick={() => scrollTo(id)}
-                  className="relative rounded-full px-4 py-2 text-sm font-semibold text-slate-300 transition-colors hover:text-white focus:outline-none"
-                >
-                  {isActive && (
-                    <motion.span
-                      layoutId="nav-active-desktop"
-                      className="absolute inset-0 rounded-full bg-white/[0.06] border border-neon/20 -z-10"
-                      transition={spring}
-                      aria-hidden
-                    />
-                  )}
-                  <span className={isActive ? 'text-neon' : ''}>{name}</span>
-                </button>
-              );
-            })}
-          </motion.nav>
-
-          <motion.div
-            layout
-            transition={spring}
-            className={scrolled ? 'w-0 flex-none overflow-hidden' : 'min-w-0 flex-1'}
-            aria-hidden
-          />
-
-          <motion.div layout transition={spring} className="shrink-0">
-            {ctaOrange}
-          </motion.div>
-        </motion.div>
-      </header>
-    </>
+            <Smartphone className="w-6 h-6" aria-hidden /> Contacter sur Snapchat
+          </a>
+          <Link
+            href={pathname === '/' ? '#contact' : '/#contact'}
+            onClick={(e) => {
+              if (pathname === '/') scroll(e, '#contact');
+              setMobileMenuOpen(false);
+            }}
+            className="flex items-center justify-center gap-3 w-full py-5 rounded-2xl bg-white text-black font-black active:scale-95 transition-transform border border-white/20 min-h-[56px]"
+          >
+            <MessageCircle className="w-6 h-6" aria-hidden /> Obtenir un Devis
+          </Link>
+        </div>
+      </div>
+    </header>
   );
 }
