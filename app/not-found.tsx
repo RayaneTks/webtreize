@@ -2,13 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import {
-  Home,
-  TerminalSquare,
-  Compass,
-  ArrowLeft,
-  WifiOff,
-} from 'lucide-react';
+import { Home, TerminalSquare, ArrowLeft, WifiOff } from 'lucide-react';
+import { LogoWebTreize } from '@/components/ui/LogoWebTreize';
 
 const TERMINAL_LINES: Array<{ text: string; delay: number; error?: boolean; warning?: boolean }> = [
   { text: "> Initialisation du protocole de recherche...", delay: 500 },
@@ -93,10 +88,14 @@ export default function NotFound() {
       <div className="fixed bottom-1/4 right-1/4 w-[30%] h-[30%] rounded-full bg-red-500/10 blur-[150px] pointer-events-none" aria-hidden />
 
       <nav className="w-full p-6 flex items-center justify-between relative z-10 max-w-7xl mx-auto">
-        <div className="text-2xl font-black tracking-tight text-white/50 flex items-center gap-3">
-          <Compass className="w-6 h-6 text-blue-500 animate-spin-slow" aria-hidden />
-          WebTreize
-        </div>
+        <Link
+          href="/"
+          className="flex items-center gap-3 text-white/50 hover:text-white transition-colors group focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#030303] rounded-lg"
+          aria-label="WebTreize - Retour accueil"
+        >
+          <LogoWebTreize decorative className="w-10 h-10 md:w-12 md:h-12 transition-transform group-hover:scale-105" />
+          <span className="text-2xl font-black tracking-tight">WebTreize</span>
+        </Link>
       </nav>
 
       <main className="flex-1 w-full px-6 flex flex-col items-center justify-center relative z-10 py-10">

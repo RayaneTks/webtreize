@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Scale, ShieldAlert, FileText, ArrowLeft } from 'lucide-react';
+import { LogoWebTreize } from '@/components/ui/LogoWebTreize';
 import { StripedTape } from './StripedTape';
 
 const tabs = [
@@ -42,7 +43,14 @@ export function LegalWipContent() {
           </div>
           <span className="font-semibold hidden sm:block">Retour au site</span>
         </Link>
-        <span className="text-2xl font-black tracking-tight text-white/50">WebTreize</span>
+        <Link
+          href="/"
+          className="flex items-center gap-3 text-white/50 hover:text-white transition-colors group focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#030303] rounded-lg"
+          aria-label="WebTreize - Retour accueil"
+        >
+          <LogoWebTreize decorative className="w-10 h-10 md:w-12 md:h-12 transition-transform group-hover:scale-105" />
+          <span className="text-2xl font-black tracking-tight">WebTreize</span>
+        </Link>
       </nav>
 
       <div className="w-full mt-8 md:mt-12">
