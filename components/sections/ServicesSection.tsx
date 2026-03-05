@@ -142,11 +142,11 @@ export function ServicesSection() {
             <FadeUp key={srv.id} delay={80 * idx}>
               <div
                 className={cn(
-                  'sticky w-full rounded-[2rem] md:rounded-[3rem] overflow-hidden border shadow-2xl flex flex-col lg:flex-row transition-all duration-500 min-h-[60vh] lg:min-h-[500px]',
+                  'sticky w-full rounded-[2rem] md:rounded-[3rem] overflow-hidden border shadow-2xl flex flex-col lg:flex-row transition-all duration-500 min-h-[80vh] lg:min-h-[520px]',
                   srv.bgColor,
                   srv.id === '01' ? 'border-gray-200' : 'border-white/10'
                 )}
-                style={{ top: `calc(12vh + ${idx * 24}px)` }}
+                style={{ top: `calc(10vh + ${idx * 32}px)` }}
               >
                 <div className="w-full lg:w-1/2 p-8 md:p-16 flex flex-col">
                   <span className={cn('text-5xl font-black mb-8 opacity-20', srv.textColor)}>{srv.id}</span>
