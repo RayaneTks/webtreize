@@ -23,6 +23,23 @@ const config: Config = {
         sans: ['var(--font-open-sans)', 'system-ui', 'sans-serif'],
       },
       keyframes: {
+        'grid-drift': {
+          '0%': { backgroundPosition: '0 0' },
+          '100%': { backgroundPosition: '80px 80px' },
+        },
+        'pulse-slow': {
+          '0%, 100%': { transform: 'scale(1)', opacity: '0.1' },
+          '50%': { transform: 'scale(1.2)', opacity: '0.15' },
+        },
+        'ping-slow': {
+          '0%': { transform: 'scale(0.8)', opacity: '1' },
+          '100%': { transform: 'scale(2)', opacity: '0' },
+        },
+        'bar-grow': {
+          '0%': { transform: 'scaleY(0.1)', opacity: '0.5' },
+          '50%': { transform: 'scaleY(1)', opacity: '1' },
+          '100%': { transform: 'scaleY(0.1)', opacity: '0.5' },
+        },
         marquee: {
           '0%': { transform: 'translateX(0)' },
           '100%': { transform: 'translateX(-50%)' },
@@ -123,6 +140,10 @@ const config: Config = {
         'spin-slow': 'spin-slow 8s linear infinite',
         'spin-slow-centered': 'spin-slow-centered 40s linear infinite',
         'spin-reverse-slow': 'spin-reverse-slow 60s linear infinite',
+        'grid-drift': 'grid-drift 10s linear infinite',
+        'pulse-slow': 'pulse-slow 8s ease-in-out infinite',
+        'ping-slow': 'ping-slow 3s cubic-bezier(0, 0, 0.2, 1) infinite',
+        'bar-grow': 'bar-grow 2s ease-in-out infinite',
         'line-fade-in': 'line-fade-in 0.3s ease-out forwards',
         'grid-scroll': 'grid-scroll 15s linear infinite',
         'data-drop': 'data-drop 3s ease-in-out infinite',

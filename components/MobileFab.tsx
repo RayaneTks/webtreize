@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { MessageCircle } from 'lucide-react';
 import { useSmoothScroll } from '@/hooks/useSmoothScroll';
@@ -35,20 +35,19 @@ export function MobileFab() {
   return (
     <div
       className={cn(
-        'md:hidden fixed bottom-5 left-1/2 -translate-x-1/2 z-50 w-[85%] max-w-[280px] transition-all duration-300 ease-out',
-        showFab
-          ? 'opacity-100 pointer-events-auto'
-          : 'opacity-0 translate-y-4 pointer-events-none'
+        'lg:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-[340px] transition-all duration-300 ease-out',
+        showFab ? 'opacity-100 pointer-events-auto' : 'opacity-0 translate-y-4 pointer-events-none'
       )}
     >
       <Link
         href="#contact"
         onClick={(e) => scroll(e, '#contact')}
-        className="w-full flex items-center justify-center gap-2 bg-white text-black font-black py-3.5 px-5 text-sm sm:text-base rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.8)] border border-white/20 active:scale-95 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#030303]"
+        className="w-full flex items-center justify-center gap-3 bg-[#001F3F]/95 backdrop-blur-xl border border-white/10 text-white font-black py-4.5 px-6 text-sm sm:text-base rounded-2xl shadow-[0_20px_40px_rgba(0,31,63,0.4)] active:scale-95 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF4500] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
       >
-        <MessageCircle className="w-5 h-5" aria-hidden />
-        Obtenir un Devis
+        <MessageCircle className="w-5 h-5 text-[#FF4500]" aria-hidden />
+        Démarrer le projet
       </Link>
     </div>
   );
 }
+

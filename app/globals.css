@@ -2,11 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --surface: #030303;
-  --neon: #00c2ff;
-}
-
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 7rem;
@@ -15,7 +10,7 @@ html {
 }
 
 body {
-  @apply bg-surface text-white antialiased;
+  @apply antialiased;
   font-family: var(--font-open-sans), system-ui, sans-serif;
   line-height: 1.6;
   overflow-x: hidden;
@@ -59,6 +54,26 @@ main {
 @keyframes blink-caret {
   from, to { border-color: transparent; }
   50% { border-color: #3b82f6; }
+}
+
+/* Textes creux (strokes) pour la nouvelle DA WebTreize */
+.stroke-text-navy {
+  -webkit-text-stroke: 2px #001f3f;
+  color: transparent;
+}
+
+.stroke-text-white {
+  -webkit-text-stroke: 2px #ffffff;
+  color: transparent;
+}
+
+@media (max-width: 768px) {
+  .stroke-text-navy {
+    -webkit-text-stroke: 1.5px #001f3f;
+  }
+  .stroke-text-white {
+    -webkit-text-stroke: 1.5px #ffffff;
+  }
 }
 
 /* Lumière qui tourne sur la bordure - angle animé via @property */

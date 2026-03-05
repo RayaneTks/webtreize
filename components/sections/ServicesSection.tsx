@@ -1,247 +1,197 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Globe, MapPin, TrendingUp, Code2, Sparkles, ChevronRight, type LucideIcon } from 'lucide-react';
-import { Reveal } from '@/components/ui/Reveal';
-import { CardStack, type CardStackItem } from '@/components/ui/card-stack';
-import { ServiceModal } from '@/components/ui/ServiceModal';
-
-const SERVICE_GRADIENTS = [
-  'from-blue-900/60 via-blue-800/30 to-cyan-900/40',
-  'from-emerald-900/50 via-teal-800/30 to-cyan-900/40',
-  'from-violet-900/50 via-purple-800/30 to-blue-900/40',
-  'from-slate-900/60 via-blue-900/30 to-cyan-900/40',
-  'from-cyan-900/50 via-blue-800/30 to-indigo-900/40',
-];
-
-/** Fonds thématiques créatifs, DA WebTreize (bleu / cyan / teal / violet) */
-function CardBackgroundPattern({ serviceIndex }: { serviceIndex: number }) {
-  const base = 'absolute inset-0 pointer-events-none overflow-hidden';
-  const opacity = 'opacity-[0.08]';
-  const textCyan = 'text-cyan-400/90';
-  const textTeal = 'text-teal-400/90';
-  const textViolet = 'text-violet-400/80';
-  const fontCode = 'font-mono text-[10px] sm:text-[11px] leading-relaxed';
-
-  switch (serviceIndex) {
-    case 0: // Sites Web Prestigieux — balises HTML très légères
-      return (
-        <div className={`${base} ${opacity}`}>
-          <div className={`absolute left-2 top-3 ${fontCode} ${textCyan} whitespace-pre rotate-[-4deg] scale-95`}>
-            {`<header>\n  <nav>\n    <a>`}
-          </div>
-          <div className={`absolute right-4 top-8 ${fontCode} ${textCyan} whitespace-pre rotate-[2deg] scale-90`}>
-            {`</section>\n  <footer>`}
-          </div>
-          <div className={`absolute left-6 bottom-12 ${fontCode} ${textCyan} whitespace-pre rotate-[1deg] scale-90`}>
-            {`className="..."\n<div>`}
-          </div>
-          <div className={`absolute right-2 bottom-6 ${fontCode} ${textCyan} whitespace-pre rotate-[-2deg] scale-95`}>
-            {`<main>\n  <article>`}
-          </div>
-        </div>
-      );
-    case 1: // Visibilité Locale — carte stylisée + pin
-      return (
-        <svg className={`${base} ${opacity} w-full h-full ${textTeal}`} viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-          <defs>
-            <pattern id={`map-grid-${serviceIndex}`} width="16" height="16" patternUnits="userSpaceOnUse">
-              <path d="M 16 0 L 0 0 0 16" fill="none" stroke="currentColor" strokeWidth="0.4" />
-            </pattern>
-          </defs>
-          <rect width="240" height="240" fill={`url(#map-grid-${serviceIndex})`} />
-          <path d="M30 120h40v-30h50v50h40M70 90v80M120 60v100" stroke="currentColor" strokeWidth="0.6" />
-          <path d="M120 100c0-22 18-40 40-40s40 18 40 40c0 24-40 80-80 80" stroke="currentColor" strokeWidth="1.2" fill="none" />
-          <circle cx="160" cy="100" r="5" fill="currentColor" />
-        </svg>
-      );
-    case 2: // Acquisition & SEO — barre de recherche + courbes de position
-      return (
-        <div className={`${base} ${opacity}`}>
-          <svg viewBox="0 0 240 240" fill="none" className="w-full h-full text-teal-400/90">
-            <rect x="20" y="40" width="200" height="28" rx="6" stroke="currentColor" strokeWidth="0.8" fill="none" />
-            <circle cx="44" cy="54" r="4" stroke="currentColor" strokeWidth="0.6" fill="none" />
-            <path d="M20 100 L70 70 L120 55 L170 40 L220 30" stroke="currentColor" strokeWidth="1.2" opacity="0.9" />
-            <path d="M20 130 L65 95 L110 75 L160 58 L220 45" stroke="currentColor" strokeWidth="0.9" opacity="0.6" />
-            <path d="M20 160 L60 130 L100 100 L150 75 L220 55" stroke="currentColor" strokeWidth="0.7" opacity="0.4" />
-          </svg>
-        </div>
-      );
-    case 3: // Logiciel Sur-Mesure — lignes de code réelles
-      return (
-        <div className={`${base} ${opacity}`}>
-          <div className={`absolute left-2 top-2 ${fontCode} ${textCyan} whitespace-pre`}>
-            {`const app = () => {\n  return (\n    <View>`}
-          </div>
-          <div className={`absolute right-3 top-14 ${fontCode} ${textCyan} whitespace-pre`}>
-            {`function fetchData() {\n  await api.get()`}
-          </div>
-          <div className={`absolute left-4 bottom-16 ${fontCode} ${textCyan} whitespace-pre`}>
-            {`useEffect(() => {\n  // sync`}
-          </div>
-          <div className={`absolute right-2 bottom-4 ${fontCode} ${textCyan} whitespace-pre`}>
-            {`export default\n  <Component />`}
-          </div>
-        </div>
-      );
-    case 4: // Conseil & Stratégie — nœuds connectés / schéma stratégie
-      return (
-        <svg className={`${base} ${opacity} w-full h-full ${textViolet}`} viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-          <path d="M120 30 L120 70 M120 70 L70 110 M120 70 L170 110 M70 110 L50 170 M70 110 L90 170 M170 110 L150 170 M170 110 L190 170 M120 70 L120 130 M120 130 L80 190 M120 130 L160 190" stroke="currentColor" strokeWidth="0.7" />
-          <circle cx="120" cy="30" r="6" fill="currentColor" />
-          <circle cx="120" cy="70" r="8" fill="currentColor" />
-          <circle cx="70" cy="110" r="5" fill="currentColor" />
-          <circle cx="170" cy="110" r="5" fill="currentColor" />
-          <circle cx="120" cy="130" r="5" fill="currentColor" />
-          <circle cx="50" cy="170" r="4" fill="currentColor" />
-          <circle cx="90" cy="170" r="4" fill="currentColor" />
-          <circle cx="150" cy="170" r="4" fill="currentColor" />
-          <circle cx="190" cy="170" r="4" fill="currentColor" />
-          <circle cx="80" cy="190" r="4" fill="currentColor" />
-          <circle cx="160" cy="190" r="4" fill="currentColor" />
-        </svg>
-      );
-    default:
-      return null;
-  }
-}
+import React from 'react';
+import { Globe, MapPin, TrendingUp, Code2 } from 'lucide-react';
+import { FadeUp } from '@/components/ui/FadeUp';
+import { cn } from '@/lib/utils';
 
 const SERVICES = [
   {
-    icon: Globe,
-    title: 'Sites Web Prestigieux',
-    desc: 'Vitrines et e-commerce qui convertissent.',
-    extendedDesc: 'Nous concevons des sites web sur-mesure qui allient esthétique premium et performance technique. Chaque projet est unique : identité de marque forte, parcours utilisateur optimisé et technologies modernes pour une expérience mémorable.',
-    bullets: ['Sites vitrines & e-commerce', 'Design sur-mesure & identité visuelle', 'Performance & optimisations techniques', 'Formation & suivi post-mise en ligne'],
+    id: '01',
+    title: 'Création de Sites Web',
+    desc: "Un design époustouflant couplé à une vitesse fulgurante. Nous concevons des vitrines et e-commerces pensés pour asseoir votre autorité.",
+    tags: ['UI/UX Design', 'Vitrine', 'E-commerce'],
+    bgColor: 'bg-white',
+    textColor: 'text-[#001F3F]',
+    visual: (
+      <div className="w-full h-full relative flex items-center justify-center bg-[#F8FAFC]">
+        <div className="w-[80%] h-[70%] bg-white rounded-xl shadow-2xl border border-gray-100 flex flex-col overflow-hidden relative transform -rotate-2 hover:rotate-0 transition-transform duration-700">
+          <div className="h-6 md:h-8 bg-gray-50 border-b border-gray-100 flex items-center px-3 gap-1.5">
+            <div className="w-2 h-2 rounded-full bg-red-400" />
+            <div className="w-2 h-2 rounded-full bg-amber-400" />
+            <div className="w-2 h-2 rounded-full bg-green-400" />
+          </div>
+          <div className="p-4 flex-1 flex flex-col gap-3">
+            <div className="w-full h-24 md:h-32 bg-gray-100 rounded-lg animate-pulse-slow" />
+            <div className="flex gap-3">
+              <div className="w-1/2 h-16 bg-[#001F3F]/5 rounded-lg" />
+              <div className="w-1/2 h-16 bg-[#FF4500]/10 rounded-lg" />
+            </div>
+          </div>
+        </div>
+      </div>
+    ),
   },
   {
-    icon: MapPin,
+    id: '02',
+    title: 'Ingénierie Applicative',
+    desc: 'Développement de logiciels métiers et Web Apps sur-mesure pour automatiser vos processus complexes et disrupter votre industrie.',
+    tags: ['React / Next.js', 'Logiciel', 'Automatisation'],
+    bgColor: 'bg-[#E2E8F0]',
+    textColor: 'text-[#001F3F]',
+    visual: (
+      <div className="w-full h-full relative flex items-center justify-center bg-[#CBD5E1] overflow-hidden">
+        <div className="relative w-full h-full flex items-center justify-center">
+          <div className="absolute w-[120%] h-[120%] font-mono text-[8px] md:text-xs text-[#001F3F]/10 opacity-50 break-all leading-tight">
+            {`function scale(biz){ return biz.revenue * 10; } `.repeat(50)}
+          </div>
+          <div className="relative z-10 grid grid-cols-3 gap-2 md:gap-4 items-end h-[60%]">
+            <div className="w-10 md:w-16 bg-[#001F3F] rounded-t-lg animate-bar-grow" style={{ height: '40%' }} />
+            <div
+              className="w-10 md:w-16 bg-[#FF4500] rounded-t-lg animate-bar-grow shadow-[0_0_20px_rgba(255,69,0,0.5)]"
+              style={{ height: '90%', animationDelay: '0.2s' as unknown as string }}
+            />
+            <div
+              className="w-10 md:w-16 bg-white rounded-t-lg animate-bar-grow"
+              style={{ height: '60%', animationDelay: '0.4s' as unknown as string }}
+            />
+          </div>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: '03',
     title: 'Visibilité Locale',
-    desc: "Fiche Google pour capter 100% de votre zone.",
-    extendedDesc: "Votre Fiche Google Business Profile est le premier point de contact avec vos clients locaux. Nous l'optimisons pour qu'elle apparaisse en tête des recherches de votre secteur et convertisse en appels et visites.",
-    bullets: ['Optimisation complète Fiche Google', 'Photos professionnelles & contenu', 'Avis clients & réputation', 'Résultats mesurables sur votre zone'],
+    desc: 'Dominez votre zone de chalandise. Nous optimisons votre présence sur Google Maps pour que vous soyez le choix évident de proximité.',
+    tags: ['Google Maps', 'Trafic', 'Réputation'],
+    bgColor: 'bg-[#001F3F]',
+    textColor: 'text-white',
+    visual: (
+      <div className="w-full h-full relative flex items-center justify-center bg-[#001428] overflow-hidden">
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="absolute w-[40%] aspect-square border border-[#FF4500]/50 rounded-full animate-ping-slow" />
+          <div
+            className="absolute w-[70%] aspect-square border border-[#FF4500]/30 rounded-full animate-ping-slow"
+            style={{ animationDelay: '1s' as unknown as string }}
+          />
+          <div
+            className="absolute w-[100%] aspect-square border border-[#FF4500]/10 rounded-full animate-ping-slow"
+            style={{ animationDelay: '2s' as unknown as string }}
+          />
+        </div>
+        <div className="relative z-10 w-16 h-16 md:w-20 md:h-20 bg-[#FF4500] rounded-full flex items-center justify-center shadow-[0_0_40px_rgba(255,69,0,0.6)]">
+          <div className="w-6 h-6 md:w-8 md:h-8 bg-white rounded-full animate-pulse" />
+        </div>
+      </div>
+    ),
   },
   {
-    icon: TrendingUp,
+    id: '04',
     title: 'Acquisition & SEO',
-    desc: 'Référencement chirurgical pour écraser la concurrence.',
-    extendedDesc: 'Le SEO est un investissement long terme qui paie. Nous mettons en place des stratégies de référencement naturelles, techniques et contentuelles pour positionner votre site devant vos concurrents sur Google.',
-    bullets: ['Audit SEO & stratégie sur-mesure', 'Optimisation technique & contenu', 'Netlinking & autorité de domaine', 'Suivi & reporting des positions'],
-  },
-  {
-    icon: Code2,
-    title: 'Logiciel Sur-Mesure',
-    desc: "Apps web et mobiles pour automatiser votre métier.",
-    extendedDesc: "Des outils digitaux pensés pour votre métier : applications web, interfaces d'administration, automatisations. Nous développons des solutions sur-mesure qui simplifient vos process et augmentent votre productivité.",
-    bullets: ['Apps web & mobiles sur-mesure', 'Automatisation de process', 'Interfaces d\'administration', 'Intégrations & API'],
-  },
-  {
-    icon: Sparkles,
-    title: 'Conseil & Stratégie',
-    desc: 'Votre département digital externalisé.',
-    extendedDesc: "L'ingénierie n'est que la face visible. Conseil, stratégie de marque, analyse de data et suivi ROIste : nous vous accompagnons à chaque étape de votre croissance digitale, bien au-delà de la technique.",
-    bullets: ['Stratégie digitale & positionnement', 'Analytics & suivi de performance', 'Conseil en transformation digitale', 'Accompagnement opérationnel'],
+    desc: "Positionnement stratégique et pérenne sur les moteurs de recherche. Ne cherchez plus vos clients, faites en sorte qu'ils vous trouvent.",
+    tags: ['Ranking', 'Mots-clés', 'Conversion'],
+    bgColor: 'bg-[#FF4500]',
+    textColor: 'text-white',
+    visual: (
+      <div className="w-full h-full relative flex items-center justify-center bg-[#E63E00] overflow-hidden">
+        <div className="absolute inset-0 grid grid-cols-6 grid-rows-6 opacity-20">
+          {Array.from({ length: 36 }).map((_, i) => (
+            <ArrowUpRightIcon key={i} />
+          ))}
+        </div>
+        <div className="relative z-10 bg-[#001F3F] p-6 md:p-10 rounded-3xl transform rotate-3 shadow-2xl">
+          <TrendingUp className="w-16 h-16 md:w-24 md:h-24 text-[#FF4500]" />
+        </div>
+      </div>
+    ),
   },
 ] as const;
 
-type ServiceCardStackItem = CardStackItem & {
-  icon: LucideIcon;
-  extendedDesc: string;
-  bullets: readonly string[];
-  gradient: string;
-  serviceIndex: number;
-};
+function ArrowUpRightIcon() {
+  return (
+    <div className="flex items-center justify-center">
+      <TrendingUp className="w-4 h-4 text-[#001F3F]" />
+    </div>
+  );
+}
 
 export function ServicesSection() {
-  const [openModalIndex, setOpenModalIndex] = useState<number | null>(null);
-
-  const cardItems: ServiceCardStackItem[] = SERVICES.map((srv, i) => ({
-    id: i + 1,
-    title: srv.title,
-    description: srv.desc,
-    serviceIndex: i,
-    icon: srv.icon,
-    extendedDesc: srv.extendedDesc,
-    bullets: srv.bullets,
-    gradient: SERVICE_GRADIENTS[i % SERVICE_GRADIENTS.length]!,
-  }));
-
-  const renderServiceCard = (item: ServiceCardStackItem, state: { active: boolean }) => {
-    const Icon = item.icon;
-    return (
-      <div className="relative h-full w-full overflow-hidden group">
-        <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient}`} />
-        <CardBackgroundPattern serviceIndex={item.serviceIndex} />
-        <div className="absolute top-0 right-0 w-32 h-32 -translate-y-1/2 translate-x-1/2 rounded-full bg-white/5 blur-2xl" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-
-        <div className="relative z-10 flex h-full flex-col p-6">
-          <div className="w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-            <Icon className="w-7 h-7 text-cyan-300" aria-hidden />
-          </div>
-          <h3 className="text-xl font-black text-white tracking-tight mb-2">{item.title}</h3>
-          <p className="text-sm text-white/80 line-clamp-2 flex-1">{item.description}</p>
-
-          {state.active && (
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                setOpenModalIndex(item.serviceIndex);
-              }}
-              className="mt-4 flex items-center gap-2 text-cyan-400 font-bold text-sm hover:text-cyan-300 transition-colors w-fit focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent rounded"
-            >
-              En savoir plus <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-            </button>
-          )}
-        </div>
-      </div>
-    );
-  };
-
   return (
-    <section id="services" className="py-24 md:py-40 px-4 sm:px-6 relative z-10" aria-labelledby="services-title">
-      <div className="container mx-auto max-w-6xl">
-        <Reveal className="text-center mb-16 md:mb-24">
-          <h2 id="services-title" className="text-4xl md:text-6xl font-black mb-6 tracking-tight">
-            Notre Ingénierie.
+    <section id="services" className="py-24 md:py-40 bg-[#F8FAFC] relative" aria-labelledby="services-title">
+      <div className="container mx-auto px-5 lg:px-8 max-w-screen-xl">
+        <FadeUp className="mb-16 md:mb-32">
+          <div className="flex items-center gap-4 mb-6">
+            <div className="w-8 h-8 rounded-full bg-[#FF4500] flex items-center justify-center">
+              <div className="w-2 h-2 bg-white rounded-full" />
+            </div>
+            <span className="text-[#001F3F] font-bold tracking-[0.15em] uppercase text-sm">
+              Pôles d&apos;Excellence
+            </span>
+          </div>
+          <h2
+            id="services-title"
+            className="text-[10vw] sm:text-[5rem] font-black tracking-tighter text-[#001F3F] leading-[1]"
+          >
+            L&apos;expertise pure.
           </h2>
-          <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto">
-            L&apos;alliance parfaite entre design époustouflant et performance technique absolue.
-          </p>
-        </Reveal>
+        </FadeUp>
 
-        <Reveal delay={100}>
-          <CardStack<ServiceCardStackItem>
-            items={cardItems}
-            initialIndex={0}
-            maxVisible={5}
-            cardWidth={380}
-            cardHeight={260}
-            overlap={0.5}
-            spreadDeg={42}
-            activeScale={1.04}
-            inactiveScale={0.92}
-            autoAdvance
-            intervalMs={3500}
-            pauseOnHover
-            showDots
-            renderCard={renderServiceCard}
-          />
-        </Reveal>
+        <div className="relative flex flex-col gap-6 md:gap-12 pb-24">
+          {SERVICES.map((srv, idx) => (
+            <div
+              key={srv.id}
+              className={cn(
+                'sticky w-full rounded-[2rem] md:rounded-[3rem] overflow-hidden border shadow-2xl flex flex-col lg:flex-row transition-all duration-500 min-h-[60vh] lg:min-h-[500px]',
+                srv.bgColor,
+                srv.id === '01' ? 'border-gray-200' : 'border-white/10'
+              )}
+              style={{ top: `calc(12vh + ${idx * 24}px)` }}
+            >
+              <div className="w-full lg:w-1/2 p-8 md:p-16 flex flex-col">
+                <span className={cn('text-5xl font-black mb-8 opacity-20', srv.textColor)}>{srv.id}</span>
+                <h3
+                  className={cn(
+                    'text-4xl md:text-5xl font-black tracking-tighter mb-6 leading-[1.1]',
+                    srv.textColor
+                  )}
+                >
+                  {srv.title}
+                </h3>
+                <p
+                  className={cn(
+                    'text-lg md:text-xl font-medium leading-relaxed mb-10',
+                    srv.textColor,
+                    srv.id === '03' || srv.id === '04' ? 'opacity-90' : 'opacity-70'
+                  )}
+                >
+                  {srv.desc}
+                </p>
+                <div className="flex flex-wrap gap-3 mt-auto">
+                  {srv.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className={cn(
+                        'px-4 py-2 rounded-full text-xs md:text-sm font-bold border',
+                        srv.id === '03' || srv.id === '04'
+                          ? 'border-white/30 text-white'
+                          : 'border-[#001F3F]/10 text-[#001F3F]'
+                      )}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
 
-        {openModalIndex !== null && (
-          <ServiceModal
-            isOpen={true}
-            onClose={() => setOpenModalIndex(null)}
-            icon={SERVICES[openModalIndex]!.icon}
-            title={SERVICES[openModalIndex]!.title}
-            desc={SERVICES[openModalIndex]!.extendedDesc}
-            bullets={SERVICES[openModalIndex]!.bullets}
-          />
-        )}
-
+              <div className="w-full lg:w-1/2 h-[40vh] lg:h-auto border-t lg:border-t-0 lg:border-l border-black/5">
+                {srv.visual}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
 }
+

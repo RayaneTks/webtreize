@@ -12,20 +12,34 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="py-12 border-t border-white/10 bg-[#030303] text-center text-gray-500 relative z-10 pb-28 md:pb-12">
-      <div className="container mx-auto px-6 flex flex-col items-center justify-center gap-6">
-        <LogoWebTreize className="w-11 h-11 opacity-50" />
-        <nav className="flex flex-wrap justify-center gap-6 text-sm font-medium" aria-label="Pied de page">
+    <footer className="pt-24 pb-32 md:pb-24 bg-white text-center relative z-10">
+      <div className="container mx-auto px-6 flex flex-col items-center gap-12">
+        <div className="w-full h-px bg-gray-200 mb-8" />
+
+        <div className="flex flex-col items-center gap-4">
+          <LogoWebTreize className="w-10 h-10 opacity-70" />
+          <div className="text-[20vw] md:text-[15rem] font-black tracking-tighter text-[#001F3F]/5 leading-none select-none">
+            W13
+          </div>
+        </div>
+
+        <nav className="flex flex-wrap justify-center gap-6 md:gap-12 text-sm font-bold text-[#001F3F]/60" aria-label="Pied de page">
           {FOOTER_LINKS.map(({ label, href }) => (
-            <Link key={label} href={href} className="text-gray-400 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-[#030303] rounded-sm">
+            <Link
+              key={label}
+              href={href}
+              className="hover:text-[#FF4500] transition-colors uppercase tracking-widest focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF4500] focus-visible:ring-offset-2 focus-visible:ring-offset-white rounded-sm"
+            >
               {label}
             </Link>
           ))}
         </nav>
-        <p className="text-xs text-gray-400 font-semibold tracking-wider">
-          © {year} WEBTREIZE. TOUS DROITS RÉSERVÉS.
+
+        <p className="text-xs text-[#001F3F]/40 font-bold tracking-[0.2em] uppercase">
+          © {year} WEBTREIZE. Conçu à Marseille, déployé partout.
         </p>
       </div>
     </footer>
   );
 }
+

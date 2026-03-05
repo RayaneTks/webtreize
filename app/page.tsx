@@ -3,13 +3,13 @@
 import { useState, useEffect } from 'react';
 import { Navbar } from '@/components/Navbar';
 import { HeroSection } from '@/components/sections/HeroSection';
-import { MarqueeSection } from '@/components/sections/MarqueeSection';
 import { ServicesSection } from '@/components/sections/ServicesSection';
 import { VisionFaqSection } from '@/components/sections/VisionFaqSection';
 import { ContactSection } from '@/components/sections/ContactSection';
 import { Footer } from '@/components/Footer';
 import { MobileFab } from '@/components/MobileFab';
 import { NAVBAR_OFFSET } from '@/hooks/useSmoothScroll';
+import { NoiseOverlay } from '@/components/background/NoiseOverlay';
 
 export default function HomePage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -29,11 +29,11 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#030303] text-white overflow-x-hidden pb-24 md:pb-0 selection:bg-blue-500/30">
+    <div className="min-h-screen bg-white text-[#001F3F] overflow-x-hidden pb-24 md:pb-0 selection:bg-[#FF4500]/20">
+      <NoiseOverlay />
       <Navbar mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
       <main className="relative z-10">
         <HeroSection />
-        <MarqueeSection />
         <ServicesSection />
         <VisionFaqSection />
         <ContactSection />

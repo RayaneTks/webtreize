@@ -1,88 +1,89 @@
 'use client';
 
 import React from 'react';
-import { Mail, Smartphone, ArrowRight } from 'lucide-react';
-import { Reveal } from '@/components/ui/Reveal';
-import { AccelerateBackground } from '@/components/background/AccelerateBackground';
+import { Mail, Smartphone, ArrowRight, ArrowUpRight } from 'lucide-react';
+import { FadeUp } from '@/components/ui/FadeUp';
 
 const SNAPCHAT_URL = 'https://snapchat.com/add/webtreize';
 
 export function ContactSection() {
   return (
-    <section id="contact" className="py-24 md:py-40 px-4 sm:px-6 relative border-t border-white/5" aria-labelledby="contact-title">
-      <AccelerateBackground />
-
-      <div className="container mx-auto max-w-5xl relative z-10">
-        <Reveal className="text-center mb-16 md:mb-24">
-          <h2 id="contact-title" className="text-5xl md:text-7xl font-black mb-6 tracking-tight">
-            Prêt à <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-600 bg-[length:200%_auto] animate-gradient">accélérer</span> ?
-          </h2>
-          <p className="text-lg md:text-2xl text-gray-400 max-w-2xl mx-auto font-light">
-            Zéro friction. Choisissez le canal qui correspond à votre rythme.
-          </p>
-        </Reveal>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-          <Reveal delay={100} direction="up" className="h-full">
-            <a
-              href={SNAPCHAT_URL}
-              target="_blank"
-              rel="noreferrer noopener"
-              className="group block relative h-full p-1 rounded-[2rem] bg-gradient-to-br from-[#FFFC00] to-yellow-500 overflow-hidden transition-transform duration-500 ease-out active:scale-[0.98] shadow-[0_0_40px_rgba(255,252,0,0.15)] hover:shadow-[0_0_60px_rgba(255,252,0,0.3)]"
+    <section id="contact" className="pt-24 pb-0 bg-white relative overflow-hidden" aria-labelledby="contact-title">
+      <div className="container mx-auto px-5 lg:px-8 max-w-screen-2xl">
+        <FadeUp>
+          <div className="flex flex-col items-center text-center mb-16 md:mb-32">
+            <h2
+              id="contact-title"
+              className="text-[15vw] lg:text-[10rem] font-black text-[#001F3F] uppercase tracking-tighter leading-[0.85] mb-6"
             >
-              <div className="bg-[#0a0a0a] rounded-[1.8rem] h-full p-8 md:p-10 flex flex-col relative overflow-hidden transition-colors duration-500 group-hover:bg-[#111]">
-                <div className="w-16 h-16 rounded-2xl bg-[#FFFC00] flex items-center justify-center mb-8 shadow-[0_0_30px_rgba(255,252,0,0.4)]">
-                  <Smartphone className="w-8 h-8 text-black" aria-hidden />
+              Parlons <br /> <span className="text-[#FF4500]">Projet.</span>
+            </h2>
+            <p className="text-xl md:text-3xl text-[#001F3F]/60 font-medium max-w-2xl">
+              Vous avez l&apos;ambition. Nous avons l&apos;ingénierie.
+            </p>
+          </div>
+        </FadeUp>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8">
+          <FadeUp
+            delay={100}
+            className="bg-[#FFFC00] rounded-[2rem] md:rounded-[3rem] p-8 md:p-16 relative group h-full shadow-[0_20px_50px_rgba(255,252,0,0.15)] overflow-hidden"
+          >
+            <a href={SNAPCHAT_URL} target="_blank" rel="noreferrer" className="flex flex-col w-full h-full cursor-pointer relative z-10">
+              <div className="flex justify-between items-center mb-16 md:mb-32">
+                <span className="px-4 py-2 bg-black text-[#FFFC00] rounded-full text-xs md:text-sm font-bold uppercase tracking-widest">
+                  Fast Track
+                </span>
+                <div className="w-12 h-12 md:w-16 md:h-16 bg-black rounded-full flex items-center justify-center">
+                  <Smartphone className="w-6 h-6 md:w-8 text-[#FFFC00]" />
                 </div>
-                <h3 className="text-3xl font-black mb-3 text-white tracking-tight">Snapchat</h3>
-                <p className="text-gray-400 font-medium mb-8 text-lg leading-relaxed">
-                  Le canal le plus direct. Questions rapides, notes vocales, ou simple prise de contact.
+              </div>
+              <div className="mt-auto">
+                <p className="text-3xl md:text-6xl font-black text-black leading-[1.1] mb-8">
+                  Le circuit court. <br /> Zéro friction.
                 </p>
-                <div className="mt-auto flex items-center font-bold text-[#FFFC00] text-lg">
-                  Ajouter @WebTreize <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform duration-300" aria-hidden />
+                <div className="inline-flex items-center gap-4 bg-black text-white font-bold text-lg md:text-xl px-6 py-4 md:px-8 md:py-5 rounded-full group-hover:bg-[#001F3F] transition-colors duration-300">
+                  Ajouter @WebTreize <ArrowUpRight className="w-6 h-6" />
                 </div>
               </div>
             </a>
-          </Reveal>
+          </FadeUp>
 
-          <Reveal delay={200} direction="up" className="h-full">
-            <div className="group relative h-full p-1 rounded-[2rem] bg-gradient-to-br from-blue-500 to-cyan-400 overflow-hidden transition-transform duration-500 ease-out">
-              <div className="bg-[#0a0a0a] rounded-[1.8rem] h-full p-8 md:p-10 flex flex-col relative overflow-hidden">
-                <div className="w-16 h-16 rounded-2xl bg-blue-500 flex items-center justify-center mb-8 shadow-[0_0_30px_rgba(59,130,246,0.4)]">
-                  <Mail className="w-8 h-8 text-white" aria-hidden />
-                </div>
-                <h3 className="text-3xl font-black mb-3 text-white tracking-tight">Email Pro</h3>
-                <p className="text-gray-400 font-medium mb-8 text-lg leading-relaxed">
-                  Privilégié pour l&apos;envoi de cahier des charges, les devis et les échanges structurés.
-                </p>
-                <form
-                  className="mt-auto space-y-4"
-                  onSubmit={(e) => e.preventDefault()}
-                  aria-label="Formulaire de contact par email"
-                >
-                  <label htmlFor="contact-email" className="sr-only">
-                    Votre email pour être recontacté
-                  </label>
+          <FadeUp
+            delay={200}
+            className="bg-[#F0F4F8] rounded-[2rem] md:rounded-[3rem] p-8 md:p-16 flex flex-col justify-between h-full border border-gray-200"
+          >
+            <div className="flex justify-between items-center mb-16 md:mb-32">
+              <span className="px-4 py-2 bg-white text-[#001F3F] border border-gray-200 rounded-full text-xs md:text-sm font-bold uppercase tracking-widest">
+                Le Studio
+              </span>
+              <Mail className="w-12 h-12 text-[#001F3F]/30" />
+            </div>
+            <div className="mt-auto">
+              <p className="text-3xl md:text-5xl font-black text-[#001F3F] leading-[1.1] mb-12">
+                Envoyez un brief, recevez un devis sous 24h.
+              </p>
+              <form className="relative w-full" onSubmit={(e) => e.preventDefault()} aria-label="Formulaire de contact par email">
+                <div className="relative flex items-center">
                   <input
-                    id="contact-email"
                     type="email"
-                    name="email"
-                    placeholder="Votre email..."
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder:text-gray-500 focus:outline-none focus:border-blue-500 focus:bg-white/10 transition-all text-base"
+                    placeholder="hello@votre-entreprise.com"
+                    className="w-full bg-white rounded-full py-5 px-6 md:px-8 text-lg text-[#001F3F] placeholder:text-[#001F3F]/40 focus:outline-none focus:ring-2 focus:ring-[#FF4500] shadow-sm transition-all pr-16"
                     required
                   />
                   <button
                     type="submit"
-                    className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-2xl py-4 active:scale-[0.98] transition-all text-base flex justify-center items-center gap-2"
+                    className="absolute right-2 w-12 h-12 bg-[#001F3F] text-white rounded-full flex items-center justify-center hover:bg-[#FF4500] transition-colors"
                   >
-                    Envoyer <ArrowRight className="w-4 h-4" aria-hidden />
+                    <ArrowRight className="w-5 h-5" />
                   </button>
-                </form>
-              </div>
+                </div>
+              </form>
             </div>
-          </Reveal>
+          </FadeUp>
         </div>
       </div>
     </section>
   );
 }
+

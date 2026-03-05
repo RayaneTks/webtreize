@@ -5,7 +5,7 @@ import { useCallback } from 'react';
 const NAVBAR_OFFSET = 80;
 
 export function useSmoothScroll() {
-  return useCallback((e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  return useCallback((e: React.MouseEvent, href: string) => {
     if (!href.startsWith('#')) return;
 
     e.preventDefault();

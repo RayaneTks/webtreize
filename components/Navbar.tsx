@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, ArrowRight, Smartphone, MessageCircle } from 'lucide-react';
+import { Menu, X, Smartphone } from 'lucide-react';
 import { LogoWebTreize } from '@/components/ui/LogoWebTreize';
 import { useSmoothScroll } from '@/hooks/useSmoothScroll';
 import { cn } from '@/lib/utils';
@@ -39,16 +39,16 @@ export function Navbar({ mobileMenuOpen: controlledOpen, setMobileMenuOpen: setC
     document.body.style.overflow = mobileMenuOpen ? 'hidden' : '';
   }, [mobileMenuOpen]);
 
-  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    if (pathname === '/') {
-      scroll(e, href);
-    }
+  const handleLogoClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     setMobileMenuOpen(false);
   };
 
-  const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  const handleNavClick = (e: React.MouseEvent, href: string) => {
+    if (pathname === '/') {
+      scroll(e, href);
+    }
     setMobileMenuOpen(false);
   };
 
@@ -56,130 +56,112 @@ export function Navbar({ mobileMenuOpen: controlledOpen, setMobileMenuOpen: setC
     <header>
       <nav
         className={cn(
-          'fixed w-full z-50 transition-all duration-500',
+          'fixed w-full z-40 transition-all duration-500',
           isScrolled
-            ? 'py-3 bg-black/60 backdrop-blur-2xl border-b border-white/5 shadow-[0_4px_30px_rgba(0,0,0,0.5)]'
-            : 'py-5 md:py-8 bg-transparent'
+            ? 'py-4 bg-white/80 backdrop-blur-xl border-b border-[#001F3F]/5 shadow-[0_10px_30px_rgba(15,23,42,0.08)]'
+            : 'py-6 bg-transparent'
         )}
         aria-label="Navigation principale"
       >
-        <div className="container mx-auto px-4 sm:px-8 max-w-7xl flex items-center justify-between">
+        <div className="container mx-auto px-5 lg:px-8 max-w-screen-2xl flex items-center justify-between">
           <Link
             href="#"
-            className="flex items-center gap-3 z-50 group"
             onClick={handleLogoClick}
-            aria-label="WebTreize - Retour accueil"
+            className="flex items-center gap-2 z-50"
+            aria-label="WebTreize - Retour en haut de page"
           >
-            <div className="relative">
-              <div className="absolute inset-0 bg-blue-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" aria-hidden />
-              <LogoWebTreize decorative className="w-11 h-11 md:w-14 md:h-14 relative z-10 transition-transform duration-500 ease-out group-hover:scale-105 group-active:scale-95" />
+            <div className="flex items-center gap-2">
+              <LogoWebTreize decorative className="w-9 h-9 md:w-11 md:h-11" />
+              <span className="text-xl md:text-2xl font-black tracking-tighter text-[#001F3F]">
+                WebTreize
+              </span>
             </div>
-            <span className="text-xl md:text-2xl font-black tracking-tight text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-blue-200 transition-all duration-300">
-              WebTreize
-            </span>
           </Link>
 
-          <div className="hidden md:flex items-center gap-1 bg-white/[0.03] border border-white/5 p-1.5 rounded-full backdrop-blur-md">
+          <div className="hidden lg:flex items-center gap-10">
             {NAV_LINKS.map(({ label, href }) => (
               <Link
                 key={label}
                 href={pathname === '/' ? href : `/#${href.slice(1)}`}
-                onClick={(e) => pathname === '/' && scroll(e, href)}
-                className="px-5 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+                onClick={(e) => handleNavClick(e, href)}
+                className="text-sm font-bold text-[#001F3F] hover:text-[#FF4500] transition-colors uppercase tracking-widest relative group overflow-hidden py-2"
               >
                 {label}
+                <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#FF4500] -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out" />
               </Link>
             ))}
           </div>
 
-          <div className="hidden md:block">
+          <div className="hidden lg:block">
             <Link
               href={pathname === '/' ? '#contact' : '/#contact'}
-              onClick={(e) => pathname === '/' && scroll(e, '#contact')}
-              className="group relative px-6 py-2.5 rounded-full bg-white text-black text-sm font-bold overflow-hidden transition-transform active:scale-95 block"
+              onClick={(e) => {
+                if (pathname === '/') {
+                  scroll(e, '#contact');
+                }
+              }}
+              className="group flex items-center gap-3 px-8 py-3.5 rounded-full bg-[#001F3F] text-white text-sm font-bold shadow-[0_10px_20px_rgba(0,31,63,0.15)] hover:shadow-[0_15px_30px_rgba(0,31,63,0.25)] hover:-translate-y-0.5 active:scale-95 transition-all duration-300"
             >
-              <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-blue-100 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" aria-hidden />
-              <span className="relative flex items-center gap-2">
-                Démarrer un projet <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" aria-hidden />
-              </span>
+              Parlons Projet
+              <div className="w-2 h-2 rounded-full bg-[#FF4500] group-hover:scale-[2] transition-transform duration-300" />
             </Link>
           </div>
 
           <button
             type="button"
-            className="md:hidden relative z-50 p-2 text-white active:scale-90 transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-lg"
+            className="lg:hidden relative z-50 p-2 text-[#001F3F] active:scale-90 transition-transform"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-expanded={mobileMenuOpen}
-            aria-controls="mobile-menu"
             aria-label={mobileMenuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
+            aria-expanded={mobileMenuOpen}
           >
-            {mobileMenuOpen ? <X className="w-7 h-7" aria-hidden /> : <Menu className="w-7 h-7" aria-hidden />}
+            {mobileMenuOpen ? <X className="w-8 h-8 text-white" /> : <Menu className="w-8 h-8" />}
           </button>
         </div>
       </nav>
 
+      {/* Menu mobile plein écran typographique */}
       <div
-        id="mobile-menu"
         className={cn(
-          'fixed inset-0 z-40 bg-[#030303]/90 backdrop-blur-3xl transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col pt-28 px-6 overflow-y-auto',
-          mobileMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-full pointer-events-none'
+          'fixed inset-0 z-30 bg-[#001F3F] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col pt-32 px-6',
+          mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         )}
-        role="dialog"
-        aria-modal="true"
-        aria-label="Menu mobile"
-        hidden={!mobileMenuOpen}
       >
-        <div className="flex flex-col gap-2 flex-shrink-0">
+        <div className="flex flex-col gap-4 mt-8">
           {NAV_LINKS.map(({ label, href }, i) => (
-            <Link
-              key={label}
-              href={pathname === '/' ? href : `/#${href.slice(1)}`}
-              onClick={(e) => {
-                if (pathname === '/') scroll(e, href);
-                setMobileMenuOpen(false);
-              }}
-              className="text-4xl font-black text-gray-400 hover:text-white transition-colors py-4 border-b border-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-inset rounded"
-              style={{
-                transform: mobileMenuOpen ? 'translateY(0)' : 'translateY(20px)',
-                opacity: mobileMenuOpen ? 1 : 0,
-                transition: `transform 0.5s ease-out ${mobileMenuOpen ? i * 100 : 0}ms, opacity 0.5s ease-out ${mobileMenuOpen ? i * 100 : 0}ms`,
-              }}
-            >
-              {label}
-            </Link>
+            <div key={label} className="overflow-hidden">
+              <Link
+                href={pathname === '/' ? href : `/#${href.slice(1)}`}
+                onClick={(e) => handleNavClick(e, href)}
+                className="text-[12vw] font-black text-white hover:text-[#FF4500] transition-colors block leading-none"
+                style={{
+                  transform: mobileMenuOpen ? 'translateY(0)' : 'translateY(100%)',
+                  transition: `transform 0.6s cubic-bezier(0.16,1,0.3,1) ${i * 0.1}s`,
+                }}
+              >
+                {label}.
+              </Link>
+            </div>
           ))}
         </div>
+
         <div
-          className="mt-auto flex-shrink-0 w-full pb-28 space-y-4"
+          className="mt-auto pb-12 w-full flex flex-col gap-4"
           style={{
-            transform: mobileMenuOpen ? 'translateY(0)' : 'translateY(20px)',
             opacity: mobileMenuOpen ? 1 : 0,
-            transition: 'transform 0.5s ease-out 300ms, opacity 0.5s ease-out 300ms',
+            transition: 'opacity 0.5s ease-out 0.4s',
           }}
         >
-          <p className="text-gray-500 mb-4 text-sm font-semibold uppercase tracking-widest">
-            Une question rapide ?
-          </p>
           <a
             href={SNAPCHAT_URL}
             target="_blank"
-            rel="noreferrer noopener"
-            className="flex items-center justify-center gap-3 w-full py-5 rounded-2xl bg-[#FFFC00] text-black font-bold text-lg active:scale-95 transition-transform min-h-[56px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#030303]"
+            rel="noreferrer"
+            className="flex items-center justify-center gap-3 w-full py-5 rounded-2xl bg-[#FFFC00] text-black font-black text-lg active:scale-95 transition-transform"
           >
-            <Smartphone className="w-6 h-6" aria-hidden /> Contacter sur Snapchat
+            <Smartphone className="w-6 h-6" /> Snapchat W13
           </a>
-          <Link
-            href={pathname === '/' ? '#contact' : '/#contact'}
-            onClick={(e) => {
-              if (pathname === '/') scroll(e, '#contact');
-              setMobileMenuOpen(false);
-            }}
-            className="flex items-center justify-center gap-3 w-full py-5 rounded-2xl bg-white text-black font-black active:scale-95 transition-transform border border-white/20 min-h-[56px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#030303]"
-          >
-            <MessageCircle className="w-6 h-6" aria-hidden /> Obtenir un Devis
-          </Link>
         </div>
       </div>
     </header>
   );
 }
+
