@@ -48,9 +48,11 @@ export function HeroSection() {
               Votre <br />
               Croissance <br />
               Digitale <br />
-              <span className="text-transparent bg-clip-text stroke-text-navy relative inline-block">
+              <span className="relative inline-block pb-1">
+                <span className="text-transparent bg-clip-text stroke-text-navy">
                 Simplifiée.
-                <div className="absolute bottom-[12%] left-0 w-full h-[8px] md:h-[16px] bg-[#FF4500] -z-10" />
+                </span>
+                <div className="absolute bottom-[6%] left-0 w-full h-[6px] md:h-[12px] bg-[#FF4500] -z-10" />
               </span>
             </h1>
           </FadeUp>

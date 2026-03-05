@@ -16,12 +16,7 @@ export function Footer() {
       <div className="container mx-auto px-6 flex flex-col items-center gap-12">
         <div className="w-full h-px bg-gray-200 mb-8" />
 
-        <div className="flex flex-col items-center gap-4">
-          <LogoWebTreize className="w-10 h-10 opacity-70" />
-          <div className="text-[20vw] md:text-[15rem] font-black tracking-tighter text-[#001F3F]/5 leading-none select-none">
-            W13
-          </div>
-        </div>
+        <LogoWebTreize className="w-10 h-10 opacity-70" />
 
         <nav className="flex flex-wrap justify-center gap-6 md:gap-12 text-sm font-bold text-[#001F3F]/60" aria-label="Pied de page">
           {FOOTER_LINKS.map(({ label, href }) => (
