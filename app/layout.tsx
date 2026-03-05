@@ -119,7 +119,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="fr" className="dark">
       <body className={`${montserrat.variable} ${openSans.variable} min-h-screen font-sans`}>
-        <div id="app-root" className="relative min-h-screen min-w-0 overflow-x-hidden">
+        <div id="app-root" className="relative min-h-screen min-w-0">
           {children}
         </div>
         <script

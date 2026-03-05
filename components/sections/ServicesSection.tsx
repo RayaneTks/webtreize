@@ -137,57 +137,58 @@ export function ServicesSection() {
           </h2>
         </FadeUp>
 
-        <div className="relative flex flex-col gap-6 md:gap-12 pb-24">
+        {/* Conteneur simple (pas de flex) pour ne pas perturber le sticky */}
+        <div className="relative pb-24 lg:pb-48">
           {SERVICES.map((srv, idx) => (
-            <FadeUp key={srv.id} delay={80 * idx}>
-              <div
-                className={cn(
-                  'sticky w-full rounded-[2rem] md:rounded-[3rem] overflow-hidden border shadow-2xl flex flex-col lg:flex-row transition-all duration-500 min-h-[80vh] lg:min-h-[520px]',
-                  srv.bgColor,
-                  srv.id === '01' ? 'border-gray-200' : 'border-white/10'
-                )}
-                style={{ top: `calc(10vh + ${idx * 32}px)` }}
-              >
-                <div className="w-full lg:w-1/2 p-8 md:p-16 flex flex-col">
-                  <span className={cn('text-5xl font-black mb-8 opacity-20', srv.textColor)}>{srv.id}</span>
-                  <h3
+            <div
+              key={srv.id}
+              className={cn(
+                'sticky w-full rounded-[2rem] md:rounded-[3rem] overflow-hidden border shadow-2xl flex flex-col lg:flex-row transition-all duration-500 min-h-[60vh] lg:min-h-[500px]',
+                srv.bgColor,
+                srv.id === '01' ? 'border-gray-200' : 'border-white/10',
+                'mb-6 md:mb-12'
+              )}
+              style={{ top: `calc(15vh + ${idx * 40}px)`, zIndex: 10 + idx }}
+            >
+              <div className="w-full lg:w-1/2 p-8 md:p-16 flex flex-col">
+                <span className={cn('text-5xl font-black mb-8 opacity-20', srv.textColor)}>{srv.id}</span>
+                <h3
                   className={cn(
                     'text-4xl md:text-5xl font-black tracking-tighter mb-6 leading-[1.1]',
                     srv.textColor
                   )}
-                  >
-                    {srv.title}
-                  </h3>
-                  <p
+                >
+                  {srv.title}
+                </h3>
+                <p
                   className={cn(
                     'text-lg md:text-xl font-medium leading-relaxed mb-10',
                     srv.textColor,
                     srv.id === '03' || srv.id === '04' ? 'opacity-90' : 'opacity-70'
                   )}
-                  >
-                    {srv.desc}
-                  </p>
-                  <div className="flex flex-wrap gap-3 mt-auto">
-                    {srv.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className={cn(
-                          'px-4 py-2 rounded-full text-xs md:text-sm font-bold border',
-                          srv.id === '03' || srv.id === '04'
-                            ? 'bg-white text-[#001F3F] border-transparent'
-                            : 'border-[#001F3F]/20 text-[#001F3F]'
-                        )}
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-                <div className="w-full lg:w-1/2 h-[40vh] lg:h-auto border-t lg:border-t-0 lg:border-l border-black/5">
-                  {srv.visual}
+                >
+                  {srv.desc}
+                </p>
+                <div className="flex flex-wrap gap-3 mt-auto">
+                  {srv.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className={cn(
+                        'px-4 py-2 rounded-full text-xs md:text-sm font-bold border',
+                        srv.id === '03' || srv.id === '04'
+                          ? 'bg-white text-[#001F3F] border-transparent'
+                          : 'border-[#001F3F]/20 text-[#001F3F]'
+                      )}
+                    >
+                      {tag}
+                    </span>
+                  ))}
                 </div>
               </div>
-            </FadeUp>
+              <div className="w-full lg:w-1/2 h-[40vh] lg:h-auto border-t lg:border-t-0 lg:border-l border-black/5">
+                {srv.visual}
+              </div>
+            </div>
           ))}
         </div>
       </div>

@@ -25,32 +25,9 @@ export function ContactSection() {
         </FadeUp>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8">
+          {/* Bloc email en premier */}
           <FadeUp
             delay={100}
-            className="bg-[#FFFC00] rounded-[2rem] md:rounded-[3rem] p-8 md:p-16 relative group h-full shadow-[0_20px_50px_rgba(255,252,0,0.15)] overflow-hidden"
-          >
-            <a href={SNAPCHAT_URL} target="_blank" rel="noreferrer" className="flex flex-col w-full h-full cursor-pointer relative z-10">
-              <div className="flex justify-between items-center mb-16 md:mb-32">
-                <span className="px-4 py-2 bg-black text-[#FFFC00] rounded-full text-xs md:text-sm font-bold uppercase tracking-widest">
-                  Fast Track
-                </span>
-                <div className="w-12 h-12 md:w-16 md:h-16 bg-black rounded-full flex items-center justify-center">
-                  <Smartphone className="w-6 h-6 md:w-8 text-[#FFFC00]" />
-                </div>
-              </div>
-              <div className="mt-auto">
-                <p className="text-3xl md:text-6xl font-black text-black leading-[1.1] mb-8">
-                  Le circuit court. <br /> Zéro friction.
-                </p>
-                <div className="inline-flex items-center gap-4 bg-black text-white font-bold text-lg md:text-xl px-6 py-4 md:px-8 md:py-5 rounded-full group-hover:bg-[#001F3F] transition-colors duration-300">
-                  Ajouter @WebTreize <ArrowUpRight className="w-6 h-6" />
-                </div>
-              </div>
-            </a>
-          </FadeUp>
-
-          <FadeUp
-            delay={200}
             className="bg-[#F0F4F8] rounded-[2rem] md:rounded-[3rem] p-8 md:p-16 flex flex-col justify-between h-full border border-gray-200"
           >
             <div className="flex justify-between items-center mb-16 md:mb-32">
@@ -81,6 +58,48 @@ export function ContactSection() {
                 </div>
               </form>
             </div>
+          </FadeUp>
+
+          {/* Bloc Snapchat, plus épuré, en second */}
+          <FadeUp
+            delay={200}
+            className="bg-[#FFFC00] rounded-[2rem] md:rounded-[3rem] p-8 md:p-16 h-full border border-black/5 shadow-[0_16px_40px_rgba(0,0,0,0.12)]"
+          >
+            <a
+              href={SNAPCHAT_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="flex flex-col justify-between w-full h-full cursor-pointer"
+            >
+              <div className="flex items-center justify-between mb-12 md:mb-20">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 md:w-14 md:h-14 bg-black rounded-2xl flex items-center justify-center">
+                    <Smartphone className="w-6 h-6 md:w-7 md:h-7 text-[#FFFC00]" />
+                  </div>
+                  <div className="flex flex-col items-start">
+                    <span className="px-3 py-1 bg-black text-[#FFFC00] rounded-full text-[0.65rem] md:text-xs font-bold uppercase tracking-[0.18em]">
+                      Snapchat
+                    </span>
+                    <span className="mt-2 text-xs md:text-sm text-black/70">
+                      Réponse rapide, conversation directe
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-auto">
+                <p className="text-2xl md:text-4xl font-black text-black leading-[1.1] mb-4">
+                  Discuter du projet sur Snapchat.
+                </p>
+                <p className="text-base md:text-lg text-black/70 mb-8 max-w-md">
+                  Idéal si vous préférez une discussion rapide et informelle, directement depuis votre téléphone.
+                </p>
+                <div className="inline-flex items-center gap-3 bg-black text-[#FFFC00] font-semibold text-sm md:text-base px-6 py-3 md:px-7 md:py-4 rounded-full transition-colors duration-300 hover:bg-[#001F3F]">
+                  <span>Ajouter @WebTreize</span>
+                  <ArrowUpRight className="w-5 h-5" />
+                </div>
+              </div>
+            </a>
           </FadeUp>
         </div>
       </div>

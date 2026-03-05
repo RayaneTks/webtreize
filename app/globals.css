@@ -13,7 +13,7 @@ body {
   @apply antialiased;
   font-family: var(--font-open-sans), system-ui, sans-serif;
   line-height: 1.6;
-  overflow-x: hidden;
+  overflow-x: clip;
   overscroll-behavior-y: none;
 }
 

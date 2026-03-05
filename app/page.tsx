@@ -29,7 +29,7 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white text-[#001F3F] overflow-x-hidden pb-24 md:pb-0 selection:bg-[#FF4500]/20">
+    <div className="min-h-screen bg-white text-[#001F3F] pb-24 md:pb-0 selection:bg-[#FF4500]/20 overflow-x-clip">
       <NoiseOverlay />
       <Navbar mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
       <main className="relative z-10">
