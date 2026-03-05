@@ -37,6 +37,10 @@ export function Navbar({ mobileMenuOpen: controlledOpen, setMobileMenuOpen: setC
 
   useEffect(() => {
     document.body.style.overflow = mobileMenuOpen ? 'hidden' : '';
+    return () => {
+      // S'assure que le scroll est toujours rétabli quand la navbar est démontée
+      document.body.style.overflow = '';
+    };
   }, [mobileMenuOpen]);
 
   const handleLogoClick = (e: React.MouseEvent) => {
