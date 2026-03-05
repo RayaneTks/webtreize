@@ -42,7 +42,7 @@ export function MobileFab() {
       <Link
         href="#contact"
         onClick={(e) => scroll(e, '#contact')}
-        className="w-full flex items-center justify-center gap-3 bg-[#001F3F]/95 backdrop-blur-xl border border-white/10 text-white font-black py-4.5 px-6 text-sm sm:text-base rounded-2xl shadow-[0_20px_40px_rgba(0,31,63,0.4)] active:scale-95 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF4500] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+        className="w-full flex items-center justify-center gap-3 bg-[#001F3F]/95 backdrop-blur-xl border border-white/10 text-white font-black py-5 px-6 text-base sm:text-lg rounded-2xl shadow-[0_20px_40px_rgba(0,31,63,0.4)] active:scale-95 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF4500] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
       >
         <MessageCircle className="w-5 h-5 text-[#FF4500]" aria-hidden />
         Démarrer le projet
