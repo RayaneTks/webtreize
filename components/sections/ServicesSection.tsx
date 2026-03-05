@@ -174,8 +174,8 @@ export function ServicesSection() {
                       className={cn(
                         'px-4 py-2 rounded-full text-xs md:text-sm font-bold border',
                         srv.id === '03' || srv.id === '04'
-                          ? 'border-white/30 text-white'
-                          : 'border-[#001F3F]/10 text-[#001F3F]'
+                          ? 'bg-white text-[#001F3F] border-transparent'
+                          : 'border-[#001F3F]/20 text-[#001F3F]'
                       )}
                     >
                       {tag}

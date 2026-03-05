@@ -18,7 +18,7 @@ export function Footer() {
 
         <LogoWebTreize className="w-10 h-10 opacity-70" />
 
-        <nav className="flex flex-wrap justify-center gap-6 md:gap-12 text-sm font-bold text-[#001F3F]/60" aria-label="Pied de page">
+        <nav className="flex flex-wrap justify-center gap-6 md:gap-12 text-sm font-bold text-[#001F3F]" aria-label="Pied de page">
           {FOOTER_LINKS.map(({ label, href }) => (
             <Link
               key={label}

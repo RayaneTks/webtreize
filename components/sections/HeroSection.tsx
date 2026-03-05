@@ -11,7 +11,7 @@ function HeroBackground() {
     <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
       {/* Grille isométrique animée */}
       <div
-        className="absolute top-0 left-[-20%] w-[140%] h-[140%] opacity-[0.04] animate-grid-drift"
+        className="absolute top-0 left-[-20%] w-[140%] h-[140%] opacity-[0.04] md:animate-grid-drift motion-reduce:animate-none"
         style={{
           backgroundImage:
             'linear-gradient(#001F3F 2px, transparent 2px), linear-gradient(90deg, #001F3F 2px, transparent 2px)',
@@ -70,7 +70,7 @@ export function HeroSection() {
                 <Link
                   href="#contact"
                   onClick={(e) => scroll(e, '#contact')}
-                  className="w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-5 rounded-full bg-[#FF4500] text-white font-bold text-lg shadow-[0_15px_30px_rgba(255,69,0,0.2)] active:scale-95 transition-transform duration-300"
+                  className="w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-5 rounded-full bg-[#FF4500] text-[#001F3F] font-bold text-xl sm:text-2xl shadow-[0_15px_30px_rgba(255,69,0,0.2)] active:scale-95 transition-transform duration-300"
                 >
                   Démarrer un projet <ArrowUpRight className="w-5 h-5" />
                 </Link>

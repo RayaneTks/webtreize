@@ -73,6 +73,7 @@ export function ContactSection() {
                   />
                   <button
                     type="submit"
+                    aria-label="Envoyer votre email pour être recontacté"
                     className="absolute right-2 w-12 h-12 bg-[#001F3F] text-white rounded-full flex items-center justify-center hover:bg-[#FF4500] transition-colors"
                   >
                     <ArrowRight className="w-5 h-5" />
