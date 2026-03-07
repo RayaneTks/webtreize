@@ -35,7 +35,7 @@ const SERVICES = [
   {
     id: '02',
     title: 'Ingénierie Applicative',
-    desc: 'Développement de logiciels métiers et Web Apps sur-mesure pour automatiser vos processus complexes et disrupter votre industrie.',
+    desc: 'Développement de logiciels métiers et Web Apps sur-mesure pour automatiser vos processus complexes et vous donner un avantage opérationnel décisif.',
     tags: ['React / Next.js', 'Logiciel', 'Automatisation'],
     bgColor: 'bg-[#E2E8F0]',
     textColor: 'text-[#001F3F]',

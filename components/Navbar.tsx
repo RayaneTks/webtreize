@@ -139,7 +139,9 @@ export function Navbar({ mobileMenuOpen: controlledOpen, setMobileMenuOpen: setC
                 className="text-[12vw] font-black text-white hover:text-[#FF4500] transition-colors block leading-none"
                 style={{
                   transform: mobileMenuOpen ? 'translateY(0)' : 'translateY(100%)',
-                  transition: `transform 0.6s cubic-bezier(0.16,1,0.3,1) ${i * 0.1}s`,
+                  transition: `transform 0.6s cubic-bezier(0.16,1,0.3,1) ${
+                    mobileMenuOpen ? i * 0.1 : (NAV_LINKS.length - 1 - i) * 0.08
+                  }s`,
                 }}
               >
                 {label}.
@@ -152,7 +154,10 @@ export function Navbar({ mobileMenuOpen: controlledOpen, setMobileMenuOpen: setC
           className="mt-auto pb-12 w-full flex flex-col gap-4"
           style={{
             opacity: mobileMenuOpen ? 1 : 0,
-            transition: 'opacity 0.5s ease-out 0.4s',
+            transform: mobileMenuOpen ? 'translateY(0)' : 'translateY(20px)',
+            transition: mobileMenuOpen
+              ? 'opacity 0.5s ease-out 0.4s, transform 0.5s ease-out 0.4s'
+              : 'opacity 0.25s ease-in, transform 0.25s ease-in',
           }}
         >
           <a

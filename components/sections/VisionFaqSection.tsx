@@ -7,19 +7,23 @@ import { FaqItem } from '@/components/ui/FaqItem';
 const FAQ_ITEMS = [
   {
     q: "Comment se déroule la création d'un site ?",
-    a: "Audit de vos besoins, conception UX/UI sur-mesure, développement technique optimisé, configuration SEO, puis mise en ligne et formation pour votre autonomie.",
+    a: "On définit ensemble vos pages et le contenu dont vous avez besoin, puis nous avançons étape par étape : maquette, développement technique optimisé, configuration SEO, puis mise en ligne et formation pour votre autonomie. Vous validez au fur et à mesure.",
   },
   {
     q: 'Intervenez-vous uniquement à Marseille ?',
-    a: "Notre base est à Marseille, mais notre expertise est sans frontière. Nous collaborons avec des entreprises dans toute la francophonie via des process ultra-optimisés.",
+    a: "Nous sommes basés à Marseille mais accompagnons des clients partout en France. La majorité des échanges se fait à distance (visio, messagerie). Pour les entreprises locales, nous organisons des rendez-vous en présentiel.",
   },
   {
     q: 'Quels sont vos tarifs ?',
-    a: "Chaque projet est unique. Nous réalisons une proposition sur-mesure adaptée à vos enjeux de rentabilité et à vos objectifs sous 24h ouvrées.",
+    a: "Chaque projet est différent : un site vitrine, une fiche Google optimisée ou une application sur mesure n'ont pas le même périmètre. Nous établissons un devis sur mesure après un échange sur vos objectifs et votre budget. Demandez un devis gratuit sans engagement.",
+  },
+  {
+    q: "Pourquoi passer par WebTreize plutôt qu'un freelance ou une autre agence ?",
+    a: "Nous combinons stratégie marketing, expertise technique et connaissance du terrain local. Un seul interlocuteur, une vision globale de votre croissance digitale — du site web à la fiche Google en passant par votre image de marque.",
   },
   {
     q: "Faut-il avoir une idée précise du projet ?",
-    a: "Absolument pas. C'est notre métier de traduire vos objectifs commerciaux en stratégie digitale performante. Venez avec un problème, nous construirons la solution.",
+    a: "Non. Beaucoup de nos clients arrivent avec un objectif (plus de visibilité, plus de prises de rendez-vous) sans savoir comment y arriver. Nous les aidons à définir le bon périmètre et à prioriser.",
   },
 ] as const;
 
@@ -46,7 +50,7 @@ export function VisionFaqSection() {
           <FadeUp>
             <h2
               id="vision-title"
-              className="text-[12vw] sm:text-[5rem] font-black text-white tracking-tighter leading-[0.9] mb-10"
+              className="text-[9vw] sm:text-[3.5rem] md:text-[4.5rem] font-black text-white tracking-tighter leading-[0.9] mb-10"
             >
               Bien plus <br />
               qu&apos;une <span className="text-transparent bg-clip-text stroke-text-white">agence.</span>
@@ -54,9 +58,9 @@ export function VisionFaqSection() {
           </FadeUp>
           <FadeUp delay={100}>
             <p className="text-lg md:text-2xl text-white/70 mb-8 font-light leading-relaxed">
-              Le digital est complexe. L&apos;ingénierie n&apos;est que l&apos;outil de base. Nous agissons comme votre{' '}
-              <strong className="text-white font-bold">département digital externalisé</strong>, impliqués dans votre
-              stratégie globale.
+              Le digital ne se résume pas à un site web. Visibilité locale, référencement, image de marque, acquisition
+              — nous pilotons l&apos;ensemble de votre présence en ligne comme votre{' '}
+              <strong className="text-white font-bold">département digital externalisé</strong>.
             </p>
           </FadeUp>
 
@@ -79,18 +83,42 @@ export function VisionFaqSection() {
           </FadeUp>
         </div>
 
-        <FadeUp delay={300} className="relative aspect-square w-full max-w-md mx-auto order-1 lg:order-2">
-          <div className="w-full h-full rounded-full border-[1px] border-white/20 flex items-center justify-center relative animate-spin-slow">
-            <div className="w-[75%] h-[75%] rounded-full border-[2px] border-[#FF4500]/50 border-dashed animate-spin-reverse-slow" />
-            <div className="absolute w-[50%] h-[50%] rounded-full bg-gradient-to-tr from-[#001F3F] to-[#FF4500]/20 blur-xl" />
-          </div>
-          <div className="absolute inset-0 flex items-center justify-center flex-col">
-            <span className="text-[6rem] font-black text-white tracking-tighter leading-none">360</span>
-            <span className="text-white/50 font-bold tracking-[0.2em] uppercase">Approche</span>
+        <FadeUp delay={300} className="relative w-full max-w-md mx-auto order-1 lg:order-2">
+          <div className="relative aspect-square flex items-center justify-center">
+            {/* Dot grid background */}
+            <div
+              className="absolute inset-0 opacity-[0.08]"
+              style={{
+                backgroundImage: 'radial-gradient(#FF4500 1px, transparent 1px)',
+                backgroundSize: '24px 24px',
+              }}
+              aria-hidden
+            />
+            {/* Outer glow ring */}
+            <div className="absolute inset-[10%] rounded-full border border-white/10" aria-hidden />
+            <div className="absolute inset-[20%] rounded-full border border-white/[0.06]" aria-hidden />
+            {/* Central glassmorphism card */}
+            <div className="relative z-10 w-48 h-48 md:w-56 md:h-56 rounded-3xl bg-white/[0.07] backdrop-blur-xl border border-white/15 flex flex-col items-center justify-center shadow-[0_8px_32px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.1)]">
+              <span className="text-[4.5rem] md:text-[5.5rem] font-black text-white tracking-tighter leading-none">360</span>
+              <span className="text-white/40 font-bold tracking-[0.25em] uppercase text-xs mt-1">Approche</span>
+              <div className="absolute -top-px left-[20%] right-[20%] h-px bg-gradient-to-r from-transparent via-[#FF4500]/60 to-transparent" aria-hidden />
+            </div>
+            {/* Floating metric cards */}
+            <div className="absolute top-[8%] left-[5%] px-4 py-2.5 rounded-xl bg-white/[0.07] backdrop-blur-md border border-white/10 text-white/80 text-xs font-bold shadow-lg">
+              Audit
+            </div>
+            <div className="absolute top-[12%] right-[2%] px-4 py-2.5 rounded-xl bg-white/[0.07] backdrop-blur-md border border-white/10 text-white/80 text-xs font-bold shadow-lg">
+              UX / UI
+            </div>
+            <div className="absolute bottom-[12%] left-[2%] px-4 py-2.5 rounded-xl bg-white/[0.07] backdrop-blur-md border border-white/10 text-white/80 text-xs font-bold shadow-lg">
+              Dev
+            </div>
+            <div className="absolute bottom-[8%] right-[5%] px-4 py-2.5 rounded-xl bg-[#FF4500]/20 backdrop-blur-md border border-[#FF4500]/30 text-[#FF4500] text-xs font-bold shadow-lg">
+              SEO
+            </div>
           </div>
         </FadeUp>
       </div>
     </section>
   );
 }
-

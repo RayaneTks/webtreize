@@ -12,24 +12,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 1,
     },
-    {
-      url: `${BASE_URL}/legal/mentions-legales`,
-      lastModified: now,
-      changeFrequency: 'yearly',
-      priority: 0.3,
-    },
-    {
-      url: `${BASE_URL}/legal/politique-confidentialite`,
-      lastModified: now,
-      changeFrequency: 'yearly',
-      priority: 0.3,
-    },
-    {
-      url: `${BASE_URL}/legal/cgv`,
-      lastModified: now,
-      changeFrequency: 'yearly',
-      priority: 0.3,
-    },
   ];
 }
-

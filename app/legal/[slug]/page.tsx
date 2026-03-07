@@ -25,6 +25,7 @@ export async function generateMetadata({ params }: LegalPageProps): Promise<Meta
     title,
     description,
     alternates: { canonical: `${SITE_URL}/legal/${slug}` },
+    robots: { index: false, follow: false },
     openGraph: {
       title,
       description,

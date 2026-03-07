@@ -1,0 +1,21 @@
+{
+  "name": "WebTreize",
+  "short_name": "W13",
+  "description": "Agence digitale à Marseille — Sites web, apps & SEO",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F8FAFC",
+  "theme_color": "#001F3F",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
