@@ -1,198 +1,124 @@
 'use client';
 
 import React from 'react';
-import { Globe, MapPin, TrendingUp, Code2 } from 'lucide-react';
 import { FadeUp } from '@/components/ui/FadeUp';
-import { cn } from '@/lib/utils';
+import { Card } from '@/components/ui/Card';
+import { Button } from '@/components/ui/Button';
+import { Search, MonitorSmartphone, Code2 } from 'lucide-react';
+import { useSmoothScroll } from '@/hooks/useSmoothScroll';
 
 const SERVICES = [
   {
-    id: '01',
+    title: 'Visibilité Locale (SEO & Maps)',
+    icon: Search,
+    description: "La majorité de vos clients cherchent d'abord sur Google. Nous optimisons votre présence pour que vous apparaissiez avant vos concurrents, exactement là où l'intention d'achat est la plus forte.",
+    bullets: [
+      'Optimisation Fiche Google Profile',
+      'Référencement local (SEO)',
+      'Génération d\'appels et d\'itinéraires',
+    ],
+    cta: 'Auditer ma fiche Google',
+    href: '#contact',
+    accent: 'text-orange',
+    accentBg: 'bg-orange/10',
+    delay: 100,
+  },
+  {
     title: 'Création de Sites Web',
-    desc: "Un design époustouflant couplé à une vitesse fulgurante. Nous concevons des vitrines et e-commerces pensés pour asseoir votre autorité.",
-    tags: ['UI/UX Design', 'Vitrine', 'E-commerce'],
-    bgColor: 'bg-white',
-    textColor: 'text-[#001F3F]',
-    visual: (
-      <div className="w-full h-full relative flex items-center justify-center bg-[#F8FAFC]">
-        <div className="w-[80%] h-[70%] bg-white rounded-xl shadow-2xl border border-gray-100 flex flex-col overflow-hidden relative transform -rotate-2 hover:rotate-0 transition-transform duration-700">
-          <div className="h-6 md:h-8 bg-gray-50 border-b border-gray-100 flex items-center px-3 gap-1.5">
-            <div className="w-2 h-2 rounded-full bg-red-400" />
-            <div className="w-2 h-2 rounded-full bg-amber-400" />
-            <div className="w-2 h-2 rounded-full bg-green-400" />
-          </div>
-          <div className="p-4 flex-1 flex flex-col gap-3">
-            <div className="w-full h-24 md:h-32 bg-gray-100 rounded-lg animate-pulse-slow" />
-            <div className="flex gap-3">
-              <div className="w-1/2 h-16 bg-[#001F3F]/5 rounded-lg" />
-              <div className="w-1/2 h-16 bg-[#FF4500]/10 rounded-lg" />
-            </div>
-          </div>
-        </div>
-      </div>
-    ),
+    icon: MonitorSmartphone,
+    description: "Un site vitrine ou e-commerce qui ne se contente pas d'être beau, mais qui est conçu pour convertir vos visiteurs en clients. Rapide, sécurisé et 100% adapté aux mobiles.",
+    bullets: [
+      'Design sur-mesure (pas de template)',
+      'Développement ultra-rapide',
+      'Optimisation pour la conversion',
+    ],
+    cta: "Voir ce qu'on peut construire",
+    href: '#contact',
+    accent: 'text-navy',
+    accentBg: 'bg-navy/10',
+    delay: 200,
   },
   {
-    id: '02',
     title: 'Ingénierie Applicative',
-    desc: 'Développement de logiciels métiers et Web Apps sur-mesure pour automatiser vos processus complexes et vous donner un avantage opérationnel décisif.',
-    tags: ['React / Next.js', 'Logiciel', 'Automatisation'],
-    bgColor: 'bg-[#E2E8F0]',
-    textColor: 'text-[#001F3F]',
-    visual: (
-      <div className="w-full h-full relative flex items-center justify-center bg-[#CBD5E1] overflow-hidden">
-        <div className="relative w-full h-full flex items-center justify-center">
-          <div className="absolute w-[120%] h-[120%] font-mono text-[8px] md:text-xs text-[#001F3F]/10 opacity-50 break-all leading-tight">
-            {`function scale(biz){ return biz.revenue * 10; } `.repeat(50)}
-          </div>
-          <div className="relative z-10 grid grid-cols-3 gap-2 md:gap-4 items-end h-[60%]">
-            <div className="w-10 md:w-16 bg-[#001F3F] rounded-t-lg animate-bar-grow" style={{ height: '40%' }} />
-            <div
-              className="w-10 md:w-16 bg-[#FF4500] rounded-t-lg animate-bar-grow shadow-[0_0_20px_rgba(255,69,0,0.5)]"
-              style={{ height: '90%', animationDelay: '0.2s' as unknown as string }}
-            />
-            <div
-              className="w-10 md:w-16 bg-white rounded-t-lg animate-bar-grow"
-              style={{ height: '60%', animationDelay: '0.4s' as unknown as string }}
-            />
-          </div>
-        </div>
-      </div>
-    ),
+    icon: Code2,
+    description: "Vous avez une idée complexe ou un processus métier à digitaliser ? Nous concevons et développons des applications sur-mesure (web et mobile) robustes et évolutives.",
+    bullets: [
+      'Applications Métier sur-mesure',
+      'Développement MVP / SaaS',
+      'Automatisation de processus',
+    ],
+    cta: 'Estimer mon projet',
+    href: '#contact',
+    accent: 'text-orange-hover',
+    accentBg: 'bg-orange-hover/10',
+    delay: 300,
   },
-  {
-    id: '03',
-    title: 'Visibilité Locale',
-    desc: 'Dominez votre zone de chalandise. Nous optimisons votre présence sur Google Maps pour que vous soyez le choix évident de proximité.',
-    tags: ['Google Maps', 'Trafic', 'Réputation'],
-    bgColor: 'bg-[#001F3F]',
-    textColor: 'text-white',
-    visual: (
-      <div className="w-full h-full relative flex items-center justify-center bg-[#001428] overflow-hidden">
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="absolute w-[40%] aspect-square border border-[#FF4500]/50 rounded-full animate-ping-slow" />
-          <div
-            className="absolute w-[70%] aspect-square border border-[#FF4500]/30 rounded-full animate-ping-slow"
-            style={{ animationDelay: '1s' as unknown as string }}
-          />
-          <div
-            className="absolute w-[100%] aspect-square border border-[#FF4500]/10 rounded-full animate-ping-slow"
-            style={{ animationDelay: '2s' as unknown as string }}
-          />
-        </div>
-        <div className="relative z-10 w-16 h-16 md:w-20 md:h-20 bg-[#FF4500] rounded-full flex items-center justify-center shadow-[0_0_40px_rgba(255,69,0,0.6)]">
-          <div className="w-6 h-6 md:w-8 md:h-8 bg-white rounded-full animate-pulse" />
-        </div>
-      </div>
-    ),
-  },
-  {
-    id: '04',
-    title: 'Acquisition & SEO',
-    desc: "Positionnement stratégique et pérenne sur les moteurs de recherche. Ne cherchez plus vos clients, faites en sorte qu'ils vous trouvent.",
-    tags: ['Ranking', 'Mots-clés', 'Conversion'],
-    bgColor: 'bg-[#FF4500]',
-    textColor: 'text-white',
-    visual: (
-      <div className="w-full h-full relative flex items-center justify-center bg-[#E63E00] overflow-hidden">
-        <div className="absolute inset-0 grid grid-cols-6 grid-rows-6 opacity-20">
-          {Array.from({ length: 36 }).map((_, i) => (
-            <ArrowUpRightIcon key={i} />
-          ))}
-        </div>
-        <div className="relative z-10 bg-[#001F3F] p-6 md:p-10 rounded-3xl transform rotate-3 shadow-2xl">
-          <TrendingUp className="w-16 h-16 md:w-24 md:h-24 text-[#FF4500]" />
-        </div>
-      </div>
-    ),
-  },
-] as const;
-
-function ArrowUpRightIcon() {
-  return (
-    <div className="flex items-center justify-center">
-      <TrendingUp className="w-4 h-4 text-[#001F3F]" />
-    </div>
-  );
-}
+];
 
 export function ServicesSection() {
+  const scroll = useSmoothScroll();
+
   return (
-    <section id="services" className="py-24 md:py-40 bg-[#F8FAFC] relative" aria-labelledby="services-title">
+    <section 
+      id="services" 
+      className="py-20 md:py-32 bg-neutral-bg relative"
+      aria-labelledby="services-title"
+    >
       <div className="container mx-auto px-5 lg:px-8 max-w-screen-xl">
-        <FadeUp className="mb-16 md:mb-32">
-          <div className="flex items-center gap-4 mb-6">
-            <div className="w-8 h-8 rounded-full bg-[#FF4500] flex items-center justify-center">
-              <div className="w-2 h-2 bg-white rounded-full" />
-            </div>
-            <span className="text-[#001F3F] font-bold tracking-[0.15em] uppercase text-sm">
-              Pôles d&apos;Excellence
-            </span>
+        <FadeUp>
+          <div className="text-center mb-16 md:mb-20">
+            <h2 
+              id="services-title"
+              className="text-navy font-black tracking-tight leading-[1.1] max-w-2xl mx-auto uppercase"
+            >
+              Ce que l'on fait pour vous
+            </h2>
+            <p className="mt-6 text-base md:text-lg text-navy/70 font-medium max-w-2xl mx-auto">
+              Nous nous concentrons sur les actions qui ont un impact mesurable et direct sur votre activité.
+            </p>
           </div>
-          <h2
-            id="services-title"
-            className="text-[10vw] sm:text-[5rem] font-black tracking-tighter text-[#001F3F] leading-[1]"
-          >
-            L&apos;expertise pure.
-          </h2>
         </FadeUp>
 
-        {/* Conteneur simple (pas de flex) pour ne pas perturber le sticky */}
-        <div className="relative pb-24 lg:pb-48">
-          {SERVICES.map((srv, idx) => (
-            <div
-              key={srv.id}
-              className={cn(
-                'sticky w-full rounded-[2rem] md:rounded-[3rem] overflow-hidden border shadow-2xl flex flex-col lg:flex-row transition-all duration-500 min-h-[60vh] lg:min-h-[500px]',
-                srv.bgColor,
-                srv.id === '01' ? 'border-gray-200' : 'border-white/10',
-                'mb-6 md:mb-12'
-              )}
-              style={{ top: `calc(15vh + ${idx * 40}px)`, zIndex: 10 + idx }}
-            >
-              <div className="w-full lg:w-1/2 p-8 md:p-16 flex flex-col">
-                <span className={cn('text-5xl font-black mb-8 opacity-20', srv.textColor)}>{srv.id}</span>
-                <h3
-                  className={cn(
-                    'text-4xl md:text-5xl font-black tracking-tighter mb-6 leading-[1.1]',
-                    srv.textColor
-                  )}
-                >
-                  {srv.title}
-                </h3>
-                <p
-                  className={cn(
-                    'text-lg md:text-xl font-medium leading-relaxed mb-10',
-                    srv.textColor,
-                    srv.id === '03' || srv.id === '04' ? 'opacity-90' : 'opacity-70'
-                  )}
-                >
-                  {srv.desc}
-                </p>
-                <div className="flex flex-wrap gap-3 mt-auto">
-                  {srv.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className={cn(
-                        'px-4 py-2 rounded-full text-xs md:text-sm font-bold border',
-                        srv.id === '03' || srv.id === '04'
-                          ? 'bg-white text-[#001F3F] border-transparent'
-                          : 'border-[#001F3F]/20 text-[#001F3F]'
-                      )}
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <div className="w-full lg:w-1/2 h-[40vh] lg:h-auto border-t lg:border-t-0 lg:border-l border-black/5">
-                {srv.visual}
-              </div>
-            </div>
-          ))}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          {SERVICES.map((service, index) => {
+            const Icon = service.icon;
+            return (
+              <FadeUp key={index} delay={service.delay}>
+                <Card className="h-full flex flex-col p-6 md:p-8 hover:border-navy/20 hover:shadow-xl transition-all duration-300">
+                  <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-6 ${service.accentBg} ${service.accent}`}>
+                    <Icon className="w-6 h-6" />
+                  </div>
+                  
+                  <h3 className="text-xl md:text-2xl font-black text-navy mb-4 tracking-tight leading-snug">
+                    {service.title}
+                  </h3>
+                  
+                  <p className="text-navy/70 font-medium leading-relaxed mb-6 flex-grow text-[15px]">
+                    {service.description}
+                  </p>
+                  
+                  <ul className="space-y-3 mb-8">
+                    {service.bullets.map((bullet, i) => (
+                      <li key={i} className="flex items-start gap-3">
+                        <div className="w-1.5 h-1.5 rounded-full bg-navy/30 mt-2 shrink-0" />
+                        <span className="text-sm font-bold text-navy/80">{bullet}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <Button 
+                    variant={index === 0 ? 'default' : 'outline'} 
+                    className="w-full mt-auto"
+                    onClick={(e) => scroll(e, service.href)}
+                  >
+                    {service.cta}
+                  </Button>
+                </Card>
+              </FadeUp>
+            );
+          })}
         </div>
       </div>
     </section>
   );
 }
-

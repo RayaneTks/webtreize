@@ -6,7 +6,6 @@ import { MobileFab } from '@/components/MobileFab';
 import { NAVBAR_OFFSET } from '@/hooks/useSmoothScroll';
 
 export function ClientShell({ children }: { children: React.ReactNode }) {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const hash = window.location.hash?.slice(1);
@@ -24,11 +23,11 @@ export function ClientShell({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      <Navbar mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
+      <Navbar />
       <main id="main-content" className="relative z-10">
         {children}
       </main>
-      {!mobileMenuOpen && <MobileFab />}
+      <MobileFab />
     </>
   );
 }

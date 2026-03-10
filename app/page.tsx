@@ -3,8 +3,10 @@ import { HeroSection } from '@/components/sections/HeroSection';
 import { SocialProofSection } from '@/components/sections/SocialProofSection';
 import { ServicesSection } from '@/components/sections/ServicesSection';
 import { MethodologySection } from '@/components/sections/MethodologySection';
-import { VisionFaqSection } from '@/components/sections/VisionFaqSection';
-import { ContactSection } from '@/components/sections/ContactSection';
+import { PainPointsSection } from '@/components/sections/PainPointsSection';
+import { GuaranteesSection } from '@/components/sections/GuaranteesSection';
+import { FaqSection } from '@/components/sections/FaqSection';
+import { CtaFinalSection } from '@/components/sections/CtaFinalSection';
 import { Footer } from '@/components/Footer';
 import { NoiseOverlay } from '@/components/background/NoiseOverlay';
 
@@ -15,10 +17,12 @@ export default function HomePage() {
       <ClientShell>
         <HeroSection />
         <SocialProofSection />
+        <PainPointsSection />
         <ServicesSection />
+        <GuaranteesSection />
         <MethodologySection />
-        <VisionFaqSection />
-        <ContactSection />
+        <FaqSection />
+        <CtaFinalSection />
         <Footer />
       </ClientShell>
     </div>

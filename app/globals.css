@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    --color-navy: #001F3F;
+    --color-orange: #FF4500;
+    --color-orange-hover: #E03E00;
+    --color-neutral-bg: #F8F7F4;
+    --color-neutral-text: #6B7280;
+  }
+}
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 7rem;
@@ -10,11 +20,20 @@ html {
 }
 
 body {
-  @apply antialiased;
+  @apply antialiased bg-neutral-bg text-navy;
   font-family: var(--font-open-sans), system-ui, sans-serif;
-  line-height: 1.6;
+  font-size: max(16px, 1rem); /* Body : 16px minimum */
+  line-height: min(1.6, 1.8); /* Line-height body : 1.6 minimum */
   overflow-x: clip;
   overscroll-behavior-y: none;
+}
+
+h1 {
+  font-size: clamp(36px, 8vw, 64px);
+}
+
+h2 {
+  font-size: clamp(28px, 6vw, 48px);
 }
 
 /* Pages légales : permettre l'overflow pour le bandeau "chantier" */

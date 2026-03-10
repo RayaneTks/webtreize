@@ -9,7 +9,7 @@ const STEPS = [
     icon: Lightbulb,
     phase: '01',
     title: 'Diagnostic',
-    desc: 'Nous analysons votre marché, vos concurrents et vos objectifs. Pas de brief générique — un audit sur-mesure.',
+    desc: 'Nous analysons votre marché, vos concurrents et vos objectifs. Pas de brief générique : un audit sur-mesure.',
     accent: 'bg-amber-500/10 text-amber-500 border-amber-500/20',
   },
   {
@@ -56,7 +56,7 @@ export function MethodologySection() {
           </h2>
           <p className="text-lg md:text-xl text-[#001F3F]/60 font-medium max-w-2xl leading-relaxed">
             Chaque projet passe par un processus rigoureux en 4 phases.
-            Pas de template, pas de raccourci — un accompagnement intégral.
+            Pas de template, pas de raccourci : un accompagnement intégral.
           </p>
         </FadeUp>
 

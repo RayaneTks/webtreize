@@ -19,7 +19,7 @@ const FAQ_ITEMS = [
   },
   {
     q: "Pourquoi passer par WebTreize plutôt qu'un freelance ou une autre agence ?",
-    a: "Nous combinons stratégie marketing, expertise technique et connaissance du terrain local. Un seul interlocuteur, une vision globale de votre croissance digitale — du site web à la fiche Google en passant par votre image de marque.",
+    a: "Nous combinons stratégie marketing, expertise technique et connaissance du terrain local. Un seul interlocuteur, une vision globale de votre croissance digitale, du site web à la fiche Google en passant par votre image de marque.",
   },
   {
     q: "Faut-il avoir une idée précise du projet ?",
@@ -59,7 +59,7 @@ export function VisionFaqSection() {
           <FadeUp delay={100}>
             <p className="text-lg md:text-2xl text-white/70 mb-8 font-light leading-relaxed">
               Le digital ne se résume pas à un site web. Visibilité locale, référencement, image de marque, acquisition
-              — nous pilotons l&apos;ensemble de votre présence en ligne comme votre{' '}
+              : nous pilotons l&apos;ensemble de votre présence en ligne comme votre{' '}
               <strong className="text-white font-bold">département digital externalisé</strong>.
             </p>
           </FadeUp>

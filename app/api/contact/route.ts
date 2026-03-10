@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
-const CONTACT_EMAIL = process.env.CONTACT_EMAIL || 'contact@webtreize.com';
+const CONTACT_EMAIL = process.env.NEXT_PUBLIC_CONTACT_EMAIL || process.env.CONTACT_EMAIL || 'contact@webtreize.com';
 
 type ContactPayload = { name: string; email: string; message: string; budget?: string };
 
@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
 
     if (!RESEND_API_KEY) {
       console.log('── NOUVEAU LEAD WEBTREIZE ──');
-      console.log(`Nom: ${name} | Email: ${email} | Budget: ${budget || '—'}`);
+      console.log(`Nom: ${name} | Email: ${email} | Budget: ${budget || 'NC'}`);
       console.log(`Message: ${message}`);
       console.log('────────────────────────────');
       return NextResponse.json({ success: true });
@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
         from: 'WebTreize <noreply@webtreize.com>',
         to: [CONTACT_EMAIL],
         reply_to: email,
-        subject: `Nouveau projet — ${name}${budget ? ` (${budget})` : ''}`,
+        subject: `Nouveau projet de ${name}${budget ? ` (${budget})` : ''}`,
         html: `
           <div style="font-family:system-ui,sans-serif;max-width:600px;margin:0 auto">
             <h2 style="color:#001F3F">Nouvelle demande de projet</h2>

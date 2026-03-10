@@ -9,6 +9,17 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      colors: {
+        navy: 'var(--color-navy)',
+        orange: {
+          DEFAULT: 'var(--color-orange)',
+          hover: 'var(--color-orange-hover)',
+        },
+        neutral: {
+          bg: 'var(--color-neutral-bg)',
+          text: 'var(--color-neutral-text)',
+        },
+      },
       fontFamily: {
         display: ['var(--font-montserrat)', 'system-ui', 'sans-serif'],
         sans: ['var(--font-open-sans)', 'system-ui', 'sans-serif'],
@@ -31,14 +42,6 @@ const config: Config = {
           '50%': { transform: 'scaleY(1)', opacity: '1' },
           '100%': { transform: 'scaleY(0.1)', opacity: '0.5' },
         },
-        'spin-slow': {
-          from: { transform: 'rotate(0deg)' },
-          to: { transform: 'rotate(360deg)' },
-        },
-        'spin-reverse-slow': {
-          from: { transform: 'translate(-50%, -50%) rotate(360deg)' },
-          to: { transform: 'translate(-50%, -50%) rotate(0deg)' },
-        },
         'line-fade-in': {
           from: { opacity: '0', transform: 'translateY(10px)' },
           to: { opacity: '1', transform: 'translateY(0)' },
@@ -53,8 +56,6 @@ const config: Config = {
         'pulse-slow': 'pulse-slow 8s ease-in-out infinite',
         'ping-slow': 'ping-slow 3s cubic-bezier(0, 0, 0.2, 1) infinite',
         'bar-grow': 'bar-grow 2s ease-in-out infinite',
-        'spin-slow': 'spin-slow 8s linear infinite',
-        'spin-reverse-slow': 'spin-reverse-slow 60s linear infinite',
         'line-fade-in': 'line-fade-in 0.3s ease-out forwards',
         marquee: 'marquee 30s linear infinite',
       },

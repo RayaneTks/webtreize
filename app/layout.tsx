@@ -16,13 +16,13 @@ const openSans = Open_Sans({
   display: 'swap',
 });
 
-const SITE_URL = 'https://www.webtreize.com';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.webtreize.com';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: 'WebTreize | Agence digitale Marseille – Sites web, apps & SEO',
+  title: 'WebTreize | Agence Digitale | Sites Web, SEO & Apps',
   description:
-    "Votre croissance digitale simplifiée. WebTreize est une agence digitale basée à Marseille spécialisée en création de sites web, applications sur mesure, fiches Google Business Profile et SEO.",
+    "WebTreize conçoit votre site, optimise votre fiche Google et développe vos outils sur-mesure. Audit gratuit en 48h.",
   keywords: [
     'agence digitale Marseille',
     'création site web Marseille',
@@ -32,23 +32,23 @@ export const metadata: Metadata = {
     'WebTreize',
   ],
   alternates: { canonical: '/' },
-  icons: { icon: '/icon.svg', apple: '/logo.png' },
+  icons: { icon: '/icon.svg', apple: '/icon.svg' },
   manifest: '/manifest.json',
   openGraph: {
     type: 'website',
     url: SITE_URL,
-    title: 'WebTreize | Agence digitale – Sites web, apps, fiches Google & SEO',
+    title: 'WebTreize | Agence Digitale | Sites Web, SEO & Apps',
     description:
-      "Agence digitale à Marseille : création de sites vitrines et applicatives, optimisation de fiche Google, SEO et accompagnement digital complet.",
+      "WebTreize conçoit votre site, optimise votre fiche Google et développe vos outils sur-mesure. Audit gratuit en 48h.",
     siteName: 'WebTreize',
     locale: 'fr_FR',
     images: [{ url: '/og-image.jpg', width: 1200, height: 630, alt: 'WebTreize - Agence digitale Marseille' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'WebTreize | Agence digitale – Sites web, apps, fiches Google & SEO',
+    title: 'WebTreize | Agence Digitale | Sites Web, SEO & Apps',
     description:
-      "Votre croissance digitale simplifiée. Création de sites web, applications sur mesure, fiches Google et SEO pour particuliers et entreprises.",
+      "WebTreize conçoit votre site, optimise votre fiche Google et développe vos outils sur-mesure. Audit gratuit en 48h.",
     images: [{ url: '/og-image.jpg', alt: 'WebTreize - Agence digitale Marseille' }],
   },
   robots: { index: true, follow: true },
@@ -145,7 +145,7 @@ const faqJsonLd = {
       name: "Pourquoi passer par WebTreize plutôt qu'un freelance ou une autre agence ?",
       acceptedAnswer: {
         '@type': 'Answer',
-        text: "Nous combinons stratégie marketing, expertise technique et connaissance du terrain local. Un seul interlocuteur, une vision globale de votre croissance digitale — du site web à la fiche Google en passant par votre image de marque.",
+        text: "Nous combinons stratégie marketing, expertise technique et connaissance du terrain local. Un seul interlocuteur, une vision globale de votre croissance digitale, du site web à la fiche Google en passant par votre image de marque.",
       },
     },
     {
