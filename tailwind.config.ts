@@ -10,14 +10,14 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        navy: 'var(--color-navy)',
+        navy: '#001F3F',
         orange: {
-          DEFAULT: 'var(--color-orange)',
-          hover: 'var(--color-orange-hover)',
+          DEFAULT: '#CC3700',
+          hover: '#A32C00',
         },
         neutral: {
-          bg: 'var(--color-neutral-bg)',
-          text: 'var(--color-neutral-text)',
+          bg: '#F8F7F4',
+          text: '#6B7280',
         },
       },
       fontFamily: {

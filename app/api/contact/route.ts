@@ -1,5 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+// TODO: AVANT MISE EN LIGNE
+// 1. Créer un compte sur resend.com
+// 2. Ajouter RESEND_API_KEY dans .env.local
+// 3. Remplacer l'adresse "onboarding@resend.dev" par l'email réel WebTreize
+// 4. Configurer le domaine WebTreize dans Resend (DMARC)
+
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const CONTACT_EMAIL = process.env.NEXT_PUBLIC_CONTACT_EMAIL || process.env.CONTACT_EMAIL || 'contact@webtreize.com';
 

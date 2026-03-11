@@ -61,9 +61,12 @@ export function ServicesSection() {
   return (
     <section 
       id="services" 
-      className="py-20 md:py-32 bg-neutral-bg relative"
+      className="py-20 md:py-32 bg-[#F8F9FA] relative overflow-hidden"
       aria-labelledby="services-title"
     >
+      {/* Pattern de fond subtil Themed for Services */}
+      <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#001F3F 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
+      <div className="absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-white to-transparent pointer-events-none" />
       <div className="container mx-auto px-5 lg:px-8 max-w-screen-xl">
         <FadeUp>
           <div className="text-center mb-16 md:mb-20">
@@ -84,8 +87,11 @@ export function ServicesSection() {
             const Icon = service.icon;
             return (
               <FadeUp key={index} delay={service.delay}>
-                <Card className="h-full flex flex-col p-6 md:p-8 hover:border-navy/20 hover:shadow-xl transition-all duration-300">
-                  <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-6 ${service.accentBg} ${service.accent}`}>
+                <Card className="h-full flex flex-col p-6 md:p-8 bg-white/80 backdrop-blur-md border border-navy/5 hover:border-navy/15 hover:shadow-[0_20px_40px_-15px_rgba(0,31,63,0.1)] hover:-translate-y-1.5 transition-all duration-500 relative overflow-hidden group">
+                  {/* Subtle hover glow */}
+                  <div className={`absolute top-0 right-0 w-32 h-32 blur-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-700 ${service.accentBg}`} />
+                  
+                  <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-6 relative z-10 transition-transform duration-500 group-hover:scale-110 ${service.accentBg} ${service.accent}`}>
                     <Icon className="w-6 h-6" />
                   </div>
                   

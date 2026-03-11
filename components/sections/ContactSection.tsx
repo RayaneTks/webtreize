@@ -1,8 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Mail, Smartphone, ArrowRight, ArrowUpRight, Loader2, CheckCircle2 } from 'lucide-react';
+import { Mail, ArrowRight, ArrowUpRight, Loader2, CheckCircle2 } from 'lucide-react';
 import { FadeUp } from '@/components/ui/FadeUp';
+import { SnapchatIcon } from '@/components/ui/SnapchatIcon';
 
 const SNAPCHAT_URL = 'https://snapchat.com/add/webtreize';
 
@@ -166,7 +167,7 @@ export function ContactSection() {
               <div className="flex items-center justify-between mb-12 md:mb-20">
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 md:w-14 md:h-14 bg-black rounded-2xl flex items-center justify-center">
-                    <Smartphone className="w-6 h-6 md:w-7 md:h-7 text-[#FFFC00]" />
+                    <SnapchatIcon className="w-6 h-6 md:w-7 md:h-7 text-[#FFFC00]" />
                   </div>
                   <div className="flex flex-col items-start">
                     <span className="px-3 py-1 bg-black text-[#FFFC00] rounded-full text-[0.65rem] md:text-xs font-bold uppercase tracking-[0.18em]">

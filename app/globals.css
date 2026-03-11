@@ -5,8 +5,8 @@
 @layer base {
   :root {
     --color-navy: #001F3F;
-    --color-orange: #FF4500;
-    --color-orange-hover: #E03E00;
+    --color-orange: #CC3700;
+    --color-orange-hover: #A32C00;
     --color-neutral-bg: #F8F7F4;
     --color-neutral-text: #6B7280;
   }

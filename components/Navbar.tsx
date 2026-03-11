@@ -29,6 +29,7 @@ export function Navbar() {
   }, []);
 
   useEffect(() => {
+    window.dispatchEvent(new CustomEvent('mobileMenuToggle', { detail: mobileMenuOpen }));
     if (mobileMenuOpen) {
       document.body.style.overflow = 'hidden';
     } else {
@@ -70,7 +71,7 @@ export function Navbar() {
           'fixed top-0 left-0 w-full z-50 transition-all duration-300 ease-in-out',
           isScrolled
             ? 'py-3 lg:py-4 bg-navy backdrop-blur-sm border-b border-white/10 shadow-lg'
-            : 'py-4 lg:py-6 bg-navy/95'
+            : 'py-4 lg:py-6 bg-transparent'
         )}
         aria-label="Navigation principale"
       >
@@ -81,8 +82,11 @@ export function Navbar() {
             className="flex items-center gap-2 z-50 relative"
             aria-label="WebTreize - Accueil"
           >
-            <LogoWebTreize decorative className="w-8 h-8 md:w-10 md:h-10 text-white" />
-            <span className="hidden sm:inline-block text-xl md:text-2xl font-black tracking-tighter text-white">
+            <LogoWebTreize 
+              decorative 
+              className={cn("w-8 h-8 md:w-10 md:h-10 transition-all duration-300", isScrolled || mobileMenuOpen ? "brightness-0 invert" : "")} 
+            />
+            <span className={cn("hidden sm:inline-block text-xl md:text-2xl font-black tracking-tighter transition-colors duration-300", isScrolled || mobileMenuOpen ? "text-white" : "text-navy")}>
               WebTreize
             </span>
           </Link>
@@ -94,7 +98,7 @@ export function Navbar() {
                 key={label}
                 href={pathname === '/' ? href : `/#${href.slice(1)}`}
                 onClick={(e) => handleNavClick(e, href)}
-                className="text-sm font-bold text-white hover:text-orange transition-colors relative group py-2"
+                className={cn("text-sm font-bold transition-colors relative group py-2", isScrolled ? "text-white hover:text-orange" : "text-navy hover:text-orange")}
               >
                 {label}
                 <span className="absolute bottom-0 left-0 w-full h-0.5 bg-orange scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out" />
@@ -130,7 +134,7 @@ export function Navbar() {
             {/* Hamburger Button */}
             <button
               type="button"
-              className="lg:hidden relative p-2 text-white active:scale-90 transition-transform focus:outline-none focus:ring-2 focus:ring-orange rounded-md"
+              className={cn("lg:hidden relative p-2 active:scale-90 transition-transform focus:outline-none focus:ring-2 focus:ring-orange rounded-md", isScrolled || mobileMenuOpen ? "text-white" : "text-navy")}
               onClick={(e) => {
                 e.stopPropagation();
                 setMobileMenuOpen(!mobileMenuOpen);

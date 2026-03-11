@@ -37,7 +37,7 @@ const STEPS = [
 
 export function MethodologySection() {
   return (
-    <section className="py-24 md:py-40 bg-[#F8FAFC] relative overflow-hidden" aria-labelledby="methodology-title">
+    <section id="method" className="py-24 md:py-40 bg-[#F8FAFC] relative overflow-hidden" aria-labelledby="methodology-title">
       <div className="container mx-auto px-5 lg:px-8 max-w-screen-xl">
         <FadeUp className="mb-16 md:mb-24">
           <div className="flex items-center gap-4 mb-6">

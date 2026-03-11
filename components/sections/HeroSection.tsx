@@ -113,30 +113,88 @@ export function HeroSection() {
             </motion.div>
           </div>
 
-          {/* 6. Élément visuel abstrait */}
+          {/* 6. Élément visuel premium (Dashboard Abstrait) */}
           <motion.div
             variants={itemVariants}
-            className="w-full mt-16 md:mt-24 relative"
+            className="w-full mt-16 md:mt-24 relative max-w-5xl mx-auto h-[300px] md:h-[400px] flex items-center justify-center pointer-events-none"
           >
-            <div className="w-full aspect-[21/9] md:aspect-[21/7] max-h-[300px] rounded-[2rem] bg-white border border-navy/5 shadow-2xl overflow-hidden relative flex items-end justify-center pt-8 px-4 sm:px-12">
-              <div className="absolute inset-0 bg-gradient-to-t from-white via-white/80 to-transparent z-10" />
-              <div className="w-full h-full flex items-end justify-between gap-2 sm:gap-4 relative z-0">
-                {[40, 30, 60, 50, 85, 75, 100].map((height, i) => (
-                  <motion.div
-                    key={i}
-                    custom={i}
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: `${height}%`, opacity: 1 }}
-                    transition={{ delay: 0.8 + i * 0.1, duration: 1, ease: 'easeOut' }}
-                    className="w-full rounded-t-lg sm:rounded-t-2xl bg-gradient-to-t from-navy to-navy/40"
-                    style={{
-                      backgroundColor: i === 6 ? 'var(--color-orange)' : undefined,
-                      backgroundImage: i === 6 ? 'linear-gradient(to top, var(--color-orange), #ff6b33)' : undefined,
-                    }}
-                  />
-                ))}
+            {/* Main glass card */}
+            <motion.div 
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.6, duration: 0.8 }}
+              className="absolute z-20 w-[90%] md:w-[65%] h-[200px] md:h-[280px] bg-white/40 backdrop-blur-2xl border border-white/60 shadow-[0_32px_64px_-12px_rgba(0,31,63,0.1)] rounded-3xl p-4 md:p-6 flex flex-col justify-between"
+            >
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex gap-2">
+                  <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-red-400"></div>
+                  <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-amber-400"></div>
+                  <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-emerald-400"></div>
+                </div>
+                <div className="h-5 md:h-6 w-20 md:w-24 bg-white/50 rounded-full"></div>
               </div>
-            </div>
+              <div className="flex-1 flex gap-3 md:gap-4">
+                <div className="w-1/3 h-full bg-white/40 rounded-xl md:rounded-2xl flex items-end justify-center overflow-hidden relative pb-1">
+                  <div className="w-full px-2 flex items-end justify-between gap-1 md:gap-2 h-full">
+                    <motion.div initial={{ height: 0 }} animate={{ height: '40%' }} transition={{ delay: 1, duration: 1 }} className="w-full bg-orange/20 rounded-t-sm md:rounded-t-md"></motion.div>
+                    <motion.div initial={{ height: 0 }} animate={{ height: '70%' }} transition={{ delay: 1.1, duration: 1 }} className="w-full bg-orange/40 rounded-t-sm md:rounded-t-md"></motion.div>
+                    <motion.div initial={{ height: 0 }} animate={{ height: '100%' }} transition={{ delay: 1.2, duration: 1 }} className="w-full bg-orange rounded-t-sm md:rounded-t-md shadow-[0_0_15px_rgba(204,55,0,0.5)]"></motion.div>
+                  </div>
+                </div>
+                <div className="flex-1 flex flex-col gap-2.5 md:gap-3">
+                  <div className="h-3 md:h-4 w-3/4 bg-navy/10 rounded-full"></div>
+                  <div className="h-3 md:h-4 w-1/2 bg-navy/10 rounded-full"></div>
+                  <div className="h-3 md:h-4 w-5/6 bg-navy/10 rounded-full"></div>
+                  <div className="mt-auto h-10 md:h-12 w-full bg-white/50 rounded-xl flex items-center px-3 md:px-4">
+                     <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-navy/10"></div>
+                     <div className="ml-2 md:ml-3 h-2 md:h-3 w-16 md:w-20 bg-navy/20 rounded-full"></div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Floating side card 1 (Success Indicator) */}
+            <motion.div
+              initial={{ x: -40, opacity: 0 }}
+              animate={{ x: 0, opacity: 1, y: [-10, 10, -10] }}
+              transition={{ delay: 0.8, opacity: { duration: 0.8 }, y: { repeat: Infinity, duration: 6, ease: "easeInOut" } }}
+              className="absolute left-[2%] md:left-[8%] top-[10%] md:top-[15%] z-30 w-[130px] md:w-[180px] bg-navy text-white rounded-2xl p-3 md:p-5 shadow-2xl flex flex-col justify-center gap-2 md:gap-3 border border-white/10"
+            >
+              <div className="flex items-center gap-2 md:gap-3">
+                <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-orange flex items-center justify-center shrink-0">
+                  <svg className="w-4 h-4 md:w-5 md:h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
+                </div>
+                <div className="flex flex-col gap-1.5 overflow-hidden">
+                  <div className="h-2.5 md:h-3 w-16 bg-white/20 rounded-full"></div>
+                  <div className="h-2 md:h-2 w-10 bg-white/10 rounded-full"></div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Floating side card 2 (Analytics Ring) */}
+            <motion.div
+              initial={{ x: 40, opacity: 0 }}
+              animate={{ x: 0, opacity: 1, y: [10, -10, 10] }}
+              transition={{ delay: 0.9, opacity: { duration: 0.8 }, y: { repeat: Infinity, duration: 5, ease: "easeInOut", delay: 1 } }}
+              className="absolute right-[2%] md:right-[8%] bottom-[15%] md:bottom-[20%] z-30 w-[110px] md:w-[150px] aspect-square bg-white/80 backdrop-blur-md rounded-2xl p-4 shadow-xl border border-white flex flex-col items-center justify-center gap-3 md:gap-4"
+            >
+              <div className="relative flex items-center justify-center">
+                <svg className="w-12 h-12 md:w-16 md:h-16 transform -rotate-90">
+                  <circle cx="50%" cy="50%" r="45%" stroke="currentColor" strokeWidth="10%" fill="none" className="text-navy/5" />
+                  <motion.circle 
+                    cx="50%" cy="50%" r="45%" 
+                    stroke="currentColor" strokeWidth="10%" fill="none" 
+                    className="text-orange"
+                    strokeDasharray="100"
+                    initial={{ strokeDashoffset: 100 }}
+                    animate={{ strokeDashoffset: 25 }}
+                    transition={{ delay: 1.5, duration: 1.5, ease: "easeOut" }}
+                  />
+                </svg>
+                <span className="absolute text-xs md:text-sm font-bold text-navy">+75%</span>
+              </div>
+              <div className="h-2 md:h-2.5 w-16 bg-navy/10 rounded-full"></div>
+            </motion.div>
           </motion.div>
         </motion.div>
       </div>

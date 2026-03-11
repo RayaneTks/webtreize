@@ -14,9 +14,13 @@ const PAIN_POINTS = [
 export function PainPointsSection() {
   return (
     <section 
-      className="py-16 md:py-24 bg-white relative"
+      className="py-16 md:py-24 bg-white relative overflow-hidden"
       aria-labelledby="pain-points-title"
     >
+      {/* Abstract Glowing Backgrounds */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-orange/[0.03] rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-navy/[0.02] rounded-full blur-[100px] translate-y-1/3 -translate-x-1/3 pointer-events-none" />
+
       <div className="container mx-auto px-5 lg:px-8 max-w-screen-xl">
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center">
           
@@ -57,8 +61,8 @@ export function PainPointsSection() {
                 {/* Background décoratif */}
                 <div className="absolute inset-0 bg-navy/5 rounded-full scale-90 blur-3xl opacity-50" />
                 
-                <Card className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] md:w-[80%] aspect-[4/3] bg-neutral-bg border-none shadow-xl flex flex-col items-center justify-center p-6 text-center z-10">
-                  <span className="text-4xl md:text-6xl mb-4">📉</span>
+                <Card className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] md:w-[80%] aspect-[4/3] bg-white/80 backdrop-blur-xl border border-navy/5 shadow-[0_20px_40px_-15px_rgba(0,31,63,0.1)] flex flex-col items-center justify-center p-6 text-center z-10 transition-transform duration-700 hover:scale-105">
+                  <span className="text-4xl md:text-6xl mb-4 drop-shadow-sm">📉</span>
                   <p className="text-navy font-black text-xl md:text-2xl mb-2">0 contact généré</p>
                   <p className="text-navy/50 text-sm md:text-base font-medium">Le coût d'un site mal conçu.</p>
                 </Card>

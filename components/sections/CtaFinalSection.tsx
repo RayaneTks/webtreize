@@ -8,6 +8,7 @@ import { FadeUp } from '@/components/ui/FadeUp';
 import { Loader2, CheckCircle2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/Button';
+import { SnapchatIcon } from '@/components/ui/SnapchatIcon';
 
 const formSchema = z.object({
   firstName: z.string().min(2, 'Le prénom doit contenir au moins 2 caractères'),
@@ -56,19 +57,24 @@ export function CtaFinalSection() {
             <FadeUp>
               <h2
                 id="cta-final-title"
-                className="text-white font-black tracking-tight leading-[1.05] text-4xl sm:text-5xl md:text-6xl mb-6"
+                className="text-white font-black tracking-tight leading-[1.05] text-4xl sm:text-5xl md:text-6xl mb-6 relative"
               >
                 Tout commence <br /> par un audit.
+                {/* Effet lumineux derrière le titre */}
+                <span className="absolute -inset-1 rounded-full bg-orange/20 blur-2xl opacity-50 z-[-1]" />
               </h2>
               <p className="text-white/70 font-medium text-lg md:text-xl leading-relaxed max-w-lg mb-8">
-                En 48h, on vous dit exactement pourquoi vos concurrents prennent vos clients, et comment inverser la tendance. <strong className="text-white font-bold">Offert.</strong>
+                En 48h, on vous dit exactement pourquoi vos concurrents prennent vos clients, et comment inverser la tendance. Quel que soit votre besoin digital, <strong className="text-white font-bold">c'est offert.</strong>
               </p>
             </FadeUp>
           </div>
 
           {/* Formulaire - Droite (50%) */}
-          <div className="w-full lg:w-1/2 max-w-md w-full mx-auto lg:mx-0">
-            <FadeUp delay={100} className="w-full bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8 backdrop-blur-md">
+          <div className="w-full lg:w-1/2 max-w-md w-full mx-auto lg:mx-0 relative">
+            {/* Ambient glow behind the form card */}
+            <div className="absolute -inset-1 sm:-inset-4 bg-gradient-to-r from-orange/30 to-orange/5 rounded-[2rem] sm:rounded-[3rem] blur-2xl opacity-50 z-0"></div>
+            
+            <FadeUp delay={100} className="w-full bg-white/5 border border-white/10 rounded-[2rem] p-6 sm:p-8 backdrop-blur-xl shadow-2xl relative z-10 transition-all duration-500 hover:border-white/20 hover:bg-white/[0.07]">
               {isSuccess ? (
                 <div className="flex flex-col items-center justify-center text-center py-10 min-h-[300px]">
                   <CheckCircle2 className="w-16 h-16 text-emerald-400 mb-6" />
@@ -120,19 +126,24 @@ export function CtaFinalSection() {
 
                   <div className="flex flex-col gap-1.5">
                     <div className="relative">
+                      <label htmlFor="need" className="sr-only">Sélectionnez votre besoin</label>
                       <select
+                        id="need"
                         {...register('need')}
                         disabled={isSubmitting}
+                        aria-label="Sélectionnez votre besoin"
                         className={cn(
                           "w-full h-14 min-h-[56px] px-5 pr-10 rounded-xl bg-white/10 border border-white/20 text-white appearance-none focus:outline-none focus:ring-2 focus:ring-orange focus:border-transparent transition-all cursor-pointer",
                           errors.need && "border-red-500 focus:ring-red-500",
                           isSubmitting && "opacity-50 cursor-not-allowed"
                         )}
                       >
-                        <option value="" disabled className="text-navy">De quoi avez-vous besoin ?</option>
-                        <option value="local" className="text-navy">Plus de clients en local</option>
-                        <option value="refonte" className="text-navy">Refonte d'un vieux site</option>
-                        <option value="sur-mesure" className="text-navy">Création d'un outil sur-mesure</option>
+                        <option value="" disabled className="text-navy">Quel est votre besoin principal ?</option>
+                        <option value="site-web" className="text-navy">Création / Refonte de site web</option>
+                        <option value="application" className="text-navy">Développement d'application (Web, Mobile)</option>
+                        <option value="seo-visibilite" className="text-navy">Visibilité & SEO (Acquisition, Local)</option>
+                        <option value="digitalisation" className="text-navy">Digitalisation & Outils métiers sur-mesure</option>
+                        <option value="croissance" className="text-navy">Une autre idée pour votre croissance digitale</option>
                       </select>
                       <div className="absolute inset-y-0 right-5 flex items-center pointer-events-none">
                         <svg className="w-4 h-4 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -154,6 +165,19 @@ export function CtaFinalSection() {
                       "Recevoir mon audit en 48h"
                     )}
                   </button>
+                  
+                  <p className="text-center text-sm md:text-xs lg:text-sm text-white/50 font-medium mt-1">
+                    Vous préférez discuter ? On est très réactifs sur{' '}
+                    <a 
+                      href="https://snapchat.com/add/webtreize" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="text-[#FFFC00] hover:underline font-bold inline-flex items-center gap-1 ml-0.5 transition-colors"
+                    >
+                      <SnapchatIcon className="w-4 h-4" /> Snapchat
+                    </a>
+                    .
+                  </p>
                 </form>
               )}
             </FadeUp>

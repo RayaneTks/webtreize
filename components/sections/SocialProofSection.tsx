@@ -3,15 +3,17 @@
 import React from 'react';
 import { FadeUp } from '@/components/ui/FadeUp';
 
+import { TECH_ICONS } from '@/components/ui/TechIconsPaths';
+
 const TECH_STACK = [
-  'Next.js',
-  'React',
-  'TypeScript',
-  'Tailwind CSS',
-  'Vercel',
-  'Figma',
-  'Node.js',
-  'Serverless',
+  { name: 'Next.js', icon: 'nextdotjs' },
+  { name: 'React', icon: 'react' },
+  { name: 'TypeScript', icon: 'typescript' },
+  { name: 'Tailwind CSS', icon: 'tailwindcss' },
+  { name: 'Vercel', icon: 'vercel' },
+  { name: 'Figma', icon: 'figma' },
+  { name: 'Node.js', icon: 'nodedotjs' },
+  { name: 'Serverless', icon: 'serverless' },
 ] as const;
 
 function TechMarquee() {
@@ -21,13 +23,18 @@ function TechMarquee() {
       <div className="absolute inset-y-0 left-0 w-20 md:w-32 bg-gradient-to-r from-neutral-bg to-transparent z-10 pointer-events-none" />
       <div className="absolute inset-y-0 right-0 w-20 md:w-32 bg-gradient-to-l from-neutral-bg to-transparent z-10 pointer-events-none" />
       <div className="flex w-max animate-marquee items-center gap-4 lg:gap-8">
-        {items.map((name, i) => (
+        {items.map((item, i) => (
           <div
-            key={`${name}-${i}`}
-            className="flex items-center justify-center px-6 py-2 rounded-full border border-navy/10 bg-white shadow-sm"
+            key={`${item.name}-${i}`}
+            className="flex items-center justify-center gap-2 px-6 py-2 rounded-full border border-navy/10 bg-white shadow-sm"
           >
+            {TECH_ICONS[item.icon] && (
+              <svg className="w-4 h-4 text-navy/60 shrink-0" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d={TECH_ICONS[item.icon]} />
+              </svg>
+            )}
             <span className="text-xs md:text-sm font-bold tracking-wide text-navy/60 whitespace-nowrap select-none">
-              {name}
+              {item.name}
             </span>
           </div>
         ))}

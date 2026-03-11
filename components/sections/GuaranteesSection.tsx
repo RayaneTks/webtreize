@@ -81,9 +81,12 @@ export function GuaranteesSection() {
                 const Icon = item.icon;
                 return (
                   <FadeUp key={index} delay={index * 100}>
-                    <Card className="h-full bg-navy/50 border border-white/10 backdrop-blur-sm p-6 md:p-8 hover:bg-white/5 hover:border-white/20 transition-all text-white">
-                      <div className="w-14 h-14 rounded-2xl bg-orange/20 text-orange flex items-center justify-center mb-6">
-                        <Icon strokeWidth={2.5} className="w-7 h-7" />
+                    <Card className="h-full bg-navy/40 border border-white/5 backdrop-blur-md p-6 md:p-8 hover:bg-white/10 hover:border-white/20 hover:-translate-y-1.5 hover:shadow-[0_20px_40px_-15px_rgba(255,69,0,0.15)] transition-all duration-500 text-white relative overflow-hidden group">
+                      {/* Ambient hover glow inside card */}
+                      <div className="absolute top-0 right-0 w-32 h-32 bg-orange/20 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                      
+                      <div className="w-14 h-14 rounded-2xl bg-orange/10 border border-orange/20 text-orange flex items-center justify-center mb-6 relative z-10 group-hover:scale-110 group-hover:bg-orange/20 transition-all duration-500">
+                        <Icon strokeWidth={2} className="w-7 h-7" />
                       </div>
                       <h3 className="text-xl md:text-2xl font-bold tracking-tight mb-4">
                         {item.title}

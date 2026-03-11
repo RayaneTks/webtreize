@@ -10,8 +10,13 @@ export function MobileFab() {
   const scroll = useSmoothScroll();
   const [isHeroVisible, setIsHeroVisible] = useState(true);
   const [isContactVisible, setIsContactVisible] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
+    // Écoute de l'événement Navbar pour cacher le bouton quand le menu burger est ouvert
+    const handleMenuToggle = (e: any) => setIsMenuOpen(e.detail);
+    window.addEventListener('mobileMenuToggle', handleMenuToggle);
+
     const hero = document.getElementById('hero');
     const contact = document.getElementById('contact');
     if (!hero || !contact) return;
@@ -23,14 +28,18 @@ export function MobileFab() {
           if (entry.target.id === 'contact') setIsContactVisible(entry.isIntersecting);
         });
       },
-      { threshold: 0.1, rootMargin: '0px' }
+      // Le threshold 0 garantit que dès que le CTA Final pointe le bout de son nez, MobileFab disparaît
+      { threshold: 0, rootMargin: '0px' }
     );
     observer.observe(hero);
     observer.observe(contact);
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('mobileMenuToggle', handleMenuToggle);
+    };
   }, []);
 
-  const showFab = !isHeroVisible && !isContactVisible;
+  const showFab = !isHeroVisible && !isContactVisible && !isMenuOpen;
 
   return (
     <div
