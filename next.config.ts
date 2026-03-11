@@ -29,7 +29,16 @@ const nextConfig: NextConfig = {
     deviceSizes: [384, 640, 750, 828, 1080, 1200, 1920, 2048, 3840],
   },
   async headers() {
-    return [{ source: '/(.*)', headers: securityHeaders }];
+    return [
+      { source: '/(.*)', headers: securityHeaders },
+      {
+        source: '/_next/static/css/(.*)',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+          { key: 'Content-Type', value: 'text/css' }
+        ],
+      },
+    ];
   },
 };
 

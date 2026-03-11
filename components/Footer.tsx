@@ -23,11 +23,11 @@ export function Footer() {
             <p className="text-sm font-medium leading-relaxed max-w-xs mb-8">
               L'agence digitale nouvelle génération. Des sites qui génèrent des clients, sans bullshit.
             </p>
-            <div className="flex items-center gap-4">
-              <a href="https://snapchat.com/add/webtreize" target="_blank" rel="noopener noreferrer" className="hover:text-orange transition-colors" aria-label="Snapchat">
+            <div className="flex items-center gap-2">
+              <a href="https://snapchat.com/add/webtreize" target="_blank" rel="noopener noreferrer" className="hover:text-orange transition-colors p-3 -ml-3 rounded-full" aria-label="Snapchat">
                 <SnapchatIcon className="w-6 h-6" />
               </a>
-              <a href={`mailto:${process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'contact@webtreize.com'}`} aria-label="Email" className="hover:text-orange transition-colors">
+              <a href={`mailto:${process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'contact@webtreize.com'}`} aria-label="Email" className="hover:text-orange transition-colors p-3 rounded-full">
                 <Mail className="w-5 h-5" />
               </a>
             </div>
@@ -35,12 +35,12 @@ export function Footer() {
 
           {/* Colonne 2 : Liens Rapides */}
           <div className="flex flex-col items-start md:items-center">
-            <div className="flex flex-col items-start gap-4">
+            <div className="flex flex-col items-start gap-2">
               <h3 className="text-white font-bold text-lg mb-2">Liens rapides</h3>
-              <Link href="#services" className="text-sm font-medium hover:text-orange transition-colors">Nos services</Link>
-              <Link href="#engagements" className="text-sm font-medium hover:text-orange transition-colors">Engagements</Link>
-              <Link href="#faq" className="text-sm font-medium hover:text-orange transition-colors">F.A.Q</Link>
-              <Link href="#contact" className="text-sm font-medium hover:text-orange transition-colors">Nous contacter</Link>
+              <Link href="#services" className="text-sm font-medium hover:text-orange transition-colors py-2 px-1 -mx-1 inline-block">Nos services</Link>
+              <Link href="#engagements" className="text-sm font-medium hover:text-orange transition-colors py-2 px-1 -mx-1 inline-block">Engagements</Link>
+              <Link href="#faq" className="text-sm font-medium hover:text-orange transition-colors py-2 px-1 -mx-1 inline-block">F.A.Q</Link>
+              <Link href="#contact" className="text-sm font-medium hover:text-orange transition-colors py-2 px-1 -mx-1 inline-block">Nous contacter</Link>
             </div>
           </div>
 
@@ -63,10 +63,10 @@ export function Footer() {
           <p className="text-xs font-medium text-white/80">
             © {currentYear} WebTreize - Conçu et développé par WebTreize
           </p>
-          <div className="flex items-center gap-4 text-xs font-medium text-white/80">
-            <Link href={"/mentions-legales" as any} className="hover:text-white transition-colors">Mentions légales</Link>
+          <div className="flex items-center gap-2 text-xs font-medium text-white/80">
+            <Link href="/legal/mentions-legales" className="hover:text-white transition-colors p-2 inline-block">Mentions légales</Link>
             <span>|</span>
-            <Link href={"/cgv" as any} className="hover:text-white transition-colors">CGV</Link>
+            <Link href="/legal/cgv" className="hover:text-white transition-colors p-2 inline-block">CGV</Link>
           </div>
         </div>
       </div>

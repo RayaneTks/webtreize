@@ -15,6 +15,8 @@ export function LogoWebTreize({ className, decorative }: LogoWebTreizeProps) {
     <img
       src={LOGO_SRC}
       alt={decorative ? '' : 'WebTreize'}
+      width={400}
+      height={300}
       className={cn('shrink-0 object-contain', className)}
       aria-hidden={decorative}
     />

@@ -58,7 +58,7 @@ export function SocialProofSection() {
             >
               Des fondations bâties pour le top 1%
             </h2>
-            <p className="mt-4 text-xs md:text-sm text-navy/50 font-bold uppercase tracking-widest">
+            <p className="mt-4 text-xs md:text-sm text-navy/70 font-bold uppercase tracking-widest">
               Coder avec les outils des leaders mondiaux
             </p>
           </div>

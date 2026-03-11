@@ -91,7 +91,9 @@ export function CtaFinalSection() {
               ) : (
                 <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 w-full">
                   <div className="flex flex-col gap-1.5">
+                    <label htmlFor="cta-firstName" className="sr-only">Prénom</label>
                     <input
+                      id="cta-firstName"
                       {...register('firstName')}
                       disabled={isSubmitting}
                       type="text"
@@ -108,7 +110,9 @@ export function CtaFinalSection() {
                   </div>
 
                   <div className="flex flex-col gap-1.5">
+                    <label htmlFor="cta-email" className="sr-only">Email</label>
                     <input
+                      id="cta-email"
                       {...register('email')}
                       disabled={isSubmitting}
                       type="email"
