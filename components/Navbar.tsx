@@ -12,6 +12,7 @@ import { cn } from '@/lib/utils';
 const NAV_LINKS = [
   { label: 'Services', href: '#services' },
   { label: 'La Méthode', href: '#method' },
+  { label: 'Réalisations', href: '#realisations' },
   { label: 'FAQ', href: '#faq' },
 ] as const;
 
@@ -98,7 +99,7 @@ export function Navbar() {
                 key={label}
                 href={pathname === '/' ? href : `/#${href.slice(1)}`}
                 onClick={(e) => handleNavClick(e, href)}
-                className={cn("text-sm font-bold transition-colors relative group py-2", isScrolled ? "text-white hover:text-orange" : "text-navy hover:text-orange")}
+                className={cn("text-sm font-bold transition-colors relative group py-2 px-1 focus-visible:ring-2 focus-visible:ring-orange focus-visible:outline-none rounded-sm", isScrolled ? "text-white hover:text-orange" : "text-navy hover:text-orange")}
               >
                 {label}
                 <span className="absolute bottom-0 left-0 w-full h-0.5 bg-orange scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out" />
@@ -109,22 +110,23 @@ export function Navbar() {
           <div className="flex items-center gap-3 md:gap-4 z-50">
             {/* CTA Desktop & Mobile (en permanence) */}
             <Button
-              variant="default"
+              variant="outline"
               size="sm"
               className={cn(
-                "hidden sm:flex whitespace-nowrap",
-                isScrolled ? "h-10" : "h-12 lg:h-12"
+                "hidden sm:flex whitespace-nowrap transition-colors",
+                isScrolled ? "h-10 bg-white/10 text-white border-white/20 hover:bg-white hover:text-navy" : "h-12 lg:h-12 border-navy/20 text-navy hover:bg-navy hover:text-white"
               )}
               onClick={(e) => handleNavClick(e, '#contact')}
             >
               Obtenir mon audit gratuit
             </Button>
             <Button
-              variant="default"
+              variant="outline"
               size="sm"
               className={cn(
-                "flex sm:hidden whitespace-nowrap px-4 py-2 text-xs",
-                "h-10" // Force 40px height sur trez petit mobile pour entrer avec le hamburger
+                "flex sm:hidden whitespace-nowrap px-4 py-2 text-xs transition-colors",
+                "h-10 border-navy/20",
+                isScrolled || mobileMenuOpen ? "bg-white/10 text-white border-white/20" : "text-navy"
               )}
               onClick={(e) => handleNavClick(e, '#contact')}
             >
@@ -134,7 +136,7 @@ export function Navbar() {
             {/* Hamburger Button */}
             <button
               type="button"
-              className={cn("lg:hidden relative p-2 active:scale-90 transition-transform focus:outline-none focus:ring-2 focus:ring-orange rounded-md", isScrolled || mobileMenuOpen ? "text-white" : "text-navy")}
+              className={cn("lg:hidden relative p-3 min-w-[48px] min-h-[48px] flex items-center justify-center active:scale-90 transition-transform focus:outline-none focus:ring-2 focus:ring-orange rounded-md", isScrolled || mobileMenuOpen ? "text-white" : "text-navy")}
               onClick={(e) => {
                 e.stopPropagation();
                 setMobileMenuOpen(!mobileMenuOpen);

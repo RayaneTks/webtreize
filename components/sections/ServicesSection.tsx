@@ -95,11 +95,16 @@ export function ServicesSection() {
                     <Icon className="w-6 h-6" />
                   </div>
                   
-                  <h3 className="text-xl md:text-2xl font-black text-navy mb-4 tracking-tight leading-snug">
-                    {service.title}
+                  <h3 className="text-xl md:text-2xl font-black text-navy mb-4 tracking-tight leading-snug flex items-start sm:items-center justify-between gap-2 flex-col sm:flex-row">
+                    <span>{service.title}</span>
+                    {index === 0 && (
+                      <span className="text-[10px] uppercase font-black tracking-widest bg-orange text-white px-2.5 py-1 rounded-full whitespace-nowrap self-start sm:self-auto">
+                        Populaire
+                      </span>
+                    )}
                   </h3>
                   
-                  <p className="text-navy/70 font-medium leading-relaxed mb-6 flex-grow text-[15px]">
+                  <p className="text-navy/80 font-medium leading-relaxed mb-6 flex-grow text-[15px]">
                     {service.description}
                   </p>
                   

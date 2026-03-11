@@ -36,7 +36,7 @@ export function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative pt-32 pb-16 md:pt-48 md:pb-24 px-5 lg:px-8 min-h-[90vh] flex flex-col justify-center bg-neutral-bg overflow-hidden"
+      className="relative pt-24 pb-12 md:pt-48 md:pb-24 px-5 lg:px-8 min-h-[90vh] flex flex-col justify-center bg-neutral-bg overflow-hidden"
       aria-labelledby="hero-title"
     >
       {/* Background decorations */}
@@ -112,6 +112,20 @@ export function HeroSection() {
               </Button>
             </motion.div>
           </div>
+
+          {/* Avis Clients (Preuve Sociale Immédiate) */}
+          <motion.div variants={itemVariants} className="mt-8 flex flex-col items-center gap-1.5 md:mt-10">
+            <div className="flex gap-1 text-orange" aria-label="5 étoiles sur 5">
+              {[1, 2, 3, 4, 5].map(i => (
+                <svg key={i} className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+              ))}
+            </div>
+            <p className="text-sm font-bold text-navy/80 tracking-wide">
+              Moyenne de <span className="text-navy font-black">5.0/5</span> sur Google Avis
+            </p>
+          </motion.div>
 
           {/* 6. Élément visuel premium (Dashboard Abstrait) */}
           <motion.div
