@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Home, TerminalSquare, ArrowLeft } from 'lucide-react';
 import { LogoWebTreize } from '@/components/ui/LogoWebTreize';
+import { Button } from '@/components/ui/Button';
+import { NoiseOverlay } from '@/components/background/NoiseOverlay';
 
 const TERMINAL_LINES: Array<{ text: string; delay: number; error?: boolean; warning?: boolean }> = [
   { text: '> Initialisation du protocole de recherche...', delay: 500 },
@@ -32,14 +34,14 @@ function FakeTerminal() {
   }, []);
 
   return (
-    <div className="w-full max-w-2xl bg-[#F0F4F8] rounded-2xl border border-gray-200 overflow-hidden shadow-xl">
-      <div className="bg-white px-4 py-3 flex items-center border-b border-gray-200">
+    <div className="w-full max-w-2xl bg-white/60 backdrop-blur-md rounded-2xl border border-navy/10 overflow-hidden shadow-xl">
+      <div className="bg-white/80 px-4 py-3 flex items-center border-b border-navy/10">
         <div className="flex gap-2">
           <div className="w-3 h-3 rounded-full bg-red-400" aria-hidden />
           <div className="w-3 h-3 rounded-full bg-amber-400" aria-hidden />
-          <div className="w-3 h-3 rounded-full bg-green-400" aria-hidden />
+          <div className="w-3 h-3 rounded-full bg-emerald-400" aria-hidden />
         </div>
-        <div className="mx-auto flex items-center gap-2 text-[#001F3F]/40 text-xs font-mono font-bold">
+        <div className="mx-auto flex items-center gap-2 text-navy/40 text-xs font-mono font-bold">
           <TerminalSquare className="w-4 h-4" aria-hidden /> root@webtreize:~
         </div>
       </div>
@@ -48,19 +50,19 @@ function FakeTerminal() {
           {TERMINAL_LINES.slice(0, visibleLines).map((line, i) => (
             <div
               key={i}
-              className={`animate-line-fade-in break-words whitespace-normal ${
+              className={`animate-line-fade-in break-words whitespace-normal font-medium ${
                 line.error
                   ? 'text-red-500 font-bold'
                   : line.warning
-                    ? 'text-[#FF4500]'
-                    : 'text-[#001F3F]/70'
+                    ? 'text-orange font-bold'
+                    : 'text-navy/70'
               }`}
             >
               {line.text}
             </div>
           ))}
           {visibleLines === TERMINAL_LINES.length && (
-            <div className="text-[#FF4500] animate-pulse mt-2">_</div>
+            <div className="text-orange animate-pulse mt-2 font-bold">_</div>
           )}
         </div>
       </div>
@@ -70,11 +72,13 @@ function FakeTerminal() {
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-[#F8FAFC] text-[#001F3F] font-sans flex flex-col selection:bg-[#FF4500]/20">
+    <div className="min-h-screen bg-neutral-bg text-navy font-sans flex flex-col selection:bg-orange/20 relative overflow-hidden">
+      <NoiseOverlay />
+      
       <nav className="w-full p-6 flex items-center justify-between relative z-10 max-w-7xl mx-auto">
         <Link
           href="/"
-          className="flex items-center gap-3 text-[#001F3F]/60 hover:text-[#001F3F] transition-colors group"
+          className="flex items-center gap-3 text-navy/60 hover:text-navy transition-colors group"
           aria-label="WebTreize - Retour accueil"
         >
           <LogoWebTreize decorative className="w-10 h-10 md:w-12 md:h-12 transition-transform group-hover:scale-105" />
@@ -90,10 +94,10 @@ export default function NotFound() {
         </div>
 
         <div className="text-center mb-12 max-w-2xl px-4">
-          <h2 className="text-2xl md:text-4xl font-black mb-4 text-[#001F3F]">
+          <h2 className="text-2xl md:text-4xl font-black mb-4 text-navy">
             Vous avez navigué hors zone.
           </h2>
-          <p className="text-base md:text-lg text-[#001F3F]/60 font-medium">
+          <p className="text-base md:text-lg text-navy/60 font-medium">
             L&apos;URL que vous cherchez n&apos;existe pas ou a été supprimée. Pas de panique, on vous ramène.
           </p>
         </div>
@@ -102,24 +106,29 @@ export default function NotFound() {
           <FakeTerminal />
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-4 w-full max-w-md">
-          <button
-            type="button"
+        <div className="flex flex-col sm:flex-row gap-4 w-full max-w-md justify-center">
+          <Button
+            variant="outline"
+            size="lg"
             onClick={() => window.history.back()}
-            className="flex-1 px-6 py-4 rounded-full bg-white border border-[#001F3F]/10 text-[#001F3F] font-bold transition-all active:scale-95 flex items-center justify-center gap-2 shadow-sm hover:shadow-md"
+            className="flex-1 gap-2"
           >
             <ArrowLeft className="w-5 h-5" aria-hidden /> Revenir
-          </button>
-          <Link
-            href="/"
-            className="flex-1 px-6 py-4 rounded-full bg-[#FF4500] text-white font-bold transition-all active:scale-95 shadow-[0_10px_25px_rgba(255,69,0,0.2)] hover:shadow-[0_15px_35px_rgba(255,69,0,0.3)] flex items-center justify-center gap-2"
+          </Button>
+          <Button
+            variant="default"
+            size="lg"
+            asChild
+            className="flex-1 gap-2"
           >
-            <Home className="w-5 h-5" aria-hidden /> Accueil
-          </Link>
+            <Link href="/">
+              <Home className="w-5 h-5" aria-hidden /> Accueil
+            </Link>
+          </Button>
         </div>
       </main>
 
-      <footer className="w-full p-6 text-center text-[#001F3F]/30 text-sm font-bold uppercase tracking-widest">
+      <footer className="w-full p-6 text-center text-navy/30 text-sm font-bold uppercase tracking-widest relative z-10">
         Signal perdu quelque part dans le Vieux-Port.
       </footer>
     </div>
