@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Navbar } from '@/components/Navbar';
 import { MobileFab } from '@/components/MobileFab';
 import { NAVBAR_OFFSET } from '@/hooks/useSmoothScroll';
@@ -9,7 +9,7 @@ export function ClientShell({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const hash = window.location.hash?.slice(1);
-    if (hash && ['services', 'vision', 'contact'].includes(hash)) {
+    if (hash) {
       const timer = setTimeout(() => {
         const el = document.getElementById(hash);
         if (el) {

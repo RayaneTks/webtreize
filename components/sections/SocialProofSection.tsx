@@ -3,69 +3,45 @@
 import React from 'react';
 import { FadeUp } from '@/components/ui/FadeUp';
 
-import { TECH_ICONS } from '@/components/ui/TechIconsPaths';
-
-const TECH_STACK = [
-  { name: 'Next.js', icon: 'nextdotjs' },
-  { name: 'React', icon: 'react' },
-  { name: 'TypeScript', icon: 'typescript' },
-  { name: 'Tailwind CSS', icon: 'tailwindcss' },
-  { name: 'Vercel', icon: 'vercel' },
-  { name: 'Figma', icon: 'figma' },
-  { name: 'Node.js', icon: 'nodedotjs' },
-  { name: 'Serverless', icon: 'serverless' },
-] as const;
-
-function TechMarquee() {
-  const items = [...TECH_STACK, ...TECH_STACK, ...TECH_STACK];
-  return (
-    <div className="w-full overflow-hidden relative py-4 lg:py-6">
-      <div className="absolute inset-y-0 left-0 w-20 md:w-32 bg-gradient-to-r from-neutral-bg to-transparent z-10 pointer-events-none" />
-      <div className="absolute inset-y-0 right-0 w-20 md:w-32 bg-gradient-to-l from-neutral-bg to-transparent z-10 pointer-events-none" />
-      <div className="flex w-max animate-marquee items-center gap-4 lg:gap-8">
-        {items.map((item, i) => (
-          <div
-            key={`${item.name}-${i}`}
-            className="flex items-center justify-center gap-2 px-6 py-2 rounded-full border border-navy/10 bg-white shadow-sm"
-          >
-            {TECH_ICONS[item.icon] && (
-              <svg className="w-4 h-4 text-navy/60 shrink-0" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                <path d={TECH_ICONS[item.icon]} />
-              </svg>
-            )}
-            <span className="text-xs md:text-sm font-bold tracking-wide text-navy/60 whitespace-nowrap select-none">
-              {item.name}
-            </span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
+const METRICS = [
+  { value: '+75%', label: 'visibilité', sublabel: 'en moyenne' },
+  { value: '100%', label: 'sur-mesure', sublabel: 'pas de template' },
+  { value: '48h', label: 'réponse', sublabel: 'garantie' },
+  { value: '0€', label: "d'engagement", sublabel: 'initial' },
+];
 
 export function SocialProofSection() {
   return (
-    <section className="pt-12 pb-16 md:pt-20 md:pb-28 bg-neutral-bg relative overflow-hidden" aria-labelledby="expertise-title">
-      <div className="container mx-auto px-5 lg:px-8 max-w-screen-xl">
+    <section
+      className="py-12 md:py-16 bg-white border-y-2 border-navy relative"
+      aria-label="Nos résultats en chiffres"
+    >
+      <div className="container mx-auto px-5 lg:px-12 xl:px-16 max-w-screen-xl">
         <FadeUp>
-          <div className="text-center mb-8 md:mb-12">
-            <span className="text-orange font-bold tracking-[0.15em] uppercase text-[10px] md:text-xs mb-3 block">
-              On ne bricole pas.
-            </span>
-            <h2
-              id="expertise-title"
-              className="text-navy leading-[1.1] max-w-2xl mx-auto"
-            >
-              Des fondations bâties pour le top 1%
-            </h2>
-            <p className="mt-4 text-xs md:text-sm text-navy/70 font-bold uppercase tracking-widest">
-              Coder avec les outils des leaders mondiaux
-            </p>
+          <div className="grid grid-cols-2 lg:grid-cols-4">
+            {METRICS.map((metric, i) => (
+              <div
+                key={i}
+                className="text-center py-4 md:py-6 relative"
+              >
+                {i > 0 && (
+                  <div className="absolute left-0 top-1/2 -translate-y-1/2 w-px h-2/3 bg-navy/10 hidden lg:block" aria-hidden="true" />
+                )}
+                {i === 2 && (
+                  <div className="absolute left-0 top-1/2 -translate-y-1/2 w-px h-2/3 bg-navy/10 lg:hidden" aria-hidden="true" />
+                )}
+                <p className="font-display text-3xl md:text-4xl lg:text-5xl text-navy uppercase leading-none mb-1">
+                  {metric.value}
+                </p>
+                <p className="text-xs md:text-sm font-bold text-navy/70 uppercase tracking-wide">
+                  {metric.label}
+                </p>
+                <p className="text-[10px] md:text-xs text-neutral-text font-medium mt-0.5">
+                  {metric.sublabel}
+                </p>
+              </div>
+            ))}
           </div>
-        </FadeUp>
-
-        <FadeUp delay={100}>
-          <TechMarquee />
         </FadeUp>
       </div>
     </section>

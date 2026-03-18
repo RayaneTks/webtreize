@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { LegalWipContent } from '@/components/legal/LegalWipContent';
+import { SITE_URL } from '@/lib/constants';
 
 type LegalPageProps = {
   params: Promise<{ slug: string }>;
@@ -11,8 +12,6 @@ const readableTitles: Record<string, string> = {
   'politique-de-confidentialite': 'Politique de confidentialité',
   cgv: 'Conditions générales de vente',
 };
-
-const SITE_URL = 'https://www.webtreize.com';
 
 export async function generateMetadata({ params }: LegalPageProps): Promise<Metadata> {
   const { slug } = await params;

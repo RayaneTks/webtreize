@@ -2,31 +2,30 @@
 
 import React from 'react';
 import { FadeUp } from '@/components/ui/FadeUp';
-import { Card } from '@/components/ui/Card';
-import { Button } from '@/components/ui/Button';
 import { ShieldCheck, CalendarClock, LifeBuoy, Unlock } from 'lucide-react';
+import { Button } from '@/components/ui/Button';
 import { useSmoothScroll } from '@/hooks/useSmoothScroll';
 
 const GUARANTEES = [
   {
     icon: ShieldCheck,
-    title: 'Audit initial gratuit',
-    description: "Sans engagement et sans condition cachée. Nous vous livrons une analyse concrète de ce qui ne fonctionne pas, que vous décidiez de travailler avec nous ou non.",
+    title: 'Audit gratuit',
+    description: "Analyse complète, sans engagement. Que vous travailliez avec nous ou non.",
   },
   {
     icon: CalendarClock,
-    title: 'Délais contractuels',
-    description: "Les dates de livraison sont inscrites dans le devis. Un retard de notre part ? C'est nous qui payons des pénalités. Pas vous.",
+    title: 'Délais garantis',
+    description: "Dates inscrites au contrat. Un retard ? On paye des pénalités.",
   },
   {
     icon: LifeBuoy,
-    title: '30 jours de suivi inclus',
-    description: "Après livraison, nous restons à vos côtés pendant un mois complet pour assurer un lancement parfait et corriger le moindre détail.",
+    title: '30 jours de suivi',
+    description: "Un mois d'accompagnement après livraison. Ajustements inclus.",
   },
   {
     icon: Unlock,
-    title: 'Zéro abonnement forcé',
-    description: "Vous êtes propriétaire de votre nom de domaine et de votre site. Aucun abonnement piège, vous êtes totalement libre.",
+    title: 'Zéro piège',
+    description: "Propriétaire de votre site et domaine. Aucun abonnement forcé.",
   },
 ] as const;
 
@@ -34,73 +33,60 @@ export function GuaranteesSection() {
   const scroll = useSmoothScroll();
 
   return (
-    <section 
+    <section
       id="engagements"
-      className="py-20 md:py-32 bg-navy relative overflow-hidden"
+      className="py-24 md:py-36 bg-white relative"
       aria-labelledby="engagements-title"
     >
-      {/* Background design */}
-      <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none mix-blend-overlay">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] animate-spin-slow rotate-45"
-             style={{ backgroundImage: 'repeating-linear-gradient(45deg, white 0px, white 2px, transparent 2px, transparent 40px)' }}
-        />
-      </div>
-
-      <div className="container mx-auto px-5 lg:px-8 max-w-screen-xl relative z-10">
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-20">
-          
-          {/* Titre et CTA - Sticky sur desktop */}
-          <div className="w-full lg:w-1/3">
-            <div className="lg:sticky lg:top-32">
-              <FadeUp>
-                <div className="w-16 h-1 bg-orange mb-8" />
-                <h2 
-                  id="engagements-title"
-                  className="text-white font-black tracking-tight leading-[1.1] text-3xl md:text-5xl mb-6 uppercase"
-                >
-                  Nos engagements
-                </h2>
-                <p className="text-white/70 font-medium text-lg mb-8 leading-relaxed">
-                  Contrairement aux "usines à sites", nous misons tout sur la qualité et la transparence. Voici nos standards non-négociables.
-                </p>
-                <Button 
-                  size="lg"
-                  className="w-full md:w-auto text-[15px] sm:text-lg"
-                  onClick={(e) => scroll(e, '#contact')}
-                >
-                  Démarrer mon audit gratuit
-                </Button>
-              </FadeUp>
-            </div>
+      <div className="container mx-auto px-5 lg:px-12 xl:px-16 max-w-screen-xl">
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-20">
+          {/* Left: Headline + CTA */}
+          <div className="lg:col-span-4">
+            <FadeUp>
+              <span className="inline-block px-4 py-2 mb-6 border-2 border-navy text-xs font-bold uppercase tracking-[0.15em] text-navy">
+                Engagements
+              </span>
+              <h2
+                id="engagements-title"
+                className="font-display text-navy uppercase leading-[0.92] mb-6"
+                style={{ fontSize: 'clamp(32px, 4.5vw, 48px)' }}
+              >
+                Pas de belles
+                <br />
+                paroles.
+                <br />
+                Des garanties.
+              </h2>
+              <p className="text-neutral-text font-medium leading-relaxed mb-8 max-w-sm">
+                On ne livre pas du volume. On livre du résultat.
+              </p>
+              <Button size="lg" onClick={(e) => scroll(e, '#contact')}>
+                Démarrer mon audit
+              </Button>
+            </FadeUp>
           </div>
 
-          {/* Grille de garanties */}
-          <div className="w-full lg:w-2/3">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+          {/* Right: 2x2 grid with border separators */}
+          <div className="lg:col-span-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-navy/15 border-2 border-navy/15">
               {GUARANTEES.map((item, index) => {
                 const Icon = item.icon;
                 return (
-                  <FadeUp key={index} delay={index * 100}>
-                    <Card className="h-full bg-navy/40 border border-white/5 backdrop-blur-md p-6 md:p-8 hover:bg-white/10 hover:border-white/20 hover:-translate-y-1.5 hover:shadow-[0_20px_40px_-15px_rgba(255,69,0,0.15)] transition-all duration-500 text-white relative overflow-hidden group">
-                      {/* Ambient hover glow inside card */}
-                      <div className="absolute top-0 right-0 w-32 h-32 bg-orange/20 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                      
-                      <div className="w-14 h-14 rounded-2xl bg-orange/10 border border-orange/20 text-orange flex items-center justify-center mb-6 relative z-10 group-hover:scale-110 group-hover:bg-orange/20 transition-all duration-500">
-                        <Icon strokeWidth={2} className="w-7 h-7" />
-                      </div>
-                      <h3 className="text-xl md:text-2xl font-bold tracking-tight mb-4">
+                  <FadeUp key={index} delay={index * 80}>
+                    <div className="p-8 md:p-10 bg-white h-full">
+                      <Icon className="w-7 h-7 text-orange mb-6" strokeWidth={2} />
+                      <h3 className="font-display text-lg md:text-xl text-navy uppercase mb-3">
                         {item.title}
                       </h3>
-                      <p className="text-white/60 font-medium leading-relaxed">
+                      <p className="text-neutral-text font-medium leading-relaxed text-sm">
                         {item.description}
                       </p>
-                    </Card>
+                    </div>
                   </FadeUp>
                 );
               })}
             </div>
           </div>
-
         </div>
       </div>
     </section>

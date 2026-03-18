@@ -7,7 +7,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test:e2e": "playwright test"
   },
   "keywords": [
     "nextjs",
@@ -24,7 +25,6 @@
     "@hookform/resolvers": "^5.2.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "framer-motion": "^12.34.3",
     "lucide-react": "^0.575.0",
     "next": "^16.1.6",
     "react": "^19.2.4",
@@ -34,6 +34,7 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
+    "@playwright/test": "^1.58.2",
     "@types/node": "22.19.13",
     "@types/react": "19.2.14",
     "@types/react-dom": "^19.0.3",

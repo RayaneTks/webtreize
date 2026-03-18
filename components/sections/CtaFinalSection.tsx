@@ -5,21 +5,30 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { FadeUp } from '@/components/ui/FadeUp';
-import { Loader2, CheckCircle2 } from 'lucide-react';
+import { Loader2, CheckCircle2, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/Button';
 import { SnapchatIcon } from '@/components/ui/SnapchatIcon';
+import { SNAPCHAT_URL } from '@/lib/constants';
 
 const formSchema = z.object({
-  firstName: z.string().min(2, 'Le prénom doit contenir au moins 2 caractères'),
-  email: z.string().email("Format d'email invalide"),
-  need: z.string().min(1, 'Veuillez sélectionner un besoin'),
+  firstName: z.string().min(2, 'Minimum 2 caractères'),
+  email: z.string().email("Email invalide"),
+  need: z.string().min(1, 'Sélectionnez un besoin'),
 });
 
 type FormData = z.infer<typeof formSchema>;
 
+const NEED_LABELS: Record<string, string> = {
+  'site-web': "Création / Refonte de site web",
+  'application': "Développement d'application",
+  'seo-visibilite': "SEO & Visibilité locale",
+  'digitalisation': "Digitalisation & Outils métiers",
+  'autre': "Autre besoin",
+};
+
 export function CtaFinalSection() {
   const [isSuccess, setIsSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const {
     register,
@@ -28,164 +37,188 @@ export function CtaFinalSection() {
     reset
   } = useForm<FormData>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      firstName: '',
-      email: '',
-      need: '',
-    }
+    defaultValues: { firstName: '', email: '', need: '' }
   });
 
   const onSubmit = async (data: FormData) => {
-    // Simulation API
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    console.log('Lead soumis :', data);
-    setIsSuccess(true);
-    reset();
+    setErrorMessage('');
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: data.firstName,
+          email: data.email,
+          message: `Demande d'audit — Besoin : ${NEED_LABELS[data.need] || data.need}`,
+        }),
+      });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error || 'Erreur');
+      setIsSuccess(true);
+      reset();
+    } catch (err) {
+      setErrorMessage(err instanceof Error ? err.message : 'Une erreur est survenue.');
+    }
   };
 
   return (
-    <section 
+    <section
       id="contact"
-      className="py-16 md:py-32 bg-navy relative overflow-hidden" 
-      aria-labelledby="cta-final-title"
+      className="py-24 md:py-36 bg-navy relative overflow-hidden"
+      aria-labelledby="cta-title"
     >
-      <div className="container mx-auto px-5 lg:px-8 max-w-screen-xl">
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-center lg:items-start max-w-6xl mx-auto">
-          
-          {/* Texte - Gauche (50%) */}
-          <div className="w-full lg:w-1/2">
-            <FadeUp>
-              <h2
-                id="cta-final-title"
-                className="text-white font-black tracking-tight leading-[1.05] text-4xl sm:text-5xl md:text-6xl mb-6 relative"
-              >
-                Tout commence <br /> par un audit.
-                {/* Effet lumineux derrière le titre */}
-                <span className="absolute -inset-1 rounded-full bg-orange/20 blur-2xl opacity-50 z-[-1]" />
-              </h2>
-              <p className="text-white/70 font-medium text-lg md:text-xl leading-relaxed max-w-lg mb-8">
-                En 48h, on vous dit exactement pourquoi vos concurrents prennent vos clients, et comment inverser la tendance. Quel que soit votre besoin digital, <strong className="text-white font-bold">c'est offert.</strong>
-              </p>
-            </FadeUp>
-          </div>
+      <div className="container mx-auto px-5 lg:px-12 xl:px-16 max-w-screen-xl">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+          {/* Left: Pitch */}
+          <FadeUp>
+            <h2
+              id="cta-title"
+              className="font-display text-white uppercase leading-[0.92] mb-6"
+              style={{ fontSize: 'clamp(36px, 5.5vw, 56px)' }}
+            >
+              Prêt à passer
+              <br />
+              devant vos
+              <br />
+              <span className="text-orange">concurrents ?</span>
+            </h2>
+            <p className="text-white/80 font-medium text-lg leading-relaxed mb-10 max-w-lg">
+              En 48h, on analyse votre présence digitale et on vous dit exactement quoi faire. Gratuit, sans engagement.
+            </p>
 
-          {/* Formulaire - Droite (50%) */}
-          <div className="w-full lg:w-1/2 max-w-md w-full mx-auto lg:mx-0 relative">
-            {/* Ambient glow behind the form card */}
-            <div className="absolute -inset-1 sm:-inset-4 bg-gradient-to-r from-orange/30 to-orange/5 rounded-[2rem] sm:rounded-[3rem] blur-2xl opacity-50 z-0"></div>
-            
-            <FadeUp delay={100} className="w-full bg-white/5 border border-white/10 rounded-[2rem] p-6 sm:p-8 backdrop-blur-xl shadow-2xl relative z-10 transition-all duration-500 hover:border-white/20 hover:bg-white/[0.07]">
+            <div className="flex flex-col gap-6">
+              <div className="flex items-center gap-3 flex-wrap">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/10 text-white/90 text-xs font-bold">✓ Audit gratuit</span>
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/10 text-white/90 text-xs font-bold">✓ Sans engagement</span>
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/10 text-white/90 text-xs font-bold">✓ Réponse 48h</span>
+              </div>
+
+              <div className="flex items-center gap-4 pt-6 border-t border-white/10">
+                <span className="text-white/60 text-sm font-medium">Vous préférez discuter ?</span>
+                <a
+                  href={SNAPCHAT_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-[#FFFC00] text-black text-sm font-bold hover:brightness-95 transition-all"
+                >
+                  <SnapchatIcon className="w-4 h-4" />
+                  @webtreize
+                </a>
+              </div>
+            </div>
+          </FadeUp>
+
+          {/* Right: Form */}
+          <FadeUp delay={100}>
+            <div className="bg-cream border-2 border-white p-6 sm:p-8 shadow-brutal">
               {isSuccess ? (
-                <div className="flex flex-col items-center justify-center text-center py-10 min-h-[300px]">
-                  <CheckCircle2 className="w-16 h-16 text-emerald-400 mb-6" />
-                  <h3 className="text-2xl font-bold text-white mb-2">Reçu !</h3>
-                  <p className="text-white/70 font-medium">On vous contacte dans 48h.</p>
-                  <Button 
-                    variant="ghost" 
-                    className="mt-8 text-white hover:bg-white/10"
+                <div className="flex flex-col items-center justify-center text-center py-12 min-h-[320px]">
+                  <CheckCircle2 className="w-14 h-14 text-emerald-600 mb-6" />
+                  <h3 className="font-display text-2xl text-navy uppercase mb-2">Reçu !</h3>
+                  <p className="text-neutral-text font-medium mb-8">On revient vers vous sous 48h.</p>
+                  <button
+                    type="button"
+                    className="text-orange font-bold text-sm hover:underline"
                     onClick={() => setIsSuccess(false)}
                   >
-                    Nouveau message
-                  </Button>
+                    Envoyer un autre message
+                  </button>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 w-full">
-                  <div className="flex flex-col gap-1.5">
-                    <label htmlFor="cta-firstName" className="sr-only">Prénom</label>
+                <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+                  <h3 className="font-display text-navy uppercase text-lg mb-2">
+                    Audit gratuit en 48h
+                  </h3>
+
+                  <div>
+                    <label htmlFor="cta-name" className="sr-only">Prénom</label>
                     <input
-                      id="cta-firstName"
+                      id="cta-name"
                       {...register('firstName')}
                       disabled={isSubmitting}
                       type="text"
                       placeholder="Prénom"
                       className={cn(
-                        "w-full h-14 min-h-[56px] px-5 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-orange focus:border-transparent transition-all",
+                        "w-full h-14 px-5 border-2 border-navy bg-white text-navy placeholder:text-navy/40 focus:outline-none focus:ring-2 focus:ring-orange transition-all",
                         errors.firstName && "border-red-500 focus:ring-red-500",
                         isSubmitting && "opacity-50 cursor-not-allowed"
                       )}
                     />
                     {errors.firstName && (
-                      <p className="text-red-400 text-xs font-medium pl-1">{errors.firstName.message}</p>
+                      <p className="text-red-500 text-xs mt-1.5 font-medium">{errors.firstName.message}</p>
                     )}
                   </div>
 
-                  <div className="flex flex-col gap-1.5">
+                  <div>
                     <label htmlFor="cta-email" className="sr-only">Email</label>
                     <input
                       id="cta-email"
                       {...register('email')}
                       disabled={isSubmitting}
                       type="email"
-                      placeholder="Email"
+                      placeholder="Email professionnel"
                       className={cn(
-                        "w-full h-14 min-h-[56px] px-5 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-orange focus:border-transparent transition-all",
+                        "w-full h-14 px-5 border-2 border-navy bg-white text-navy placeholder:text-navy/40 focus:outline-none focus:ring-2 focus:ring-orange transition-all",
                         errors.email && "border-red-500 focus:ring-red-500",
                         isSubmitting && "opacity-50 cursor-not-allowed"
                       )}
                     />
                     {errors.email && (
-                      <p className="text-red-400 text-xs font-medium pl-1">{errors.email.message}</p>
+                      <p className="text-red-500 text-xs mt-1.5 font-medium">{errors.email.message}</p>
                     )}
                   </div>
 
-                  <div className="flex flex-col gap-1.5">
-                    <div className="relative">
-                      <label htmlFor="need" className="sr-only">Sélectionnez votre besoin</label>
-                      <select
-                        id="need"
-                        {...register('need')}
-                        disabled={isSubmitting}
-                        aria-label="Sélectionnez votre besoin"
-                        className={cn(
-                          "w-full h-14 min-h-[56px] px-5 pr-10 rounded-xl bg-white/10 border border-white/20 text-white appearance-none focus:outline-none focus:ring-2 focus:ring-orange focus:border-transparent transition-all cursor-pointer",
-                          errors.need && "border-red-500 focus:ring-red-500",
-                          isSubmitting && "opacity-50 cursor-not-allowed"
-                        )}
-                      >
-                        <option value="" disabled className="text-navy">Quel est votre besoin principal ?</option>
-                        <option value="site-web" className="text-navy">Création / Refonte de site web</option>
-                        <option value="application" className="text-navy">Développement d'application (Web, Mobile)</option>
-                        <option value="seo-visibilite" className="text-navy">Visibilité & SEO (Acquisition, Local)</option>
-                        <option value="digitalisation" className="text-navy">Digitalisation & Outils métiers sur-mesure</option>
-                        <option value="croissance" className="text-navy">Une autre idée pour votre croissance digitale</option>
-                      </select>
-                      <div className="absolute inset-y-0 right-5 flex items-center pointer-events-none">
-                        <svg className="w-4 h-4 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
-                      </div>
+                  <div className="relative">
+                    <label htmlFor="cta-need" className="sr-only">Votre besoin</label>
+                    <select
+                      id="cta-need"
+                      {...register('need')}
+                      disabled={isSubmitting}
+                      className={cn(
+                        "w-full h-14 px-5 pr-10 border-2 border-navy bg-white text-navy appearance-none focus:outline-none focus:ring-2 focus:ring-orange transition-all cursor-pointer",
+                        errors.need && "border-red-500 focus:ring-red-500",
+                        isSubmitting && "opacity-50 cursor-not-allowed"
+                      )}
+                    >
+                      <option value="" disabled>Votre besoin principal</option>
+                      <option value="site-web">Création / Refonte de site web</option>
+                      <option value="application">Développement d&apos;application</option>
+                      <option value="seo-visibilite">SEO &amp; Visibilité locale</option>
+                      <option value="digitalisation">Digitalisation &amp; Outils métiers</option>
+                      <option value="autre">Autre</option>
+                    </select>
+                    <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
+                      <svg className="w-4 h-4 text-navy/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                      </svg>
                     </div>
                     {errors.need && (
-                      <p className="text-red-400 text-xs font-medium pl-1">{errors.need.message}</p>
+                      <p className="text-red-500 text-xs mt-1.5 font-medium">{errors.need.message}</p>
                     )}
                   </div>
+
+                  {errorMessage && (
+                    <p className="text-red-500 text-sm font-medium" role="alert">{errorMessage}</p>
+                  )}
 
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full h-14 min-h-[56px] bg-orange hover:bg-orange-hover text-white font-bold rounded-xl transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed mt-2 active:scale-[0.98]"
+                    className="w-full h-14 bg-orange border-2 border-navy text-white font-bold shadow-brutal-sm hover:shadow-brutal hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed mt-2 active:scale-[0.98]"
                   >
                     {isSubmitting ? (
-                      <Loader2 className="w-6 h-6 animate-spin" />
+                      <Loader2 className="w-5 h-5 animate-spin" />
                     ) : (
-                      "Recevoir mon audit en 48h"
+                      <>
+                        Recevoir mon audit
+                        <ArrowRight className="w-4 h-4" />
+                      </>
                     )}
                   </button>
-                  
-                  <p className="text-center text-sm md:text-xs lg:text-sm text-white/50 font-medium mt-1">
-                    Vous préférez discuter ? On est très réactifs sur{' '}
-                    <a 
-                      href="https://snapchat.com/add/webtreize" 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      className="text-[#FFFC00] hover:underline font-bold inline-flex items-center gap-1 ml-0.5 transition-colors"
-                    >
-                      <SnapchatIcon className="w-4 h-4" /> Snapchat
-                    </a>
-                    .
-                  </p>
                 </form>
               )}
-            </FadeUp>
-          </div>
+            </div>
+          </FadeUp>
         </div>
       </div>
     </section>

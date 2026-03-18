@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { MessageCircle } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { useSmoothScroll } from '@/hooks/useSmoothScroll';
 import { cn } from '@/lib/utils';
 
@@ -13,9 +13,8 @@ export function MobileFab() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
-    // Écoute de l'événement Navbar pour cacher le bouton quand le menu burger est ouvert
-    const handleMenuToggle = (e: any) => setIsMenuOpen(e.detail);
-    window.addEventListener('mobileMenuToggle', handleMenuToggle);
+    const handleMenuToggle = (e: CustomEvent) => setIsMenuOpen(e.detail);
+    window.addEventListener('mobileMenuToggle', handleMenuToggle as EventListener);
 
     const hero = document.getElementById('hero');
     const contact = document.getElementById('contact');
@@ -28,14 +27,13 @@ export function MobileFab() {
           if (entry.target.id === 'contact') setIsContactVisible(entry.isIntersecting);
         });
       },
-      // Le threshold 0 garantit que dès que le CTA Final pointe le bout de son nez, MobileFab disparaît
       { threshold: 0, rootMargin: '0px' }
     );
     observer.observe(hero);
     observer.observe(contact);
     return () => {
       observer.disconnect();
-      window.removeEventListener('mobileMenuToggle', handleMenuToggle);
+      window.removeEventListener('mobileMenuToggle', handleMenuToggle as EventListener);
     };
   }, []);
 
@@ -44,19 +42,18 @@ export function MobileFab() {
   return (
     <div
       className={cn(
-        'lg:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-[340px] transition-all duration-300 ease-out',
+        'lg:hidden fixed bottom-5 left-1/2 -translate-x-1/2 z-50 w-[88%] max-w-[320px] transition-all duration-300 ease-out',
         showFab ? 'opacity-100 pointer-events-auto' : 'opacity-0 translate-y-4 pointer-events-none'
       )}
     >
       <Link
         href="#contact"
         onClick={(e) => scroll(e, '#contact')}
-        className="w-full flex items-center justify-center gap-2 bg-[#001F3F]/95 backdrop-blur-xl border border-white/10 text-white font-bold py-3 px-5 text-xs sm:text-sm rounded-2xl shadow-[0_12px_24px_rgba(0,31,63,0.4)] active:scale-95 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF4500] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+        className="w-full flex items-center justify-center gap-2 bg-orange border-2 border-navy text-white font-bold py-3 px-5 text-sm shadow-brutal-sm active:scale-95 transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
       >
-        <MessageCircle className="w-5 h-5 text-[#FF4500]" aria-hidden />
-        Démarrer le projet
+        Audit gratuit
+        <ArrowRight className="w-4 h-4" />
       </Link>
     </div>
   );
 }
-

@@ -4,8 +4,9 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Home, TerminalSquare, ArrowLeft } from 'lucide-react';
 import { LogoWebTreize } from '@/components/ui/LogoWebTreize';
-import { Button } from '@/components/ui/Button';
+import { Button, buttonVariants } from '@/components/ui/Button';
 import { NoiseOverlay } from '@/components/background/NoiseOverlay';
+import { cn } from '@/lib/utils';
 
 const TERMINAL_LINES: Array<{ text: string; delay: number; error?: boolean; warning?: boolean }> = [
   { text: '> Initialisation du protocole de recherche...', delay: 500 },
@@ -37,12 +38,12 @@ function FakeTerminal() {
     <div className="w-full max-w-2xl bg-white/60 backdrop-blur-md rounded-2xl border border-navy/10 overflow-hidden shadow-xl">
       <div className="bg-white/80 px-4 py-3 flex items-center border-b border-navy/10">
         <div className="flex gap-2">
-          <div className="w-3 h-3 rounded-full bg-red-400" aria-hidden />
-          <div className="w-3 h-3 rounded-full bg-amber-400" aria-hidden />
-          <div className="w-3 h-3 rounded-full bg-emerald-400" aria-hidden />
+          <div className="w-3 h-3 rounded-full bg-red-400" aria-hidden="true" />
+          <div className="w-3 h-3 rounded-full bg-amber-400" aria-hidden="true" />
+          <div className="w-3 h-3 rounded-full bg-emerald-400" aria-hidden="true" />
         </div>
-        <div className="mx-auto flex items-center gap-2 text-navy/40 text-xs font-mono font-bold">
-          <TerminalSquare className="w-4 h-4" aria-hidden /> root@webtreize:~
+          <div className="mx-auto flex items-center gap-2 text-navy/40 text-xs font-mono font-bold">
+          <TerminalSquare className="w-4 h-4" aria-hidden="true" /> root@webtreize:~
         </div>
       </div>
       <div className="p-4 md:p-6 font-mono text-xs sm:text-sm md:text-base leading-relaxed min-h-[250px] flex flex-col justify-end">
@@ -113,18 +114,14 @@ export default function NotFound() {
             onClick={() => window.history.back()}
             className="flex-1 gap-2"
           >
-            <ArrowLeft className="w-5 h-5" aria-hidden /> Revenir
+            <ArrowLeft className="w-5 h-5" aria-hidden="true" /> Revenir
           </Button>
-          <Button
-            variant="default"
-            size="lg"
-            asChild
-            className="flex-1 gap-2"
+          <Link
+            href="/"
+            className={cn(buttonVariants({ variant: 'default', size: 'lg' }), 'flex-1 gap-2')}
           >
-            <Link href="/">
-              <Home className="w-5 h-5" aria-hidden /> Accueil
-            </Link>
-          </Button>
+            <Home className="w-5 h-5" aria-hidden="true" /> Accueil
+          </Link>
         </div>
       </main>
 

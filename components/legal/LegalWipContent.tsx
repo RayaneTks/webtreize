@@ -11,6 +11,7 @@ import {
 import { LogoWebTreize } from '@/components/ui/LogoWebTreize';
 import { NoiseOverlay } from '@/components/background/NoiseOverlay';
 import { FadeUp } from '@/components/ui/FadeUp';
+import { CONTACT_EMAIL } from '@/lib/constants';
 
 const LAWYER_THOUGHTS = [
   "Article 1 : Le client est roi, sauf s'il demande du Comic Sans MS.",
@@ -205,10 +206,10 @@ export function LegalWipContent() {
                     Pour faire valoir vos droits (RGPD) ou demander des informations légales précises avant la
                     publication finale, contactez notre équipe :{' '}
                     <a
-                      href="mailto:contact@webtreize.com"
+                      href={`mailto:${CONTACT_EMAIL}`}
                       className="text-orange hover:underline font-bold"
                     >
-                      contact@webtreize.com
+                      {CONTACT_EMAIL}
                     </a>
                     .
                   </p>

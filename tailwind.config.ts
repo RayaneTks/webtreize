@@ -15,49 +15,34 @@ const config: Config = {
           DEFAULT: '#D9480F',
           hover: '#B83E0D',
         },
-        neutral: {
-          bg: '#F8F7F4',
-          text: '#6B7280',
+        cream: {
+          DEFAULT: '#f5f0e8',
+          dark: '#e8e0d4',
         },
+        ink: '#0a0a0a',
+        neutral: {
+          bg: '#f5f0e8',
+          text: '#4a4a4a',
+        },
+      },
+      boxShadow: {
+        'brutal': '6px 6px 0 #001F3F',
+        'brutal-sm': '4px 4px 0 #001F3F',
+        'brutal-lg': '8px 8px 0 #001F3F',
+        'brutal-orange': '6px 6px 0 #D9480F',
       },
       fontFamily: {
-        display: ['var(--font-montserrat)', 'system-ui', 'sans-serif'],
-        sans: ['var(--font-open-sans)', 'system-ui', 'sans-serif'],
+        display: ['var(--font-display)', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-body)', 'system-ui', 'sans-serif'],
       },
       keyframes: {
-        'grid-drift': {
-          '0%': { backgroundPosition: '0 0' },
-          '100%': { backgroundPosition: '80px 80px' },
-        },
-        'pulse-slow': {
-          '0%, 100%': { transform: 'scale(1)', opacity: '0.1' },
-          '50%': { transform: 'scale(1.2)', opacity: '0.15' },
-        },
-        'ping-slow': {
-          '0%': { transform: 'scale(0.8)', opacity: '1' },
-          '100%': { transform: 'scale(2)', opacity: '0' },
-        },
-        'bar-grow': {
-          '0%': { transform: 'scaleY(0.1)', opacity: '0.5' },
-          '50%': { transform: 'scaleY(1)', opacity: '1' },
-          '100%': { transform: 'scaleY(0.1)', opacity: '0.5' },
-        },
         'line-fade-in': {
           from: { opacity: '0', transform: 'translateY(10px)' },
           to: { opacity: '1', transform: 'translateY(0)' },
         },
-        marquee: {
-          '0%': { transform: 'translateX(0)' },
-          '100%': { transform: 'translateX(-50%)' },
-        },
       },
       animation: {
-        'grid-drift': 'grid-drift 10s linear infinite',
-        'pulse-slow': 'pulse-slow 8s ease-in-out infinite',
-        'ping-slow': 'ping-slow 3s cubic-bezier(0, 0, 0.2, 1) infinite',
-        'bar-grow': 'bar-grow 2s ease-in-out infinite',
         'line-fade-in': 'line-fade-in 0.3s ease-out forwards',
-        marquee: 'marquee 30s linear infinite',
       },
     },
   },

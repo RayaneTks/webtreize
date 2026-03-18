@@ -14,7 +14,7 @@ export function useSmoothScroll() {
 
     if (element) {
       const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - NAVBAR_OFFSET;
+      const offsetPosition = elementPosition + window.scrollY - NAVBAR_OFFSET;
 
       window.scrollTo({
         top: offsetPosition,
