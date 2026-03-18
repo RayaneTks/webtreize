@@ -51,7 +51,8 @@ export function Navbar() {
         className={cn(
           'fixed top-0 left-0 w-full z-50 transition-all duration-300',
           'pt-[env(safe-area-inset-top)]',
-          'max-lg:py-3 max-lg:bg-cream/95 max-lg:backdrop-blur-md max-lg:border-b max-lg:border-navy/10',
+          // Mobile: on force un header "dark" pour garder le contraste (sinon il paraît blanc/peu lisible)
+          'max-lg:py-3 max-lg:bg-navy/95 max-lg:backdrop-blur-md max-lg:border-b max-lg:border-navy/10',
           isScrolled
             ? 'py-3 bg-navy/95 backdrop-blur-md border-b border-white/10'
             : 'lg:py-5 lg:bg-transparent lg:border-b lg:border-transparent'
@@ -69,12 +70,14 @@ export function Navbar() {
               decorative
               className={cn(
                 "w-7 h-7 md:w-8 md:h-8 transition-all duration-300",
-                (isScrolled || mobileMenuOpen) && "brightness-0 invert"
+                (isScrolled || mobileMenuOpen) && "brightness-0 invert",
+                "max-lg:brightness-0 max-lg:invert"
               )}
             />
             <span className={cn(
               "text-lg md:text-xl font-black tracking-tighter transition-colors duration-300",
-              (isScrolled || mobileMenuOpen) ? "text-white" : "text-navy"
+              (isScrolled || mobileMenuOpen) ? "text-white" : "text-navy",
+              "max-lg:text-white"
             )}>
               WebTreize
             </span>
@@ -120,7 +123,9 @@ export function Navbar() {
                 "whitespace-nowrap px-3 py-1.5 text-xs h-9 transition-colors",
                 (isScrolled || mobileMenuOpen)
                   ? "bg-orange text-white border-orange"
-                  : "text-navy border-navy/30"
+                  : "text-navy border-navy/30",
+                // Mobile CTA toujours bien contrasté sur fond navy
+                "max-lg:bg-orange max-lg:text-white max-lg:border-orange"
               )}
               onClick={(e) => handleNavClick(e, '#contact')}
             >
@@ -130,7 +135,8 @@ export function Navbar() {
               type="button"
               className={cn(
                 "p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center active:scale-90 transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-orange rounded-sm",
-                (isScrolled || mobileMenuOpen) ? "text-white" : "text-navy"
+                (isScrolled || mobileMenuOpen) ? "text-white" : "text-navy",
+                "max-lg:text-white"
               )}
               onClick={(e) => {
                 e.stopPropagation();
