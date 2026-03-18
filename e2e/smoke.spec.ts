@@ -8,7 +8,7 @@ test.describe('WebTreize - Smoke tests', () => {
 
   test('navigation vers #contact scroll correctement', async ({ page }) => {
     await page.goto('/');
-    const ctaButton = page.locator('button', { hasText: 'Obtenir mon audit gratuit' }).first();
+    const ctaButton = page.locator('#hero').locator('button', { hasText: 'Obtenir mon audit gratuit' }).first();
     await ctaButton.click();
     await page.waitForTimeout(800);
     const contactSection = page.locator('#contact');
@@ -39,16 +39,50 @@ test.describe('WebTreize - Smoke tests', () => {
 
   test('navbar CTA visible et cliquable', async ({ page }) => {
     await page.goto('/');
-    const navCta = page.locator('nav button', { hasText: /audit/i }).first();
-    await expect(navCta).toBeVisible();
+    const nav = page.locator('nav[aria-label="Navigation principale"]');
+    await expect(nav).toBeVisible();
+
+    // Desktop CTA est dans un container "hidden lg:flex" (donc invisible sur mobile).
+    // Mobile CTA est dans un container "lg:hidden".
+    const desktopCta = nav.locator('div.hidden.lg\\:flex button', { hasText: /audit/i }).first();
+    const mobileCta = nav.locator('div.lg\\:hidden button', { hasText: /audit/i }).first();
+
+    if (await mobileCta.isVisible()) {
+      await expect(mobileCta).toBeVisible();
+    } else {
+      await expect(desktopCta).toBeVisible();
+    }
+  });
+
+  test('navbar reste fixé en scroll (mobile)', async ({ page, isMobile }) => {
+    test.skip(!isMobile, 'Test mobile uniquement');
+    await page.goto('/');
+    await page.waitForLoadState('networkidle');
+
+    const nav = page.locator('nav[aria-label="Navigation principale"]');
+    await expect(nav).toBeVisible();
+
+    const before = await nav.boundingBox();
+    expect(before).toBeTruthy();
+
+    await page.evaluate(() => window.scrollTo({ top: 700, behavior: 'instant' as ScrollBehavior }));
+    await page.waitForTimeout(150);
+
+    const after = await nav.boundingBox();
+    expect(after).toBeTruthy();
+
+    // Un header fixed doit rester collé en haut (tolérance légère selon device/scroll snapping).
+    expect(Math.abs((after!.y ?? 0) - (before!.y ?? 0))).toBeLessThanOrEqual(2);
   });
 
   test('métriques de social proof visibles', async ({ page }) => {
     await page.goto('/');
-    await expect(page.locator('text=+75%')).toBeVisible();
-    await expect(page.locator('text=100%')).toBeVisible();
-    await expect(page.locator('text=48h')).toBeVisible();
-    await expect(page.locator('text=0€')).toBeVisible();
+    const social = page.locator('section[aria-label="Nos résultats en chiffres"]');
+    await expect(social).toBeVisible();
+    await expect(social.getByText('+75%', { exact: true })).toBeVisible();
+    await expect(social.getByText('100%', { exact: true })).toBeVisible();
+    await expect(social.getByText('48h', { exact: true })).toBeVisible();
+    await expect(social.getByText('0€', { exact: true })).toBeVisible();
   });
 
   test('aucune mention de faux avis Google', async ({ page }) => {
@@ -59,8 +93,21 @@ test.describe('WebTreize - Smoke tests', () => {
 
   test('Google result mockup présent dans hero', async ({ page }) => {
     await page.goto('/');
-    await expect(page.locator('#hero >> text=Votre entreprise')).toBeVisible();
-    await expect(page.locator('#hero >> text=+200%')).toBeVisible();
+    const hero = page.locator('#hero');
+    await expect(hero).toBeVisible();
+
+    // Desktop mockup: container "hidden lg:block" (visible à partir de lg).
+    // Mobile mockup: container "lg:hidden" (visible en dessous de lg).
+    const desktopMockup = hero.locator('div.hidden.lg\\:block');
+    const mobileMockup = hero.locator('div.lg\\:hidden');
+
+    if (await mobileMockup.isVisible()) {
+      await expect(mobileMockup.getByText('Votre entreprise', { exact: true }).first()).toBeVisible();
+      await expect(mobileMockup.getByText('+200%', { exact: true }).first()).toBeVisible();
+    } else {
+      await expect(desktopMockup.getByText('Votre entreprise', { exact: true }).first()).toBeVisible();
+      await expect(desktopMockup.getByText('+200%', { exact: true }).first()).toBeVisible();
+    }
   });
 
   test('FAQ accordion fonctionne', async ({ page }) => {

@@ -50,9 +50,11 @@ export function Navbar() {
       <nav
         className={cn(
           'fixed top-0 left-0 w-full z-50 transition-all duration-300',
+          'pt-[env(safe-area-inset-top)]',
+          'max-lg:py-3 max-lg:bg-cream/95 max-lg:backdrop-blur-md max-lg:border-b max-lg:border-navy/10',
           isScrolled
             ? 'py-3 bg-navy/95 backdrop-blur-md border-b border-white/10'
-            : 'py-4 lg:py-5 bg-transparent'
+            : 'lg:py-5 lg:bg-transparent lg:border-b lg:border-transparent'
         )}
         aria-label="Navigation principale"
       >

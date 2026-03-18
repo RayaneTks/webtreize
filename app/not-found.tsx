@@ -3,9 +3,9 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Home, TerminalSquare, ArrowLeft } from 'lucide-react';
-import { LogoWebTreize } from '@/components/ui/LogoWebTreize';
+import { Navbar } from '@/components/Navbar';
+import { Footer } from '@/components/Footer';
 import { Button, buttonVariants } from '@/components/ui/Button';
-import { NoiseOverlay } from '@/components/background/NoiseOverlay';
 import { cn } from '@/lib/utils';
 
 const TERMINAL_LINES: Array<{ text: string; delay: number; error?: boolean; warning?: boolean }> = [
@@ -73,61 +73,72 @@ function FakeTerminal() {
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-neutral-bg text-navy font-sans flex flex-col selection:bg-orange/20 relative overflow-hidden">
-      <NoiseOverlay />
-      
-      <nav className="w-full p-6 flex items-center justify-between relative z-10 max-w-7xl mx-auto">
-        <Link
-          href="/"
-          className="flex items-center gap-3 text-navy/60 hover:text-navy transition-colors group"
-          aria-label="WebTreize - Retour accueil"
-        >
-          <LogoWebTreize decorative className="w-10 h-10 md:w-12 md:h-12 transition-transform group-hover:scale-105" />
-          <span className="text-2xl font-black tracking-tight">WebTreize</span>
-        </Link>
-      </nav>
+    <div className="min-h-screen bg-cream text-navy overflow-x-clip">
+      <Navbar />
+      <main className="relative z-10 pt-28 pb-20 md:pt-36">
+        <section className="container mx-auto px-5 lg:px-12 xl:px-16 max-w-screen-xl">
+          <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-start">
+            <div>
+              <div className="inline-flex items-center gap-3 mb-7">
+                <span className="px-4 py-2 bg-orange text-white text-xs font-bold uppercase tracking-[0.15em] border-2 border-navy">
+                  Erreur
+                </span>
+                <span className="text-sm font-bold text-neutral-text">Page introuvable</span>
+              </div>
 
-      <main className="flex-1 w-full px-6 flex flex-col items-center justify-center relative z-10 py-10">
-        <div className="relative mb-8 text-center">
-          <h1 className="text-[8rem] md:text-[14rem] font-black leading-none tracking-tighter stroke-text-navy select-none">
-            404
-          </h1>
-        </div>
+              <h1
+                className="font-display text-navy uppercase leading-[0.9] mb-5"
+                style={{ fontSize: 'clamp(44px, 9vw, 96px)' }}
+              >
+                404
+                <br />
+                <span className="stroke-text-navy">hors zone</span>
+              </h1>
 
-        <div className="text-center mb-12 max-w-2xl px-4">
-          <h2 className="text-2xl md:text-4xl font-black mb-4 text-navy">
-            Vous avez navigué hors zone.
-          </h2>
-          <p className="text-base md:text-lg text-navy/60 font-medium">
-            L&apos;URL que vous cherchez n&apos;existe pas ou a été supprimée. Pas de panique, on vous ramène.
-          </p>
-        </div>
+              <p className="text-lg md:text-xl text-neutral-text font-medium leading-relaxed max-w-xl mb-10">
+                L&apos;URL que vous cherchez n&apos;existe pas (ou a pris l&apos;apéro au Vallon des Auffes).
+                On vous ramène sur la route.
+              </p>
 
-        <div className="w-full flex justify-center mb-12">
-          <FakeTerminal />
-        </div>
+              <div className="flex flex-col sm:flex-row gap-4 w-full max-w-md">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  onClick={() => window.history.back()}
+                  className="gap-2"
+                >
+                  <ArrowLeft className="w-5 h-5" aria-hidden="true" /> Revenir
+                </Button>
+                <Link
+                  href="/"
+                  className={cn(buttonVariants({ variant: 'default', size: 'lg' }), 'gap-2')}
+                >
+                  <Home className="w-5 h-5" aria-hidden="true" /> Accueil
+                </Link>
+              </div>
+            </div>
 
-        <div className="flex flex-col sm:flex-row gap-4 w-full max-w-md justify-center">
-          <Button
-            variant="outline"
-            size="lg"
-            onClick={() => window.history.back()}
-            className="flex-1 gap-2"
-          >
-            <ArrowLeft className="w-5 h-5" aria-hidden="true" /> Revenir
-          </Button>
-          <Link
-            href="/"
-            className={cn(buttonVariants({ variant: 'default', size: 'lg' }), 'flex-1 gap-2')}
-          >
-            <Home className="w-5 h-5" aria-hidden="true" /> Accueil
-          </Link>
-        </div>
+            <div className="lg:pt-10">
+              <div className="bg-navy p-5 md:p-7 border-2 border-navy shadow-brutal-orange">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="text-white/70 text-xs font-bold uppercase tracking-widest flex items-center gap-2">
+                    <TerminalSquare className="w-4 h-4" aria-hidden="true" />
+                    diagnostic
+                  </div>
+                  <span className="bg-orange text-white text-xs font-bold px-2.5 py-1 border-2 border-navy">
+                    404
+                  </span>
+                </div>
+                <FakeTerminal />
+                <p className="mt-4 text-white/50 text-xs font-bold uppercase tracking-widest">
+                  Signal perdu quelque part dans le Vieux-Port.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
-
-      <footer className="w-full p-6 text-center text-navy/30 text-sm font-bold uppercase tracking-widest relative z-10">
-        Signal perdu quelque part dans le Vieux-Port.
-      </footer>
+      <Footer />
     </div>
   );
 }

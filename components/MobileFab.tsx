@@ -18,7 +18,9 @@ export function MobileFab() {
 
     const hero = document.getElementById('hero');
     const contact = document.getElementById('contact');
-    if (!hero || !contact) return;
+    if (!hero || !contact) {
+      return () => window.removeEventListener('mobileMenuToggle', handleMenuToggle as EventListener);
+    }
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -42,7 +44,7 @@ export function MobileFab() {
   return (
     <div
       className={cn(
-        'lg:hidden fixed bottom-5 left-1/2 -translate-x-1/2 z-50 w-[88%] max-w-[320px] transition-all duration-300 ease-out',
+        'lg:hidden fixed bottom-[calc(1.25rem+env(safe-area-inset-bottom))] left-1/2 -translate-x-1/2 z-50 w-[88%] max-w-[320px] transition-all duration-300 ease-out',
         showFab ? 'opacity-100 pointer-events-auto' : 'opacity-0 translate-y-4 pointer-events-none'
       )}
     >
