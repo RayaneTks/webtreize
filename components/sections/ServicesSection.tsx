@@ -8,20 +8,20 @@ import { useSmoothScroll } from '@/hooks/useSmoothScroll';
 
 const SERVICES = [
   {
-    title: 'SEO & Visibilité Locale',
-    icon: Search,
-    tag: 'Le + demandé',
-    description: "Vos clients cherchent sur Google. On vous place devant vos concurrents. Fiche Google, référencement local, SEO technique.",
-    bullets: ['Optimisation fiche Google Business', 'Référencement naturel & local', "Stratégie d'acquisition digitale"],
-    cta: 'Auditer ma visibilité',
-    featured: true,
-  },
-  {
     title: 'Sites Web Sur-Mesure',
     icon: MonitorSmartphone,
     description: "Sites vitrines et e-commerce conçus pour convertir. Rapides, sécurisés, 100% responsive.",
     bullets: ['Design unique, pas de template', 'Performance & Core Web Vitals', 'Optimisé pour la conversion'],
     cta: 'Lancer mon projet',
+    featured: true,
+    tag: 'Le + demandé',
+  },
+  {
+    title: 'SEO & Visibilité Locale',
+    icon: Search,
+    description: "Vos clients cherchent sur Google. On vous place devant vos concurrents. Fiche Google, référencement local, SEO technique.",
+    bullets: ['Optimisation fiche Google Business', 'Référencement naturel & local', "Stratégie d'acquisition digitale"],
+    cta: 'Auditer ma visibilité',
     featured: false,
   },
   {

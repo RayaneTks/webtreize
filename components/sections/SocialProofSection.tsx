@@ -7,7 +7,7 @@ const METRICS = [
   { value: '+75%', label: 'visibilité', sublabel: 'en moyenne' },
   { value: '100%', label: 'sur-mesure', sublabel: 'pas de template' },
   { value: '48h', label: 'réponse', sublabel: 'garantie' },
-  { value: '0€', label: "d'engagement", sublabel: 'initial' },
+  { value: '0€', label: 'sans engagement', sublabel: 'zéro frais' },
 ];
 
 export function SocialProofSection() {

@@ -166,7 +166,7 @@ export function HeroSection() {
               <span className="hidden sm:block w-px h-4 bg-navy/20" aria-hidden="true" />
               <span className="text-neutral-text font-medium">Réponse sous 48h</span>
               <span className="hidden sm:block w-px h-4 bg-navy/20" aria-hidden="true" />
-              <span className="text-neutral-text font-medium">0€ d&apos;engagement</span>
+              <span className="text-neutral-text font-medium">0€ sans engagement</span>
             </div>
           </div>
 

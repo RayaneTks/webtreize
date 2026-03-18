@@ -1,4 +1,4 @@
-﻿# Dependencies
+# Dependencies
 node_modules
 .pnp
 .pnp.js
@@ -29,6 +29,10 @@ yarn-error.log*
 .idea
 .vscode
 .cursor
+.agent/
+.agents/
+.claude/
+skills-lock.json
 *.swp
 *.swo
 .DS_Store

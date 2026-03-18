@@ -9,10 +9,10 @@ export const FAQ_ITEMS = [
   },
   {
     q: "En combien de temps j'ai des résultats ?",
-    a: "Optimiser une fiche Google : environ 30 jours. Refaire un site : 4 à 8 semaines. L'audit vous donne une timeline précise adaptée à votre situation.",
+    a: "Optimiser une fiche Google : environ 30 jours. Refaire un site : 4 à 8 semaines. L'audit vous donne un calendrier précis adapté à votre situation.",
   },
   {
-    q: "Et si je ne comprends rien au digital ?",
+    q: "Et si je ne comprends rien au numérique ?",
     a: "C'est justement notre métier. On gère la technique, vous vous concentrez sur vos clients. On vous explique tout en français, pas en jargon.",
   },
 ] as const;

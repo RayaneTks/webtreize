@@ -4,7 +4,7 @@ import tsPlugin from '@typescript-eslint/eslint-plugin';
 import reactHooks from 'eslint-plugin-react-hooks';
 
 export default [
-  { ignores: ['.next/**', 'node_modules/**', 'out/**', 'dist/**', 'coverage/**'] },
+  { ignores: ['.next/**', '.agents/**', 'node_modules/**', 'out/**', 'dist/**', 'coverage/**'] },
 
   js.configs.recommended,
 

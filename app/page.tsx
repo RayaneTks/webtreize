@@ -1,6 +1,7 @@
 import { ClientShell } from '@/components/ClientShell';
 import { HeroSection } from '@/components/sections/HeroSection';
 import { SocialProofSection } from '@/components/sections/SocialProofSection';
+import { DemosSection } from '@/components/sections/DemosSection';
 import { Footer } from '@/components/Footer';
 import dynamic from 'next/dynamic';
 
@@ -40,6 +41,7 @@ export default function HomePage() {
       <ClientShell>
         <HeroSection />
         <SocialProofSection />
+        <DemosSection />
         <PainPointsSection />
         <ServicesSection />
         <GuaranteesSection />

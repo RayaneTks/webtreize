@@ -62,7 +62,7 @@ export default async function LegalPage({ params }: LegalPageProps) {
             </h1>
 
             <p className="text-lg text-neutral-text font-medium leading-relaxed mb-10">
-              Cette page est en cours de finalisation. En attendant, si tu as besoin d&apos;une info précise, contacte-nous.
+              Cette page est en cours de finalisation. En attendant, si vous avez besoin d&apos;une info précise, contactez-nous.
             </p>
 
             <div className="grid gap-6">

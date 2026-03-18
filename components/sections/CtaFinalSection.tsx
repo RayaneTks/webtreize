@@ -11,9 +11,9 @@ import { SnapchatIcon } from '@/components/ui/SnapchatIcon';
 import { SNAPCHAT_URL } from '@/lib/constants';
 
 const formSchema = z.object({
-  firstName: z.string().min(2, 'Minimum 2 caractères'),
-  email: z.string().email("Email invalide"),
-  need: z.string().min(1, 'Sélectionnez un besoin'),
+  firstName: z.string().min(2, 'Veuillez saisir au moins 2 caractères.'),
+  email: z.string().email('Veuillez saisir une adresse email valide.'),
+  need: z.string().min(1, 'Veuillez sélectionner votre besoin principal.'),
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -114,8 +114,10 @@ export function CtaFinalSection() {
               {isSuccess ? (
                 <div className="flex flex-col items-center justify-center text-center py-12 min-h-[320px]">
                   <CheckCircle2 className="w-14 h-14 text-emerald-600 mb-6" />
-                  <h3 className="font-display text-2xl text-navy uppercase mb-2">Reçu !</h3>
-                  <p className="text-neutral-text font-medium mb-8">On revient vers vous sous 48h.</p>
+                  <h3 className="font-display text-2xl text-navy uppercase mb-2">Demande envoyée</h3>
+                  <p className="text-neutral-text font-medium mb-8">
+                    On revient vers vous sous 48h avec votre audit gratuit.
+                  </p>
                   <button
                     type="button"
                     className="text-orange font-bold text-sm hover:underline"
