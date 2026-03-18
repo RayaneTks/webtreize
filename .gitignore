@@ -1,4 +1,4 @@
-# Dependencies
+﻿# Dependencies
 node_modules
 .pnp
 .pnp.js
@@ -28,6 +28,7 @@ yarn-error.log*
 # IDE & OS
 .idea
 .vscode
+.cursor
 *.swp
 *.swo
 .DS_Store
@@ -40,3 +41,13 @@ next-env.d.ts
 # Testing
 coverage
 .nyc_output
+playwright-report
+test-results
+
+# Playwright MCP
+.playwright-mcp
+
+# Screenshots & audit artifacts
+*.png
+*.jpeg
+lighthouse-report.json
