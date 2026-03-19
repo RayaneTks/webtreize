@@ -15,4 +15,8 @@ export const FAQ_ITEMS = [
     q: "Et si je ne comprends rien au numérique ?",
     a: "C'est justement notre métier. On gère la technique, vous vous concentrez sur vos clients. On vous explique tout en français, pas en jargon.",
   },
+  {
+    q: "Comment trouver WebTreize en ligne ?",
+    a: "Tapez « WebTreize », « Web Treize » ou « Agence Web 13 » sur Google. Notre site officiel webtreize.com apparaît dans les premiers résultats. Attention à ne pas confondre avec « webtrees » qui est un logiciel de généalogie sans aucun rapport avec notre agence.",
+  },
 ] as const;

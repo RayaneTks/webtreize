@@ -20,7 +20,7 @@ function GoogleResultMockup() {
       </div>
 
       {/* "After" card — prominent Google result */}
-      <div className="relative bg-cream border-2 border-navy shadow-[8px_8px_0_rgba(217,72,15,0.8)] p-6">
+      <div className="relative bg-cream border-2 border-navy shadow-brutal-orange-lg p-6">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 bg-orange flex items-center justify-center">
@@ -140,7 +140,7 @@ export function HeroSection() {
             {/* Mobile compact mockup — inline in the text flow */}
             <div className="lg:hidden hero-enter hero-enter-delay-3 mb-10 -mx-5 px-5">
               <div className="relative bg-navy p-5">
-                <div className="relative bg-cream border-2 border-navy shadow-[6px_6px_0_rgba(217,72,15,0.8)] p-4">
+                <div className="relative bg-cream border-2 border-navy shadow-brutal-orange p-4">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2.5">
                       <div className="w-7 h-7 bg-orange flex items-center justify-center">

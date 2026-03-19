@@ -70,10 +70,7 @@ test.describe('Footer - liens légaux sous CTA flottant (mobile/desktop)', () =>
     await expect(page.getByRole('heading', { name: /Mentions légales/i })).toBeVisible();
 
     if (isMobile && fabVisible) {
-      expect(overlapFraction).toBeLessThan(
-        0.1,
-        `Le CTA flottant "Audit gratuit" recouvre une partie du lien "Mentions légales" (fraction recouverte: ${overlapFraction}).`
-      );
+      expect(overlapFraction).toBeLessThan(0.1);
     }
   });
 
@@ -112,10 +109,7 @@ test.describe('Footer - liens légaux sous CTA flottant (mobile/desktop)', () =>
     await expect(page.getByRole('heading', { name: /Politique de confidentialité/i })).toBeVisible();
 
     if (isMobile && fabVisible) {
-      expect(overlapFraction).toBeLessThan(
-        0.1,
-        `Le CTA flottant "Audit gratuit" recouvre une partie du lien "Confidentialité" (fraction recouverte: ${overlapFraction}).`
-      );
+      expect(overlapFraction).toBeLessThan(0.1);
     }
   });
 
@@ -154,10 +148,7 @@ test.describe('Footer - liens légaux sous CTA flottant (mobile/desktop)', () =>
     await expect(page.getByRole('heading', { name: /Conditions générales de vente/i })).toBeVisible();
 
     if (isMobile && fabVisible) {
-      expect(overlapFraction).toBeLessThan(
-        0.1,
-        `Le CTA flottant "Audit gratuit" recouvre une partie du lien "CGV" (fraction recouverte: ${overlapFraction}).`
-      );
+      expect(overlapFraction).toBeLessThan(0.1);
     }
   });
 });

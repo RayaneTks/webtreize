@@ -1,7 +1,6 @@
 import type { Config } from 'tailwindcss';
 
 const config: Config = {
-  darkMode: 'class',
   content: [
     './app/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -30,6 +29,8 @@ const config: Config = {
         'brutal-sm': '4px 4px 0 #001F3F',
         'brutal-lg': '8px 8px 0 #001F3F',
         'brutal-orange': '6px 6px 0 #D9480F',
+        'brutal-orange-sm': '4px 4px 0 #D9480F',
+        'brutal-orange-lg': '8px 8px 0 #D9480F',
       },
       fontFamily: {
         display: ['var(--font-display)', 'system-ui', 'sans-serif'],

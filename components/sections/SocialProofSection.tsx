@@ -3,44 +3,50 @@
 import React from 'react';
 import { FadeUp } from '@/components/ui/FadeUp';
 
-const METRICS = [
-  { value: '+75%', label: 'visibilité', sublabel: 'en moyenne' },
-  { value: '100%', label: 'sur-mesure', sublabel: 'pas de template' },
-  { value: '48h', label: 'réponse', sublabel: 'garantie' },
-  { value: '0€', label: 'sans engagement', sublabel: 'zéro frais' },
+const PROOF_POINTS = [
+  'Délais inscrits au contrat — pénalités si retard',
+  'Design unique sur chaque projet, aucun template réutilisé',
+  'Votre site vous appartient dès le premier jour, aucun abonnement forcé',
 ];
 
 export function SocialProofSection() {
   return (
     <section
-      className="py-12 md:py-16 bg-white border-y-2 border-navy relative"
-      aria-label="Nos résultats en chiffres"
+      className="py-10 md:py-14 bg-white border-y-2 border-navy"
+      aria-label="Résultats et engagements"
     >
       <div className="container mx-auto px-5 lg:px-12 xl:px-16 max-w-screen-xl">
         <FadeUp>
-          <div className="grid grid-cols-2 lg:grid-cols-4">
-            {METRICS.map((metric, i) => (
-              <div
-                key={i}
-                className="text-center py-4 md:py-6 relative"
+          <div className="flex flex-col md:flex-row md:items-center gap-8 md:gap-0">
+
+            {/* Stat principale */}
+            <div className="md:w-5/12 md:pr-12 md:border-r-2 md:border-navy/15">
+              <p
+                className="font-display text-navy uppercase leading-none"
+                style={{ fontSize: 'clamp(56px, 7vw, 88px)' }}
               >
-                {i > 0 && (
-                  <div className="absolute left-0 top-1/2 -translate-y-1/2 w-px h-2/3 bg-navy/10 hidden lg:block" aria-hidden="true" />
-                )}
-                {i === 2 && (
-                  <div className="absolute left-0 top-1/2 -translate-y-1/2 w-px h-2/3 bg-navy/10 lg:hidden" aria-hidden="true" />
-                )}
-                <p className="font-display text-3xl md:text-4xl lg:text-5xl text-navy uppercase leading-none mb-1">
-                  {metric.value}
-                </p>
-                <p className="text-xs md:text-sm font-bold text-navy/70 uppercase tracking-wide">
-                  {metric.label}
-                </p>
-                <p className="text-[10px] md:text-xs text-neutral-text font-medium mt-0.5">
-                  {metric.sublabel}
-                </p>
-              </div>
-            ))}
+                +75%
+              </p>
+              <p className="text-sm font-bold text-navy mt-2 leading-snug">
+                de visibilité gagnée en moyenne
+              </p>
+              <p className="text-xs text-neutral-text font-medium mt-1">
+                dans les 90 jours suivant notre intervention
+              </p>
+            </div>
+
+            {/* Preuves qualitatives */}
+            <ul className="md:w-7/12 md:pl-12 flex flex-col gap-4">
+              {PROOF_POINTS.map((point, i) => (
+                <li key={i} className="flex items-start gap-3">
+                  <span className="mt-[7px] w-1.5 h-1.5 shrink-0 bg-orange" aria-hidden="true" />
+                  <span className="text-sm md:text-[15px] font-medium text-navy leading-snug">
+                    {point}
+                  </span>
+                </li>
+              ))}
+            </ul>
+
           </div>
         </FadeUp>
       </div>

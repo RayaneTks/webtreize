@@ -61,69 +61,101 @@ export function ServicesSection() {
           </div>
         </FadeUp>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {SERVICES.map((service, index) => {
-            const Icon = service.icon;
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+          {/* Featured card — 7 colonnes, dominante */}
+          {(() => {
+            const s = SERVICES[0];
+            const Icon = s.icon;
             return (
-              <FadeUp key={index} delay={index * 100}>
-                <div className={`h-full flex flex-col p-6 md:p-8 border-2 border-navy transition-all duration-300 hover:-translate-x-1 hover:-translate-y-1 ${
-                  service.featured
-                    ? 'bg-navy text-white shadow-brutal-orange hover:shadow-[8px_8px_0_#D9480F]'
-                    : 'bg-cream shadow-brutal hover:shadow-brutal-lg'
-                }`}>
-                  <div className="flex items-start justify-between mb-6">
-                    <div className={`w-12 h-12 flex items-center justify-center border-2 ${
-                      service.featured
-                        ? 'border-white/30 bg-orange text-white'
-                        : 'border-navy bg-navy text-white'
-                    }`}>
-                      <Icon className="w-5 h-5" strokeWidth={2.5} />
+              <FadeUp className="lg:col-span-7">
+                <div className="h-full flex flex-col p-8 md:p-10 border-2 border-navy bg-navy text-white shadow-brutal-orange transition-[transform,box-shadow] duration-300 hover:-translate-x-1 hover:-translate-y-1 hover:shadow-brutal-orange-lg">
+                  <div className="flex items-start justify-between mb-8">
+                    <div className="w-14 h-14 flex items-center justify-center border-2 border-white/30 bg-orange text-white">
+                      <Icon className="w-6 h-6" strokeWidth={2.5} />
                     </div>
-                    {service.tag && (
-                      <span className="px-3 py-1 text-[10px] font-bold uppercase tracking-wider bg-orange text-white">
-                        {service.tag}
-                      </span>
-                    )}
+                    <span className="px-3 py-1 text-[10px] font-bold uppercase tracking-wider bg-orange text-white">
+                      {s.tag}
+                    </span>
                   </div>
 
-                  <h3 className={`font-display text-xl md:text-2xl uppercase leading-tight mb-4 ${
-                    service.featured ? 'text-white' : 'text-navy'
-                  }`}>
-                    {service.title}
+                  <h3
+                    className="font-display text-white uppercase leading-[0.92] mb-5"
+                    style={{ fontSize: 'clamp(28px, 3.5vw, 44px)' }}
+                  >
+                    {s.title}
                   </h3>
 
-                  <p className={`font-medium leading-relaxed mb-6 flex-grow ${
-                    service.featured ? 'text-white/80' : 'text-neutral-text'
-                  }`}>
-                    {service.description}
+                  <p className="text-white/80 font-medium leading-relaxed mb-8 text-base md:text-lg">
+                    {s.description}
                   </p>
 
-                  <ul className="space-y-2.5 mb-8">
-                    {service.bullets.map((bullet, i) => (
-                      <li key={i} className={`flex items-center gap-3 text-sm font-bold ${
-                        service.featured ? 'text-white/90' : 'text-navy'
-                      }`}>
+                  <ul className="space-y-3 mb-10">
+                    {s.bullets.map((bullet, i) => (
+                      <li key={i} className="flex items-center gap-3 text-sm font-bold text-white/90">
                         <span className="w-1.5 h-1.5 shrink-0 bg-orange" />
                         {bullet}
                       </li>
                     ))}
                   </ul>
 
+                  <div className="flex-1" />
+
                   <Button
-                    variant={service.featured ? 'outline' : 'default'}
-                    className={`w-full mt-auto ${
-                      service.featured
-                        ? 'border-white text-white hover:bg-white hover:text-navy bg-transparent'
-                        : ''
-                    }`}
+                    variant="outline"
+                    className="w-full mt-auto border-white text-white hover:bg-white hover:text-navy bg-transparent"
                     onClick={(e) => scroll(e, '#contact')}
                   >
-                    {service.cta}
+                    {s.cta}
                   </Button>
                 </div>
               </FadeUp>
             );
-          })}
+          })()}
+
+          {/* Colonne secondaire — 5 colonnes, 2 cartes empilées */}
+          <div className="lg:col-span-5 flex flex-col gap-6">
+            {SERVICES.slice(1).map((service, index) => {
+              const Icon = service.icon;
+              return (
+                <FadeUp key={index} delay={(index + 1) * 120} className="flex-1">
+                  <div className="h-full flex flex-col p-6 md:p-7 border-2 border-navy bg-cream shadow-brutal transition-[transform,box-shadow] duration-300 hover:-translate-x-1 hover:-translate-y-1 hover:shadow-brutal-lg">
+                    <div className="mb-5">
+                      <div className="w-11 h-11 flex items-center justify-center border-2 border-navy bg-navy text-white">
+                        <Icon className="w-5 h-5" strokeWidth={2.5} />
+                      </div>
+                    </div>
+
+                    <h3 className="font-display text-navy text-lg md:text-xl uppercase leading-tight mb-3">
+                      {service.title}
+                    </h3>
+
+                    <p className="text-neutral-text font-medium leading-relaxed mb-5 flex-grow text-sm">
+                      {service.description}
+                    </p>
+
+                    <ul className="space-y-2 mb-6">
+                      {service.bullets.map((bullet, i) => (
+                        <li key={i} className="flex items-center gap-3 text-xs font-bold text-navy">
+                          <span className="w-1.5 h-1.5 shrink-0 bg-orange" />
+                          {bullet}
+                        </li>
+                      ))}
+                    </ul>
+
+                    <Button
+                      variant="default"
+                      className="w-full mt-auto"
+                      onClick={(e) => scroll(e, '#contact')}
+                    >
+                      {service.cta}
+                    </Button>
+                  </div>
+                </FadeUp>
+              );
+            })}
+          </div>
+
         </div>
       </div>
     </section>

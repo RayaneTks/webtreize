@@ -99,7 +99,7 @@ export function CtaFinalSection() {
                   href={SNAPCHAT_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-[#FFFC00] text-black text-sm font-bold hover:brightness-95 transition-all"
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-[#FFFC00] text-black text-sm font-bold hover:brightness-95 transition-[filter]"
                 >
                   <SnapchatIcon className="w-4 h-4" />
                   @webtreize
@@ -133,15 +133,17 @@ export function CtaFinalSection() {
                   </h3>
 
                   <div>
-                    <label htmlFor="cta-name" className="sr-only">Prénom</label>
+                    <label htmlFor="cta-name" className="block text-xs font-bold text-navy uppercase tracking-[0.1em] mb-1.5">
+                      Prénom
+                    </label>
                     <input
                       id="cta-name"
                       {...register('firstName')}
                       disabled={isSubmitting}
                       type="text"
-                      placeholder="Prénom"
+                      placeholder="Jean"
                       className={cn(
-                        "w-full h-14 px-5 border-2 border-navy bg-white text-navy placeholder:text-navy/40 focus:outline-none focus:ring-2 focus:ring-orange transition-all",
+                        "w-full h-14 px-5 border-2 border-navy bg-white text-navy placeholder:text-navy/30 focus:outline-none focus:ring-2 focus:ring-orange transition-colors",
                         errors.firstName && "border-red-500 focus:ring-red-500",
                         isSubmitting && "opacity-50 cursor-not-allowed"
                       )}
@@ -152,15 +154,17 @@ export function CtaFinalSection() {
                   </div>
 
                   <div>
-                    <label htmlFor="cta-email" className="sr-only">Email</label>
+                    <label htmlFor="cta-email" className="block text-xs font-bold text-navy uppercase tracking-[0.1em] mb-1.5">
+                      Email professionnel
+                    </label>
                     <input
                       id="cta-email"
                       {...register('email')}
                       disabled={isSubmitting}
                       type="email"
-                      placeholder="Email professionnel"
+                      placeholder="jean@entreprise.fr"
                       className={cn(
-                        "w-full h-14 px-5 border-2 border-navy bg-white text-navy placeholder:text-navy/40 focus:outline-none focus:ring-2 focus:ring-orange transition-all",
+                        "w-full h-14 px-5 border-2 border-navy bg-white text-navy placeholder:text-navy/30 focus:outline-none focus:ring-2 focus:ring-orange transition-colors",
                         errors.email && "border-red-500 focus:ring-red-500",
                         isSubmitting && "opacity-50 cursor-not-allowed"
                       )}
@@ -171,13 +175,15 @@ export function CtaFinalSection() {
                   </div>
 
                   <div className="relative">
-                    <label htmlFor="cta-need" className="sr-only">Votre besoin</label>
+                    <label htmlFor="cta-need" className="block text-xs font-bold text-navy uppercase tracking-[0.1em] mb-1.5">
+                      Votre besoin
+                    </label>
                     <select
                       id="cta-need"
                       {...register('need')}
                       disabled={isSubmitting}
                       className={cn(
-                        "w-full h-14 px-5 pr-10 border-2 border-navy bg-white text-navy appearance-none focus:outline-none focus:ring-2 focus:ring-orange transition-all cursor-pointer",
+                        "w-full h-14 px-5 pr-10 border-2 border-navy bg-white text-navy appearance-none focus:outline-none focus:ring-2 focus:ring-orange transition-colors cursor-pointer",
                         errors.need && "border-red-500 focus:ring-red-500",
                         isSubmitting && "opacity-50 cursor-not-allowed"
                       )}
@@ -206,7 +212,7 @@ export function CtaFinalSection() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full h-14 bg-orange border-2 border-navy text-white font-bold shadow-brutal-sm hover:shadow-brutal hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed mt-2 active:scale-[0.98]"
+                    className="w-full h-14 bg-orange border-2 border-navy text-white font-bold shadow-brutal-sm hover:shadow-brutal hover:-translate-x-0.5 hover:-translate-y-0.5 transition-[transform,box-shadow] flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed mt-2 active:scale-[0.98]"
                   >
                     {isSubmitting ? (
                       <Loader2 className="w-5 h-5 animate-spin" />

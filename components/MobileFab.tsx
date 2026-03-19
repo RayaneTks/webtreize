@@ -44,7 +44,7 @@ export function MobileFab() {
   return (
     <div
       className={cn(
-        'lg:hidden fixed bottom-[calc(1.25rem+env(safe-area-inset-bottom))] left-1/2 -translate-x-1/2 z-50 w-[88%] max-w-[320px] transition-all duration-300 ease-out',
+        'lg:hidden fixed bottom-[calc(1.25rem+env(safe-area-inset-bottom))] left-1/2 -translate-x-1/2 z-50 w-[88%] max-w-[320px] transition-[opacity,transform] duration-300 ease-out',
         showFab ? 'opacity-100 pointer-events-auto' : 'opacity-0 translate-y-4 pointer-events-none'
       )}
     >
