@@ -162,7 +162,7 @@ export function HeroSection() {
 
             {/* Proof line */}
             <div className="hero-enter hero-enter-delay-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
-              <span className="font-bold text-navy">Agence digitale Marseille</span>
+              <span className="font-bold text-navy">Agence web Marseille (13)</span>
               <span className="hidden sm:block w-px h-4 bg-navy/20" aria-hidden="true" />
               <span className="text-neutral-text font-medium">Réponse sous 48h</span>
               <span className="hidden sm:block w-px h-4 bg-navy/20" aria-hidden="true" />

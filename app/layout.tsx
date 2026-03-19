@@ -21,9 +21,9 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: 'WebTreize | Agence Digitale Marseille | Création Site Web, SEO Marseille',
+  title: 'WebTreize | Agence Web Marseille (13) | Création Site Web & SEO Marseille',
   description:
-    "Agence digitale Marseille : création site web Marseille, SEO Marseille, référencement naturel Marseille. Sites web, fiches Google & apps sur-mesure. Audit gratuit en 48h.",
+    "Agence web à Marseille (13) : création site web Marseille, SEO Marseille, optimisation fiches Google Business. Sites vitrines & e-commerce, apps sur-mesure. Audit gratuit en 48h.",
   keywords: [
     'agence digitale Marseille',
     'création site web Marseille',
@@ -31,6 +31,12 @@ export const metadata: Metadata = {
     'fiche Google Business',
     'application web sur mesure',
     'WebTreize',
+    'Web Treize',
+    'Web 13',
+    'Agence Web Marseille',
+    'agence web marseille',
+    'Agence 13',
+    'agence web 13',
   ],
   alternates: { canonical: '/' },
   icons: { icon: '/icon.svg', apple: '/icon.svg' },
@@ -38,18 +44,18 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     url: SITE_URL,
-    title: 'WebTreize | Agence Digitale Marseille | Création Site Web, SEO Marseille',
+    title: 'WebTreize | Agence Web Marseille (13) | Création Site Web & SEO Marseille',
     description:
-      "Agence digitale Marseille : création site web Marseille, SEO Marseille, référencement naturel Marseille. Sites web, fiches Google & apps sur-mesure. Audit gratuit en 48h.",
+      "Agence web à Marseille (13) : création site web Marseille, SEO Marseille, optimisation fiches Google Business. Sites vitrines & e-commerce, apps sur-mesure. Audit gratuit en 48h.",
     siteName: 'WebTreize',
     locale: 'fr_FR',
     images: [{ url: '/og-image.jpg', width: 1200, height: 630, alt: 'WebTreize - Agence digitale Marseille' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'WebTreize | Agence Digitale Marseille | Création Site Web, SEO Marseille',
+    title: 'WebTreize | Agence Web Marseille (13) | Création Site Web & SEO Marseille',
     description:
-      "Agence digitale Marseille : création site web Marseille, SEO Marseille, référencement naturel Marseille. Sites web, fiches Google & apps sur-mesure. Audit gratuit en 48h.",
+      "Agence web à Marseille (13) : création site web Marseille, SEO Marseille, optimisation fiches Google Business. Sites vitrines & e-commerce, apps sur-mesure. Audit gratuit en 48h.",
     images: [{ url: '/og-image.jpg', alt: 'WebTreize - Agence digitale Marseille' }],
   },
   robots: { index: true, follow: true },
@@ -66,6 +72,7 @@ const jsonLd = {
   url: SITE_URL,
   description:
     "Agence digitale basée à Marseille spécialisée en création de sites web et d'applications, optimisation de fiches Google Business Profile, SEO et accompagnement web global.",
+  logo: `${SITE_URL}/logo.svg`,
   email: CONTACT_EMAIL,
   contactPoint: {
     '@type': 'ContactPoint',

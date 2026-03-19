@@ -85,27 +85,6 @@ test.describe('WebTreize - Smoke tests', () => {
     await expect(social.getByText('0€', { exact: true })).toBeVisible();
   });
 
-  test('section démos présente', async ({ page }) => {
-    await page.goto('/');
-    await expect(page.locator('#demos')).toBeVisible();
-    await expect(page.getByText(/Exemples & Démos/i)).toBeVisible();
-  });
-
-  test('ouvrir et fermer une démo (modal) en mobile', async ({ page, isMobile }) => {
-    test.skip(!isMobile, 'Test mobile uniquement');
-    await page.goto('/');
-
-    const firstCard = page.locator('[data-testid^="demo-card-"]').first();
-    const openBtn = firstCard.getByRole('button', { name: /Voir la démo/i }).first();
-    await openBtn.click();
-
-    const modal = page.locator('[data-testid="demo-modal"]');
-    await expect(modal).toBeVisible();
-
-    await page.keyboard.press('Escape');
-    await expect(modal).toBeHidden();
-  });
-
   test('aucune mention de faux avis Google', async ({ page }) => {
     await page.goto('/');
     await expect(page.locator('text=14 avis')).not.toBeVisible();

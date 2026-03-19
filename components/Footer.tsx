@@ -9,7 +9,10 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-navy text-white/70 pt-16 pb-8 md:pt-20 md:pb-10 border-t border-white/10" aria-labelledby="footer-heading">
+    <footer
+      className="bg-navy text-white/70 pt-16 pb-28 md:pt-20 md:pb-10 border-t border-white/10 lg:pb-10"
+      aria-labelledby="footer-heading"
+    >
       <h2 id="footer-heading" className="sr-only">Footer</h2>
       <div className="container mx-auto px-5 lg:px-12 xl:px-16 max-w-screen-xl">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 mb-12 md:mb-16">
@@ -18,10 +21,12 @@ export function Footer() {
           <div className="flex flex-col items-start">
             <div className="flex items-center gap-2 mb-4">
               <LogoWebTreize className="w-7 h-7 brightness-0 invert" />
-              <span className="text-xl font-black tracking-tighter text-white">WebTreize</span>
+              <span className="text-xl font-black tracking-tighter text-white">
+                WebTreize<span className="sr-only">Web Treize</span>
+              </span>
             </div>
             <p className="text-sm font-medium leading-relaxed max-w-xs mb-6">
-              Agence digitale Marseille. Sites, SEO, fiche Google.
+              Agence web à Marseille (13). Sites, SEO, fiche Google.
             </p>
             <div className="flex items-center gap-1">
               <a

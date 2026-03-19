@@ -197,7 +197,7 @@ export function Navbar() {
             Obtenir mon audit gratuit
           </Button>
           <p className="text-center text-white/40 text-xs font-medium">
-            Agence digitale · Marseille
+            Agence web · Marseille (13)
           </p>
         </div>
       </div>
