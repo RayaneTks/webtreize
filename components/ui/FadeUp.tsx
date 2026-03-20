@@ -47,7 +47,8 @@ export function FadeUp({
     <div
       ref={ref}
       className={cn(
-        'transition-all duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] will-change-[opacity,transform]',
+        'transition-all duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)]',
+        'motion-reduce:transition-none motion-reduce:duration-0',
         isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-[0.98]',
         className
       )}

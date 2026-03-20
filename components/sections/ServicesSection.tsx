@@ -58,6 +58,9 @@ export function ServicesSection() {
               <br />
               Concrètement.
             </h2>
+            <p className="text-neutral-text font-medium text-lg leading-relaxed max-w-2xl">
+              Chaque activité est différente : on intervient sur ce qui vous fait gagner en clarté, en visibilité et en performance — du site vitrine à la fiche Google, du référencement aux outils sur mesure.
+            </p>
           </div>
         </FadeUp>
 
@@ -69,7 +72,7 @@ export function ServicesSection() {
             const Icon = s.icon;
             return (
               <FadeUp className="lg:col-span-7">
-                <div className="h-full flex flex-col p-8 md:p-10 border-2 border-navy bg-navy text-white shadow-brutal-orange transition-[transform,box-shadow] duration-300 hover:-translate-x-1 hover:-translate-y-1 hover:shadow-brutal-orange-lg">
+                <div className="h-full flex flex-col p-8 md:p-10 border-2 border-navy bg-navy text-white shadow-brutal-orange transition-[transform,box-shadow] duration-300 hover:-translate-x-1 hover:-translate-y-1 hover:shadow-brutal-orange-lg motion-reduce:transition-none motion-reduce:hover:translate-x-0 motion-reduce:hover:translate-y-0">
                   <div className="flex items-start justify-between mb-8">
                     <div className="w-14 h-14 flex items-center justify-center border-2 border-white/30 bg-orange text-white">
                       <Icon className="w-6 h-6" strokeWidth={2.5} />
@@ -119,7 +122,7 @@ export function ServicesSection() {
               const Icon = service.icon;
               return (
                 <FadeUp key={index} delay={(index + 1) * 120} className="flex-1">
-                  <div className="h-full flex flex-col p-6 md:p-7 border-2 border-navy bg-cream shadow-brutal transition-[transform,box-shadow] duration-300 hover:-translate-x-1 hover:-translate-y-1 hover:shadow-brutal-lg">
+                  <div className="h-full flex flex-col p-6 md:p-7 border-2 border-navy bg-cream shadow-brutal transition-[transform,box-shadow] duration-300 hover:-translate-x-1 hover:-translate-y-1 hover:shadow-brutal-lg motion-reduce:transition-none motion-reduce:hover:translate-x-0 motion-reduce:hover:translate-y-0">
                     <div className="mb-5">
                       <div className="w-11 h-11 flex items-center justify-center border-2 border-navy bg-navy text-white">
                         <Icon className="w-5 h-5" strokeWidth={2.5} />

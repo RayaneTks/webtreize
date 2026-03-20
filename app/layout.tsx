@@ -20,12 +20,12 @@ const dmSans = DM_Sans({
 
 
 const META_DESCRIPTION =
-  "WebTreize est une agence web à Marseille (13) spécialisée en création de sites web, SEO, optimisation Google Business et développement d'applications sur-mesure. Audit gratuit en 48h.";
+  "WebTreize, agence digitale à Marseille (13) : votre activité enfin prise au sérieux — sites, visibilité locale, SEO, applications et outils sur mesure. Audit gratuit sous 48h.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: 'WebTreize | Agence Web Marseille (13) | Création Site Web & SEO',
+    default: 'WebTreize | Agence digitale Marseille (13) | Votre activité prise au sérieux',
     template: '%s | WebTreize',
   },
   description: META_DESCRIPTION,
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     url: SITE_URL,
-    title: 'WebTreize | Agence Web Marseille (13)',
+    title: 'WebTreize | Agence digitale Marseille (13) | Votre activité prise au sérieux',
     description: META_DESCRIPTION,
     siteName: 'WebTreize',
     locale: 'fr_FR',
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'WebTreize | Agence Web Marseille (13)',
+    title: 'WebTreize | Agence digitale Marseille (13) | Votre activité prise au sérieux',
     description: META_DESCRIPTION,
     creator: '@webtreize',
     images: [{ url: '/og-image.jpg', alt: 'WebTreize — Agence web Marseille' }],
@@ -109,14 +109,9 @@ const jsonLd = {
       '@id': `${SITE_URL}/#website`,
       url: SITE_URL,
       name: 'WebTreize',
-      description: 'Agence web Marseille — Sites web, SEO, Apps sur-mesure',
+      description: 'Agence digitale Marseille — Sites, visibilité, SEO, apps & outils sur mesure',
       publisher: { '@id': `${SITE_URL}/#organization` },
       inLanguage: 'fr-FR',
-      potentialAction: {
-        '@type': 'SearchAction',
-        target: { '@type': 'EntryPoint', urlTemplate: `${SITE_URL}/?q={search_term_string}` },
-        'query-input': 'required name=search_term_string',
-      },
     },
     {
       '@type': 'ProfessionalService',

@@ -9,22 +9,25 @@ import { Loader2, CheckCircle2, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { SnapchatIcon } from '@/components/ui/SnapchatIcon';
 import { SNAPCHAT_URL } from '@/lib/constants';
+import { AUDIT_CATEGORIES, AUDIT_CATEGORY_LABELS } from '@/lib/data/audit-categories';
 
 const formSchema = z.object({
   firstName: z.string().min(2, 'Veuillez saisir au moins 2 caractères.'),
   email: z.string().email('Veuillez saisir une adresse email valide.'),
-  need: z.string().min(1, 'Veuillez sélectionner votre besoin principal.'),
+  category: z.string().min(1, 'Veuillez sélectionner une catégorie.'),
+  projectNote: z.string().max(2000).optional(),
 });
 
 type FormData = z.infer<typeof formSchema>;
 
-const NEED_LABELS: Record<string, string> = {
-  'site-web': "Création / Refonte de site web",
-  'application': "Développement d'application",
-  'seo-visibilite': "SEO & Visibilité locale",
-  'digitalisation': "Digitalisation & Outils métiers",
-  'autre': "Autre besoin",
-};
+function buildAuditMessage(data: FormData): string {
+  const catLabel = AUDIT_CATEGORY_LABELS[data.category] ?? data.category;
+  let message = `Demande d'audit — Catégorie : ${catLabel}`;
+  if (data.projectNote?.trim()) {
+    message += `\n\nContexte projet (pour l'audit) :\n${data.projectNote.trim()}`;
+  }
+  return message;
+}
 
 export function CtaFinalSection() {
   const [isSuccess, setIsSuccess] = useState(false);
@@ -37,7 +40,7 @@ export function CtaFinalSection() {
     reset
   } = useForm<FormData>({
     resolver: zodResolver(formSchema),
-    defaultValues: { firstName: '', email: '', need: '' }
+    defaultValues: { firstName: '', email: '', category: '', projectNote: '' }
   });
 
   const onSubmit = async (data: FormData) => {
@@ -49,7 +52,7 @@ export function CtaFinalSection() {
         body: JSON.stringify({
           name: data.firstName,
           email: data.email,
-          message: `Demande d'audit — Besoin : ${NEED_LABELS[data.need] || data.need}`,
+          message: buildAuditMessage(data),
         }),
       });
       const json = await res.json();
@@ -76,14 +79,14 @@ export function CtaFinalSection() {
               className="font-display text-white uppercase leading-[0.92] mb-6"
               style={{ fontSize: 'clamp(36px, 5.5vw, 56px)' }}
             >
-              Prêt à passer
+              Un diagnostic
               <br />
-              devant vos
+              à la hauteur de
               <br />
-              <span className="text-orange">concurrents ?</span>
+              <span className="text-orange">votre activité.</span>
             </h2>
             <p className="text-white/80 font-medium text-lg leading-relaxed mb-10 max-w-lg">
-              En 48h, on analyse votre présence digitale et on vous dit exactement quoi faire. Gratuit, sans engagement.
+              En 48h, on analyse votre situation et on vous dit quoi prioriser — présence en ligne, visibilité, outils ou stratégie. Gratuit, sans engagement.
             </p>
 
             <div className="flex flex-col gap-6">
@@ -94,7 +97,7 @@ export function CtaFinalSection() {
               </div>
 
               <div className="flex items-center gap-4 pt-6 border-t border-white/10">
-                <span className="text-white/60 text-sm font-medium">Vous préférez discuter ?</span>
+                <span className="text-white/75 text-sm font-medium">Vous préférez discuter ?</span>
                 <a
                   href={SNAPCHAT_URL}
                   target="_blank"
@@ -128,9 +131,14 @@ export function CtaFinalSection() {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-                  <h3 className="font-display text-navy uppercase text-lg mb-2">
-                    Audit gratuit en 48h
-                  </h3>
+                  <div>
+                    <h3 className="font-display text-navy uppercase text-lg mb-1">
+                      Audit gratuit en 48h
+                    </h3>
+                    <p className="text-neutral-text text-sm font-medium leading-snug">
+                      Choisissez la catégorie la plus proche de votre besoin — et décrivez votre projet si vous le souhaitez, pour qu&apos;on prépare l&apos;audit.
+                    </p>
+                  </div>
 
                   <div>
                     <label htmlFor="cta-name" className="block text-xs font-bold text-navy uppercase tracking-[0.1em] mb-1.5">
@@ -143,7 +151,7 @@ export function CtaFinalSection() {
                       type="text"
                       placeholder="Jean"
                       className={cn(
-                        "w-full h-14 px-5 border-2 border-navy bg-white text-navy placeholder:text-navy/30 focus:outline-none focus:ring-2 focus:ring-orange transition-colors",
+                        "w-full h-14 px-5 border-2 border-navy bg-white text-navy placeholder:text-navy/45 focus:outline-none focus:ring-2 focus:ring-orange transition-colors",
                         errors.firstName && "border-red-500 focus:ring-red-500",
                         isSubmitting && "opacity-50 cursor-not-allowed"
                       )}
@@ -164,7 +172,7 @@ export function CtaFinalSection() {
                       type="email"
                       placeholder="jean@entreprise.fr"
                       className={cn(
-                        "w-full h-14 px-5 border-2 border-navy bg-white text-navy placeholder:text-navy/30 focus:outline-none focus:ring-2 focus:ring-orange transition-colors",
+                        "w-full h-14 px-5 border-2 border-navy bg-white text-navy placeholder:text-navy/45 focus:outline-none focus:ring-2 focus:ring-orange transition-colors",
                         errors.email && "border-red-500 focus:ring-red-500",
                         isSubmitting && "opacity-50 cursor-not-allowed"
                       )}
@@ -175,33 +183,51 @@ export function CtaFinalSection() {
                   </div>
 
                   <div className="relative">
-                    <label htmlFor="cta-need" className="block text-xs font-bold text-navy uppercase tracking-[0.1em] mb-1.5">
-                      Votre besoin
+                    <label htmlFor="cta-category" className="block text-xs font-bold text-navy uppercase tracking-[0.1em] mb-1.5">
+                      Catégorie
                     </label>
                     <select
-                      id="cta-need"
-                      {...register('need')}
+                      id="cta-category"
+                      {...register('category')}
                       disabled={isSubmitting}
                       className={cn(
                         "w-full h-14 px-5 pr-10 border-2 border-navy bg-white text-navy appearance-none focus:outline-none focus:ring-2 focus:ring-orange transition-colors cursor-pointer",
-                        errors.need && "border-red-500 focus:ring-red-500",
+                        errors.category && "border-red-500 focus:ring-red-500",
                         isSubmitting && "opacity-50 cursor-not-allowed"
                       )}
                     >
-                      <option value="" disabled>Votre besoin principal</option>
-                      <option value="site-web">Création / Refonte de site web</option>
-                      <option value="application">Développement d&apos;application</option>
-                      <option value="seo-visibilite">SEO &amp; Visibilité locale</option>
-                      <option value="digitalisation">Digitalisation &amp; Outils métiers</option>
-                      <option value="autre">Autre</option>
+                      <option value="" disabled>Sélectionnez une catégorie</option>
+                      {AUDIT_CATEGORIES.map(({ value, label }) => (
+                        <option key={value} value={value}>{label}</option>
+                      ))}
                     </select>
                     <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
                       <svg className="w-4 h-4 text-navy/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
                       </svg>
                     </div>
-                    {errors.need && (
-                      <p className="text-red-500 text-xs mt-1.5 font-medium">{errors.need.message}</p>
+                    {errors.category && (
+                      <p className="text-red-500 text-xs mt-1.5 font-medium">{errors.category.message}</p>
+                    )}
+                  </div>
+
+                  <div>
+                    <label htmlFor="cta-project" className="block text-xs font-bold text-navy uppercase tracking-[0.1em] mb-1.5">
+                      Votre projet <span className="text-neutral-text font-medium normal-case">(facultatif)</span>
+                    </label>
+                    <textarea
+                      id="cta-project"
+                      {...register('projectNote')}
+                      disabled={isSubmitting}
+                      rows={4}
+                      placeholder="Contexte, objectifs, contraintes, lien vers votre site… Tout ce qui aide à cadrer l'audit."
+                      className={cn(
+                        "w-full min-h-[120px] px-5 py-4 border-2 border-navy bg-white text-navy placeholder:text-navy/45 focus:outline-none focus:ring-2 focus:ring-orange transition-colors resize-y",
+                        isSubmitting && "opacity-50 cursor-not-allowed"
+                      )}
+                    />
+                    {errors.projectNote && (
+                      <p className="text-red-500 text-xs mt-1.5 font-medium">{errors.projectNote.message}</p>
                     )}
                   </div>
 
@@ -212,7 +238,7 @@ export function CtaFinalSection() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full h-14 bg-orange border-2 border-navy text-white font-bold shadow-brutal-sm hover:shadow-brutal hover:-translate-x-0.5 hover:-translate-y-0.5 transition-[transform,box-shadow] flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed mt-2 active:scale-[0.98]"
+                    className="w-full h-14 bg-orange border-2 border-navy text-white font-bold shadow-brutal-sm hover:shadow-brutal hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:hover:translate-x-0 motion-reduce:hover:translate-y-0 transition-[transform,box-shadow] motion-reduce:transition-none flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed mt-2 active:scale-[0.98] motion-reduce:active:scale-100"
                   >
                     {isSubmitting ? (
                       <Loader2 className="w-5 h-5 animate-spin" />

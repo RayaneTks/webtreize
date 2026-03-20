@@ -7,9 +7,9 @@ import { Button } from '@/components/ui/Button';
 import { useSmoothScroll } from '@/hooks/useSmoothScroll';
 
 const PAIN_POINTS = [
-  "Votre site existe, mais il ne génère aucun appel.",
-  "Vos concurrents récupèrent les clients que vous devriez avoir.",
-  "Vous avez payé cher pour un site qui ne convertit pas.",
+  "Vous êtes en ligne, mais ça ne se traduit pas en demandes concrètes (appels, devis, prises de contact).",
+  "Vos concurrents sont plus visibles que vous — sur Google, sur la fiche locale, ou là où vos clients cherchent vraiment.",
+  "Vous avez déjà investi (site, pub, outil) sans voir l'impact sur le terrain : trafic, conversion, gain de temps.",
 ] as const;
 
 const CHART_BARS = [8, 14, 6, 18, 4, 10, 5, 15, 3, 8, 5, 10];
@@ -22,9 +22,9 @@ function AnalyticsDashboard() {
         <div className="px-5 py-3 border-b border-white/10 bg-white/[0.02] flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="w-2 h-2 rounded-full bg-red-500/80" />
-            <span className="text-white/30 text-[11px] font-mono font-bold tracking-wide">analytics — votre-site.fr</span>
+            <span className="text-white/50 text-[11px] font-mono font-bold tracking-wide">analytics — votre-site.fr</span>
           </div>
-          <span className="text-white/15 text-[10px] font-mono">30 derniers jours</span>
+          <span className="text-white/50 text-[10px] font-mono">30 derniers jours</span>
         </div>
 
         {/* Metrics row */}
@@ -37,9 +37,9 @@ function AnalyticsDashboard() {
             const Icon = m.icon;
             return (
               <div key={i} className="bg-navy p-5 text-center">
-                <Icon className="w-4 h-4 text-white/15 mx-auto mb-2" strokeWidth={1.5} />
+                <Icon className="w-4 h-4 text-white/45 mx-auto mb-2" strokeWidth={1.5} />
                 <p className="font-display text-4xl xl:text-5xl text-white/90 leading-none">{m.value}</p>
-                <p className="text-white/25 text-[10px] font-bold mt-1.5 uppercase tracking-wider">{m.label}</p>
+                <p className="text-white/45 text-[10px] font-bold mt-1.5 uppercase tracking-wider">{m.label}</p>
               </div>
             );
           })}
@@ -57,9 +57,9 @@ function AnalyticsDashboard() {
             ))}
           </div>
           <div className="flex items-center justify-between mt-3">
-            <span className="text-[10px] text-white/15 font-mono">1 mars</span>
-            <span className="text-[10px] text-red-400/60 font-mono font-bold">— aucune donnée —</span>
-            <span className="text-[10px] text-white/15 font-mono">aujourd&apos;hui</span>
+            <span className="text-[10px] text-white/50 font-mono">1 mars</span>
+            <span className="text-[10px] text-red-400/75 font-mono font-bold">— aucune donnée —</span>
+            <span className="text-[10px] text-white/50 font-mono">aujourd&apos;hui</span>
           </div>
         </div>
       </div>
@@ -103,8 +103,7 @@ export function PainPointsSection() {
                 ne suffit plus.
               </h2>
               <p className="text-white/80 font-medium text-lg md:text-xl leading-relaxed mb-12 max-w-xl">
-                Un site sans stratégie, c&apos;est de l&apos;argent jeté par la fenêtre.
-                Voici ce qu&apos;on voit chez 90% des entreprises qui nous contactent.
+                Un digital sans méthode, c&apos;est du temps et de l&apos;argent perdus. Voici ce qu&apos;on voit le plus souvent — site, visibilité ou outils confondus.
               </p>
             </FadeUp>
 

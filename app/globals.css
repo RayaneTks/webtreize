@@ -18,6 +18,8 @@
     --shadow-brutal-orange: 6px 6px 0 #D9480F;
     --border-brutal: 3px solid #001F3F;
     --border-brutal-thin: 2px solid #001F3F;
+    --color-on-navy: rgba(255, 255, 255, 0.76);
+    --color-on-navy-muted: rgba(255, 255, 255, 0.62);
   }
 }
 
@@ -113,5 +115,29 @@ body:has([data-legal-page]),
   pointer-events: none;
   opacity: 0.015;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .hero-enter,
+  .hero-enter-delay-1,
+  .hero-enter-delay-2,
+  .hero-enter-delay-3 {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .animate-line-fade-in {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+
+  .animate-pulse {
+    animation: none !important;
+  }
 }
 

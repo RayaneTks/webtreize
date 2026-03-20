@@ -53,15 +53,16 @@ export function FaqSection() {
                     {isOpen ? (
                       <Minus className="w-5 h-5 text-orange shrink-0" strokeWidth={2.5} />
                     ) : (
-                      <Plus className="w-5 h-5 text-navy/30 shrink-0" strokeWidth={2.5} />
+                      <Plus className="w-5 h-5 text-navy/48 shrink-0" strokeWidth={2.5} />
                     )}
                   </button>
                   <div
                     id={`faq-answer-${i}`}
                     role="region"
                     aria-labelledby={`faq-btn-${i}`}
+                    aria-hidden={!isOpen}
                     className={cn(
-                      "grid transition-[grid-template-rows,opacity] duration-300 ease-out",
+                      "grid transition-[grid-template-rows,opacity] duration-300 ease-out motion-reduce:transition-none motion-reduce:duration-0",
                       isOpen ? "grid-rows-[1fr] opacity-100 pb-6 md:pb-8" : "grid-rows-[0fr] opacity-0"
                     )}
                   >

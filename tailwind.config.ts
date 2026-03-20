@@ -23,6 +23,11 @@ const config: Config = {
           bg: '#f5f0e8',
           text: '#4a4a4a',
         },
+        /** Texte sur fond navy — contrastes visés ~AA sur corps de texte */
+        onNavy: {
+          DEFAULT: 'rgba(255, 255, 255, 0.76)',
+          muted: 'rgba(255, 255, 255, 0.62)',
+        },
       },
       boxShadow: {
         'brutal': '6px 6px 0 #001F3F',

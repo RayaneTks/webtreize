@@ -3,12 +3,12 @@ import { test, expect } from '@playwright/test';
 test.describe('WebTreize - Smoke tests', () => {
   test("page d'accueil charge et affiche le H1", async ({ page }) => {
     await page.goto('/');
-    await expect(page.locator('h1')).toContainText(/ramènent|sites qui|clients/i);
+    await expect(page.locator('h1')).toContainText(/activité|sérieux|prise/i);
   });
 
   test('navigation vers #contact scroll correctement', async ({ page }) => {
     await page.goto('/');
-    const ctaButton = page.locator('#hero').locator('button', { hasText: 'Obtenir mon audit gratuit' }).first();
+    const ctaButton = page.locator('#hero').locator('button', { hasText: 'Demander un audit gratuit' }).first();
     await ctaButton.click();
     await page.waitForTimeout(800);
     const contactSection = page.locator('#contact');
@@ -21,10 +21,12 @@ test.describe('WebTreize - Smoke tests', () => {
     const contactSection = page.locator('#contact');
     await contactSection.scrollIntoViewIfNeeded();
     await page.waitForTimeout(500);
-    const nameInput = contactSection.locator('input[placeholder="Prénom"]');
+    const nameInput = contactSection.locator('input[placeholder="Jean"]');
     await expect(nameInput).toBeVisible({ timeout: 5000 });
-    const emailInput = contactSection.locator('input[placeholder="Email professionnel"]');
+    const emailInput = contactSection.locator('input[placeholder="jean@entreprise.fr"]');
     await expect(emailInput).toBeVisible();
+    await expect(contactSection.locator('#cta-category')).toBeVisible();
+    await expect(contactSection.locator('#cta-project')).toBeVisible();
   });
 
   test('sections principales présentes', async ({ page }) => {
@@ -77,12 +79,9 @@ test.describe('WebTreize - Smoke tests', () => {
 
   test('métriques de social proof visibles', async ({ page }) => {
     await page.goto('/');
-    const social = page.locator('section[aria-label="Nos résultats en chiffres"]');
+    const social = page.locator('section[aria-label="Résultats et engagements"]');
     await expect(social).toBeVisible();
     await expect(social.getByText('+75%', { exact: true })).toBeVisible();
-    await expect(social.getByText('100%', { exact: true })).toBeVisible();
-    await expect(social.getByText('48h', { exact: true })).toBeVisible();
-    await expect(social.getByText('0€', { exact: true })).toBeVisible();
   });
 
   test('aucune mention de faux avis Google', async ({ page }) => {

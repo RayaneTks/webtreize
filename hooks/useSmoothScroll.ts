@@ -1,10 +1,13 @@
 'use client';
 
 import { useCallback } from 'react';
+import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 
 const NAVBAR_OFFSET = 80;
 
 export function useSmoothScroll() {
+  const prefersReducedMotion = usePrefersReducedMotion();
+
   return useCallback((e: React.MouseEvent, href: string) => {
     if (!href.startsWith('#')) return;
 
@@ -18,7 +21,7 @@ export function useSmoothScroll() {
 
       window.scrollTo({
         top: offsetPosition,
-        behavior: 'smooth',
+        behavior: prefersReducedMotion ? 'auto' : 'smooth',
       });
 
       try {
@@ -27,7 +30,7 @@ export function useSmoothScroll() {
         // Silencieux : erreur possible en mode preview restreint (iframe)
       }
     }
-  }, []);
+  }, [prefersReducedMotion]);
 }
 
 export { NAVBAR_OFFSET };

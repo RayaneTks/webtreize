@@ -31,7 +31,7 @@ export function SocialProofSection() {
                 de visibilité gagnée en moyenne
               </p>
               <p className="text-xs text-neutral-text font-medium mt-1">
-                dans les 90 jours suivant notre intervention
+                Mesuré en moyenne sur nos accompagnements visibilité, dans les 90 jours suivant la mise en œuvre.
               </p>
             </div>
 

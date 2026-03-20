@@ -43,7 +43,7 @@ export default async function LegalPage({ params }: LegalPageProps) {
   return (
     <div className="min-h-screen bg-cream text-navy overflow-x-clip">
       <Navbar />
-      <main className="relative z-10 pt-28 pb-20 md:pt-36">
+      <main id="main-content" className="relative z-10 pt-28 pb-20 md:pt-36">
         <section className="container mx-auto px-5 lg:px-12 xl:px-16 max-w-screen-xl">
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-3 mb-8">
@@ -82,7 +82,7 @@ export default async function LegalPage({ params }: LegalPageProps) {
                   </Link>
                   <Link
                     href="/#contact"
-                    className="inline-flex items-center justify-center h-12 px-8 py-3 border-2 border-navy bg-orange text-white font-bold rounded-sm shadow-brutal-sm hover:bg-orange-hover hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all"
+                    className="inline-flex items-center justify-center h-12 px-8 py-3 border-2 border-navy bg-orange text-white font-bold rounded-sm shadow-brutal-sm hover:bg-orange-hover hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:hover:translate-x-0 motion-reduce:hover:translate-y-0 transition-all motion-reduce:transition-none"
                   >
                     Demander une info
                   </Link>

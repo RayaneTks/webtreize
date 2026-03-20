@@ -58,7 +58,7 @@ export function GuaranteesSection() {
                 Des garanties.
               </h2>
               <p className="text-neutral-text font-medium leading-relaxed mb-8 max-w-sm">
-                On ne livre pas du volume. On livre du résultat.
+                On ne livre pas du bruit. On livre du sérieux — et du résultat mesurable.
               </p>
               <Button size="lg" onClick={(e) => scroll(e, '#contact')}>
                 Démarrer mon audit

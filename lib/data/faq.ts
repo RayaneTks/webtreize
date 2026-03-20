@@ -1,7 +1,7 @@
 export const FAQ_ITEMS = [
   {
-    q: "Vous êtes nouveaux, pourquoi vous faire confiance ?",
-    a: "On a tout à prouver — et c'est exactement pour ça qu'on donne tout. On est à la pointe technique, nos tarifs sont justes, et on n'a pas les frais de structure d'une grosse boîte à rentabiliser sur votre dos.",
+    q: "Pourquoi nous confier votre projet plutôt qu'une grosse structure ?",
+    a: "On n'a pas de siège à amortir sur votre facture : équipe réduite, tarifs alignés sur le travail réel, stack moderne. L'audit gratuit et les délais contractuels, c'est notre façon d'assumer le risque à votre place — pas de promesse en l'air.",
   },
   {
     q: "Combien ça coûte ?",
@@ -9,7 +9,7 @@ export const FAQ_ITEMS = [
   },
   {
     q: "En combien de temps j'ai des résultats ?",
-    a: "Optimiser une fiche Google : environ 30 jours. Refaire un site : 4 à 8 semaines. L'audit vous donne un calendrier précis adapté à votre situation.",
+    a: "Optimiser une fiche Google : 1 à 2 semaines. Refaire un site : 4 à 8 semaines. L'audit vous donne un calendrier précis adapté à votre situation.",
   },
   {
     q: "Et si je ne comprends rien au numérique ?",

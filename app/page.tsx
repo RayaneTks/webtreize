@@ -6,32 +6,32 @@ import dynamic from 'next/dynamic';
 
 const PainPointsSection = dynamic(
   () => import('@/components/sections/PainPointsSection').then(mod => mod.PainPointsSection),
-  { loading: () => <div className="h-96 w-full animate-pulse bg-navy" /> }
+  { loading: () => <div className="h-96 w-full animate-pulse bg-navy" aria-hidden /> }
 );
 
 const ServicesSection = dynamic(
   () => import('@/components/sections/ServicesSection').then(mod => mod.ServicesSection),
-  { loading: () => <div className="h-96 w-full animate-pulse bg-cream" /> }
+  { loading: () => <div className="h-96 w-full animate-pulse bg-cream" aria-hidden /> }
 );
 
 const GuaranteesSection = dynamic(
   () => import('@/components/sections/GuaranteesSection').then(mod => mod.GuaranteesSection),
-  { loading: () => <div className="h-96 w-full animate-pulse bg-white" /> }
+  { loading: () => <div className="h-96 w-full animate-pulse bg-white" aria-hidden /> }
 );
 
 const MethodologySection = dynamic(
   () => import('@/components/sections/MethodologySection').then(mod => mod.MethodologySection),
-  { loading: () => <div className="h-96 w-full animate-pulse bg-cream" /> }
+  { loading: () => <div className="h-96 w-full animate-pulse bg-cream" aria-hidden /> }
 );
 
 const FaqSection = dynamic(
   () => import('@/components/sections/FaqSection').then(mod => mod.FaqSection),
-  { loading: () => <div className="h-96 w-full animate-pulse bg-white" /> }
+  { loading: () => <div className="h-96 w-full animate-pulse bg-white" aria-hidden /> }
 );
 
 const CtaFinalSection = dynamic(
   () => import('@/components/sections/CtaFinalSection').then(mod => mod.CtaFinalSection),
-  { loading: () => <div className="h-96 w-full animate-pulse bg-navy" /> }
+  { loading: () => <div className="h-96 w-full animate-pulse bg-navy" aria-hidden /> }
 );
 
 export default function HomePage() {

@@ -75,7 +75,7 @@ export default function NotFound() {
   return (
     <div className="min-h-screen bg-cream text-navy overflow-x-clip">
       <Navbar />
-      <main className="relative z-10 pt-28 pb-20 md:pt-36">
+      <main id="main-content" className="relative z-10 pt-28 pb-20 md:pt-36">
         <section className="container mx-auto px-5 lg:px-12 xl:px-16 max-w-screen-xl">
           <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-start">
             <div>

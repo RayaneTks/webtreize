@@ -9,14 +9,14 @@ function GoogleResultMockup() {
   return (
     <div className="relative">
       {/* "Before" card — faded, rotated behind */}
-      <div className="absolute -top-6 -left-6 w-[90%] bg-white/5 border border-white/10 p-5 rotate-[-2deg] opacity-50">
+      <div className="absolute -top-6 -left-6 w-[90%] bg-white/5 border border-white/10 p-5 rotate-[-2deg] opacity-[0.62]">
         <div className="flex items-center gap-2 mb-2">
           <div className="w-5 h-5 rounded-full bg-red-500/60" />
-          <span className="text-white/40 text-xs font-bold">Position #48</span>
+          <span className="text-white/65 text-xs font-bold">Position #48</span>
         </div>
         <div className="h-2 bg-white/10 rounded-full w-3/4 mb-2" />
         <div className="h-2 bg-white/10 rounded-full w-1/2" />
-        <p className="text-white/30 text-[11px] mt-3 font-medium">Invisible sur Google</p>
+        <p className="text-white/58 text-[11px] mt-3 font-medium">Invisible sur Google</p>
       </div>
 
       {/* "After" card — prominent Google result */}
@@ -109,20 +109,17 @@ export function HeroSection() {
             {/* Headline */}
             <h1
               id="hero-title"
-              className="hero-enter hero-enter-delay-1 font-display text-navy uppercase leading-[0.9] mb-8 md:mb-10"
+              className="hero-enter hero-enter-delay-1 font-display text-navy uppercase leading-[0.92] mb-8 md:mb-10 text-balance"
               style={{ fontSize: 'clamp(40px, 5.5vw, 72px)' }}
             >
-              Des sites qui
-              <br />
-              <span className="text-orange">ramènent</span>
-              <br />
-              des clients.
+              <span className="block lg:inline">Votre activité </span>
+              <span className="block lg:inline">enfin prise au </span>
+              <span className="text-orange">sérieux.</span>
             </h1>
 
             {/* Subtitle */}
             <p className="hero-enter hero-enter-delay-2 text-lg md:text-xl text-neutral-text font-medium max-w-xl leading-relaxed mb-10 md:mb-12">
-              Vos clients vous cherchent sur Google.
-              On fait en sorte qu&apos;ils vous trouvent — pas vos concurrents.
+              On met votre présence en ligne au niveau de votre activité : site, visibilité locale, SEO, applications et outils métiers — avec la même exigence sur l&apos;ensemble.
             </p>
 
             {/* CTA */}
@@ -132,8 +129,8 @@ export function HeroSection() {
                 className="group"
                 onClick={(e) => scroll(e, '#contact')}
               >
-                Obtenir mon audit gratuit
-                <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
+                Demander un audit gratuit
+                <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0" />
               </Button>
             </div>
 
@@ -162,7 +159,7 @@ export function HeroSection() {
 
             {/* Proof line */}
             <div className="hero-enter hero-enter-delay-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
-              <span className="font-bold text-navy">Agence web Marseille (13)</span>
+              <span className="font-bold text-navy">Agence digitale · Marseille (13)</span>
               <span className="hidden sm:block w-px h-4 bg-navy/20" aria-hidden="true" />
               <span className="text-neutral-text font-medium">Réponse sous 48h</span>
               <span className="hidden sm:block w-px h-4 bg-navy/20" aria-hidden="true" />

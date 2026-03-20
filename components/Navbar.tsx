@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 import { LogoWebTreize } from '@/components/ui/LogoWebTreize';
 import { useSmoothScroll } from '@/hooks/useSmoothScroll';
+import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
 
@@ -18,6 +19,7 @@ const NAV_LINKS = [
 export function Navbar() {
   const pathname = usePathname();
   const scroll = useSmoothScroll();
+  const prefersReducedMotion = usePrefersReducedMotion();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -63,8 +65,13 @@ export function Navbar() {
   }, [mobileMenuOpen]);
 
   const handleLogoClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (pathname === '/') {
+      e.preventDefault();
+      window.scrollTo({
+        top: 0,
+        behavior: prefersReducedMotion ? 'auto' : 'smooth',
+      });
+    }
     setMobileMenuOpen(false);
   };
 
@@ -77,7 +84,7 @@ export function Navbar() {
     <header>
       <nav
         className={cn(
-          'fixed top-0 left-0 w-full z-50 transition-[background-color,border-color,backdrop-filter,padding] duration-300',
+          'fixed top-0 left-0 w-full z-50 transition-[background-color,border-color,backdrop-filter,padding] duration-300 motion-reduce:transition-none motion-reduce:duration-0',
           'pt-[env(safe-area-inset-top)]',
           // Mobile: on force un header "dark" pour garder le contraste (sinon il paraît blanc/peu lisible)
           'max-lg:py-3 max-lg:bg-navy/95 max-lg:backdrop-blur-md max-lg:border-b max-lg:border-navy/10',
@@ -89,7 +96,7 @@ export function Navbar() {
       >
         <div className="container mx-auto px-5 lg:px-12 xl:px-16 max-w-screen-xl flex items-center justify-between">
           <Link
-            href="#"
+            href="/"
             onClick={handleLogoClick}
             className="flex items-center gap-2 z-50 relative"
             aria-label="WebTreize - Accueil"
@@ -148,7 +155,7 @@ export function Navbar() {
               variant="outline"
               size="sm"
               className={cn(
-                "whitespace-nowrap px-3 py-1.5 text-xs h-9 transition-colors",
+                "whitespace-nowrap px-3 min-h-[44px] h-11 text-xs transition-colors",
                 (isScrolled || mobileMenuOpen)
                   ? "bg-orange text-white border-orange"
                   : "text-navy border-navy/30",
@@ -162,7 +169,7 @@ export function Navbar() {
             <button
               type="button"
               className={cn(
-                "p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center active:scale-90 transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-orange rounded-sm",
+                "p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center active:scale-90 motion-reduce:active:scale-100 transition-transform motion-reduce:transition-none focus:outline-none focus-visible:ring-2 focus-visible:ring-orange rounded-sm",
                 (isScrolled || mobileMenuOpen) ? "text-white" : "text-navy",
                 "max-lg:text-white"
               )}
@@ -182,7 +189,7 @@ export function Navbar() {
       {/* Mobile Overlay */}
       <div
         className={cn(
-          'fixed inset-0 z-40 bg-navy/50 backdrop-blur-sm transition-opacity duration-300 lg:hidden',
+          'fixed inset-0 z-40 bg-navy/50 backdrop-blur-sm transition-opacity duration-300 motion-reduce:transition-none motion-reduce:duration-0 lg:hidden',
           mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         )}
         onClick={() => setMobileMenuOpen(false)}
@@ -196,7 +203,7 @@ export function Navbar() {
         aria-modal="true"
         aria-label="Menu de navigation"
         className={cn(
-          'fixed top-0 right-0 w-full h-screen max-w-sm z-40 bg-navy shadow-2xl transition-transform duration-300 ease-out flex flex-col pt-24 px-6 lg:hidden',
+          'fixed top-0 right-0 w-full h-screen max-w-sm z-40 bg-navy shadow-2xl transition-transform duration-300 ease-out motion-reduce:transition-none motion-reduce:duration-0 flex flex-col pt-24 px-6 lg:hidden',
           mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         )}
       >
@@ -208,11 +215,15 @@ export function Navbar() {
               href={pathname === '/' ? href : `/${href}`}
               onClick={(e) => handleNavClick(e, href)}
               className="text-3xl font-black text-white hover:text-orange transition-colors py-3"
-              style={{
-                opacity: mobileMenuOpen ? 1 : 0,
-                transform: mobileMenuOpen ? 'translateX(0)' : 'translateX(20px)',
-                transition: `all 0.3s ease-out ${0.1 + i * 0.05}s`,
-              }}
+              style={
+                prefersReducedMotion
+                  ? { opacity: mobileMenuOpen ? 1 : 0, transform: 'none' }
+                  : {
+                      opacity: mobileMenuOpen ? 1 : 0,
+                      transform: mobileMenuOpen ? 'translateX(0)' : 'translateX(20px)',
+                      transition: `all 0.3s ease-out ${0.1 + i * 0.05}s`,
+                    }
+              }
             >
               {label}
             </Link>
@@ -226,9 +237,9 @@ export function Navbar() {
             className="w-full"
             onClick={(e) => handleNavClick(e, '#contact')}
           >
-            Obtenir mon audit gratuit
+            Demander un audit gratuit
           </Button>
-          <p className="text-center text-white/40 text-xs font-medium">
+          <p className="text-center text-white/72 text-xs font-medium">
             Agence web · Marseille (13)
           </p>
         </div>
