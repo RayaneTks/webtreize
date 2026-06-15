@@ -2,12 +2,13 @@
   "name": "webtreize",
   "version": "1.0.0",
   "private": true,
-  "description": "WebTreize - Agence digitale à Marseille, création de sites web, SEO, optimisation Google et applications sur mesure.",
+  "description": "WebTreize — Agence digitale à Marseille (13). Votre activité prise au sérieux : sites, visibilité, SEO, apps et outils sur mesure.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test:e2e": "playwright test"
   },
   "keywords": [
     "nextjs",
@@ -24,7 +25,6 @@
     "@hookform/resolvers": "^5.2.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "framer-motion": "^12.34.3",
     "lucide-react": "^0.575.0",
     "next": "^16.1.6",
     "react": "^19.2.4",
@@ -34,12 +34,16 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.0",
+    "@playwright/test": "^1.58.2",
+    "@typescript-eslint/eslint-plugin": "^8.38.0",
+    "@typescript-eslint/parser": "^8.38.0",
     "@types/node": "22.19.13",
     "@types/react": "19.2.14",
     "@types/react-dom": "^19.0.3",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.39.3",
-    "eslint-config-next": "^16.1.6",
+    "eslint-plugin-react-hooks": "^5.2.0",
     "postcss": "^8.4.49",
     "sharp": "^0.34.5",
     "tailwindcss": "^3.4.16",

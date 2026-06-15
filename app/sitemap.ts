@@ -1,13 +1,12 @@
 import type { MetadataRoute } from 'next';
-
-const BASE_URL = 'https://www.webtreize.com';
+import { SITE_URL } from '@/lib/constants';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
 
   return [
     {
-      url: BASE_URL,
+      url: SITE_URL,
       lastModified: now,
       changeFrequency: 'monthly',
       priority: 1,

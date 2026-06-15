@@ -2,89 +2,141 @@
 
 import React from 'react';
 import { FadeUp } from '@/components/ui/FadeUp';
-import { Card, CardContent } from '@/components/ui/Card';
-import { XCircle } from 'lucide-react';
+import { X, BarChart3, PhoneOff, UserX } from 'lucide-react';
+import { Button } from '@/components/ui/Button';
+import { useSmoothScroll } from '@/hooks/useSmoothScroll';
 
 const PAIN_POINTS = [
-  "Vous avez un site, mais il ne génère aucun appel.",
-  "Vos concurrents récupèrent les clients sur Google Maps.",
-  "On vous a vendu un « template » basique au prix du sur-mesure.",
+  "Vous êtes en ligne, mais ça ne se traduit pas en demandes concrètes (appels, devis, prises de contact).",
+  "Vos concurrents sont plus visibles que vous — sur Google, sur la fiche locale, ou là où vos clients cherchent vraiment.",
+  "Vous avez déjà investi (site, pub, outil) sans voir l'impact sur le terrain : trafic, conversion, gain de temps.",
 ] as const;
 
-export function PainPointsSection() {
-  return (
-    <section 
-      className="py-16 md:py-24 bg-white relative overflow-hidden"
-      aria-labelledby="pain-points-title"
-    >
-      {/* Abstract Glowing Backgrounds */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-orange/[0.03] rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3 pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-navy/[0.02] rounded-full blur-[100px] translate-y-1/3 -translate-x-1/3 pointer-events-none" />
+const CHART_BARS = [8, 14, 6, 18, 4, 10, 5, 15, 3, 8, 5, 10];
 
-      <div className="container mx-auto px-5 lg:px-8 max-w-screen-xl">
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center">
-          
-          {/* Contenu - Gauche */}
-          <div className="w-full lg:w-1/2">
+function AnalyticsDashboard() {
+  return (
+    <div className="relative">
+      <div className="border border-white/10 overflow-hidden">
+        {/* Terminal header */}
+        <div className="px-5 py-3 border-b border-white/10 bg-white/[0.02] flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <div className="w-2 h-2 rounded-full bg-red-500/80" />
+            <span className="text-white/50 text-[11px] font-mono font-bold tracking-wide">analytics — votre-site.fr</span>
+          </div>
+          <span className="text-white/50 text-[10px] font-mono">30 derniers jours</span>
+        </div>
+
+        {/* Metrics row */}
+        <div className="grid grid-cols-3 gap-px bg-white/[0.06]">
+          {[
+            { value: '0', label: 'visites', icon: BarChart3 },
+            { value: '0', label: 'appels', icon: PhoneOff },
+            { value: '0', label: 'clients', icon: UserX },
+          ].map((m, i) => {
+            const Icon = m.icon;
+            return (
+              <div key={i} className="bg-navy p-5 text-center">
+                <Icon className="w-4 h-4 text-white/45 mx-auto mb-2" strokeWidth={1.5} />
+                <p className="font-display text-4xl xl:text-5xl text-white/90 leading-none">{m.value}</p>
+                <p className="text-white/45 text-[10px] font-bold mt-1.5 uppercase tracking-wider">{m.label}</p>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Flat-line chart */}
+        <div className="p-5 bg-white/[0.01]">
+          <div className="flex items-end gap-[3px] h-20">
+            {CHART_BARS.map((h, i) => (
+              <div
+                key={i}
+                className="flex-1 bg-white/[0.07] rounded-sm"
+                style={{ height: `${h}%`, minHeight: '2px' }}
+              />
+            ))}
+          </div>
+          <div className="flex items-center justify-between mt-3">
+            <span className="text-[10px] text-white/50 font-mono">1 mars</span>
+            <span className="text-[10px] text-red-400/75 font-mono font-bold">— aucune donnée —</span>
+            <span className="text-[10px] text-white/50 font-mono">aujourd&apos;hui</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Position badge */}
+      <div className="absolute -bottom-4 -right-4 bg-cream border-2 border-navy px-5 py-3 shadow-brutal-sm">
+        <p className="text-[10px] font-bold text-navy/60 uppercase tracking-wide">Position moyenne</p>
+        <p className="font-display text-navy text-xl leading-none mt-0.5">#48 sur Google</p>
+      </div>
+    </div>
+  );
+}
+
+export function PainPointsSection() {
+  const scroll = useSmoothScroll();
+
+  return (
+    <section
+      className="py-24 md:py-36 bg-navy relative overflow-hidden"
+      aria-labelledby="pain-title"
+    >
+      {/* Large "0" watermark */}
+      <div
+        className="absolute right-[-5%] top-1/2 -translate-y-1/2 font-display text-[50vw] md:text-[35vw] leading-none text-white/[0.02] pointer-events-none select-none"
+        aria-hidden="true"
+      >
+        0
+      </div>
+
+      <div className="container mx-auto px-5 lg:px-12 xl:px-16 max-w-screen-xl relative z-10">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          <div>
             <FadeUp>
-              <h2 
-                id="pain-points-title"
-                className="text-navy font-black tracking-tight leading-[1.1] mb-6 md:mb-8"
+              <h2
+                id="pain-title"
+                className="font-display text-white uppercase leading-[0.92] mb-6 md:mb-8"
+                style={{ fontSize: 'clamp(36px, 6vw, 64px)' }}
               >
-                Avoir un site web ne suffit plus. <br />
-                <span className="text-orange">Vos clients vont chez ceux qu'ils trouvent.</span>
+                Avoir un site
+                <br />
+                ne suffit plus.
               </h2>
-            </FadeUp>
-            
-            <FadeUp delay={100}>
-              <p className="text-base md:text-lg text-navy/70 mb-8 max-w-lg leading-relaxed font-medium">
-                La majorité des prestataires vous livrent un joli site vide et vous laissent vous débrouiller. Résultat ? Vous êtes invisible sur Google, et votre investissement ne rapporte rien.
+              <p className="text-white/80 font-medium text-lg md:text-xl leading-relaxed mb-12 max-w-xl">
+                Un digital sans méthode, c&apos;est du temps et de l&apos;argent perdus. Voici ce qu&apos;on voit le plus souvent — site, visibilité ou outils confondus.
               </p>
             </FadeUp>
 
-            <FadeUp delay={200}>
-              <div className="flex flex-col gap-4">
-                {PAIN_POINTS.map((point, i) => (
-                  <div key={i} className="flex items-start gap-3">
-                    <XCircle className="w-6 h-6 text-red-500 shrink-0 mt-0.5" />
-                    <span className="text-navy/80 font-medium text-sm md:text-base leading-snug">{point}</span>
+            <div className="flex flex-col gap-3 mb-12">
+              {PAIN_POINTS.map((point, i) => (
+                <FadeUp key={i} delay={i * 80}>
+                  <div className="flex items-start gap-4 p-5 border border-white/15 bg-white/5 hover:bg-white/[0.08] transition-colors">
+                    <div className="w-8 h-8 flex items-center justify-center bg-orange/20 shrink-0 mt-0.5">
+                      <X className="w-4 h-4 text-orange" strokeWidth={3} />
+                    </div>
+                    <p className="text-white/90 font-medium text-base md:text-lg leading-relaxed">
+                      {point}
+                    </p>
                   </div>
-                ))}
-              </div>
+                </FadeUp>
+              ))}
+            </div>
+
+            <FadeUp delay={300}>
+              <Button
+                variant="default"
+                size="lg"
+                onClick={(e) => scroll(e, '#contact')}
+              >
+                Corriger ça maintenant
+              </Button>
             </FadeUp>
           </div>
 
-          {/* Visuel Impactant - Droite */}
-          <div className="w-full lg:w-1/2">
-            <FadeUp delay={300} className="w-full">
-              <div className="relative w-full aspect-square max-w-[500px] mx-auto">
-                {/* Background décoratif */}
-                <div className="absolute inset-0 bg-navy/5 rounded-full scale-90 blur-3xl opacity-50" />
-                
-                <Card className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] md:w-[80%] aspect-[4/3] bg-white/80 backdrop-blur-xl border border-navy/5 shadow-[0_20px_40px_-15px_rgba(0,31,63,0.1)] flex flex-col items-center justify-center p-6 text-center z-10 transition-transform duration-700 hover:scale-105">
-                  <span className="text-4xl md:text-6xl mb-4 drop-shadow-sm">📉</span>
-                  <p className="text-navy font-black text-xl md:text-2xl mb-2">0 contact généré</p>
-                  <p className="text-navy/50 text-sm md:text-base font-medium">Le coût d'un site mal conçu.</p>
-                </Card>
-
-                {/* Éléments flottants pour l'effet de "perte" */}
-                <Card className="absolute top-[10%] left-0 w-48 p-4 bg-white/90 backdrop-blur-md border-navy/5 shadow-lg rotate-[-6deg] z-20">
-                  <div className="h-2 w-1/3 bg-red-100 rounded mb-3" />
-                  <div className="h-2 w-full bg-navy/10 rounded mb-2" />
-                  <div className="h-2 w-4/5 bg-navy/10 rounded" />
-                </Card>
-                
-                <Card className="absolute bottom-[15%] right-[-5%] w-52 p-4 bg-white/90 backdrop-blur-md border-navy/5 shadow-lg rotate-[4deg] z-20 hidden sm:block">
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="w-6 h-6 rounded-full border-2 border-orange/20 text-orange flex items-center justify-center text-xs font-bold">!</div>
-                    <div className="h-2 w-1/2 bg-navy/10 rounded" />
-                  </div>
-                  <p className="text-xs text-navy/50">Position #48 sur Google</p>
-                </Card>
-              </div>
-            </FadeUp>
-          </div>
-
+          {/* Right: Analytics dashboard mockup */}
+          <FadeUp delay={200} className="hidden lg:block">
+            <AnalyticsDashboard />
+          </FadeUp>
         </div>
       </div>
     </section>

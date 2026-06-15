@@ -1,55 +1,66 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
-import { Montserrat, Open_Sans } from 'next/font/google';
+import { Archivo_Black, DM_Sans } from 'next/font/google';
+import { SITE_URL, CONTACT_EMAIL, SNAPCHAT_URL } from '@/lib/constants';
+import { FAQ_ITEMS } from '@/lib/data/faq';
 
-const montserrat = Montserrat({
+const archivoBlack = Archivo_Black({
   subsets: ['latin'],
-  variable: '--font-montserrat',
-  weight: ['700', '800', '900'],
+  variable: '--font-display',
+  weight: '400',
   display: 'swap',
 });
 
-const openSans = Open_Sans({
+const dmSans = DM_Sans({
   subsets: ['latin'],
-  variable: '--font-open-sans',
-  weight: ['400', '500', '600'],
+  variable: '--font-body',
+  weight: ['400', '500', '600', '700'],
   display: 'swap',
 });
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.webtreize.com';
+
+const META_DESCRIPTION =
+  "WebTreize, agence digitale à Marseille (13) : votre activité enfin prise au sérieux — sites, visibilité locale, SEO, applications et outils sur mesure. Audit gratuit sous 48h.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: 'WebTreize | Agence Digitale | Sites Web, SEO & Apps',
-  description:
-    "WebTreize conçoit votre site, optimise votre fiche Google et développe vos outils sur-mesure. Audit gratuit en 48h.",
+  title: {
+    default: 'WebTreize | Agence digitale Marseille (13) | Votre activité prise au sérieux',
+    template: '%s | WebTreize',
+  },
+  description: META_DESCRIPTION,
   keywords: [
+    'WebTreize',
+    'Web Treize',
+    'Webtreize',
+    'agence web Marseille',
     'agence digitale Marseille',
     'création site web Marseille',
     'SEO Marseille',
     'fiche Google Business',
     'application web sur mesure',
-    'WebTreize',
+    'Web 13',
+    'Agence 13',
+    'agence web 13',
   ],
-  alternates: { canonical: '/' },
-  icons: { icon: '/icon.svg', apple: '/icon.svg' },
+  alternates: { canonical: SITE_URL },
+  icons: { icon: '/logo.svg', apple: '/logo.svg' },
   manifest: '/manifest.json',
   openGraph: {
     type: 'website',
     url: SITE_URL,
-    title: 'WebTreize | Agence Digitale | Sites Web, SEO & Apps',
-    description:
-      "WebTreize conçoit votre site, optimise votre fiche Google et développe vos outils sur-mesure. Audit gratuit en 48h.",
+    title: 'WebTreize | Agence digitale Marseille (13) | Votre activité prise au sérieux',
+    description: META_DESCRIPTION,
     siteName: 'WebTreize',
     locale: 'fr_FR',
-    images: [{ url: '/og-image.jpg', width: 1200, height: 630, alt: 'WebTreize - Agence digitale Marseille' }],
+    images: [{ url: '/og-image.jpg', width: 1200, height: 630, alt: 'WebTreize — Agence web Marseille' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'WebTreize | Agence Digitale | Sites Web, SEO & Apps',
-    description:
-      "WebTreize conçoit votre site, optimise votre fiche Google et développe vos outils sur-mesure. Audit gratuit en 48h.",
-    images: [{ url: '/og-image.jpg', alt: 'WebTreize - Agence digitale Marseille' }],
+    title: 'WebTreize | Agence digitale Marseille (13) | Votre activité prise au sérieux',
+    description: META_DESCRIPTION,
+    creator: '@webtreize',
+    images: [{ url: '/og-image.jpg', alt: 'WebTreize — Agence web Marseille' }],
   },
   robots: { index: true, follow: true },
 };
@@ -58,111 +69,112 @@ export const viewport: Viewport = {
   themeColor: '#001F3F',
 };
 
-/* TODO : Remplacer le téléphone placeholder par le vrai numéro */
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': ['Organization', 'LocalBusiness', 'ProfessionalService'],
-  name: 'WebTreize',
-  url: SITE_URL,
-  description:
-    "Agence digitale basée à Marseille spécialisée en création de sites web et d'applications, optimisation de fiches Google Business Profile, SEO et accompagnement web global.",
-  email: 'contact@webtreize.com',
-  telephone: '+33 4 00 00 00 00',
-  image: `${SITE_URL}/og-image.jpg`,
-  priceRange: '€€',
-  geo: {
-    '@type': 'GeoCoordinates',
-    latitude: 43.2965,
-    longitude: 5.3698,
-  },
-  areaServed: [
-    { '@type': 'City', name: 'Marseille' },
-    { '@type': 'Country', name: 'France' },
-  ],
-  address: {
-    '@type': 'PostalAddress',
-    addressLocality: 'Marseille',
-    addressRegion: "Provence-Alpes-Côte d'Azur",
-    postalCode: '13000',
-    addressCountry: 'FR',
-  },
-  openingHoursSpecification: {
-    '@type': 'OpeningHoursSpecification',
-    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-    opens: '09:00',
-    closes: '18:00',
-  },
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '5',
-    reviewCount: '14',
-    bestRating: '5',
-  },
-  sameAs: [
-    SITE_URL,
-    'https://webtreize.fr',
-    'https://www.snapchat.com/add/webtreize',
-  ],
-  makesOffer: [
-    { '@type': 'Offer', name: 'Création de sites web vitrines et e-commerce' },
-    { '@type': 'Offer', name: "Développement d'applications web sur mesure" },
-    { '@type': 'Offer', name: 'Optimisation de fiche Google Business Profile' },
-    { '@type': 'Offer', name: 'SEO & référencement naturel' },
-    { '@type': 'Offer', name: 'Conseil et accompagnement digital' },
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${SITE_URL}/#organization`,
+      name: 'WebTreize',
+      alternateName: ['Web Treize', 'Webtreize', 'Web13', 'WebTreize Agence', 'Agence Web 13'],
+      url: SITE_URL,
+      logo: { '@type': 'ImageObject', url: `${SITE_URL}/logo.svg` },
+      description: META_DESCRIPTION,
+      foundingDate: '2024',
+      email: CONTACT_EMAIL,
+      contactPoint: {
+        '@type': 'ContactPoint',
+        email: CONTACT_EMAIL,
+        contactType: 'customer service',
+        availableLanguage: 'French',
+      },
+      areaServed: [
+        { '@type': 'City', name: 'Marseille' },
+        { '@type': 'Country', name: 'France' },
+      ],
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Marseille',
+        addressRegion: "Provence-Alpes-Côte d'Azur",
+        postalCode: '13000',
+        addressCountry: 'FR',
+      },
+      sameAs: [
+        'https://webtreize.fr',
+        SNAPCHAT_URL,
+      ],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: 'WebTreize',
+      description: 'Agence digitale Marseille — Sites, visibilité, SEO, apps & outils sur mesure',
+      publisher: { '@id': `${SITE_URL}/#organization` },
+      inLanguage: 'fr-FR',
+    },
+    {
+      '@type': 'ProfessionalService',
+      '@id': `${SITE_URL}/#service`,
+      name: 'WebTreize',
+      image: `${SITE_URL}/og-image.jpg`,
+      url: SITE_URL,
+      priceRange: '€€',
+      currenciesAccepted: 'EUR',
+      areaServed: 'France',
+      geo: { '@type': 'GeoCoordinates', latitude: 43.2965, longitude: 5.3698 },
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Marseille',
+        addressRegion: "Provence-Alpes-Côte d'Azur",
+        postalCode: '13000',
+        addressCountry: 'FR',
+      },
+      openingHoursSpecification: {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+        opens: '09:00',
+        closes: '18:00',
+      },
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: 'Services WebTreize',
+        itemListElement: [
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Création de site web', description: 'Sites vitrines et e-commerce rapides, sécurisés et optimisés SEO' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Référencement SEO', description: 'Optimisation pour les moteurs de recherche et visibilité locale' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Google Business Profile', description: 'Gestion et optimisation des fiches Google pour le référencement local' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Développement applicatif', description: "Applications web et outils métiers sur-mesure" } },
+        ],
+      },
+    },
   ],
 };
 
 const faqJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
-  mainEntity: [
-    {
-      '@type': 'Question',
-      name: "Comment se déroule la création d'un site ?",
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: "On définit ensemble vos pages et le contenu dont vous avez besoin, puis nous avançons étape par étape : maquette, développement technique optimisé, configuration SEO, puis mise en ligne et formation pour votre autonomie. Vous validez au fur et à mesure.",
-      },
+  mainEntity: FAQ_ITEMS.map(item => ({
+    '@type': 'Question' as const,
+    name: item.q,
+    acceptedAnswer: {
+      '@type': 'Answer' as const,
+      text: item.a,
     },
-    {
-      '@type': 'Question',
-      name: 'Intervenez-vous uniquement à Marseille ?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: "Nous sommes basés à Marseille mais accompagnons des clients partout en France. La majorité des échanges se fait à distance (visio, messagerie). Pour les entreprises locales, nous organisons des rendez-vous en présentiel.",
-      },
-    },
-    {
-      '@type': 'Question',
-      name: 'Quels sont vos tarifs ?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: "Chaque projet est différent : un site vitrine, une fiche Google optimisée ou une application sur mesure n'ont pas le même périmètre. Nous établissons un devis sur mesure après un échange sur vos objectifs et votre budget. Demandez un devis gratuit sans engagement.",
-      },
-    },
-    {
-      '@type': 'Question',
-      name: "Pourquoi passer par WebTreize plutôt qu'un freelance ou une autre agence ?",
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: "Nous combinons stratégie marketing, expertise technique et connaissance du terrain local. Un seul interlocuteur, une vision globale de votre croissance digitale, du site web à la fiche Google en passant par votre image de marque.",
-      },
-    },
-    {
-      '@type': 'Question',
-      name: "Faut-il avoir une idée précise du projet ?",
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: "Non. Beaucoup de nos clients arrivent avec un objectif (plus de visibilité, plus de prises de rendez-vous) sans savoir comment y arriver. Nous les aidons à définir le bon périmètre et à prioriser.",
-      },
-    },
+  })),
+};
+
+const breadcrumbJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Accueil', item: SITE_URL },
   ],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="fr" className="dark">
-      <body className={`${montserrat.variable} ${openSans.variable} min-h-screen font-sans`}>
+    <html lang="fr">
+      <body className={`${archivoBlack.variable} ${dmSans.variable} min-h-screen font-sans grain-texture`}>
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-6 focus:py-3 focus:rounded-full focus:bg-[#001F3F] focus:text-white focus:font-bold focus:shadow-lg focus:outline-dashed focus:outline-white focus:ring-4 focus:ring-orange"
@@ -179,6 +191,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
         />
       </body>
     </html>

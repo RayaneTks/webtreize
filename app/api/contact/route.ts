@@ -6,10 +6,20 @@ import { NextRequest, NextResponse } from 'next/server';
 // 3. Remplacer l'adresse "onboarding@resend.dev" par l'email réel WebTreize
 // 4. Configurer le domaine WebTreize dans Resend (DMARC)
 
+import { CONTACT_EMAIL } from '@/lib/constants';
+
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
-const CONTACT_EMAIL = process.env.NEXT_PUBLIC_CONTACT_EMAIL || process.env.CONTACT_EMAIL || 'contact@webtreize.com';
 
 type ContactPayload = { name: string; email: string; message: string; budget?: string };
+
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
 
 function validate(data: unknown): data is ContactPayload {
   if (!data || typeof data !== 'object') return false;
@@ -32,11 +42,15 @@ export async function POST(request: NextRequest) {
     }
 
     const { name, email, message, budget } = body;
+    const safeName = escapeHtml(name.trim());
+    const safeEmail = escapeHtml(email.trim());
+    const safeMessage = escapeHtml(message.trim());
+    const safeBudget = budget ? escapeHtml(budget.trim()) : '';
 
     if (!RESEND_API_KEY) {
       console.log('── NOUVEAU LEAD WEBTREIZE ──');
-      console.log(`Nom: ${name} | Email: ${email} | Budget: ${budget || 'NC'}`);
-      console.log(`Message: ${message}`);
+      console.log(`Nom: ${safeName} | Email: ${safeEmail} | Budget: ${safeBudget || 'NC'}`);
+      console.log(`Message: ${safeMessage}`);
       console.log('────────────────────────────');
       return NextResponse.json({ success: true });
     }
@@ -50,19 +64,19 @@ export async function POST(request: NextRequest) {
       body: JSON.stringify({
         from: 'WebTreize <noreply@webtreize.com>',
         to: [CONTACT_EMAIL],
-        reply_to: email,
-        subject: `Nouveau projet de ${name}${budget ? ` (${budget})` : ''}`,
+        reply_to: safeEmail,
+        subject: `Nouveau projet de ${safeName}${safeBudget ? ` (${safeBudget})` : ''}`,
         html: `
           <div style="font-family:system-ui,sans-serif;max-width:600px;margin:0 auto">
             <h2 style="color:#001F3F">Nouvelle demande de projet</h2>
             <table style="width:100%;border-collapse:collapse">
-              <tr><td style="padding:8px 0;color:#888;width:100px">Nom</td><td style="padding:8px 0;font-weight:600">${name}</td></tr>
-              <tr><td style="padding:8px 0;color:#888">Email</td><td style="padding:8px 0"><a href="mailto:${email}">${email}</a></td></tr>
-              ${budget ? `<tr><td style="padding:8px 0;color:#888">Budget</td><td style="padding:8px 0">${budget}</td></tr>` : ''}
+              <tr><td style="padding:8px 0;color:#888;width:100px">Nom</td><td style="padding:8px 0;font-weight:600">${safeName}</td></tr>
+              <tr><td style="padding:8px 0;color:#888">Email</td><td style="padding:8px 0"><a href="mailto:${safeEmail}">${safeEmail}</a></td></tr>
+              ${safeBudget ? `<tr><td style="padding:8px 0;color:#888">Budget</td><td style="padding:8px 0">${safeBudget}</td></tr>` : ''}
             </table>
             <div style="margin-top:24px;padding:16px;background:#f8fafc;border-radius:8px">
               <p style="color:#666;margin:0 0 8px;font-size:14px">Message :</p>
-              <p style="color:#001F3F;margin:0;white-space:pre-wrap">${message}</p>
+              <p style="color:#001F3F;margin:0;white-space:pre-wrap">${safeMessage}</p>
             </div>
           </div>`,
       }),

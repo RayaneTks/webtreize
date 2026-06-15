@@ -11,7 +11,6 @@ interface LogoWebTreizeProps {
 
 export function LogoWebTreize({ className, decorative }: LogoWebTreizeProps) {
   return (
-    // eslint-disable-next-line @next/next/no-img-element
     <img
       src={LOGO_SRC}
       alt={decorative ? '' : 'WebTreize'}
