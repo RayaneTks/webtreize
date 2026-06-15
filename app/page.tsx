@@ -1,44 +1,23 @@
 import { ClientShell } from '@/components/ClientShell';
+import { CapabilityRail } from '@/components/decor/CapabilityRail';
+import { Footer } from '@/components/layout/Footer';
+import { CtaFinalSection } from '@/components/sections/CtaFinalSection';
+import { FaqSection } from '@/components/sections/FaqSection';
+import { GuaranteesSection } from '@/components/sections/GuaranteesSection';
 import { HeroSection } from '@/components/sections/HeroSection';
+import { MethodologySection } from '@/components/sections/MethodologySection';
+import { PainPointsSection } from '@/components/sections/PainPointsSection';
+import { ServicesSection } from '@/components/sections/ServicesSection';
 import { SocialProofSection } from '@/components/sections/SocialProofSection';
-import { Footer } from '@/components/Footer';
-import dynamic from 'next/dynamic';
-
-const PainPointsSection = dynamic(
-  () => import('@/components/sections/PainPointsSection').then(mod => mod.PainPointsSection),
-  { loading: () => <div className="h-96 w-full animate-pulse bg-navy" aria-hidden /> }
-);
-
-const ServicesSection = dynamic(
-  () => import('@/components/sections/ServicesSection').then(mod => mod.ServicesSection),
-  { loading: () => <div className="h-96 w-full animate-pulse bg-cream" aria-hidden /> }
-);
-
-const GuaranteesSection = dynamic(
-  () => import('@/components/sections/GuaranteesSection').then(mod => mod.GuaranteesSection),
-  { loading: () => <div className="h-96 w-full animate-pulse bg-white" aria-hidden /> }
-);
-
-const MethodologySection = dynamic(
-  () => import('@/components/sections/MethodologySection').then(mod => mod.MethodologySection),
-  { loading: () => <div className="h-96 w-full animate-pulse bg-cream" aria-hidden /> }
-);
-
-const FaqSection = dynamic(
-  () => import('@/components/sections/FaqSection').then(mod => mod.FaqSection),
-  { loading: () => <div className="h-96 w-full animate-pulse bg-white" aria-hidden /> }
-);
-
-const CtaFinalSection = dynamic(
-  () => import('@/components/sections/CtaFinalSection').then(mod => mod.CtaFinalSection),
-  { loading: () => <div className="h-96 w-full animate-pulse bg-navy" aria-hidden /> }
-);
+import { TrustStrip } from '@/components/sections/TrustStrip';
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-cream text-navy overflow-x-clip">
+    <div className="min-h-screen bg-canvas text-ink">
       <ClientShell>
         <HeroSection />
+        <TrustStrip />
+        <CapabilityRail />
         <SocialProofSection />
         <PainPointsSection />
         <ServicesSection />

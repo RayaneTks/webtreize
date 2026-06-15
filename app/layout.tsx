@@ -1,13 +1,13 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
-import { Archivo_Black, DM_Sans } from 'next/font/google';
+import { DM_Sans, IBM_Plex_Mono, Syne } from 'next/font/google';
 import { SITE_URL, CONTACT_EMAIL, SNAPCHAT_URL } from '@/lib/constants';
 import { FAQ_ITEMS } from '@/lib/data/faq';
 
-const archivoBlack = Archivo_Black({
+const syne = Syne({
   subsets: ['latin'],
   variable: '--font-display',
-  weight: '400',
+  weight: ['500', '600', '700', '800'],
   display: 'swap',
 });
 
@@ -15,6 +15,13 @@ const dmSans = DM_Sans({
   subsets: ['latin'],
   variable: '--font-body',
   weight: ['400', '500', '600', '700'],
+  display: 'swap',
+});
+
+const plexMono = IBM_Plex_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
+  weight: ['400', '500'],
   display: 'swap',
 });
 
@@ -66,7 +73,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#001F3F',
+  themeColor: '#faf9f7',
+  colorScheme: 'light',
 };
 
 const jsonLd = {
@@ -174,10 +182,10 @@ const breadcrumbJsonLd = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fr">
-      <body className={`${archivoBlack.variable} ${dmSans.variable} min-h-screen font-sans grain-texture`}>
+      <body className={`${syne.variable} ${dmSans.variable} ${plexMono.variable} min-h-screen bg-canvas font-sans text-ink antialiased`}>
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-6 focus:py-3 focus:rounded-full focus:bg-[#001F3F] focus:text-white focus:font-bold focus:shadow-lg focus:outline-dashed focus:outline-white focus:ring-4 focus:ring-orange"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-accent focus:px-6 focus:py-3 focus:font-semibold focus:text-white focus:outline-none focus:ring-2 focus:ring-white/30"
         >
           Aller au contenu principal
         </a>

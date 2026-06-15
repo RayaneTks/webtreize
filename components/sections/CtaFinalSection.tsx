@@ -1,15 +1,17 @@
 'use client';
 
-import React, { useState } from 'react';
+import type { ReactNode } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { FadeUp } from '@/components/ui/FadeUp';
-import { Loader2, CheckCircle2, ArrowRight } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { ArrowRight, CheckCircle, CircleNotch } from '@phosphor-icons/react';
+import { Reveal } from '@/components/motion/Reveal';
+import { Section } from '@/components/ui/Section';
 import { SnapchatIcon } from '@/components/ui/SnapchatIcon';
 import { SNAPCHAT_URL } from '@/lib/constants';
 import { AUDIT_CATEGORIES, AUDIT_CATEGORY_LABELS } from '@/lib/data/audit-categories';
+import { cn } from '@/lib/utils';
 
 const formSchema = z.object({
   firstName: z.string().min(2, 'Veuillez saisir au moins 2 caractères.'),
@@ -22,7 +24,7 @@ type FormData = z.infer<typeof formSchema>;
 
 function buildAuditMessage(data: FormData): string {
   const catLabel = AUDIT_CATEGORY_LABELS[data.category] ?? data.category;
-  let message = `Demande d'audit — Catégorie : ${catLabel}`;
+  let message = `Demande d'audit - Catégorie : ${catLabel}`;
   if (data.projectNote?.trim()) {
     message += `\n\nContexte projet (pour l'audit) :\n${data.projectNote.trim()}`;
   }
@@ -37,10 +39,10 @@ export function CtaFinalSection() {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    reset
+    reset,
   } = useForm<FormData>({
     resolver: zodResolver(formSchema),
-    defaultValues: { firstName: '', email: '', category: '', projectNote: '' }
+    defaultValues: { firstName: '', email: '', category: '', projectNote: '' },
   });
 
   const onSubmit = async (data: FormData) => {
@@ -65,196 +67,175 @@ export function CtaFinalSection() {
   };
 
   return (
-    <section
-      id="contact"
-      className="py-24 md:py-36 bg-navy relative overflow-hidden"
-      aria-labelledby="cta-title"
-    >
-      <div className="container mx-auto px-5 lg:px-12 xl:px-16 max-w-screen-xl">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
-          {/* Left: Pitch */}
-          <FadeUp>
+    <Section id="contact" aria-labelledby="cta-title" className="bg-surface">
+      <div className="site-container">
+        <div className="overflow-hidden rounded-2xl border border-line bg-surface shadow-lift lg:grid lg:grid-cols-2">
+          <Reveal className="on-dark bg-navy p-8 md:p-10 lg:p-12">
             <h2
               id="cta-title"
-              className="font-display text-white uppercase leading-[0.92] mb-6"
-              style={{ fontSize: 'clamp(36px, 5.5vw, 56px)' }}
+              className="text-[clamp(1.75rem,3.5vw,2.75rem)] font-semibold leading-[1.08] tracking-tight"
             >
-              Un diagnostic
-              <br />
-              à la hauteur de
-              <br />
-              <span className="text-orange">votre activité.</span>
+              Un diagnostic à la hauteur de votre activité.
             </h2>
-            <p className="text-white/80 font-medium text-lg leading-relaxed mb-10 max-w-lg">
-              En 48h, on analyse votre situation et on vous dit quoi prioriser — présence en ligne, visibilité, outils ou stratégie. Gratuit, sans engagement.
+            <p className="mt-5 max-w-md text-base leading-relaxed text-white/75">
+              En 48h, on analyse votre situation et on vous dit quoi prioriser. Gratuit, sans
+              engagement.
             </p>
 
-            <div className="flex flex-col gap-6">
-              <div className="flex items-center gap-3 flex-wrap">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/10 text-white/90 text-xs font-bold">✓ Audit gratuit</span>
-                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/10 text-white/90 text-xs font-bold">✓ Sans engagement</span>
-                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/10 text-white/90 text-xs font-bold">✓ Réponse 48h</span>
+            <dl className="mt-8 space-y-4 border-t border-white/15 pt-8 text-sm">
+              <div>
+                <dt className="font-medium text-white">Audit</dt>
+                <dd className="text-white/70">Gratuit, sans engagement</dd>
               </div>
+              <div>
+                <dt className="font-medium text-white">Délai</dt>
+                <dd className="text-white/70">Réponse sous 48h</dd>
+              </div>
+            </dl>
 
-              <div className="flex items-center gap-4 pt-6 border-t border-white/10">
-                <span className="text-white/75 text-sm font-medium">Vous préférez discuter ?</span>
-                <a
-                  href={SNAPCHAT_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-[#FFFC00] text-black text-sm font-bold hover:brightness-95 transition-[filter]"
+            <div className="mt-8 flex flex-wrap items-center gap-4 border-t border-white/15 pt-8">
+              <span className="text-sm text-white/70">Vous préférez discuter ?</span>
+              <a
+                href={SNAPCHAT_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full bg-[#FFFC00] px-4 py-2 text-sm font-semibold text-black transition-[filter] hover:brightness-95"
+              >
+                <SnapchatIcon className="h-4 w-4" />
+                @webtreize
+              </a>
+            </div>
+          </Reveal>
+
+          <Reveal delay={0.1} className="p-6 sm:p-8 lg:p-10">
+            {isSuccess ? (
+              <div className="flex min-h-[320px] flex-col items-center justify-center text-center">
+                <CheckCircle size={56} weight="duotone" className="text-accent" />
+                <h3 className="mt-6 text-2xl font-semibold text-ink">Demande envoyée</h3>
+                <p className="mt-3 text-muted">On revient vers vous sous 48h avec votre audit gratuit.</p>
+                <button
+                  type="button"
+                  className="mt-8 text-sm font-semibold text-accent hover:underline"
+                  onClick={() => setIsSuccess(false)}
                 >
-                  <SnapchatIcon className="w-4 h-4" />
-                  @webtreize
-                </a>
+                  Envoyer un autre message
+                </button>
               </div>
-            </div>
-          </FadeUp>
-
-          {/* Right: Form */}
-          <FadeUp delay={100}>
-            <div className="bg-cream border-2 border-white p-6 sm:p-8 shadow-brutal">
-              {isSuccess ? (
-                <div className="flex flex-col items-center justify-center text-center py-12 min-h-[320px]">
-                  <CheckCircle2 className="w-14 h-14 text-emerald-600 mb-6" />
-                  <h3 className="font-display text-2xl text-navy uppercase mb-2">Demande envoyée</h3>
-                  <p className="text-neutral-text font-medium mb-8">
-                    On revient vers vous sous 48h avec votre audit gratuit.
+            ) : (
+              <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+                <div>
+                  <h3 className="text-xl font-semibold text-ink">Audit gratuit en 48h</h3>
+                  <p className="mt-2 text-sm text-muted">
+                    Choisissez la catégorie la plus proche de votre besoin.
                   </p>
-                  <button
-                    type="button"
-                    className="text-orange font-bold text-sm hover:underline"
-                    onClick={() => setIsSuccess(false)}
-                  >
-                    Envoyer un autre message
-                  </button>
                 </div>
-              ) : (
-                <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-                  <div>
-                    <h3 className="font-display text-navy uppercase text-lg mb-1">
-                      Audit gratuit en 48h
-                    </h3>
-                    <p className="text-neutral-text text-sm font-medium leading-snug">
-                      Choisissez la catégorie la plus proche de votre besoin — et décrivez votre projet si vous le souhaitez, pour qu&apos;on prépare l&apos;audit.
-                    </p>
-                  </div>
 
-                  <div>
-                    <label htmlFor="cta-name" className="block text-xs font-bold text-navy uppercase tracking-[0.1em] mb-1.5">
-                      Prénom
-                    </label>
-                    <input
-                      id="cta-name"
-                      {...register('firstName')}
-                      disabled={isSubmitting}
-                      type="text"
-                      placeholder="Jean"
-                      className={cn(
-                        "w-full h-14 px-5 border-2 border-navy bg-white text-navy placeholder:text-navy/45 focus:outline-none focus:ring-2 focus:ring-orange transition-colors",
-                        errors.firstName && "border-red-500 focus:ring-red-500",
-                        isSubmitting && "opacity-50 cursor-not-allowed"
-                      )}
-                    />
-                    {errors.firstName && (
-                      <p className="text-red-500 text-xs mt-1.5 font-medium">{errors.firstName.message}</p>
-                    )}
-                  </div>
-
-                  <div>
-                    <label htmlFor="cta-email" className="block text-xs font-bold text-navy uppercase tracking-[0.1em] mb-1.5">
-                      Email professionnel
-                    </label>
-                    <input
-                      id="cta-email"
-                      {...register('email')}
-                      disabled={isSubmitting}
-                      type="email"
-                      placeholder="jean@entreprise.fr"
-                      className={cn(
-                        "w-full h-14 px-5 border-2 border-navy bg-white text-navy placeholder:text-navy/45 focus:outline-none focus:ring-2 focus:ring-orange transition-colors",
-                        errors.email && "border-red-500 focus:ring-red-500",
-                        isSubmitting && "opacity-50 cursor-not-allowed"
-                      )}
-                    />
-                    {errors.email && (
-                      <p className="text-red-500 text-xs mt-1.5 font-medium">{errors.email.message}</p>
-                    )}
-                  </div>
-
-                  <div className="relative">
-                    <label htmlFor="cta-category" className="block text-xs font-bold text-navy uppercase tracking-[0.1em] mb-1.5">
-                      Catégorie
-                    </label>
-                    <select
-                      id="cta-category"
-                      {...register('category')}
-                      disabled={isSubmitting}
-                      className={cn(
-                        "w-full h-14 px-5 pr-10 border-2 border-navy bg-white text-navy appearance-none focus:outline-none focus:ring-2 focus:ring-orange transition-colors cursor-pointer",
-                        errors.category && "border-red-500 focus:ring-red-500",
-                        isSubmitting && "opacity-50 cursor-not-allowed"
-                      )}
-                    >
-                      <option value="" disabled>Sélectionnez une catégorie</option>
-                      {AUDIT_CATEGORIES.map(({ value, label }) => (
-                        <option key={value} value={value}>{label}</option>
-                      ))}
-                    </select>
-                    <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
-                      <svg className="w-4 h-4 text-navy/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                      </svg>
-                    </div>
-                    {errors.category && (
-                      <p className="text-red-500 text-xs mt-1.5 font-medium">{errors.category.message}</p>
-                    )}
-                  </div>
-
-                  <div>
-                    <label htmlFor="cta-project" className="block text-xs font-bold text-navy uppercase tracking-[0.1em] mb-1.5">
-                      Votre projet <span className="text-neutral-text font-medium normal-case">(facultatif)</span>
-                    </label>
-                    <textarea
-                      id="cta-project"
-                      {...register('projectNote')}
-                      disabled={isSubmitting}
-                      rows={4}
-                      placeholder="Contexte, objectifs, contraintes, lien vers votre site… Tout ce qui aide à cadrer l'audit."
-                      className={cn(
-                        "w-full min-h-[120px] px-5 py-4 border-2 border-navy bg-white text-navy placeholder:text-navy/45 focus:outline-none focus:ring-2 focus:ring-orange transition-colors resize-y",
-                        isSubmitting && "opacity-50 cursor-not-allowed"
-                      )}
-                    />
-                    {errors.projectNote && (
-                      <p className="text-red-500 text-xs mt-1.5 font-medium">{errors.projectNote.message}</p>
-                    )}
-                  </div>
-
-                  {errorMessage && (
-                    <p className="text-red-500 text-sm font-medium" role="alert">{errorMessage}</p>
-                  )}
-
-                  <button
-                    type="submit"
+                <Field label="Prénom" htmlFor="cta-name" error={errors.firstName?.message}>
+                  <input
+                    id="cta-name"
+                    {...register('firstName')}
                     disabled={isSubmitting}
-                    className="w-full h-14 bg-orange border-2 border-navy text-white font-bold shadow-brutal-sm hover:shadow-brutal hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:hover:translate-x-0 motion-reduce:hover:translate-y-0 transition-[transform,box-shadow] motion-reduce:transition-none flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed mt-2 active:scale-[0.98] motion-reduce:active:scale-100"
+                    type="text"
+                    placeholder="Jean"
+                    className={inputClass(!!errors.firstName)}
+                  />
+                </Field>
+
+                <Field label="Email professionnel" htmlFor="cta-email" error={errors.email?.message}>
+                  <input
+                    id="cta-email"
+                    {...register('email')}
+                    disabled={isSubmitting}
+                    type="email"
+                    placeholder="jean@entreprise.fr"
+                    className={inputClass(!!errors.email)}
+                  />
+                </Field>
+
+                <Field label="Catégorie" htmlFor="cta-category" error={errors.category?.message}>
+                  <select
+                    id="cta-category"
+                    {...register('category')}
+                    disabled={isSubmitting}
+                    className={cn(inputClass(!!errors.category), 'appearance-none')}
                   >
-                    {isSubmitting ? (
-                      <Loader2 className="w-5 h-5 animate-spin" />
-                    ) : (
-                      <>
-                        Recevoir mon audit
-                        <ArrowRight className="w-4 h-4" />
-                      </>
-                    )}
-                  </button>
-                </form>
-              )}
-            </div>
-          </FadeUp>
+                    <option value="" disabled>
+                      Sélectionnez une catégorie
+                    </option>
+                    {AUDIT_CATEGORIES.map(({ value, label }) => (
+                      <option key={value} value={value}>
+                        {label}
+                      </option>
+                    ))}
+                  </select>
+                </Field>
+
+                <Field
+                  label="Votre projet (facultatif)"
+                  htmlFor="cta-project"
+                  error={errors.projectNote?.message}
+                >
+                  <textarea
+                    id="cta-project"
+                    {...register('projectNote')}
+                    disabled={isSubmitting}
+                    rows={4}
+                    placeholder="Contexte, objectifs, contraintes, lien vers votre site…"
+                    className={cn(inputClass(false), 'min-h-[120px] resize-y py-3')}
+                  />
+                </Field>
+
+                {errorMessage ? (
+                  <p className="text-sm text-red-600" role="alert">
+                    {errorMessage}
+                  </p>
+                ) : null}
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="mt-2 inline-flex h-14 w-full items-center justify-center gap-2 rounded-full bg-accent text-base font-semibold text-white transition-[transform,background-color] hover:bg-accent-hover active:scale-[0.97] disabled:opacity-50"
+                >
+                  {isSubmitting ? (
+                    <CircleNotch size={20} className="animate-spin" />
+                  ) : (
+                    <>
+                      Recevoir mon audit
+                      <ArrowRight size={18} weight="bold" />
+                    </>
+                  )}
+                </button>
+              </form>
+            )}
+          </Reveal>
         </div>
       </div>
-    </section>
+    </Section>
+  );
+}
+
+function inputClass(hasError: boolean) {
+  return cn('input-field', hasError && 'input-field--error');
+}
+
+function Field({
+  label,
+  htmlFor,
+  error,
+  children,
+}: {
+  label: string;
+  htmlFor: string;
+  error?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div>
+      <label htmlFor={htmlFor} className="mb-1.5 block text-sm font-medium text-ink">
+        {label}
+      </label>
+      {children}
+      {error ? <p className="mt-1.5 text-xs text-red-600">{error}</p> : null}
+    </div>
   );
 }

@@ -9,46 +9,70 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        navy: '#001F3F',
-        orange: {
+        canvas: '#faf9f7',
+        surface: {
+          DEFAULT: '#ffffff',
+          raised: '#f5f4f1',
+          muted: '#eeede9',
+        },
+        ink: '#0c1220',
+        muted: '#4a5568',
+        subtle: '#7a8494',
+        line: 'rgba(12, 18, 32, 0.08)',
+        'line-strong': 'rgba(12, 18, 32, 0.14)',
+        accent: {
           DEFAULT: '#D9480F',
-          hover: '#B83E0D',
+          hover: '#c43f0d',
+          soft: 'rgba(217, 72, 15, 0.1)',
         },
-        cream: {
-          DEFAULT: '#f5f0e8',
-          dark: '#e8e0d4',
-        },
-        ink: '#0a0a0a',
-        neutral: {
-          bg: '#f5f0e8',
-          text: '#4a4a4a',
-        },
-        /** Texte sur fond navy — contrastes visés ~AA sur corps de texte */
-        onNavy: {
-          DEFAULT: 'rgba(255, 255, 255, 0.76)',
-          muted: 'rgba(255, 255, 255, 0.62)',
-        },
-      },
-      boxShadow: {
-        'brutal': '6px 6px 0 #001F3F',
-        'brutal-sm': '4px 4px 0 #001F3F',
-        'brutal-lg': '8px 8px 0 #001F3F',
-        'brutal-orange': '6px 6px 0 #D9480F',
-        'brutal-orange-sm': '4px 4px 0 #D9480F',
-        'brutal-orange-lg': '8px 8px 0 #D9480F',
+        navy: '#001F3F',
       },
       fontFamily: {
         display: ['var(--font-display)', 'system-ui', 'sans-serif'],
         sans: ['var(--font-body)', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
       },
-      keyframes: {
-        'line-fade-in': {
-          from: { opacity: '0', transform: 'translateY(10px)' },
-          to: { opacity: '1', transform: 'translateY(0)' },
-        },
+      boxShadow: {
+        soft: '0 1px 2px rgba(0,31,63,0.04), 0 16px 48px -20px rgba(0,31,63,0.1)',
+        panel:
+          '0 0 0 1px rgba(0,31,63,0.06), 0 24px 56px -28px rgba(0,31,63,0.12)',
+        lift: '0 20px 40px -24px rgba(0,31,63,0.15)',
+      },
+      backgroundImage: {
+        'hero-light':
+          'radial-gradient(ellipse 70% 55% at 85% 15%, rgba(217,72,15,0.07), transparent 50%), radial-gradient(ellipse 50% 45% at 5% 90%, rgba(0,31,63,0.05), transparent 45%)',
+        'mesh-navy':
+          'radial-gradient(ellipse 60% 50% at 0% 100%, rgba(217,72,15,0.12), transparent 50%), radial-gradient(ellipse 40% 40% at 100% 0%, rgba(255,255,255,0.06), transparent 45%)',
       },
       animation: {
-        'line-fade-in': 'line-fade-in 0.3s ease-out forwards',
+        'fade-up': 'fade-up 0.7s cubic-bezier(0.23, 1, 0.32, 1) both',
+        'rule-grow': 'rule-grow 1s cubic-bezier(0.23, 1, 0.32, 1) both',
+        'bar-fill': 'bar-fill 1.4s cubic-bezier(0.23, 1, 0.32, 1) both',
+        marquee: 'marquee 40s linear infinite',
+      },
+      keyframes: {
+        'fade-up': {
+          from: { opacity: '0', transform: 'translateY(16px)' },
+          to: { opacity: '1', transform: 'translateY(0)' },
+        },
+        'rule-grow': {
+          from: { transform: 'scaleX(0)' },
+          to: { transform: 'scaleX(1)' },
+        },
+        'bar-fill': {
+          from: { transform: 'scaleX(0)' },
+          to: { transform: 'scaleX(1)' },
+        },
+        marquee: {
+          from: { transform: 'translateX(0)' },
+          to: { transform: 'translateX(-50%)' },
+        },
+      },
+      transitionTimingFunction: {
+        out: 'cubic-bezier(0.23, 1, 0.32, 1)',
+      },
+      maxWidth: {
+        site: '1400px',
       },
     },
   },

@@ -29,7 +29,11 @@ debug.log
 # IDE & OS
 .idea
 .vscode
-.cursor
+.cursor/*
+!.cursor/rules/
+!.cursor/rules/**
+!.cursor/skills/
+!.cursor/skills/**
 .agent/
 .agents/
 .claude/

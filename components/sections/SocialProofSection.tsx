@@ -1,54 +1,38 @@
 'use client';
 
-import React from 'react';
-import { FadeUp } from '@/components/ui/FadeUp';
-
-const PROOF_POINTS = [
-  'Délais inscrits au contrat — pénalités si retard',
-  'Design unique sur chaque projet, aucun template réutilisé',
-  'Votre site vous appartient dès le premier jour, aucun abonnement forcé',
-];
+import { ProofMetric } from '@/components/decor/ProofMetric';
+import { Reveal } from '@/components/motion/Reveal';
+import { PROOF_POINTS, PROOF_STAT } from '@/lib/data/site';
 
 export function SocialProofSection() {
   return (
-    <section
-      className="py-10 md:py-14 bg-white border-y-2 border-navy"
-      aria-label="Résultats et engagements"
-    >
-      <div className="container mx-auto px-5 lg:px-12 xl:px-16 max-w-screen-xl">
-        <FadeUp>
-          <div className="flex flex-col md:flex-row md:items-center gap-8 md:gap-0">
-
-            {/* Stat principale */}
-            <div className="md:w-5/12 md:pr-12 md:border-r-2 md:border-navy/15">
-              <p
-                className="font-display text-navy uppercase leading-none"
-                style={{ fontSize: 'clamp(56px, 7vw, 88px)' }}
-              >
-                +75%
-              </p>
-              <p className="text-sm font-bold text-navy mt-2 leading-snug">
-                de visibilité gagnée en moyenne
-              </p>
-              <p className="text-xs text-neutral-text font-medium mt-1">
-                Mesuré en moyenne sur nos accompagnements visibilité, dans les 90 jours suivant la mise en œuvre.
-              </p>
+    <section className="section-pad bg-canvas" aria-label="Résultats et engagements">
+      <div className="site-container">
+        <Reveal>
+          <div className="grid gap-6 lg:grid-cols-2">
+            <div className="panel-elevated p-8 md:p-10">
+              <ProofMetric value={PROOF_STAT.value} label={PROOF_STAT.label} />
+              <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted">{PROOF_STAT.note}</p>
             </div>
 
-            {/* Preuves qualitatives */}
-            <ul className="md:w-7/12 md:pl-12 flex flex-col gap-4">
-              {PROOF_POINTS.map((point, i) => (
-                <li key={i} className="flex items-start gap-3">
-                  <span className="mt-[7px] w-1.5 h-1.5 shrink-0 bg-orange" aria-hidden="true" />
-                  <span className="text-sm md:text-[15px] font-medium text-navy leading-snug">
+            <div className="panel-navy relative overflow-hidden p-8 md:p-10">
+              <div
+                className="pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full bg-accent/10 blur-2xl"
+                aria-hidden
+              />
+              <ul className="relative space-y-5">
+                {PROOF_POINTS.map((point) => (
+                  <li
+                    key={point}
+                    className="border-l-2 border-accent/50 pl-5 text-base leading-relaxed text-white/85"
+                  >
                     {point}
-                  </span>
-                </li>
-              ))}
-            </ul>
-
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-        </FadeUp>
+        </Reveal>
       </div>
     </section>
   );

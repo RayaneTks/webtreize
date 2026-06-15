@@ -90,23 +90,12 @@ test.describe('WebTreize - Smoke tests', () => {
     await expect(page.locator('text=★★★★★')).not.toBeVisible();
   });
 
-  test('Google result mockup présent dans hero', async ({ page }) => {
+  test('aperçu visibilité présent dans hero', async ({ page }) => {
     await page.goto('/');
     const hero = page.locator('#hero');
     await expect(hero).toBeVisible();
-
-    // Desktop mockup: container "hidden lg:block" (visible à partir de lg).
-    // Mobile mockup: container "lg:hidden" (visible en dessous de lg).
-    const desktopMockup = hero.locator('div.hidden.lg\\:block');
-    const mobileMockup = hero.locator('div.lg\\:hidden');
-
-    if (await mobileMockup.isVisible()) {
-      await expect(mobileMockup.getByText('Votre entreprise', { exact: true }).first()).toBeVisible();
-      await expect(mobileMockup.getByText('+200%', { exact: true }).first()).toBeVisible();
-    } else {
-      await expect(desktopMockup.getByText('Votre entreprise', { exact: true }).first()).toBeVisible();
-      await expect(desktopMockup.getByText('+200%', { exact: true }).first()).toBeVisible();
-    }
+    await expect(hero.getByText('Votre entreprise', { exact: true }).first()).toBeVisible();
+    await expect(hero.getByText('+200% visibilité', { exact: true }).first()).toBeVisible();
   });
 
   test('FAQ accordion fonctionne', async ({ page }) => {
@@ -117,7 +106,7 @@ test.describe('WebTreize - Smoke tests', () => {
     const firstQuestion = faqSection.locator('button').first();
     await firstQuestion.click();
     await page.waitForTimeout(400);
-    const answer = faqSection.locator('p', { hasText: /tout à prouver/i });
+    const answer = faqSection.locator('p', { hasText: /équipe réduite|grosse structure/i });
     await expect(answer).toBeVisible();
   });
 });

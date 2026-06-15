@@ -1,59 +1,41 @@
 'use client';
 
-import React, { useState } from 'react';
-import { FadeUp } from '@/components/ui/FadeUp';
-import { Plus, Minus } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { useState } from 'react';
+import { Minus, Plus } from '@phosphor-icons/react';
+import { Reveal } from '@/components/motion/Reveal';
+import { Section, SectionHeading } from '@/components/ui/Section';
 import { FAQ_ITEMS } from '@/lib/data/faq';
+import { cn } from '@/lib/utils';
 
 export function FaqSection() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section
-      id="faq"
-      className="py-24 md:py-36 bg-white relative"
-      aria-labelledby="faq-title"
-    >
-      <div className="container mx-auto px-5 lg:px-12 xl:px-16 max-w-screen-xl">
-        <FadeUp>
-          <div className="max-w-2xl mb-16 md:mb-20">
-            <span className="inline-block px-4 py-2 mb-6 border-2 border-navy text-xs font-bold uppercase tracking-[0.15em] text-navy">
-              FAQ
-            </span>
-            <h2
-              id="faq-title"
-              className="font-display text-navy uppercase leading-[0.92]"
-              style={{ fontSize: 'clamp(36px, 5.5vw, 56px)' }}
-            >
-              Questions
-              <br />
-              fréquentes.
-            </h2>
-          </div>
-        </FadeUp>
+    <Section id="faq" aria-labelledby="faq-title" className="bg-canvas">
+      <div className="site-container max-w-3xl">
+        <Reveal>
+          <SectionHeading title={<span id="faq-title">Questions fréquentes</span>} />
+        </Reveal>
 
-        <div className="max-w-3xl">
+        <div className="mt-10">
           {FAQ_ITEMS.map((item, i) => {
             const isOpen = openIndex === i;
             return (
-              <FadeUp key={i} delay={i * 60}>
-                <div className={cn("border-b-2 border-navy/15", i === 0 && "border-t-2")}>
+              <Reveal key={item.q} delay={i * 0.05}>
+                <div className={cn('border-b border-line', i === 0 && 'border-t')}>
                   <button
                     type="button"
                     id={`faq-btn-${i}`}
-                    className="w-full flex items-center justify-between py-6 md:py-8 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-orange focus-visible:ring-offset-2 rounded-sm"
+                    className="flex w-full items-center justify-between gap-6 rounded-lg py-6 text-left transition-colors duration-200 hover:bg-surface-muted/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
                     onClick={() => setOpenIndex(isOpen ? null : i)}
                     aria-expanded={isOpen}
                     aria-controls={`faq-answer-${i}`}
                   >
-                    <span className="font-bold text-navy text-base md:text-lg pr-8">
-                      {item.q}
-                    </span>
+                    <span className="text-base font-medium text-ink md:text-lg">{item.q}</span>
                     {isOpen ? (
-                      <Minus className="w-5 h-5 text-orange shrink-0" strokeWidth={2.5} />
+                      <Minus size={20} weight="bold" className="shrink-0 text-accent" />
                     ) : (
-                      <Plus className="w-5 h-5 text-navy/48 shrink-0" strokeWidth={2.5} />
+                      <Plus size={20} weight="bold" className="shrink-0 text-muted" />
                     )}
                   </button>
                   <div
@@ -62,22 +44,20 @@ export function FaqSection() {
                     aria-labelledby={`faq-btn-${i}`}
                     aria-hidden={!isOpen}
                     className={cn(
-                      "grid transition-[grid-template-rows,opacity] duration-300 ease-out motion-reduce:transition-none motion-reduce:duration-0",
-                      isOpen ? "grid-rows-[1fr] opacity-100 pb-6 md:pb-8" : "grid-rows-[0fr] opacity-0"
+                      'grid transition-[grid-template-rows,opacity] duration-300 ease-out',
+                      isOpen ? 'grid-rows-[1fr] pb-6 opacity-100' : 'grid-rows-[0fr] opacity-0',
                     )}
                   >
                     <div className="overflow-hidden">
-                      <p className="text-neutral-text font-medium leading-relaxed max-w-2xl">
-                        {item.a}
-                      </p>
+                      <p className="leading-relaxed text-muted">{item.a}</p>
                     </div>
                   </div>
                 </div>
-              </FadeUp>
+              </Reveal>
             );
           })}
         </div>
       </div>
-    </section>
+    </Section>
   );
 }
