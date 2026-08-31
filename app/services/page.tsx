@@ -4,16 +4,16 @@ import { PageCtaBand } from '@/components/sections/PageCtaBand';
 import { ServicesPageContent } from '@/components/sections/ServicesPageContent';
 
 export const metadata: Metadata = {
-  title: 'Services | WebTreize - Agence Digitale Marseille',
+  title: 'Services | WebTreize - Studio digital à Marseille',
   description:
-    'Création de sites web, SEO, applications sur mesure et optimisation Google Business à Marseille.',
+    'Sites web sur mesure, référencement local, fiche Google Business et outils métier pour les entreprises de Marseille et de PACA.',
 };
 
 export default function ServicesPage() {
   return (
     <PageShell
-      title="Nos services"
-      description="Des solutions digitales complètes pour transformer votre présence en ligne en levier business concret."
+      title="Ce qu'on fait, précisément."
+      description="Quatre chantiers, un seul objectif : que vos clients vous trouvent et sachent quoi faire ensuite."
     >
       <ServicesPageContent />
       <PageCtaBand />

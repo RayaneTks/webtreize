@@ -1,33 +1,22 @@
-'use client';
-
 import Link from 'next/link';
-import { ArrowLeft, House } from '@phosphor-icons/react';
 import { ClientShell } from '@/components/ClientShell';
 import { Footer } from '@/components/layout/Footer';
-import { Button, buttonVariants } from '@/components/ui/Button';
-import { cn } from '@/lib/utils';
 
 export default function NotFound() {
   return (
     <div className="min-h-screen bg-canvas text-ink">
       <ClientShell>
-        <section className="site-container flex min-h-[calc(100dvh-var(--header-height))] flex-col justify-center py-20">
-          <p className="text-sm font-medium text-accent">Erreur 404</p>
-          <h1 className="mt-4 max-w-lg text-[clamp(2.5rem,8vw,4.5rem)] font-semibold leading-[1.05] tracking-[-0.02em]">
-            Page introuvable
+        <section className="site-container flex min-h-[calc(100dvh-var(--header-height))] flex-col justify-center py-[clamp(4rem,10vw,8rem)]">
+          <p className="eyebrow-accent">Erreur 404</p>
+          <h1 className="mt-[clamp(1.125rem,2.4vw,1.75rem)] max-w-[14ch] text-display-lg font-extrabold">
+            Page introuvable.
           </h1>
-          <p className="mt-6 max-w-xl text-lg text-muted">
-            L&apos;URL demandée n&apos;existe pas ou a été déplacée.
+          <p className="lede mt-6 max-w-[42ch]">
+            L&apos;adresse demandée n&apos;existe pas ou a été déplacée.
           </p>
-
-          <div className="mt-10 flex flex-wrap gap-4">
-            <Button variant="secondary" onClick={() => window.history.back()}>
-              <ArrowLeft size={18} weight="bold" />
-              Revenir
-            </Button>
-            <Link href="/" className={cn(buttonVariants({ size: 'md' }))}>
-              <House size={18} weight="bold" />
-              Accueil
+          <div className="mt-[clamp(2rem,4vw,3rem)]">
+            <Link href="/" className="btn-primary">
+              Retour à l&apos;accueil
             </Link>
           </div>
         </section>

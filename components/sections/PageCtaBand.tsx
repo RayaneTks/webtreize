@@ -1,13 +1,16 @@
 import Link from 'next/link';
 import type { Route } from 'next';
-import { ArrowUpRight } from '@phosphor-icons/react/dist/ssr';
 import { Reveal } from '@/components/motion/Reveal';
 
+/**
+ * Bande de fin de page interne — reprend la seule section sombre de la DA
+ * (`AuditSection`) pour que toutes les pages se terminent de la même façon.
+ */
 export function PageCtaBand({
-  title = 'Prêt à clarifier vos priorités ?',
-  description = 'Audit gratuit de votre présence en ligne. Réponse sous 48h, sans engagement.',
-  href = '/#contact',
-  label = 'Demander un audit gratuit',
+  title = 'Commençons simplement.',
+  description = 'Vous nous parlez de votre activité, nous vous renvoyons par écrit ce qui vous freine. Gratuit, sous 48 heures, sans engagement.',
+  href = '/#audit',
+  label = 'Demander mon audit',
 }: {
   title?: string;
   description?: string;
@@ -15,20 +18,22 @@ export function PageCtaBand({
   label?: string;
 }) {
   return (
-    <section className="on-dark border-t border-line bg-navy">
-      <div className="site-container flex flex-col items-start justify-between gap-8 py-14 md:flex-row md:items-center md:py-16">
+    <section className="bg-ink-deep py-[clamp(4rem,9vw,7rem)] text-center text-canvas">
+      <div className="site-container">
         <Reveal>
-          <h2 className="max-w-xl text-2xl font-semibold tracking-tight md:text-3xl">{title}</h2>
-          <p className="mt-3 max-w-lg text-base text-white/75">{description}</p>
+          <h2 className="mx-auto max-w-[20ch] text-display-md font-extrabold text-canvas">
+            {title}
+          </h2>
+          <p className="mx-auto mt-[clamp(1.125rem,2.2vw,1.625rem)] max-w-[54ch] text-[1.03125rem] leading-[1.7] text-canvas/70">
+            {description}
+          </p>
         </Reveal>
-        <Reveal delay={0.05}>
-          <Link
-            href={href as Route}
-            className="inline-flex h-14 items-center justify-center gap-2 rounded-full bg-accent px-8 text-base font-semibold text-white shadow-[0_4px_20px_-8px_rgba(217,72,15,0.4)] transition-[transform,background-color,box-shadow] hover:bg-accent-hover hover:shadow-[0_6px_28px_-8px_rgba(217,72,15,0.5)] active:scale-[0.97] motion-reduce:active:scale-100"
-          >
-            {label}
-            <ArrowUpRight size={18} weight="bold" />
-          </Link>
+        <Reveal delay={0.06}>
+          <div className="mt-[clamp(1.75rem,3.4vw,2.75rem)]">
+            <Link href={href as Route} className="btn-primary-inverse">
+              {label}
+            </Link>
+          </div>
         </Reveal>
       </div>
     </section>

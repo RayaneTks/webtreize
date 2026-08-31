@@ -1,12 +1,14 @@
 'use client';
 
 import { useEffect } from 'react';
-import { GrainOverlay } from '@/components/decor/GrainOverlay';
 import { Header } from '@/components/layout/Header';
-import { MobileFab } from '@/components/MobileFab';
 import { NAVBAR_OFFSET } from '@/hooks/useSmoothScroll';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 
+/**
+ * Shell client. La nouvelle DA n'utilise plus GrainOverlay ni MobileFab :
+ * pas de texture décorative, pas de bouton flottant — le header suffit.
+ */
 export function ClientShell({ children }: { children: React.ReactNode }) {
   const prefersReducedMotion = usePrefersReducedMotion();
 
@@ -24,12 +26,10 @@ export function ClientShell({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      <GrainOverlay />
       <Header />
       <main id="main-content" className="relative">
         {children}
       </main>
-      <MobileFab />
     </>
   );
 }

@@ -45,23 +45,19 @@ export default async function LegalPage({ params }: LegalPageProps) {
           écrivez-nous et nous vous répondrons sous 48h.
         </p>
 
-        <div className="panel p-6 md:p-8">
-          <h2 className="text-lg font-semibold text-ink">Besoin d&apos;une réponse rapide ?</h2>
-          <p className="mt-2 text-muted">
-            Utilisez le formulaire de contact ou l&apos;audit gratuit sur la page d&apos;accueil.
+        <div className="rule-top pt-8">
+          <h2 className="text-xl font-bold tracking-[-0.025em] text-ink">
+            Besoin d&apos;une réponse rapide ?
+          </h2>
+          <p className="mt-3">
+            Écrivez-nous : nous répondons par écrit sous 48&nbsp;heures.
           </p>
-          <div className="mt-6 flex flex-wrap gap-3">
-            <Link
-              href="/"
-              className="inline-flex h-12 items-center justify-center rounded-full border border-line bg-surface px-6 text-sm font-semibold text-ink hover:border-line-strong"
-            >
-              Retour à l&apos;accueil
+          <div className="mt-7 flex flex-wrap items-center gap-x-7 gap-y-4">
+            <Link href="/contact" className="btn-primary">
+              Nous écrire
             </Link>
-            <Link
-              href="/#contact"
-              className="inline-flex h-12 items-center justify-center rounded-full bg-accent px-6 text-sm font-semibold text-white hover:bg-accent-hover"
-            >
-              Demander une info
+            <Link href="/" className="btn-text">
+              Retour à l&apos;accueil&nbsp;→
             </Link>
           </div>
         </div>

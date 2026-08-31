@@ -1,30 +1,24 @@
 import { ClientShell } from '@/components/ClientShell';
-import { CapabilityRail } from '@/components/decor/CapabilityRail';
 import { Footer } from '@/components/layout/Footer';
-import { CtaFinalSection } from '@/components/sections/CtaFinalSection';
+import { ApproachSection } from '@/components/sections/ApproachSection';
+import { AuditSection } from '@/components/sections/AuditSection';
+import { CraftSection } from '@/components/sections/CraftSection';
 import { FaqSection } from '@/components/sections/FaqSection';
-import { GuaranteesSection } from '@/components/sections/GuaranteesSection';
 import { HeroSection } from '@/components/sections/HeroSection';
-import { MethodologySection } from '@/components/sections/MethodologySection';
-import { PainPointsSection } from '@/components/sections/PainPointsSection';
-import { ServicesSection } from '@/components/sections/ServicesSection';
-import { SocialProofSection } from '@/components/sections/SocialProofSection';
-import { TrustStrip } from '@/components/sections/TrustStrip';
+import { ProcessSection } from '@/components/sections/ProcessSection';
+import { PromisesSection } from '@/components/sections/PromisesSection';
 
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-canvas text-ink">
       <ClientShell>
         <HeroSection />
-        <TrustStrip />
-        <CapabilityRail />
-        <SocialProofSection />
-        <PainPointsSection />
-        <ServicesSection />
-        <GuaranteesSection />
-        <MethodologySection />
+        <ApproachSection />
+        <CraftSection />
+        <PromisesSection />
+        <ProcessSection />
+        <AuditSection />
         <FaqSection />
-        <CtaFinalSection />
         <Footer />
       </ClientShell>
     </div>

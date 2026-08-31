@@ -3,7 +3,7 @@
 import { useCallback } from 'react';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 
-const NAVBAR_OFFSET = 80;
+const NAVBAR_OFFSET = 76;
 
 export function useSmoothScroll() {
   const prefersReducedMotion = usePrefersReducedMotion();

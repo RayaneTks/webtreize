@@ -1,64 +1,54 @@
 'use client';
 
-import { ArrowUpRight } from '@phosphor-icons/react';
-import { AmbientField } from '@/components/decor/AmbientField';
-import { RankPreview } from '@/components/decor/RankPreview';
-import { StudioRule } from '@/components/decor/StudioRule';
 import { Reveal } from '@/components/motion/Reveal';
-import { Button } from '@/components/ui/Button';
 import { useSmoothScroll } from '@/hooks/useSmoothScroll';
 
 export function HeroSection() {
   const scroll = useSmoothScroll();
 
   return (
-    <section
-      id="hero"
-      className="relative overflow-hidden bg-canvas bg-hero-light pt-[var(--header-height)]"
-      aria-labelledby="hero-title"
-    >
-      <AmbientField />
+    <section id="hero" aria-labelledby="hero-title" className="pt-[clamp(3.5rem,10vw,8.25rem)] text-center">
+      <div className="site-container">
+        <Reveal>
+          <p className="eyebrow">Studio digital · Marseille</p>
+        </Reveal>
 
-      <div className="site-container relative grid items-center gap-12 py-14 md:py-20 lg:grid-cols-2 lg:gap-16 lg:py-24">
-        <div>
-          <Reveal>
-            <p className="text-sm font-medium text-muted">Agence digitale à Marseille</p>
-            <StudioRule className="mb-7 mt-4" />
-          </Reveal>
+        <Reveal delay={0.05}>
+          <h1 id="hero-title" className="mx-auto mt-[clamp(1.25rem,2.6vw,1.875rem)] max-w-[19ch] text-display-xl font-extrabold">
+            Votre savoir-faire mérite d&apos;être trouvé.
+          </h1>
+        </Reveal>
 
-          <Reveal delay={0.05}>
-            <h1
-              id="hero-title"
-              className="max-w-[12ch] text-[clamp(2.75rem,6.5vw,5.25rem)] font-semibold leading-[0.98] tracking-[-0.04em]"
-            >
-              Votre activité{' '}
-              <span className="text-navy">enfin prise</span>{' '}
-              <span className="text-accent">au sérieux.</span>
-            </h1>
-          </Reveal>
+        <Reveal delay={0.1}>
+          <p className="mx-auto mt-[clamp(1.375rem,2.6vw,2rem)] max-w-[52ch] text-[clamp(1.0625rem,1.4vw,1.3125rem)] leading-[1.6] text-muted">
+            Nous concevons des sites, des fiches Google et des outils sur mesure pour les entreprises
+            du 13 — avec le même soin qu&apos;on met à recevoir un client.
+          </p>
+        </Reveal>
 
-          <Reveal delay={0.1}>
-            <p className="mt-6 max-w-md text-lg leading-relaxed text-muted">
-              Site, visibilité locale, SEO et outils sur mesure. Le niveau d&apos;exigence que vous
-              attendez pour vos clients, appliqué à votre propre présence en ligne.
-            </p>
-          </Reveal>
-
-          <Reveal delay={0.15} className="mt-9 flex flex-wrap items-center gap-4">
-            <Button size="lg" onClick={(e) => scroll(e, '#contact')}>
-              Demander un audit gratuit
-              <ArrowUpRight size={18} weight="bold" />
-            </Button>
-            <Button variant="ghost" size="lg" onClick={(e) => scroll(e, '#services')}>
-              Voir nos expertises
-            </Button>
-          </Reveal>
-        </div>
-
-        <Reveal delay={0.12} className="lg:max-w-lg lg:justify-self-end">
-          <RankPreview />
+        <Reveal delay={0.15}>
+          <div className="mt-[clamp(1.875rem,3.4vw,2.75rem)] flex flex-wrap items-center justify-center gap-x-6 gap-y-3.5">
+            <a href="#audit" onClick={(e) => scroll(e, '#audit')} className="btn-primary">
+              Commencer par un audit
+            </a>
+            <a href="#approche" onClick={(e) => scroll(e, '#approche')} className="btn-text">
+              Découvrir notre approche&nbsp;→
+            </a>
+          </div>
+          <p className="mt-[clamp(1.125rem,2vw,1.625rem)] text-sm text-subtle">
+            Gratuit · Réponse écrite sous 48 heures · Sans engagement
+          </p>
         </Reveal>
       </div>
+
+      {/* Plaque principale — remplacer par une vraie photo (2400×1350) */}
+      <Reveal delay={0.2}>
+        <div className="plate-container mt-[clamp(2.75rem,6vw,5.25rem)]">
+          <div className="plate flex aspect-[16/9] items-end rounded-plate-lg bg-surface-sand p-[clamp(1.125rem,2.5vw,2rem)]">
+            <span className="eyebrow">Photo — atelier, boutique ou projet client · 2400 × 1350</span>
+          </div>
+        </div>
+      </Reveal>
     </section>
   );
 }
