@@ -29,15 +29,7 @@ debug.log
 # IDE & OS
 .idea
 .vscode
-.cursor/*
-!.cursor/rules/
-!.cursor/rules/**
-!.cursor/skills/
-!.cursor/skills/**
-.agent/
-.agents/
 .claude/
-skills-lock.json
 *.swp
 *.swo
 .DS_Store
