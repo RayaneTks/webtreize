@@ -1,4 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <rect width="64" height="64" rx="18" fill="#17130F"></rect>
-  <text x="32" y="33" fill="#F6F3EE" font-family="'Plus Jakarta Sans', system-ui, -apple-system, sans-serif" font-size="27" font-weight="800" letter-spacing="-1.1" text-anchor="middle" dominant-baseline="central">13</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img">
+  <title>Monogramme WebTreize</title>
+  <rect width="64" height="64" rx="18" fill="#17130F"/>
+  <path d="M21.78 44.18V23.77H16.96V19.42H26.93V44.18Z M37.90 44.58Q35.84 44.58 33.98 43.80Q32.12 43.02 30.82 41.59Q29.52 40.16 29.09 38.23L33.65 36.70Q34.21 38.30 35.31 39.11Q36.40 39.93 37.90 39.93Q39.13 39.93 40.01 39.46Q40.89 39.00 41.39 38.15Q41.89 37.30 41.89 36.17Q41.89 35.04 41.41 34.23Q40.92 33.41 40.04 32.96Q39.16 32.52 37.90 32.52Q37.17 32.52 36.44 32.68Q35.71 32.85 35.11 33.15L33.91 30.65L40.26 23.74H30.59V19.42H46.04V23.41L39.53 30.82L39.69 28.73Q41.92 28.73 43.57 29.64Q45.21 30.55 46.13 32.18Q47.04 33.81 47.04 35.97Q47.04 38.43 45.84 40.39Q44.65 42.35 42.59 43.47Q40.53 44.58 37.90 44.58Z" fill="#F6F3EE"/>
 </svg>

@@ -48,7 +48,15 @@ test-results
 # Playwright MCP
 .playwright-mcp
 
-# Screenshots & audit artifacts
-*.png
-*.jpeg
-lighthouse-report.json
+# Captures d’audit et artefacts de travail — racine du dépôt uniquement.
+# Les règles sont ancrées par « / » : sans cet ancrage, elles ignoraient aussi les actifs
+# de marque livrés (app/icon.svg, app/apple-icon.png, public/icons/*.png), qui doivent
+# rester versionnés. Ne jamais les débrider en « *.png ».
+/*.png
+/*.jpg
+/*.jpeg
+/lighthouse-report.json
+
+# Dossier d’audit et captures de recette : artefacts de travail, non versionnés.
+/.audit
+/.shots
