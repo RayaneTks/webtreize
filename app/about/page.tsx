@@ -1,116 +1,183 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { PageShell } from '@/components/layout/PageShell';
 import { PageCtaBand } from '@/components/sections/PageCtaBand';
+import { SerifQuote, SerifQuoteEmphasis } from '@/components/sections/SerifQuote';
 import { Reveal } from '@/components/motion/Reveal';
 import { ContactChannels } from '@/components/ui/ContactChannels';
-import { PROCESS_STEPS, PROMISES } from '@/lib/data/site';
+import { Plate } from '@/components/ui/Plate';
+import { breadcrumbJsonLd, pageMetadata, webPageJsonLd } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'À propos | WebTreize - Studio digital à Marseille',
-  description:
-    'Studio digital basé à Marseille. Sites web, visibilité Google et outils sur mesure, avec un seul interlocuteur du début à la fin.',
-};
+/**
+ * Page « Le studio ».
+ *
+ * ## Ce qu’elle ne fait plus
+ *
+ * Elle republiait intégralement deux sections de l’accueil — la boucle
+ * `PROCESS_STEPS` et la boucle `PROMISES`, mêmes textes, `h2` quasi identiques —
+ * après avoir écrit « Le détail complet est sur la page d’accueil » quatorze
+ * lignes plus haut (finding « about-duplique-la-home »). Deux URL portant les
+ * mêmes blocs, sur le site d’un studio qui vend du référencement.
+ *
+ * Le contenu est désormais propre à la page : l’origine du nom, le lieu, et ce
+ * que le studio refuse de faire. Rien qui soit déjà écrit ailleurs, rien qui ne
+ * soit vérifiable.
+ *
+ * ## Accent
+ *
+ * Une seule terre cuite dans le corps de page : le « 13 » de la citation. Les
+ * étiquettes restent en `.eyebrow` (encre pâle) et non en `.eyebrow-accent` :
+ * avec le point du logotype du header et celui du footer, la règle des trois de
+ * la charte est déjà à son plafond.
+ */
+export const metadata: Metadata = pageMetadata('about');
+
+const JSON_LD = [
+  webPageJsonLd('about', 'AboutPage'),
+  breadcrumbJsonLd([
+    { name: 'Accueil', path: '/' },
+    { name: 'Le studio', path: '/about' },
+  ]),
+];
+
+/** Cadrage vertical du plan de travail — voir docs/imagerie.md. */
+const ATELIER_SIZES = '(min-width: 1120px) 420px, (min-width: 700px) 40vw, 100vw';
+
+const ATELIER_ALT =
+  'Le plan de travail du studio : un carnet ouvert, un crayon et une tasse en céramique, éclairés par la fenêtre.';
+
+/**
+ * Ce que le studio ne fait pas — la seule liste du site qui se lit en creux.
+ * Chaque ligne est un fait constatable sur ce site même ou dans un devis, jamais
+ * une promesse à tenir plus tard.
+ */
+const REFUS = [
+  {
+    title: 'Pas de témoignages, pas de logos clients',
+    body: 'Nous n’affichons rien que nous ne puissions montrer. Ce site est notre seule pièce à conviction : sa vitesse, sa lisibilité, son code.',
+  },
+  {
+    title: 'Pas de jargon',
+    body: 'Si une phrase de nos échanges a besoin d’un glossaire, elle est mal écrite. Nous la réécrivons jusqu’à ce qu’elle se lise sans effort.',
+  },
+  {
+    title: 'Pas de devis qui gonfle en route',
+    body: 'Ce qui n’était pas prévu est chiffré à part, et vous décidez avant que nous le fassions. Aucune ligne n’apparaît sur une facture sans être passée par vous.',
+  },
+] as const;
 
 export default function AboutPage() {
   return (
-    <PageShell
-      title="Le studio, en clair."
-      description="Un studio marseillais qui mise sur l'exécution et la franchise, pas sur le vocabulaire d'agence."
-    >
-      <section className="section-pad border-t border-line bg-surface">
-        <div className="site-container">
-          <Reveal>
-            <p className="mx-auto max-w-[30ch] text-center font-serif text-[clamp(1.625rem,4vw,3rem)] font-light leading-[1.18] tracking-[-0.02em] text-ink">
-              WebTreize, c&apos;est le <em className="text-accent">13</em> en provençal.
-            </p>
-          </Reveal>
-
-          <div className="mx-auto mt-[clamp(2.5rem,5vw,4rem)] max-w-[46rem] space-y-6">
-            <Reveal delay={0.05}>
-              <p className="lede">
-                Nous sommes un studio digital installé à Marseille. Notre conviction tient en une
-                phrase : les entreprises d&apos;ici méritent une présence en ligne à la hauteur de
-                leur savoir-faire réel.
-              </p>
+    <>
+      <PageShell
+        eyebrow="Le studio"
+        title="Le studio digital marseillais, en clair."
+        description="Un seul interlocuteur, du premier échange à la mise en ligne. Et un site dont vous gardez tous les accès."
+      >
+        <section
+          aria-labelledby="nom-title"
+          className="section-pad border-t border-line bg-surface text-center"
+        >
+          <div className="site-container">
+            <h2 id="nom-title" className="sr-only">
+              L’origine du nom
+            </h2>
+            <Reveal>
+              <SerifQuote>
+                WebTreize, c’est le <SerifQuoteEmphasis>13</SerifQuoteEmphasis> en provençal.
+              </SerifQuote>
             </Reveal>
-            <Reveal delay={0.1}>
-              <p className="lede">
-                Pas de promesses miracles, pas de faux témoignages, pas de logos clients inventés.
-                Ce que nous avons : une exigence technique, une façon de travailler honnête, et ce
-                site comme première démonstration.
+            <Reveal delay={60}>
+              <p className="lede mx-auto mt-gap-lg max-w-[54ch] text-left sm:text-center">
+                Le nom dit d’où nous travaillons et pour qui. Les entreprises d’ici méritent une
+                présence en ligne à la hauteur de leur savoir-faire réel&#8239;: c’est la seule conviction
+                dont ce studio a besoin.
               </p>
             </Reveal>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="section-pad">
-        <div className="site-container">
-          <Reveal>
-            <p className="eyebrow">Comment ça se passe</p>
-            <h2 className="mt-4 max-w-[18ch] text-display-sm font-extrabold">
-              Quatre temps, sans improvisation.
-            </h2>
-            <p className="mt-5 max-w-[46ch] text-base leading-[1.7] text-muted">
-              Le détail complet est{' '}
-              <Link href="/#methode" className="text-accent underline-offset-4 hover:underline">
-                sur la page d&apos;accueil
-              </Link>
-              .
-            </p>
-          </Reveal>
+        <section aria-labelledby="lieu-title" className="section-pad">
+          <div className="site-container grid items-start gap-x-gap-lg gap-y-gap-md md:grid-cols-[1fr_minmax(0,20rem)]">
+            <Reveal>
+              <p className="eyebrow">Où nous sommes</p>
+              <h2 id="lieu-title" className="mt-gap-xs max-w-[18ch] text-display-sm font-extrabold">
+                Installés à Marseille, pas derrière un formulaire.
+              </h2>
+              <div className="mt-gap-sm max-w-[54ch] space-y-4 text-body text-ink-muted">
+                <p>
+                  Nous travaillons depuis Marseille, pour des commerces et des artisans des
+                  Bouches-du-Rhône. Nous nous déplaçons dans le 13, et à distance ailleurs&#8239;: voir un
+                  comptoir, une devanture, un atelier, cela change ce que nous écrivons ensuite.
+                </p>
+                <p>
+                  Vous parlez à la personne qui conçoit, qui développe et qui met en ligne. Il n’y a
+                  pas de chef de projet à informer, pas de studio à qui transmettre, pas de délai
+                  perdu entre deux services.
+                </p>
+                <p>
+                  Nous ne prenons que ce que nous pouvons finir. C’est la raison pour laquelle nous
+                  répondons par un audit écrit avant un devis&#8239;: si votre besoin n’est pas pour nous,
+                  vous le saurez tout de suite, et vous garderez l’audit.
+                </p>
+              </div>
+            </Reveal>
 
-          <ol className="mt-[clamp(2.5rem,5vw,4.25rem)] flex flex-wrap gap-[clamp(1.75rem,4vw,3.5rem)]">
-            {PROCESS_STEPS.map((step, index) => (
-              <Reveal key={step.title} delay={index * 0.05} className="flex-[1_1_14rem]">
-                <li className="rule-top list-none">
-                  <span className="eyebrow-accent">{String(index + 1).padStart(2, '0')}</span>
-                  <h3 className="mt-3 text-xl font-bold tracking-[-0.025em]">{step.title}</h3>
-                  <p className="mt-3 text-base leading-[1.7] text-muted">{step.body}</p>
-                </li>
-              </Reveal>
-            ))}
-          </ol>
-        </div>
-      </section>
-
-      <section className="section-pad bg-surface">
-        <div className="site-container">
-          <Reveal>
-            <h2 className="mx-auto max-w-[22ch] text-center text-display-md font-extrabold">
-              Nos engagements, au contrat.
-            </h2>
-          </Reveal>
-
-          <div className="mt-[clamp(2.75rem,6vw,5rem)] flex flex-wrap gap-[clamp(1.75rem,4vw,3.5rem)]">
-            {PROMISES.map((item, index) => (
-              <Reveal key={item.title} delay={index * 0.06} className="flex-[1_1_16.25rem]">
-                <div className="rule-top">
-                  <h3 className="text-xl font-bold tracking-[-0.025em]">{item.title}</h3>
-                  <p className="mt-3 text-base leading-[1.7] text-muted">{item.body}</p>
-                </div>
-              </Reveal>
-            ))}
+            <Reveal delay={60}>
+              <Plate src="/images/about-atelier.jpg" alt={ATELIER_ALT} ratio="3/4" sizes={ATELIER_SIZES} />
+            </Reveal>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="section-pad">
-        <div className="site-container">
-          <Reveal>
-            <p className="eyebrow">Nous joindre</p>
-            <h2 className="mt-4 max-w-[18ch] text-display-sm font-extrabold">
-              Lundi au vendredi, 9h–18h.
-            </h2>
-          </Reveal>
-          <Reveal delay={0.06}>
-            <ContactChannels className="mt-[clamp(2.25rem,4.5vw,3.5rem)]" />
-          </Reveal>
-        </div>
-      </section>
+        <section aria-labelledby="refus-title" className="section-pad bg-surface">
+          <div className="site-container">
+            <Reveal>
+              <p className="eyebrow">Ce que nous ne faisons pas</p>
+              <h2
+                id="refus-title"
+                className="mt-gap-xs max-w-[20ch] text-display-sm font-extrabold"
+              >
+                Trois choses que vous ne verrez jamais ici.
+              </h2>
+            </Reveal>
 
-      <PageCtaBand />
-    </PageShell>
+            <ul className="mt-gap-lg grid gap-gap-md sm:grid-cols-3">
+              {REFUS.map((item, index) => (
+                <Reveal key={item.title} as="li" delay={index * 60} className="rule-top">
+                  <h3 className="text-title-sm font-bold text-ink">{item.title}</h3>
+                  <p className="mt-gap-xs text-body text-ink-muted">{item.body}</p>
+                </Reveal>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        <section aria-labelledby="joindre-title" className="section-pad">
+          <div className="site-container">
+            <Reveal>
+              <p className="eyebrow">Nous joindre</p>
+              <h2
+                id="joindre-title"
+                className="mt-gap-xs max-w-[16ch] text-display-sm font-extrabold"
+              >
+                Du lundi au vendredi, de 9&#160;h à 18&#160;h.
+              </h2>
+            </Reveal>
+            <Reveal delay={60}>
+              <ContactChannels className="mt-gap-lg" />
+            </Reveal>
+          </div>
+        </section>
+
+        <PageCtaBand />
+      </PageShell>
+
+      {JSON_LD.map((node, index) => (
+        <script
+          key={index}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(node) }}
+        />
+      ))}
+    </>
   );
 }
