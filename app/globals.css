@@ -4,14 +4,34 @@
 
 @layer base {
   :root {
+    /* — Couleurs : miroir exact de tailwind.config.ts, pour le CSS hors Tailwind — */
     --color-canvas: #f6f3ee;
     --color-surface: #fffdfa;
     --color-sand: #eae3d8;
-    --color-ink: #1c1814;
-    --color-ink-deep: #17130f;
+    --color-ink: #17130f;
     --color-accent: #c4552b;
-    --ease-out: cubic-bezier(0.32, 0.72, 0, 1);
+    --color-ink-muted: #6b6259;
+    --color-ink-faint: #756c65;
+    --color-accent-deep: #a8461f;
+    --color-line: rgba(23, 19, 15, 0.14);
+    --color-line-strong: rgba(23, 19, 15, 0.5);
+
+    /* — Mouvement : deux courbes, quatre durées. Rien d’autre dans tout le code. — */
+    --ease-out: cubic-bezier(0.32, 0.72, 0, 1); /* entrées, déplacements */
+    --ease-swap: cubic-bezier(0.65, 0, 0.35, 1); /* échanges d’état, rare */
+    --dur-micro: 150ms; /* couleur, opacité d’un état de survol */
+    --dur-state: 250ms; /* bascule d’état, ouverture d’un menu */
+    --dur-reveal: 450ms; /* apparition courte */
+    --dur-long: 700ms; /* apparition longue, image */
+
+    /* Couleur de l’anneau de focus. Redéfinie par .on-ink sur la section sombre. */
+    --focus-ring: var(--color-accent-deep);
+
     --header-height: 3.75rem;
+
+    /* Rend les mots-clés de taille interpolables : ouverture animée des <details>
+       sans une ligne de JavaScript. Ignoré par les navigateurs sans support. */
+    interpolate-size: allow-keywords;
   }
 
   html {
@@ -24,12 +44,19 @@
   }
 
   body {
-    @apply antialiased font-sans;
+    @apply font-sans antialiased;
     background: var(--color-canvas);
-    font-size: max(16px, 1rem);
-    line-height: 1.6;
+    /* Valeurs du cran `body` de l’échelle, avec garde-fou de lisibilité à 16 px. */
+    font-size: max(1rem, 16px);
+    line-height: 1.7;
+    /* Crénage et ligatures : la typographie française du site en dépend. */
+    font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+    /* Chiffres proportionnels par défaut ; `tabular-nums` est posé au cas par cas
+       sur les chiffres alignés ou animés (compteur du « 48 »). */
+    font-variant-numeric: proportional-nums;
     overflow-x: clip;
-    overscroll-behavior-y: none;
+    /* Couleur de décalage par défaut des anneaux Tailwind : jamais de blanc pur. */
+    --tw-ring-offset-color: var(--color-canvas);
   }
 
   h1,
@@ -40,131 +67,271 @@
     text-wrap: balance;
   }
 
-  p {
+  p,
+  li {
     text-wrap: pretty;
+    /* Le document porte lang="fr" : la césure suit les règles françaises. */
+    hyphens: auto;
+    -webkit-hyphens: auto;
   }
 
   ::selection {
     background: rgba(196, 85, 43, 0.16);
     color: var(--color-ink);
   }
+
+  /* — Anneau de focus unique —
+     Posé sur les éléments interactifs eux-mêmes, dans la couche `base` : aucun
+     composant ne peut être livré sans indication de focus, et un composant qui a
+     besoin d’un anneau différent le surcharge depuis les couches supérieures. */
+  a[href]:focus-visible,
+  button:focus-visible,
+  summary:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible,
+  [contenteditable]:focus-visible,
+  [tabindex]:not([tabindex='-1']):focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+
 }
 
 @layer components {
-  /* Conteneur étroit : la largeur limitée fait partie de la DA */
+  /* — Conteneurs — */
+
+  /* Colonne unique du site : la largeur limitée fait partie de la direction artistique. */
   .site-container {
     @apply mx-auto w-full max-w-site px-5 sm:px-6 md:px-8;
   }
 
+  /* Colonne large des plaques. Gouttière alignée sur .site-container jusqu’à `md`,
+     où le débordement devient assez franc pour se lire comme une intention. */
   .plate-container {
-    @apply mx-auto w-full max-w-plate px-4 sm:px-5 md:px-7;
+    @apply mx-auto w-full max-w-plate px-5 sm:px-6 md:px-7;
   }
 
   .section-pad {
     @apply py-section;
   }
 
-  /* Étiquette : seul usage des majuscules dans la DA */
+  /* — Typographie — */
+
+  /* Étiquette : seul usage des majuscules dans la direction artistique. */
   .eyebrow {
-    @apply text-[0.78rem] font-semibold uppercase tracking-[0.1em] text-subtle;
+    @apply text-label font-semibold uppercase text-ink-faint;
   }
 
   .eyebrow-accent {
-    @apply text-[0.78rem] font-semibold uppercase tracking-[0.1em] text-accent;
+    @apply text-label font-semibold uppercase text-accent-deep;
   }
 
   .lede {
-    @apply text-[1.0625rem] leading-[1.72] text-muted md:text-[1.125rem];
+    @apply text-body-lg text-ink-muted;
   }
 
-  /* Séparation par filet fin — jamais de carte bordée */
+  /* Séparation par filet fin — jamais de carte bordée. */
   .rule-top {
-    @apply border-t border-line pt-5;
+    @apply border-t border-line pt-gap-sm;
   }
 
-  /* Plaque image : fond sable + rayures douces en attendant les vraies photos */
-  .plate {
-    @apply rounded-plate bg-surface-muted;
-    background-image: repeating-linear-gradient(
-      115deg,
-      rgba(28, 24, 20, 0.05) 0 10px,
-      transparent 10px 20px
-    );
+  /* — Micro-interactions — */
+
+  /* Soulignement dessiné de gauche à droite. Un filet de 1 px, pas un
+     `text-decoration` qui saute d’un état à l’autre. */
+  .link-draw {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 0 1px;
+    padding-bottom: 0.22em;
+    text-decoration: none;
+    transition: background-size var(--dur-state) var(--ease-out);
   }
 
-  .btn-primary {
-    @apply inline-flex items-center justify-center rounded-full bg-ink px-8 text-[1.03125rem] font-semibold tracking-[-0.01em] text-canvas transition-colors duration-300 ease-out hover:bg-accent hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-canvas;
-    height: 3.375rem;
+  .link-draw:hover,
+  .link-draw:focus-visible {
+    background-size: 100% 1px;
   }
 
-  .btn-primary-inverse {
-    @apply inline-flex items-center justify-center rounded-full bg-canvas px-8 text-[1.03125rem] font-semibold tracking-[-0.01em] text-ink-deep transition-colors duration-300 ease-out hover:bg-accent hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-ink-deep;
-    height: 3.375rem;
+  /* Retour d’appui. 80 ms est la seule durée hors vocabulaire, fixée par le SPEC 4.4
+     et déclarée ici une fois pour toutes afin qu’aucun composant ne l’écrive. */
+  .press {
+    transition: transform 80ms var(--ease-out);
   }
 
-  .btn-text {
-    @apply inline-flex items-center text-[1.03125rem] font-semibold tracking-[-0.01em] text-accent transition-colors duration-200 hover:text-accent-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4;
+  .press:active {
+    transform: scale(0.985);
   }
 
-  .nav-link {
-    @apply text-[0.84375rem] font-medium text-muted transition-colors duration-200 hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-canvas;
+  /* À poser sur un bloc à fond encre : l’anneau de focus y passe en terre cuite
+     pleine (4,12:1 sur l’encre) au lieu de la terre cuite foncée. */
+  .on-ink {
+    --focus-ring: var(--color-accent);
   }
 
+  /* — FAQ : ouverture animée sans une ligne de JavaScript (SPEC 4.4) —
+     Les navigateurs sans `::details-content` ignorent ces règles : l’ouverture est
+     instantanée, sans aucun défaut visible. */
   .faq-item {
-    @apply border-b border-line py-6;
+    @apply border-b border-line py-gap-sm;
   }
 
-  .faq-item summary {
-    @apply flex cursor-pointer list-none items-baseline justify-between gap-6 text-[1.15625rem] font-bold tracking-[-0.025em] text-ink;
+  .faq-item > summary {
+    @apply flex cursor-pointer list-none items-baseline justify-between gap-gap-sm text-title-sm font-bold text-ink;
   }
 
-  .faq-item summary::-webkit-details-marker {
+  .faq-item > summary::-webkit-details-marker {
     display: none;
+  }
+
+  .faq-item::details-content {
+    block-size: 0;
+    overflow: clip;
+    /* Laisse respirer l’anneau de focus d’un lien placé dans la réponse. */
+    overflow-clip-margin: 0.25rem;
+    transition:
+      block-size var(--dur-state) var(--ease-out),
+      content-visibility var(--dur-state) var(--ease-out);
+    transition-behavior: allow-discrete;
+  }
+
+  .faq-item[open]::details-content {
+    block-size: auto;
+  }
+
+  .faq-sign {
+    @apply shrink-0 text-title-sm font-semibold text-ink-muted;
+    transition: transform var(--dur-state) var(--ease-out);
   }
 
   .faq-item[open] .faq-sign {
     transform: rotate(90deg);
-    opacity: 1;
   }
 
-  .faq-sign {
-    @apply shrink-0 text-[1.1875rem] font-semibold text-accent opacity-60;
-    transition: transform 0.3s var(--ease-out), opacity 0.3s var(--ease-out);
+  /* — Navigation — */
+  .nav-link {
+    @apply text-note font-medium text-ink-muted transition-colors hover:text-ink;
   }
 
-  /* --- Pages internes (/services, /about, /contact, /legal) --- */
-  .input-field {
-    @apply h-12 w-full rounded-xl border border-line bg-surface px-4 text-ink placeholder:text-subtle transition-[border-color,box-shadow] duration-200 focus:border-accent/40 focus:outline-none focus:ring-2 focus:ring-accent;
-  }
-
-  .input-field--error {
-    @apply border-red-500/60 focus:border-red-500/60 focus:ring-red-500;
-  }
-
+  /* — Pages légales — */
   .legal-prose {
-    @apply leading-relaxed text-muted;
+    @apply text-body text-ink-muted;
   }
 
   .legal-prose h2 {
-    @apply mt-10 text-xl font-bold tracking-[-0.025em] text-ink;
+    @apply mt-gap-md text-title font-bold text-ink;
   }
 
   .legal-prose p {
-    @apply mt-3;
+    @apply mt-gap-xs;
   }
 
   .legal-prose ul {
-    @apply mt-3 list-disc space-y-2 pl-5;
+    @apply mt-gap-xs list-disc space-y-2 pl-5;
+  }
+
+  /* Les classes dépréciées `.btn-primary`, `.btn-primary-inverse`, `.btn-text`,
+     `.input-field` et `.input-field--error` ont été supprimées : plus aucun
+     appelant ne les employait. `components/ui/Button.tsx` et
+     `components/ui/Field.tsx` portent seuls ces deux composants. */
+}
+
+/* Compensation du header collant pour toutes les ancres. */
+[id] {
+  scroll-margin-top: calc(var(--header-height) + 1rem);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Mouvement piloté par attribut — hors des couches Tailwind à dessein :       */
+/* le sélecteur `html.js` n’existe dans aucun fichier de contenu, une règle    */
+/* posée dans `@layer base` serait donc supprimée à la compilation.            */
+/* -------------------------------------------------------------------------- */
+
+/* — Reveal (SPEC 4.1) —
+   Aucun masquage par défaut : sans JavaScript, tout le contenu est peint
+   immédiatement. Le voile n’existe que sous `html.js`, classe posée avant la
+   première peinture par un script inline du <head>. */
+[data-reveal] {
+  --reveal-delay: 0ms;
+}
+
+html.js [data-reveal] {
+  transition:
+    opacity var(--dur-reveal) var(--ease-out) var(--reveal-delay),
+    transform var(--dur-reveal) var(--ease-out) var(--reveal-delay);
+}
+
+html.js [data-reveal]:not([data-revealed]) {
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+html.js [data-reveal][data-revealed] {
+  opacity: 1;
+  transform: none;
+}
+
+/* — Masque de ligne du h1 (SPEC 4.2) —
+   L’opacité reste à 1 : l’élément LCP est peint dès la première frame, seul son
+   découpage s’anime. Sans JavaScript, aucun masque.
+
+   L’état masqué vit UNIQUEMENT dans le `from` de l’animation, jamais en
+   déclaration autonome sur l’élément. La différence n’est pas cosmétique : un
+   `clip-path: inset(0 0 100% 0)` écrit ici resterait appliqué si l’animation ne
+   démarrait pas — extension qui coupe les animations, `animation: none` hérité
+   d’une feuille tierce, moteur sans support des `@keyframes` sur `clip-path` —
+   et le titre de la page, qui est l’élément LCP, disparaîtrait purement et
+   simplement. Avec `both`, le navigateur applique le `from` pendant le délai et
+   le `to` après ; si l’animation ne tourne pas, aucun découpage n’est appliqué
+   et le titre reste visible. Le mouvement ne peut jamais masquer le contenu. */
+html.js [data-line-mask] {
+  animation: line-mask var(--dur-long) var(--ease-out) var(--reveal-delay, 0ms) both;
+}
+
+@keyframes line-mask {
+  from {
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    /* Marge négative : les jambages et les accents ne sont jamais rognés. */
+    clip-path: inset(-0.3em -0.15em -0.3em -0.15em);
   }
 }
 
-[id] {
-  scroll-margin-top: calc(var(--header-height) + 1rem);
+/* — Fondu de la plaque image (SPEC 4.3) —
+   Même règle que `Reveal` : aucun voile par défaut. Le fondu était écrit en
+   `opacity-0` dans le rendu serveur et levé par le `onLoad` de `next/image` ;
+   sans JavaScript ce gestionnaire n’est jamais appelé et les photos restaient
+   invisibles pour toujours. Il n’existe donc que sous `html.js`. */
+html.js [data-plate-image] {
+  transition: opacity var(--dur-long) var(--ease-out);
+}
+
+html.js [data-plate-image]:not([data-plate-loaded]) {
+  opacity: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  /* Le contenu reste visible même si l’observateur ne pose jamais data-revealed. */
+  html.js [data-reveal]:not([data-revealed]) {
+    opacity: 1;
+    transform: none;
+  }
+
+  html.js [data-line-mask] {
+    clip-path: none;
+    animation: none;
+  }
+
+  /* La photo est peinte dès son arrivée, sans fondu. */
+  html.js [data-plate-image]:not([data-plate-loaded]) {
+    opacity: 1;
   }
 
   *,
