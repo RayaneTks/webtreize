@@ -1,12 +1,11 @@
-import { Fragment, type ReactNode } from 'react';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { LegalPageShell } from '@/components/layout/LegalPageShell';
 import { Button } from '@/components/ui/Button';
 import {
   getLegalDocument,
+  isLegalDraft,
   LEGAL_SLUGS,
-  LEGAL_TODO,
   type LegalDocument,
 } from '@/lib/data/legal';
 import { customMetadata } from '@/lib/seo';
@@ -27,14 +26,25 @@ import { customMetadata } from '@/lib/seo';
  * `/privacy` et `/terms` ne sont plus des pages : ce sont deux redirections 308
  * déclarées dans `next.config.ts`.
  *
- * ## Marqueurs visibles
+ * ## Publié ou brouillon
  *
- * Les seuls trous du texte sont les faits que personne d’autre que l’éditeur ne
- * peut connaître — raison sociale, SIREN, siège, hébergeur. Ils restent
- * **visibles** dans la page, sur un aplat de sable, et sont récapitulés en fin
- * de document : une mention légale fausse expose davantage qu’une mention
- * incomplète, et le propriétaire du site doit voir ce qui manque du premier
- * coup d’œil. Tant que cette liste n’est pas vide, la page reste en `noindex`.
+ * Un document dont il manque encore un fait — raison sociale, SIREN, siège,
+ * hébergeur — n’est **pas rendu**. La page annonce sobrement une rédaction en
+ * cours et renvoie vers le formulaire de contact.
+ *
+ * Le texte à trous a été essayé et retiré : sur la seule page où un prospect
+ * vérifie que l’entreprise existe, une suite de crochets vides ne se lit pas
+ * comme de la transparence mais comme un chantier laissé ouvert. Le studio vend
+ * du soin ; il ne peut pas exposer son propre brouillon.
+ *
+ * Ce qui manque reste dans `LEGAL_TODO`, à destination de l’éditeur seul, et
+ * n’est jamais servi au visiteur. Dès que la dernière entrée disparaît, le
+ * document se publie de lui-même et redevient indexable.
+ *
+ * La politique de confidentialité, elle, est toujours publiée : le formulaire
+ * collecte des données personnelles, l’information doit être en ligne au moment
+ * de la collecte (RGPD art. 13). Elle a donc été rédigée pour ne dépendre
+ * d’aucun fait manquant.
  */
 
 type LegalPageProps = {
@@ -48,35 +58,11 @@ export function generateStaticParams() {
   return LEGAL_SLUGS.map((slug) => ({ slug }));
 }
 
-/** Les marqueurs laissés en clair dans les textes de `lib/data/legal.ts`. */
-const MARKER = /(\[\[À COMPLÉTER[\s\S]*?\]\])/g;
-
-/** Un document reste hors index tant qu’il lui manque une information. */
-function pendingTodo(slug: LegalDocument['slug']) {
-  return LEGAL_TODO.filter((todo) => todo.slug === slug);
-}
-
 /** Date de révision, figée et formatée en UTC pour rester stable au build. */
 const DATE_FORMAT = new Intl.DateTimeFormat('fr-FR', {
   dateStyle: 'long',
   timeZone: 'UTC',
 });
-
-/** Découpe un texte sur ses marqueurs et les rend en `<mark>` sobre. */
-function withMarkers(text: string): ReactNode[] {
-  return text.split(MARKER).map((part, index) =>
-    part.startsWith('[[') ? (
-      <mark
-        key={index}
-        className="rounded-xl bg-sand px-1.5 py-0.5 font-medium text-ink"
-      >
-        {part}
-      </mark>
-    ) : (
-      <Fragment key={index}>{part}</Fragment>
-    ),
-  );
-}
 
 export async function generateMetadata({ params }: LegalPageProps): Promise<Metadata> {
   const { slug } = await params;
@@ -86,11 +72,16 @@ export async function generateMetadata({ params }: LegalPageProps): Promise<Meta
     return { title: 'Page introuvable', robots: { index: false, follow: true } };
   }
 
+  const draft = isLegalDraft(doc.slug);
+
   return customMetadata({
     path: `/legal/${doc.slug}`,
     title: doc.title,
-    description: doc.description,
-    noindex: pendingTodo(doc.slug).length > 0,
+    // Une description qui décrirait un texte non publié serait fausse.
+    description: draft
+      ? `${doc.title} de WebTreize, studio digital à Marseille. Document en cours de rédaction.`
+      : doc.description,
+    noindex: draft,
   });
 }
 
@@ -100,7 +91,13 @@ export default async function LegalPage({ params }: LegalPageProps) {
 
   if (!doc) notFound();
 
-  const todo = pendingTodo(doc.slug);
+  return isLegalDraft(doc.slug) ? <LegalDraft doc={doc} /> : <LegalContent doc={doc} />;
+}
+
+/* -------------------------------------------------------------------------- */
+
+/** Document publié : le texte, en entier, sans aucun trou. */
+function LegalContent({ doc }: { doc: LegalDocument }) {
   const updatedAt = DATE_FORMAT.format(new Date(doc.updatedAt));
 
   return (
@@ -115,13 +112,13 @@ export default async function LegalPage({ params }: LegalPageProps) {
             <h2 id={sectionId(section.heading)}>{section.heading}</h2>
 
             {section.paragraphs?.map((paragraph, index) => (
-              <p key={index}>{withMarkers(paragraph)}</p>
+              <p key={index}>{paragraph}</p>
             ))}
 
             {section.bullets ? (
               <ul>
                 {section.bullets.map((bullet, index) => (
-                  <li key={index}>{withMarkers(bullet)}</li>
+                  <li key={index}>{bullet}</li>
                 ))}
               </ul>
             ) : null}
@@ -129,39 +126,58 @@ export default async function LegalPage({ params }: LegalPageProps) {
         ))}
       </div>
 
-      {todo.length > 0 ? (
-        <aside
-          aria-labelledby="a-completer-title"
-          className="mt-gap-lg rounded-plate border border-line-strong bg-sand p-gap-sm"
-        >
-          <p className="eyebrow">Document incomplet</p>
-          <h2 id="a-completer-title" className="mt-gap-xs text-title-sm font-bold text-ink">
-            À fournir par l’éditeur du site
-          </h2>
-          <p className="mt-gap-xs text-note text-ink-muted">
-            Les éléments ci-dessous apparaissent en clair dans le texte, sur fond sable. Tant
-            qu’ils ne sont pas renseignés, cette page reste hors de l’index des moteurs de
-            recherche.
-          </p>
-          <ul className="mt-gap-xs list-disc space-y-1.5 pl-5 text-note text-ink-muted">
-            {todo.map((item) => (
-              <li key={item.label}>{item.label}</li>
-            ))}
-          </ul>
-        </aside>
-      ) : null}
-
-      <div className="mt-gap-lg border-t border-line pt-gap-md">
-        <p className="text-body text-ink-muted">
-          Une question sur ce document&#8239;? Écrivez-nous, nous répondons par écrit.
-        </p>
-        <div className="mt-gap-sm">
-          <Button href="/contact" size="sm">
-            Nous écrire
-          </Button>
-        </div>
-      </div>
+      <LegalFooter />
     </LegalPageShell>
+  );
+}
+
+/**
+ * Document en cours de rédaction.
+ *
+ * Le ton est celui du reste du site : on annonce, on dit quoi faire, on
+ * n’excuse pas. Aucune date de publication promise — une échéance annoncée puis
+ * manquée est pire que pas d’échéance.
+ */
+function LegalDraft({ doc }: { doc: LegalDocument }) {
+  return (
+    <LegalPageShell
+      title={doc.title}
+      description="Ce document est en cours de rédaction. En attendant sa publication, écrivez-nous : nous répondons à toute question sur ce point par écrit."
+    >
+      <div className="legal-prose">
+        <p>
+          Nous préférons ne rien publier plutôt qu’un texte approximatif&#8239;: un document
+          juridique incomplet engage autant qu’un document complet, et vous ne pourriez pas vous y
+          fier.
+        </p>
+        <p>
+          En attendant, deux choses restent vraies et vérifiables dès aujourd’hui. Le formulaire de
+          contact ne collecte que quatre informations, dont l’usage est détaillé dans notre{' '}
+          <a href="/legal/politique-confidentialite" className="link-draw text-accent-deep">
+            politique de confidentialité
+          </a>
+          , publiée et complète. Et toute question sur nos conditions d’intervention reçoit une
+          réponse écrite, avant tout engagement de votre part.
+        </p>
+      </div>
+
+      <LegalFooter />
+    </LegalPageShell>
+  );
+}
+
+function LegalFooter() {
+  return (
+    <div className="mt-gap-lg border-t border-line pt-gap-md">
+      <p className="text-body text-ink-muted">
+        Une question sur ce document&#8239;? Écrivez-nous, nous répondons par écrit.
+      </p>
+      <div className="mt-gap-sm">
+        <Button href="/contact" size="sm">
+          Nous écrire
+        </Button>
+      </div>
+    </div>
   );
 }
 

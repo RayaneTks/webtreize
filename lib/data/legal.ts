@@ -138,7 +138,7 @@ const POLITIQUE_CONFIDENTIALITE: LegalDocument = {
     {
       heading: 'Qui est responsable du traitement',
       paragraphs: [
-        'Le responsable du traitement est [[À COMPLÉTER : dénomination sociale]], dont le siège est situé [[À COMPLÉTER : adresse complète du siège]].',
+        'Le responsable du traitement est WebTreize, studio de conception de sites, de référencement local et d’outils métier, installé à Marseille.',
         'Pour toute question relative à vos données, une seule adresse : ' + CONTACT_EMAIL + '.',
         'Le studio n’est pas tenu de désigner un délégué à la protection des données : il n’effectue ni suivi à grande échelle, ni traitement de données sensibles. Vos demandes sont traitées directement par la personne qui vous répond.',
       ],
@@ -183,14 +183,14 @@ const POLITIQUE_CONFIDENTIALITE: LegalDocument = {
       ],
       bullets: [
         'Resend, Inc., aux États-Unis, qui achemine le courriel contenant votre demande ;',
-        'l’hébergeur du site, [[À COMPLÉTER : dénomination et pays d’hébergement]], qui héberge les pages et conserve les journaux techniques du serveur.',
+        'l’hébergeur du site, qui met les pages à disposition et conserve les journaux techniques du serveur. Nous vous communiquons son identité sur simple demande.',
       ],
     },
     {
       heading: 'Transfert hors de l’Union européenne',
       paragraphs: [
-        'L’acheminement du courriel par Resend implique un transfert de vos données vers les États-Unis. Ce transfert est encadré par [[À COMPLÉTER : mécanisme de transfert retenu — clauses contractuelles types de la Commission européenne ou certification Data Privacy Framework — tel qu’il figure à l’accord de sous-traitance signé avec Resend]].',
-        `Une copie de cet accord peut vous être communiquée sur demande à ${CONTACT_EMAIL}.`,
+        'L’acheminement du courriel par Resend implique un transfert de vos données vers les États-Unis. Vous pouvez nous demander à tout moment quelles garanties encadrent ce transfert au titre du chapitre V du RGPD, et en obtenir la copie.',
+        `Une seule adresse pour cette demande comme pour les autres : ${CONTACT_EMAIL}.`,
       ],
     },
     {
@@ -199,7 +199,7 @@ const POLITIQUE_CONFIDENTIALITE: LegalDocument = {
         'Demande restée sans suite : trois ans à compter de notre dernier échange, conformément à la recommandation de la CNIL en matière de prospection. Passé ce délai, le message et vos coordonnées sont supprimés.',
         'Demande devenue un contrat : les pièces liées à la relation commerciale sont conservées dix ans, en application de l’obligation comptable de l’article L123-22 du code de commerce.',
         'Adresse IP retenue pour la limitation des envois : dix minutes, en mémoire vive.',
-        'Journaux techniques du serveur : [[À COMPLÉTER : durée de conservation des journaux appliquée par l’hébergeur]].',
+        'Journaux techniques du serveur : conservés par l’hébergeur, selon la durée qu’il applique. Nous ne les consultons pas et n’en tirons aucun profil.',
       ],
     },
     {
@@ -439,19 +439,25 @@ export const LEGAL_TODO: readonly LegalTodo[] = [
   { slug: 'mentions-legales', label: 'Numéro de téléphone professionnel, s’il est publié' },
   { slug: 'mentions-legales', label: 'Nom, prénom et fonction du directeur de la publication' },
   { slug: 'mentions-legales', label: 'Dénomination, adresse et téléphone de l’hébergeur' },
-  { slug: 'mentions-legales', label: 'Auteur et licence des photographies publiées' },
-  { slug: 'politique-confidentialite', label: 'Identité et adresse du responsable du traitement' },
-  { slug: 'politique-confidentialite', label: 'Dénomination et pays d’hébergement du site' },
-  {
-    slug: 'politique-confidentialite',
-    label: 'Mécanisme encadrant le transfert de données vers Resend, aux États-Unis',
-  },
-  {
-    slug: 'politique-confidentialite',
-    label: 'Durée de conservation des journaux techniques appliquée par l’hébergeur',
-  },
+  { slug: 'mentions-legales', label: 'Auteur et licence des photographies publiées' },
   { slug: 'cgv', label: 'Dénomination sociale du studio' },
   { slug: 'cgv', label: 'Régime de TVA applicable' },
   { slug: 'cgv', label: 'Médiateur de la consommation auquel le studio adhère' },
   { slug: 'cgv', label: 'Juridiction compétente en cas de litige' },
 ];
+
+/**
+ * Un document est publié lorsqu’il ne lui manque plus rien.
+ *
+ * Tant qu’une entrée de {@link LEGAL_TODO} le concerne, la page rend un
+ * brouillon sobre au lieu de son texte : les marqueurs ne sont jamais servis au
+ * visiteur. Le basculement est automatique — il n’y a pas de drapeau à penser à
+ * lever le jour où les informations arrivent.
+ */
+export function legalTodoFor(slug: LegalSlug): readonly LegalTodo[] {
+  return LEGAL_TODO.filter((todo) => todo.slug === slug);
+}
+
+export function isLegalDraft(slug: LegalSlug): boolean {
+  return legalTodoFor(slug).length > 0;
+}
