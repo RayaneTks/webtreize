@@ -1,52 +1,72 @@
-'use client';
-
+import { LineMask } from '@/components/motion/LineMask';
 import { Reveal } from '@/components/motion/Reveal';
-import { useSmoothScroll } from '@/hooks/useSmoothScroll';
+import { Button } from '@/components/ui/Button';
+import { Plate } from '@/components/ui/Plate';
 
+/** Largeurs servies pour la plaque 16/9 du héros — voir docs/imagerie.md. */
+const HERO_PLATE_SIZES = '(min-width: 1280px) 1224px, 100vw';
+
+/**
+ * Héros de l’accueil — composant **serveur**.
+ *
+ * Il portait `'use client'` pour un seul hook, `useSmoothScroll`, qui
+ * interceptait le clic des deux ancres. Le défilement doux est désormais
+ * déclaré une fois pour toutes en CSS (`scroll-behavior: smooth` et
+ * `scroll-padding-top` sur `html`, app/globals.css) : le hook ne faisait plus
+ * que réimplémenter en JavaScript ce que le navigateur fait déjà, au prix
+ * d’une frontière client sur la première section de la page.
+ *
+ * Le `h1` passe par `LineMask` et jamais par `Reveal` : c’est l’élément LCP,
+ * son opacité reste à 1 (finding critique « lcp-h1-opacity-zero »).
+ */
 export function HeroSection() {
-  const scroll = useSmoothScroll();
-
   return (
-    <section id="hero" aria-labelledby="hero-title" className="pt-[clamp(3.5rem,10vw,8.25rem)] text-center">
+    <section id="hero" aria-labelledby="hero-title" className="pt-gap-xl text-center">
       <div className="site-container">
         <Reveal>
           <p className="eyebrow">Studio digital · Marseille</p>
         </Reveal>
 
-        <Reveal delay={0.05}>
-          <h1 id="hero-title" className="mx-auto mt-[clamp(1.25rem,2.6vw,1.875rem)] max-w-[19ch] text-display-xl font-extrabold">
-            Votre savoir-faire mérite d&apos;être trouvé.
-          </h1>
-        </Reveal>
+        <LineMask
+          as="h1"
+          id="hero-title"
+          className="mx-auto mt-gap-sm max-w-[19ch] text-display-xl font-extrabold"
+        >
+          Votre savoir-faire mérite d’être trouvé.
+        </LineMask>
 
-        <Reveal delay={0.1}>
-          <p className="mx-auto mt-[clamp(1.375rem,2.6vw,2rem)] max-w-[52ch] text-[clamp(1.0625rem,1.4vw,1.3125rem)] leading-[1.6] text-muted">
+        <Reveal delay={60}>
+          <p className="lede mx-auto mt-gap-sm max-w-[52ch]">
             Nous concevons des sites, des fiches Google et des outils sur mesure pour les entreprises
-            du 13 — avec le même soin qu&apos;on met à recevoir un client.
+            du 13 — avec le même soin que vous mettez à recevoir un client.
           </p>
         </Reveal>
 
-        <Reveal delay={0.15}>
-          <div className="mt-[clamp(1.875rem,3.4vw,2.75rem)] flex flex-wrap items-center justify-center gap-x-6 gap-y-3.5">
-            <a href="#audit" onClick={(e) => scroll(e, '#audit')} className="btn-primary">
-              Commencer par un audit
-            </a>
-            <a href="#approche" onClick={(e) => scroll(e, '#approche')} className="btn-text">
-              Découvrir notre approche&nbsp;→
-            </a>
+        <Reveal delay={120}>
+          <div className="mt-gap-md flex flex-wrap items-center justify-center gap-x-gap-sm gap-y-gap-xs">
+            <Button href="/#audit">Commencer par un audit</Button>
+            <Button href="/#approche" variant="text" arrow>
+              Découvrir notre approche
+            </Button>
           </div>
-          <p className="mt-[clamp(1.125rem,2vw,1.625rem)] text-sm text-subtle">
-            Gratuit · Réponse écrite sous 48 heures · Sans engagement
+          {/* Le délai de 48 heures est annoncé une seule fois par page : il est
+              porté par la section « audit », dont c’est le chiffre principal. */}
+          <p className="mt-gap-sm text-note text-ink-faint">
+            Gratuit · Réponse écrite · Sans engagement
           </p>
         </Reveal>
       </div>
 
-      {/* Plaque principale — remplacer par une vraie photo (2400×1350) */}
-      <Reveal delay={0.2}>
-        <div className="plate-container mt-[clamp(2.75rem,6vw,5.25rem)]">
-          <div className="plate flex aspect-[16/9] items-end rounded-plate-lg bg-surface-sand p-[clamp(1.125rem,2.5vw,2rem)]">
-            <span className="eyebrow">Photo — atelier, boutique ou projet client · 2400 × 1350</span>
-          </div>
+      {/* Plaque principale — image LCP de la page d’accueil. */}
+      <Reveal delay={180}>
+        <div className="plate-container mt-gap-lg">
+          <Plate
+            src="/images/hero-atelier.jpg"
+            alt="Le comptoir en bois clair d’une boutique marseillaise avant l’ouverture, dans la lumière du matin qui entre par la vitrine."
+            ratio="16/9"
+            priority
+            sizes={HERO_PLATE_SIZES}
+          />
         </div>
       </Reveal>
     </section>

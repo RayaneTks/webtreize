@@ -1,9 +1,10 @@
+import { clsx } from 'clsx';
 import { Reveal } from '@/components/motion/Reveal';
 import { GOOGLE_BUSINESS_SERVICE, SERVICES } from '@/lib/data/site';
-import { cn } from '@/lib/utils';
 
 const ALL_SERVICES = [...SERVICES, GOOGLE_BUSINESS_SERVICE];
 
+/** Étiquette de chaque prestation — les identifiants sont ceux de lib/data/site.ts. */
 const EYEBROWS: Record<string, string> = {
   web: 'Le site',
   seo: 'La visibilité',
@@ -11,36 +12,67 @@ const EYEBROWS: Record<string, string> = {
   google: 'La fiche Google',
 };
 
+/**
+ * Corps de la page `/services` — composant serveur.
+ *
+ * ## Nommage des régions
+ *
+ * Quatre prestations, quatre `h2` de rang égal : aucun ne pouvait nommer la
+ * section qui les contenait. L’enveloppe redevient un conteneur et **chaque
+ * prestation est sa propre région**, nommée par son propre titre — la même
+ * correction que dans `CraftSection`, pour la même raison.
+ *
+ * ## Mise en page
+ *
+ * Deux colonnes explicites à partir de `md` : titre à gauche, description et
+ * points à droite. `flex-wrap` + `flex-[1_1_22rem]` faisait basculer les deux
+ * colonnes à des largeurs différentes selon le palier ; ici les quatre blocs
+ * s’alignent sur la même gouttière à toutes les largeurs.
+ *
+ * ## Accent
+ *
+ * Les quatre étiquettes étaient en `.eyebrow-accent` : quatre terres cuites sur
+ * une page qui n’en autorise que trois, point du logotype compris (finding
+ * critique « regle-trois-terres-cuites-explosee »). Elles passent en
+ * `.eyebrow`.
+ */
 export function ServicesPageContent() {
   return (
-    <section className="section-pad border-t border-line bg-surface">
-      <div className="site-container grid gap-[clamp(3.5rem,8vw,7rem)]">
-        {ALL_SERVICES.map((service, index) => (
-          <div
-            key={service.id}
-            className={cn(
-              'flex flex-wrap gap-x-[clamp(2rem,5vw,4.5rem)] gap-y-6',
-              index > 0 && 'rule-top pt-[clamp(2.5rem,5vw,4rem)]',
-            )}
-          >
-            <Reveal className="min-w-[min(100%,16rem)] flex-[1_1_22rem]">
-              <p className="eyebrow-accent">{EYEBROWS[service.id] ?? 'Service'}</p>
-              <h2 className="mt-4 max-w-[16ch] text-display-sm font-extrabold">{service.title}</h2>
-            </Reveal>
+    <div className="section-pad border-t border-line bg-surface">
+      <div className="site-container grid gap-gap-xl">
+        {ALL_SERVICES.map((service, index) => {
+          const titleId = `service-${service.id}-title`;
 
-            <Reveal delay={0.06} className="min-w-[min(100%,16rem)] flex-[1_1_22rem]">
-              <p className="lede max-w-[46ch]">{service.description}</p>
-              <ul className="mt-7 grid gap-3.5">
-                {service.points.map((point) => (
-                  <li key={point} className="rule-top pt-3.5 text-base text-ink">
-                    {point}
-                  </li>
-                ))}
-              </ul>
-            </Reveal>
-          </div>
-        ))}
+          return (
+            <section
+              key={service.id}
+              aria-labelledby={titleId}
+              className={clsx(
+                'grid gap-x-gap-lg gap-y-gap-sm md:grid-cols-2',
+                index > 0 && 'rule-top pt-gap-lg',
+              )}
+            >
+              <Reveal>
+                <p className="eyebrow">{EYEBROWS[service.id] ?? 'Service'}</p>
+                <h2 id={titleId} className="mt-gap-xs max-w-[16ch] text-display-sm font-extrabold">
+                  {service.title}
+                </h2>
+              </Reveal>
+
+              <Reveal delay={60}>
+                <p className="lede max-w-[46ch]">{service.description}</p>
+                <ul className="mt-gap-md grid list-none gap-gap-xs">
+                  {service.points.map((point) => (
+                    <li key={point} className="rule-top pt-gap-xs text-body text-ink">
+                      {point}
+                    </li>
+                  ))}
+                </ul>
+              </Reveal>
+            </section>
+          );
+        })}
       </div>
-    </section>
+    </div>
   );
 }

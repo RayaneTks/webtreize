@@ -1,57 +1,99 @@
+import { Counter } from '@/components/motion/Counter';
 import { Reveal } from '@/components/motion/Reveal';
-import { CONTACT_EMAIL, SNAPCHAT_URL } from '@/lib/constants';
+import { Button } from '@/components/ui/Button';
+import { CONTACT_EMAIL } from '@/lib/constants';
 import { AUDIT } from '@/lib/data/site';
 
+/** `AUDIT.delay` est une chaîne éditoriale ; le compteur veut un nombre. */
+const AUDIT_DELAY = Number(AUDIT.delay);
+
+/** Espace insécable : le chiffre et son unité ne se séparent jamais en fin de ligne. */
+const NBSP = '\u00a0';
+
+/**
+ * Bloc sombre de l’accueil — le point de bascule de la page.
+ *
+ * ## Le CTA n’est plus un `mailto:`
+ *
+ * Le bouton principal du site ouvrait le client de messagerie du visiteur
+ * (finding critique « cta-mailto-et-pages-orphelines ») : sur un poste sans
+ * client configuré, il ne se passait rien, et `/contact` — la seule page
+ * capable de qualifier une demande — n’avait aucun lien entrant. Il pointe
+ * désormais vers `/contact`. L’adresse reste affichée juste en dessous, en
+ * second recours, pour qui préfère écrire directement.
+ *
+ * Snapchat était le second appel à l’action de ce bloc, à égalité de rang avec
+ * l’audit (finding « snapchat-unique-reseau ») : un réseau éphémère ne peut pas
+ * être la moitié du point de conversion d’un site d’entreprise. Il redescend au
+ * footer, avec les autres canaux.
+ *
+ * ## Le chiffre
+ *
+ * Le « 48 » se compte à l’entrée dans le viewport (`Counter`, SPEC 4.4). Le
+ * HTML servi porte déjà la valeur finale et le texte restitué reste toujours
+ * « 48 heures ». C’est aussi la seule occurrence du délai sur l’accueil : le
+ * héros ne le répète plus (finding « martelement-48h »).
+ *
+ * ## Fond sombre
+ *
+ * `.on-ink` bascule l’anneau de focus en terre cuite pleine (4,12:1 sur
+ * l’encre) — la terre cuite foncée y serait invisible. Les textes secondaires
+ * sont des voiles d’ivoire : 8,5:1 à 70 %, 6,5:1 à 60 %, tous deux au-dessus
+ * du seuil AA.
+ *
+ * ## Accent
+ *
+ * Aucun aplat de terre cuite : le bouton `inverse` est ivoire sur encre.
+ */
 export function AuditSection() {
   return (
     <section
       id="audit"
-      className="bg-ink-deep py-[clamp(5.25rem,12vw,11rem)] text-center text-canvas"
       aria-labelledby="audit-title"
+      className="on-ink bg-ink py-section-lg text-center text-canvas"
     >
       <div className="site-container">
         <Reveal>
-          <p className="text-[0.78rem] font-semibold uppercase tracking-[0.1em] text-canvas/55">
-            {AUDIT.eyebrow}
-          </p>
+          <p className="text-label font-semibold uppercase text-canvas/70">{AUDIT.eyebrow}</p>
           <h2
             id="audit-title"
-            className="mx-auto mt-[clamp(1.125rem,2.4vw,1.75rem)] max-w-[20ch] text-display-lg font-extrabold text-canvas"
+            className="mx-auto mt-gap-sm max-w-[20ch] text-display-lg font-extrabold text-canvas"
           >
             {AUDIT.title}
           </h2>
         </Reveal>
 
-        <Reveal delay={0.06}>
-          <p className="mx-auto mt-[clamp(1.375rem,2.6vw,2rem)] max-w-[54ch] text-[clamp(1.03125rem,1.35vw,1.21875rem)] leading-[1.7] text-canvas/70">
-            {AUDIT.body}
-          </p>
+        <Reveal delay={60}>
+          <p className="mx-auto mt-gap-sm max-w-[54ch] text-body-lg text-canvas/70">{AUDIT.body}</p>
         </Reveal>
 
-        <Reveal delay={0.1}>
-          <p className="mt-[clamp(1.75rem,3.4vw,2.75rem)] font-serif text-[clamp(3.25rem,9vw,7.75rem)] font-light leading-none tracking-[-0.03em] text-canvas">
-            {AUDIT.delay}
-            <span className="text-[0.42em] tracking-[0.02em]"> {AUDIT.delayUnit}</span>
+        <Reveal delay={120}>
+          <p
+            className="mt-gap-md font-serif text-display-xl font-light leading-none tracking-tight text-canvas"
+          >
+            <Counter to={AUDIT_DELAY} />
+            <span className="text-title font-sans font-semibold tracking-normal">
+              {NBSP}
+              {AUDIT.delayUnit}
+            </span>
           </p>
-          <p className="mt-2.5 text-[0.90625rem] text-canvas/55">{AUDIT.note}</p>
+          <p className="mt-gap-xs text-note text-canvas/60">{AUDIT.note}</p>
         </Reveal>
 
-        <Reveal delay={0.14}>
-          <div className="mt-[clamp(2rem,4vw,3.25rem)] flex flex-wrap items-center justify-center gap-x-7 gap-y-3.5">
-            <a href={`mailto:${CONTACT_EMAIL}`} className="btn-primary-inverse">
+        <Reveal delay={180}>
+          <div className="mt-gap-md">
+            <Button href="/contact" variant="inverse" arrow>
               Demander mon audit
-            </a>
-            <a
-              href={SNAPCHAT_URL}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex h-[3.375rem] items-center text-[1.03125rem] font-semibold text-canvas/80 transition-colors hover:text-white"
-            >
-              ou par Snapchat&nbsp;→
-            </a>
+            </Button>
           </div>
-          <p className="mt-[clamp(1.625rem,3vw,2.375rem)] text-[0.90625rem] text-canvas/50">
-            {CONTACT_EMAIL} · Marseille &amp; PACA · lun–ven 9h–18h
+          <p className="mt-gap-md text-note text-canvas/60">
+            Ou écrivez-nous directement&#8239;:{' '}
+            <a href={`mailto:${CONTACT_EMAIL}`} className="link-draw font-semibold text-canvas">
+              {CONTACT_EMAIL}
+            </a>
+          </p>
+          <p className="mt-gap-xs text-note text-canvas/60">
+            Marseille, Provence-Alpes-Côte d’Azur · du lundi au vendredi, 9&#160;h – 18&#160;h
           </p>
         </Reveal>
       </div>

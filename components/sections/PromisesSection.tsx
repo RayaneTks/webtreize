@@ -1,26 +1,47 @@
 import { Reveal } from '@/components/motion/Reveal';
 import { PROMISES } from '@/lib/data/site';
 
+/**
+ * Les trois engagements — composant serveur.
+ *
+ * ## Pourquoi une grille et non `flex-wrap`
+ *
+ * `flex flex-wrap` + `flex-[1_1_16.25rem]` faisait absorber toute la largeur
+ * restante par le dernier élément renvoyé à la ligne : à 900 px, les filets
+ * mesuraient 393 / 393 / 821 px, à 768 px 329 / 329 / 689 px (finding critique
+ * « flexwrap-orphelin-filet-pleine-largeur »). Le filet est précisément
+ * l’élément par lequel la charte marque le soin : un filet deux fois trop long
+ * est un accident visible.
+ *
+ * Colonnes explicites, donc : une jusqu’à `md`, trois au-delà. Vérifié à 360,
+ * 768, 900, 1024 et 1440 px — trois filets de largeur rigoureusement égale à
+ * chacun de ces paliers, jamais d’orphelin.
+ *
+ * ## Accent
+ *
+ * Aucun. Avec le point du logotype du header collant, un sur trois.
+ */
 export function PromisesSection() {
   return (
-    <section id="promesses" className="section-pad">
+    <section id="promesses" aria-labelledby="promesses-title" className="section-pad">
       <div className="site-container">
         <Reveal>
-          <h2 className="mx-auto max-w-[22ch] text-center text-display-md font-extrabold">
-            Trois choses qu&apos;on écrit noir sur blanc.
+          <h2
+            id="promesses-title"
+            className="mx-auto max-w-[22ch] text-center text-display-md font-extrabold"
+          >
+            Trois choses que nous écrivons noir sur blanc.
           </h2>
         </Reveal>
 
-        <div className="mt-[clamp(2.75rem,6vw,5.375rem)] flex flex-wrap gap-[clamp(1.75rem,4vw,3.5rem)]">
+        <ul className="mt-gap-lg grid list-none gap-gap-md md:grid-cols-3">
           {PROMISES.map((item, index) => (
-            <Reveal key={item.title} delay={index * 0.06} className="flex-[1_1_16.25rem]">
-              <div className="rule-top">
-                <h3 className="text-xl font-bold tracking-[-0.025em]">{item.title}</h3>
-                <p className="mt-3 text-base leading-[1.7] text-muted">{item.body}</p>
-              </div>
+            <Reveal key={item.title} as="li" delay={index * 60} className="rule-top">
+              <h3 className="text-title-sm font-bold">{item.title}</h3>
+              <p className="mt-gap-xs text-body text-ink-muted">{item.body}</p>
             </Reveal>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   );
