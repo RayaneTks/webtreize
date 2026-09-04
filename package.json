@@ -2,7 +2,7 @@
   "name": "webtreize",
   "version": "1.0.0",
   "private": true,
-  "description": "WebTreize — Agence digitale à Marseille (13). Votre activité prise au sérieux : sites, visibilité, SEO, apps et outils sur mesure.",
+  "description": "WebTreize — studio digital à Marseille (13). Sites sur mesure, visibilité locale, fiche Google et outils métier.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -12,12 +12,13 @@
   },
   "keywords": [
     "nextjs",
-    "agence digitale",
+    "studio digital",
     "site vitrine",
     "webtreize",
     "marseille",
-    "seo",
-    "creation site web"
+    "referencement local",
+    "creation site web",
+    "seo marseille"
   ],
   "author": "WebTreize",
   "license": "MIT",
