@@ -1,26 +1,52 @@
-'use client';
-
-import { motion, useReducedMotion, type HTMLMotionProps } from 'motion/react';
 import { cn } from '@/lib/utils';
 
-type RevealProps = HTMLMotionProps<'div'> & {
+/** Au-delà de ce seuil, l’entrée d’un bloc cesse d’être un décalage et devient une attente. */
+const MAX_DELAY = 300;
+
+/** Le décalage se lit sur une grille de 60 ms — cinq crans, pas un de plus. */
+const DELAY_STEP = 60;
+
+type RevealProps = {
+  children: React.ReactNode;
+  /** Décalage d’entrée en millisecondes. Arrondi au multiple de 60, plafonné à 300. */
   delay?: number;
-  y?: number;
+  /** Balise rendue. `li` sert aux listes, dont le modèle de contenu refuse les `div`. */
+  as?: 'div' | 'li' | 'section' | 'p';
+  className?: string;
 };
 
-export function Reveal({ children, className, delay = 0, y = 24, ...props }: RevealProps) {
-  const reduce = useReducedMotion();
+function normalizeDelay(delay: number): number {
+  if (!Number.isFinite(delay) || delay <= 0) return 0;
+  return Math.min(Math.round(delay / DELAY_STEP) * DELAY_STEP, MAX_DELAY);
+}
+
+/**
+ * Apparition d’un bloc à son entrée dans le viewport.
+ *
+ * Composant **serveur** : il n’importe rien de `motion/react` et ne rend aucun
+ * masquage. Le HTML servi contient le contenu visible — ni `opacity: 0`, ni
+ * `visibility: hidden`. C’est la condition pour que le site existe sans
+ * JavaScript et pour que le titre du héros soit peint immédiatement.
+ *
+ * Le masquage n’existe que sous « html.js » (app/globals.css, section
+ * « Mouvement piloté par attribut »), classe posée avant la première peinture
+ * par le script inline du <head>. L’attribut `data-revealed` est posé par
+ * `RevealObserver`, monté une seule fois dans `ClientShell`.
+ */
+export function Reveal({ children, delay = 0, as: Tag = 'div', className }: RevealProps) {
+  const revealDelay = normalizeDelay(delay);
 
   return (
-    <motion.div
-      initial={reduce ? false : { opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.65, delay, ease: [0.23, 1, 0.32, 1] }}
+    <Tag
+      data-reveal=""
       className={cn(className)}
-      {...props}
+      style={
+        revealDelay > 0
+          ? ({ '--reveal-delay': `${revealDelay}ms` } as React.CSSProperties)
+          : undefined
+      }
     >
       {children}
-    </motion.div>
+    </Tag>
   );
 }

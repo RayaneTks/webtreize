@@ -3,34 +3,47 @@
 import { useCallback } from 'react';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 
-const NAVBAR_OFFSET = 76;
-
+/**
+ * Défilement vers une ancre du document courant.
+ *
+ * Le décalage du header collant n’est plus recalculé ici. `app/globals.css`
+ * pose `scroll-margin-top: calc(var(--header-height) + 1rem)` sur tout élément
+ * porteur d’un `id` : `scrollIntoView` le respecte, exactement comme le
+ * navigateur le fait sur un `href="#ancre"` ordinaire. La constante 76 qui
+ * doublait le jeton — et le `getBoundingClientRect` qu’elle imposait à chaque
+ * appel — ont disparu ; une seule valeur gouverne désormais le décalage, celle
+ * du socle.
+ *
+ * Ce hook ne sert plus qu’aux ancres écrites dans un composant déjà client. Un
+ * simple `<a href="#audit">` obtient le même résultat sans une ligne de
+ * JavaScript : `scroll-behavior: smooth` et `scroll-padding-top` sont déclarés
+ * sur `html`, et la requête média « moins d’animations » y bascule seule en
+ * défilement instantané.
+ */
 export function useSmoothScroll() {
   const prefersReducedMotion = usePrefersReducedMotion();
 
-  return useCallback((e: React.MouseEvent, href: string) => {
-    if (!href.startsWith('#')) return;
+  return useCallback(
+    (event: React.MouseEvent, href: string) => {
+      if (!href.startsWith('#')) return;
 
-    e.preventDefault();
-    const id = href.slice(1);
-    const element = document.getElementById(id);
+      // Cible absente : on laisse le navigateur faire ce qu’il sait faire du
+      // lien, plutôt que d’annuler la navigation pour ne rien exécuter.
+      const element = document.getElementById(href.slice(1));
+      if (!element) return;
 
-    if (element) {
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.scrollY - NAVBAR_OFFSET;
-
-      window.scrollTo({
-        top: offsetPosition,
+      event.preventDefault();
+      element.scrollIntoView({
         behavior: prefersReducedMotion ? 'auto' : 'smooth',
+        block: 'start',
       });
 
       try {
         window.history.pushState(null, '', href);
       } catch {
-        // Silencieux : erreur possible en mode preview restreint (iframe)
+        // Silencieux : `pushState` échoue dans une prévisualisation en bac à sable.
       }
-    }
-  }, [prefersReducedMotion]);
+    },
+    [prefersReducedMotion],
+  );
 }
-
-export { NAVBAR_OFFSET };
