@@ -3,11 +3,18 @@ import { test, expect } from '@playwright/test';
 /**
  * Le mouvement ne doit jamais pouvoir masquer ni fausser du contenu.
  *
- * Ces trois cas ont tous été des défauts réels du site : un titre effacé par un
- * `clip-path` dont l’animation ne démarrait pas, et un compteur bloqué sur « 0 »
- * tant que personne n’avait défilé jusqu’à lui. Un chiffre faux sur le bloc de
- * conversion coûte plus qu’une animation manquée : le repos d’un composant animé
- * est toujours son état final, jamais son état de départ.
+ * Deux défauts réels du site sont à l’origine de ce fichier : un titre effacé
+ * par un `clip-path` dont l’animation ne démarrait pas, et un compteur bloqué
+ * sur « 0 » tant que personne n’avait défilé jusqu’à lui. La règle qui en est
+ * sortie : le repos d’un composant animé est toujours son état final, jamais son
+ * état de départ.
+ *
+ * S’y ajoute une faille propre aux animations pilotées par le défilement,
+ * mesurée dans le moteur : le bloc `prefers-reduced-motion: reduce` de
+ * `globals.css` force `animation-duration: 0.01ms !important`, ce qui **ne les
+ * neutralise pas** — leur progression vient du scroll, pas du temps. Elles sont
+ * donc enveloppées dans `@media (prefers-reduced-motion: no-preference)`, et
+ * c’est cette enveloppe que les tests ci-dessous vérifient.
  */
 test.describe('Mouvement — dégradation', () => {
   test('le titre du héros reste visible quand toute animation est coupée', async ({ page }) => {
@@ -30,32 +37,62 @@ test.describe('Mouvement — dégradation', () => {
     expect(clip).toBe('none');
   });
 
-  test('le compteur affiche la valeur finale tant qu’il n’est pas atteint', async ({ page }) => {
+  test('la fiche d’audit porte son contenu, quel que soit le défilement', async ({ page }) => {
     await page.goto('/');
-    await page.waitForTimeout(1500);
 
-    // Le visiteur n’a pas défilé : la section est hors écran, la valeur doit être juste.
-    const digits = page.locator('#audit [aria-hidden="true"]').first();
-    await expect(digits).toHaveText('48');
+    // Le visiteur n’a pas encore défilé : le document doit déjà être complet.
+    const sheet = page.locator('.brief__sheet');
+    await expect(sheet).toContainText('48');
+    await expect(sheet).toContainText('heures');
+    await expect(sheet).toContainText('Ce que Google montre de vous');
+    await expect(sheet).toContainText('Ce que votre site ne dit pas');
+    await expect(sheet).toContainText('Ce qu’il faut corriger, et dans quel ordre');
   });
 
-  test('le compteur se déroule puis se fige sur la valeur finale', async ({ page }) => {
+  test('la fiche ne se transforme pas sous prefers-reduced-motion', async ({ page }) => {
+    // Le garde-fou historique — `animation-duration: 0.01ms !important` — est sans
+    // effet sur une animation pilotée par le défilement. C’est l’enveloppe
+    // `@media (prefers-reduced-motion: no-preference)` qui protège, et c’est elle
+    // que ce test verrouille : sans elle, la feuille resterait décalée et
+    // rétrécie chez un visiteur qui a demandé moins d’animations.
+    await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('/');
     await page.locator('#audit').scrollIntoViewIfNeeded();
+    await page.waitForTimeout(400);
 
-    const digits = page.locator('#audit [aria-hidden="true"]').first();
-    await expect(digits).toHaveText('48', { timeout: 4000 });
+    const transform = await page
+      .locator('.brief__stack')
+      .evaluate((el) => getComputedStyle(el).transform);
+    expect(transform).toBe('none');
 
-    // Le texte restitué aux lecteurs d’écran ne dépend jamais de l’animation.
-    await expect(page.locator('#audit .sr-only').first()).toHaveText('48');
+    await expect(page.locator('.brief__sheet')).toBeVisible();
   });
 
-  test('à l’impression, aucune valeur intermédiaire ni contenu masqué', async ({ page }) => {
+  test('à l’impression, la fiche est posée à plat et le titre visible', async ({ page }) => {
     await page.goto('/');
     await page.emulateMedia({ media: 'print' });
-    await page.waitForTimeout(600);
+    await page.waitForTimeout(400);
 
-    await expect(page.locator('#audit [aria-hidden="true"]').first()).toHaveText('48');
     await expect(page.locator('h1#hero-title')).toBeVisible();
+    await expect(page.locator('.brief__sheet')).toContainText('48');
+  });
+
+  test('le pli des filets ne masque jamais de contenu', async ({ page }) => {
+    await page.goto('/');
+
+    // Les parois du pli sont des pseudo-éléments décoratifs de 1 px : elles ne
+    // portent rien, n’interceptent pas le pointeur, et ne changent pas la mise
+    // en page. On vérifie que le contenu porté par les blocs à filet est bien là.
+    const rules = page.locator('.rule-top');
+    expect(await rules.count()).toBeGreaterThan(0);
+
+    const first = rules.first();
+    await first.scrollIntoViewIfNeeded();
+    await expect(first).toBeVisible();
+
+    const events = await first.evaluate(
+      (el) => getComputedStyle(el, '::before').pointerEvents,
+    );
+    expect(events).toBe('none');
   });
 });

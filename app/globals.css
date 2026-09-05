@@ -131,9 +131,46 @@
     @apply text-body-lg text-ink-muted;
   }
 
-  /* Séparation par filet fin — jamais de carte bordée. */
+  /* Séparation par filet fin — jamais de carte bordée.
+     Le filet n’est plus imprimé sur le papier : il y est pressé. Une seconde
+     paroi, d’un pixel, se pose au-dessus du trait — le côté du creux qui reste
+     dans l’ombre quand la lumière vient d’en haut, comme dans les cinq
+     photographies du site. Rien en dessous : c’est la face éclairée, et le
+     papier y est déjà à sa pleine clarté.
+
+     Le pli est donc soustractif, il n’a que de l’ombre. C’est ce qui le rend
+     valide sur les cinq fonds : sur `surface #fffdfa`, un reflet ne pourrait
+     monter qu’à `#ffffff`, soit deux à cinq valeurs sur 255 — il ne peindrait
+     littéralement rien, et le blanc pur n’existe pas dans la charte. */
   .rule-top {
-    @apply border-t border-line pt-gap-sm;
+    @apply relative border-t border-line pt-gap-sm;
+  }
+
+  /* La paroi d’ombre du pli. Même encre que le filet — `--color-line`, jamais
+     une autre couleur, jamais un flou, jamais un dégradé : une seconde passe de
+     la même plume, plus légère. */
+  .rule-top::before,
+  .faq-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--color-line);
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
+  /* Le bloc de positionnement est la boîte de padding : la bordure haute occupe
+     −1px → 0, la paroi se pose donc juste au-dessus, à −2px. */
+  .rule-top::before {
+    top: -2px;
+  }
+
+  /* Bordure basse : elle occupe 0 → −1px sous la boîte de padding ; la paroi se
+     pose juste au-dessus, à l’intérieur. */
+  .faq-item::before {
+    bottom: 0;
   }
 
   /* — Micro-interactions — */
@@ -171,11 +208,36 @@
     --focus-ring: var(--color-accent);
   }
 
+  /* — La fiche d’audit —
+     La tranche du papier, et rien de plus. Elle est décalée vers le bas et la
+     droite : le côté opposé à la lumière, qui vient du haut-gauche dans les
+     cinq photographies du site. Trois pixels de sable sur l’encre — plus
+     CLAIRS que le fond, donc une épaisseur et non une ombre portée.
+
+     L’épaisseur est un décalage en pixels réels, jamais une profondeur en
+     `translateZ` : sous une perspective de 1200 px, un `translateZ(-3px)`
+     produit un facteur de 0,9975, c’est-à-dire zéro pixel à cette échelle. */
+  .brief__stack {
+    position: relative;
+  }
+
+  .brief__edge {
+    position: absolute;
+    inset: 0;
+    transform: translate3d(1px, 3px, 0);
+    background: var(--color-sand);
+    pointer-events: none;
+  }
+
+  .brief__sheet {
+    position: relative;
+  }
+
   /* — FAQ : ouverture animée sans une ligne de JavaScript (SPEC 4.4) —
      Les navigateurs sans `::details-content` ignorent ces règles : l’ouverture est
      instantanée, sans aucun défaut visible. */
   .faq-item {
-    @apply border-b border-line py-gap-sm;
+    @apply relative border-b border-line py-gap-sm;
   }
 
   .faq-item > summary {
@@ -311,6 +373,99 @@ html.js [data-plate-image] {
 
 html.js [data-plate-image]:not([data-plate-loaded]) {
   opacity: 0;
+}
+
+/* ==========================================================================
+   Mouvement piloté par le défilement (SPEC 4.6)
+
+   Deux moments seulement : la fiche d’audit et le pli des filets.
+
+   ATTENTION, ET C’EST LA RÈGLE QUI GOUVERNE TOUT CE QUI SUIT.
+   Le bloc `prefers-reduced-motion: reduce` en fin de fichier force
+   `animation-duration: 0.01ms !important`. Cela NE NEUTRALISE PAS une animation
+   pilotée par le défilement : sa progression vient du scroll, pas du temps.
+   Mesuré dans le moteur — à parcours égal, les valeurs sont rigoureusement
+   identiques avec et sans la préférence. Toute animation de cette famille doit
+   donc être enveloppée dans `@media (prefers-reduced-motion: no-preference)` :
+   l’enveloppe se verrouille elle-même, là où un garde-fou écrit plus bas
+   dépendrait de l’ordre des sources et finirait par être déplacé.
+
+   Trois autres règles, pour les mêmes raisons de robustesse :
+   — jamais le raccourci `animation`, qui réinitialise `animation-timeline` et
+     `animation-range` à `auto` ; longhand exclusivement ;
+   — la frise est déclarée sur un élément qui ne se transforme JAMAIS, et
+     consommée par un descendant : mesurer la position d’un élément que
+     l’animation déplace est une boucle de rétroaction ;
+   — l’état extrême ne vit que dans les `@keyframes`, jamais en déclaration
+     autonome. Si l’animation ne démarre pas, c’est l’état de repos qui reste à
+     l’écran, et il doit être présentable. Même doctrine que `line-mask`.
+   ========================================================================== */
+
+/* — La fiche —
+   Une feuille de papier qu’on glisse sur la table : elle arrive un peu à
+   gauche, à peine tournée, un peu plus loin, et vient se poser à plat.
+   `perspective()` est une fonction de `transform`, pas une propriété d’ancêtre :
+   aucun `transform-style: preserve-3d`, donc aucun piège d’aplatissement avec
+   `overflow`, `opacity` ou `filter`. */
+@keyframes brief-set {
+  from {
+    transform: perspective(1200px) translate3d(-1.5rem, 0.5rem, -70px) rotate(-2.5deg);
+  }
+  to {
+    transform: none;
+  }
+}
+
+/* — Le pli —
+   L’état de repos est la déclaration `opacity: 0.3` de la couche `components` :
+   la lumière à 45°. L’animation ne fait que la moduler selon la hauteur du
+   filet dans la fenêtre — creusé quand la lumière rase, effacé quand elle est à
+   pic. Sans support, le pli est là, immobile : la matière ne dépend pas du
+   mouvement. `linear` parce que ce n’est pas une entrée mais une position
+   angulaire de source lumineuse ; une courbe ferait mentir la physique. */
+@keyframes pli-rasant {
+  from {
+    opacity: 0.55;
+    transform: translate3d(0, -1px, 0);
+  }
+  to {
+    opacity: 0.12;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    /* La frise est mesurée sur `.brief`, conteneur en flux qui ne se transforme
+       jamais ; `.brief__stack`, qui bouge, la consomme. */
+    .brief {
+      view-timeline-name: --brief;
+      view-timeline-axis: block;
+    }
+
+    .brief__stack {
+      animation-name: brief-set;
+      animation-timing-function: var(--ease-out);
+      animation-fill-mode: both;
+      animation-timeline: --brief;
+      animation-range: entry 20% entry 100%;
+    }
+
+    .rule-top,
+    .faq-item {
+      view-timeline-name: --pli;
+      view-timeline-axis: block;
+    }
+
+    .rule-top::before,
+    .faq-item::before {
+      animation-name: pli-rasant;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: --pli;
+      animation-range: cover 0% cover 100%;
+    }
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

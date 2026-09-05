@@ -178,12 +178,28 @@ export const PROCESS_STEPS = [
 export const AUDIT = {
   eyebrow: 'Premier pas',
   title: 'Ce qui vous freine, par écrit.',
-  body:
-    'Vous nous parlez de votre activité. Nous regardons votre site et votre fiche Google, puis nous vous renvoyons par écrit ce qui vous freine et dans quel ordre le corriger.',
   delay: '48',
   delayUnit: 'heures',
   note: 'Gratuit, sans engagement. Le délai court les jours ouvrés.',
-} as const;
+  /**
+   * Le contenu du document que le prospect va recevoir.
+   *
+   * Il remplace l’ancien paragraphe : la fiche montre le livrable au lieu de le
+   * décrire. Les deux disaient la même chose — « ce qui vous freine et dans quel
+   * ordre le corriger » — à deux centimètres l’un de l’autre.
+   *
+   * Trois lignes, ni deux ni quatre : la forme du document appartient à la
+   * direction artistique, et le tuple la rend non négociable côté typage.
+   */
+  brief: [
+    'Ce que Google montre de vous',
+    'Ce que votre site ne dit pas',
+    'Ce qu’il faut corriger, et dans quel ordre',
+  ],
+} as const satisfies { readonly brief: readonly [string, string, string] } & Record<
+  string,
+  unknown
+>;
 
 /* -------------------------------------------------------------------------- */
 /* Prestations — page /services                                               */

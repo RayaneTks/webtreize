@@ -3,7 +3,7 @@
 **Direction :** chaleureux plutôt que technique, calme plutôt que bruyant. Beaucoup de vide, une seule
 couleur d’accent, deux familles de caractères. Rien de décoratif.
 
-**Stack :** Next.js 16 · React 19 · Tailwind CSS 3 · Motion
+**Stack :** Next.js 16 · React 19 · Tailwind CSS 3. **Aucune librairie d’animation.**
 
 **Sources de vérité, dans cet ordre :** `docs/charte-graphique.md` (la marque) > ce document
 (le système) > le code. Les jetons vivent dans `tailwind.config.ts` et `app/globals.css` ; aucune
@@ -126,7 +126,7 @@ Réglages posés une fois pour toutes sur `body` :
 
 - `font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1` — crénage et ligatures.
 - `font-variant-numeric: proportional-nums` par défaut ; `tabular-nums` se pose au cas par cas sur
-  les chiffres alignés ou animés (le « 48 » du compteur), pour que la largeur ne tremble pas.
+  les chiffres alignés, pour que la largeur ne tremble pas.
 - `font-size: max(1rem, 16px)` — garde-fou de lisibilité.
 - `text-wrap: balance` sur `h1`–`h4`, `text-wrap: pretty` et `hyphens: auto` sur `p` et `li`
   (le document porte `lang="fr"`, la césure suit donc les règles françaises).
@@ -254,7 +254,7 @@ focus à écrire, et aucun ne peut être livré sans anneau. `--tw-ring-offset-c
 jusqu’à `md`), `.section-pad`.
 
 **Typographie :** `.eyebrow` (label + `ink-faint`), `.eyebrow-accent` (label + `accent-deep`),
-`.lede` (body-lg + `ink-muted`), `.rule-top` (filet haut + `pt-gap-sm`), `.legal-prose`.
+`.lede` (body-lg + `ink-muted`), `.rule-top` (**pli** haut + `pt-gap-sm`), `.legal-prose`.
 
 `.eyebrow-accent` est la variante d’accent de l’étiquette. **Aucune page ne l’emploie aujourd’hui**,
 et c’est délibéré : les quatre étiquettes de `/services` et les trois de `CraftSection` la portaient,
@@ -284,15 +284,14 @@ Les signatures sont fixées par le cahier des charges de la passe « studio ».
 - `Accordion` — `<details>` natif enrichi, aucun état React
 - `Plate` — plaque image, `bg-sand`, rayons `rounded-plate` / `rounded-plate-lg`, fondu piloté par
   le CSS du socle (§ 4.3)
-- `Counter` — seul composant autorisé à importer `motion/react`
 - `Logo` / `LogoLink` / `Monogram` — le point est `accent` sur tous les fonds
 
-Îlots clients autorisés : `ClientShell`, `Header`, `ContactForm`, `Counter`, `Plate`,
+Îlots clients autorisés : `ClientShell`, `Header`, `ContactForm`, `Plate`,
 `RevealObserver`. Tout le reste est serveur.
 
 Une seule implémentation de « moins d’animations » dans tout le dépôt :
-`hooks/usePrefersReducedMotion.ts`. Le `useReducedMotion` de `motion/react` n’est importé nulle
-part — c’est ce qui garantit que `Counter` reste le seul point d’entrée de la librairie.
+`hooks/usePrefersReducedMotion.ts`. Le projet n’a plus aucune dépendance d’animation : `motion`
+a été retiré de `package.json` en même temps que le compteur, et vérifié absent des chunks servis.
 
 **Images sociales.** Les quatre cartes de partage sont composées par le code, pas photographiées :
 `lib/og.tsx` et un `opengraph-image.tsx` par route, en 1200 × 630 via `next/og`. Deux terres cuites
@@ -304,6 +303,40 @@ sur le visuel — le point du logotype et le filet du bas — donc une de moins 
 
 - **Le vide fait le prestige.** Une idée par section. Si c’est serré, on retire du contenu, jamais de
   l’espace.
+### 4.6 · Mouvement piloté par le défilement
+
+Deux moments du site sont pilotés par `animation-timeline` — la fiche d’audit et le pli des filets.
+Aucun autre ne le sera sans que ces quatre règles soient tenues.
+
+1. **Toujours enveloppé dans `@media (prefers-reduced-motion: no-preference)`**, à l’intérieur duquel
+   vient `@supports (animation-timeline: view())`. Le bloc `prefers-reduced-motion: reduce` en fin de
+   `globals.css` force `animation-duration: 0.01ms !important` : cela **ne neutralise pas** une
+   animation pilotée par le défilement, dont la progression vient du scroll et non du temps. Mesuré
+   dans le moteur — à parcours égal, les valeurs sont identiques avec et sans la préférence. Un
+   garde-fou écrit en bas du fichier dépendrait de l’ordre des sources ; l’enveloppe se verrouille
+   elle-même.
+2. **Jamais le raccourci `animation`.** Il réinitialise `animation-timeline` et `animation-range` à
+   `auto`. Longhand uniquement.
+3. **La frise (`view-timeline-name`) est déclarée sur un élément qui ne se transforme jamais**, et
+   consommée par un descendant ou un pseudo-élément. Mesurer la position d’un élément que l’animation
+   déplace est une boucle de rétroaction qu’aucune spécification ne définit.
+4. **L’état extrême ne vit que dans les `@keyframes`**, jamais en déclaration autonome — même règle
+   que `line-mask`. Si l’animation ne démarre pas, c’est l’état de repos qui reste à l’écran, et il
+   doit être présentable. `animation-fill-mode: both` est obligatoire.
+
+**La fiche** (`components/sections/AuditBrief.tsx`) est le seul objet en profondeur du site, une seule
+fois, sur le bloc encre. Elle est posée sur l’encre et nulle part ailleurs : c’est le seul fond où sa
+tranche `sand` est plus **claire** que le fond, donc une épaisseur et non une ombre portée.
+L’épaisseur est un décalage en pixels réels — sous une perspective de 1200 px, un `translateZ(-3px)`
+ne produit aucun pixel visible.
+
+**Le pli** remplace le trait imprimé des filets par un creux : une seconde paroi d’un pixel, au-dessus
+du trait, du côté de l’ombre — la lumière du site vient du haut, comme dans les cinq photographies.
+Il est soustractif, il n’a que de l’ombre : sur `surface #fffdfa`, un reflet ne pourrait monter qu’à
+`#ffffff`, soit deux à cinq valeurs sur 255. **Des plis, pas des traits.**
+
+---
+
 - **Des filets, pas des cadres.** Séparer par un trait fin ou un changement de fond. Pas de cartes
   bordées, pas d’ombres portées, pas de dégradés.
 - **Rien de décoratif.** Un effet qui ne sert pas la lecture est retiré : pas d’icône d’illustration,

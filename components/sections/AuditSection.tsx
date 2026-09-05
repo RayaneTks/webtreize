@@ -1,14 +1,8 @@
-import { Counter } from '@/components/motion/Counter';
 import { Reveal } from '@/components/motion/Reveal';
+import { AuditBrief } from '@/components/sections/AuditBrief';
 import { Button } from '@/components/ui/Button';
 import { CONTACT_EMAIL } from '@/lib/constants';
 import { AUDIT } from '@/lib/data/site';
-
-/** `AUDIT.delay` est une chaîne éditoriale ; le compteur veut un nombre. */
-const AUDIT_DELAY = Number(AUDIT.delay);
-
-/** Espace insécable : le chiffre et son unité ne se séparent jamais en fin de ligne. */
-const NBSP = '\u00a0';
 
 /**
  * Bloc sombre de l’accueil — le point de bascule de la page.
@@ -27,12 +21,17 @@ const NBSP = '\u00a0';
  * être la moitié du point de conversion d’un site d’entreprise. Il redescend au
  * footer, avec les autres canaux.
  *
- * ## Le chiffre
+ * ## La fiche
  *
- * Le « 48 » se compte à l’entrée dans le viewport (`Counter`, SPEC 4.4). Le
- * HTML servi porte déjà la valeur finale et le texte restitué reste toujours
- * « 48 heures ». C’est aussi la seule occurrence du délai sur l’accueil : le
- * héros ne le répète plus (finding « martelement-48h »).
+ * Le paragraphe et le grand chiffre ont été remplacés par le document lui-même
+ * (`AuditBrief`). Ils disaient la même chose que lui — « ce qui vous freine et
+ * dans quel ordre le corriger » — à deux centimètres l’un de l’autre : le
+ * prospect lisait la promesse d’un audit au lieu de voir la feuille qu’il va
+ * recevoir. Le bloc gagne une centaine de pixels et perd deux redites.
+ *
+ * Le délai reste la seule occurrence de « 48 heures » sur l’accueil, le héros ne
+ * le répète plus (finding « martelement-48h »), et il est rendu en dur côté
+ * serveur : cette section n’a plus aucun îlot client.
  *
  * ## Fond sombre
  *
@@ -63,22 +62,13 @@ export function AuditSection() {
           </h2>
         </Reveal>
 
-        <Reveal delay={60}>
-          <p className="mx-auto mt-gap-sm max-w-[54ch] text-body-lg text-canvas/70">{AUDIT.body}</p>
-        </Reveal>
-
-        <Reveal delay={120}>
-          <p
-            className="mt-gap-md font-serif text-display-xl font-light leading-none tracking-tight text-canvas"
-          >
-            <Counter to={AUDIT_DELAY} />
-            <span className="text-title font-sans font-semibold tracking-normal">
-              {NBSP}
-              {AUDIT.delayUnit}
-            </span>
-          </p>
-          <p className="mt-gap-xs text-note text-canvas/60">{AUDIT.note}</p>
-        </Reveal>
+        <AuditBrief
+          delay={AUDIT.delay}
+          delayUnit={AUDIT.delayUnit}
+          lines={AUDIT.brief}
+          className="mt-gap-md"
+        />
+        <p className="mt-gap-sm text-note text-canvas/60">{AUDIT.note}</p>
 
         <Reveal delay={180}>
           <div className="mt-gap-md">
