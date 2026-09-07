@@ -49,7 +49,7 @@ export function CraftSection() {
             >
               <Reveal className={plateFirst ? 'md:order-2' : undefined}>
                 <p className="eyebrow">{block.eyebrow}</p>
-                <h2 id={titleId} className="mt-gap-xs max-w-[18ch] text-display-sm font-extrabold">
+                <h2 id={titleId} className="sweep mt-gap-xs max-w-[18ch] text-display-sm font-extrabold">
                   {block.title}
                 </h2>
                 <p className="lede mt-gap-sm max-w-[46ch]">{block.body}</p>

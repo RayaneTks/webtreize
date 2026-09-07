@@ -198,6 +198,35 @@
     }
   }
 
+  /* — La lumière de l’atelier —
+     Une lueur chaude qui suit le regard, sur la seule section sombre du site.
+     Réservée à l’encre : sur l’ivoire, une lueur chaude serait invisible ou
+     sale. La couleur est la terre cuite de la charte, à 7 % au centre, éteinte
+     à 60 % du rayon — sous le seuil de conscience, comme il se doit.
+
+     Seule la position du dégradé change, une fois par frame : aucune mise en
+     page recalculée, aucune repeinture de texte. La lueur reste sous le contenu
+     (`z-index` négatif dans un conteneur qui isole), n’intercepte rien, et
+     n’existe qu’une fois le pointeur entré. */
+  .lamp {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--dur-long) var(--ease-out);
+    background-image: radial-gradient(
+      42rem 42rem at var(--lamp-x, 50%) var(--lamp-y, 40%),
+      rgba(196, 85, 43, 0.095),
+      rgba(196, 85, 43, 0.04) 34%,
+      transparent 60%
+    );
+  }
+
+  .lamp[data-lit] {
+    opacity: 1;
+  }
+
   /* Soulignement dessiné de gauche à droite. Un filet de 1 px, pas un
      `text-decoration` qui saute d’un état à l’autre. */
   .link-draw {
@@ -439,6 +468,48 @@ html.js [data-plate-image]:not([data-plate-loaded]) {
   }
 }
 
+/* — Le tirage se pose —
+   La plaque du héros arrive un peu plus loin sur la table et légèrement
+   inclinée, puis vient se poser à plat. Même doctrine que la fiche :
+   `perspective()` est une fonction de `transform`, donc aucun ancêtre à
+   modifier ; l’état incliné ne vit que dans le `from`, donc rien n’est appliqué
+   si l’animation ne démarre pas.
+
+   Les valeurs sont trois fois plus douces que celles de la fiche : la plaque
+   fait 1180 px de large, un degré s’y lit autant que trois sur une carte de
+   384 px. Au-delà, le keystone devient un effet, et l’image du studio devient
+   une diapositive. */
+@keyframes tirage-pose {
+  from {
+    transform: perspective(2200px) translate3d(0, 0.75rem, -55px) rotateX(1.1deg);
+  }
+  to {
+    transform: none;
+  }
+}
+
+/* — Le titre se découvre —
+   Un grand titre n’apparaît pas d’un bloc : il se découvre du haut vers le bas,
+   au rythme du défilement, comme une ligne composée qu’on tire de la casse.
+
+   Même doctrine que partout : l’état découpé ne vit que dans le `from`. Si
+   l’animation ne démarre pas, aucun découpage n’est appliqué et le titre est
+   entier. La course se termine à `entry 100%` — dès que le titre est
+   entièrement entré dans la fenêtre, il est entièrement lisible, quoi qu’il
+   arrive ensuite.
+
+   L’opacité reste à 1 d’un bout à l’autre : un titre est un repère de structure
+   pour les moteurs comme pour les lecteurs d’écran, il ne clignote pas. Les
+   marges négatives laissent passer jambages et accents. */
+@keyframes titre-decouvre {
+  from {
+    clip-path: inset(0 -0.12em 100% -0.12em);
+  }
+  to {
+    clip-path: inset(-0.32em -0.12em -0.32em -0.12em);
+  }
+}
+
 /* — Le pli —
    L’état de repos est la déclaration `opacity: 0.3` de la couche `components` :
    la lumière à 45°. L’animation ne fait que la moduler selon la hauteur du
@@ -472,6 +543,37 @@ html.js [data-plate-image]:not([data-plate-loaded]) {
       animation-fill-mode: both;
       animation-timeline: --brief;
       animation-range: entry 20% entry 100%;
+    }
+
+    /* La frise est portée par le conteneur en flux, jamais par la plaque qui
+       se transforme : mesurer un élément que l’animation déplace serait une
+       boucle de rétroaction. */
+    .tirage {
+      view-timeline-name: --tirage;
+      view-timeline-axis: block;
+    }
+
+    .tirage > * {
+      animation-name: tirage-pose;
+      animation-timing-function: var(--ease-out);
+      animation-fill-mode: both;
+      animation-timeline: --tirage;
+      animation-range: entry 25% cover 22%;
+    }
+
+    /* La frise est portée par le conteneur du titre, pas par le titre lui-même :
+       le découpage ne déplace rien, mais la règle vaut d’être tenue partout. */
+    .sweep {
+      view-timeline-name: --sweep;
+      view-timeline-axis: block;
+      animation-name: titre-decouvre;
+      animation-timing-function: var(--ease-out);
+      animation-fill-mode: both;
+      animation-timeline: --sweep;
+      /* Toute la traversée d’entrée : le titre finit de se découvrir au moment
+         exact où il est entièrement dans la fenêtre. Se terminer plus tard
+         laisserait un titre visible et pourtant coupé. */
+      animation-range: entry 0% entry 100%;
     }
 
     .rule-top,

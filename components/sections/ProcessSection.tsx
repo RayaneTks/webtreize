@@ -35,7 +35,7 @@ export function ProcessSection() {
       <div className="site-container">
         <Reveal>
           <p className="eyebrow">Comment ça se passe</p>
-          <h2 id="methode-title" className="mt-gap-xs max-w-[20ch] text-display-md font-extrabold">
+          <h2 id="methode-title" className="sweep mt-gap-xs max-w-[20ch] text-display-md font-extrabold">
             Quatre temps, sans mauvaise surprise.
           </h2>
         </Reveal>

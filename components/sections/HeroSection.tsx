@@ -59,7 +59,7 @@ export function HeroSection() {
 
       {/* Plaque principale — image LCP de la page d’accueil. */}
       <Reveal delay={180}>
-        <div className="plate-container mt-gap-lg">
+        <div className="plate-container tirage mt-gap-lg">
           <Plate
             src="/images/hero-atelier.jpg"
             alt="Le comptoir en bois clair d’une boutique marseillaise avant l’ouverture, dans la lumière du matin qui entre par la vitrine."

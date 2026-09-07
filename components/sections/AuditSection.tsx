@@ -1,3 +1,4 @@
+import { Lamp } from '@/components/motion/Lamp';
 import { Reveal } from '@/components/motion/Reveal';
 import { AuditBrief } from '@/components/sections/AuditBrief';
 import { Button } from '@/components/ui/Button';
@@ -49,14 +50,16 @@ export function AuditSection() {
     <section
       id="audit"
       aria-labelledby="audit-title"
-      className="on-ink bg-ink py-section-lg text-center text-canvas"
+      className="on-ink relative isolate overflow-hidden bg-ink py-section-lg text-center text-canvas"
     >
+      <Lamp />
+
       <div className="site-container">
         <Reveal>
           <p className="text-label font-semibold uppercase text-canvas/70">{AUDIT.eyebrow}</p>
           <h2
             id="audit-title"
-            className="mx-auto mt-gap-sm max-w-[20ch] text-display-lg font-extrabold text-canvas"
+            className="sweep mx-auto mt-gap-sm max-w-[20ch] text-display-lg font-extrabold text-canvas"
           >
             {AUDIT.title}
           </h2>

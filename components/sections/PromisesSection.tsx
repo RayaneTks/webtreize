@@ -28,7 +28,7 @@ export function PromisesSection() {
         <Reveal>
           <h2
             id="promesses-title"
-            className="mx-auto max-w-[22ch] text-center text-display-md font-extrabold"
+            className="sweep mx-auto max-w-[22ch] text-center text-display-md font-extrabold"
           >
             Trois choses que nous écrivons noir sur blanc.
           </h2>

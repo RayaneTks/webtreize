@@ -43,7 +43,7 @@ export function WorkSection() {
           <p className="eyebrow">Nos réalisations</p>
           <h2
             id="realisations-title"
-            className="mt-gap-xs max-w-[20ch] text-display-md font-extrabold"
+            className="sweep mt-gap-xs max-w-[20ch] text-display-md font-extrabold"
           >
             Des sites et des outils qui tournent, aujourd’hui.
           </h2>

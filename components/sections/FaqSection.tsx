@@ -31,7 +31,7 @@ export function FaqSection() {
     <section id="questions" aria-labelledby="questions-title" className="section-pad">
       <div className="site-container">
         <Reveal>
-          <h2 id="questions-title" className="max-w-[16ch] text-display-sm font-extrabold">
+          <h2 id="questions-title" className="sweep max-w-[16ch] text-display-sm font-extrabold">
             Questions fréquentes
           </h2>
         </Reveal>
