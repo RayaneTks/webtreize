@@ -4,11 +4,15 @@ import { Plate } from '@/components/ui/Plate';
 import {
   REALISATIONS_A_LA_UNE,
   REALISATIONS_HREF,
+  type Ecran,
   type Realisation,
 } from '@/lib/data/realisations';
 
-/** Largeurs servies pour les captures — deux colonnes à partir de `md`. */
-const WORK_SIZES = '(min-width: 1120px) 520px, (min-width: 700px) 46vw, 100vw';
+/** L’écran d’ouverture occupe une colonne sur deux à partir de `md`. */
+const MAIN_SIZES = '(min-width: 1120px) 520px, (min-width: 700px) 46vw, 100vw';
+
+/** Les deux écrans de la bande sont deux fois plus étroits. */
+const STRIP_SIZES = '(min-width: 1120px) 254px, (min-width: 700px) 23vw, 50vw';
 
 /**
  * « Ce que nous avons livré » — l’aperçu des réalisations sur l’accueil.
@@ -18,22 +22,22 @@ const WORK_SIZES = '(min-width: 1120px) 520px, (min-width: 700px) 46vw, 100vw';
  * Le site affirmait son sérieux sans jamais rien montrer : aucune réalisation,
  * aucun nom, aucune capture (finding « preuve-absente-plan-honnete »). C’était
  * le dernier trou de crédibilité. Il se comble avec des projets réellement en
- * ligne, dont l’URL est cliquable : le visiteur peut vérifier lui-même, ce qui
- * vaut infiniment plus qu’un témoignage recopié.
+ * ligne, dont l’URL est cliquable : le visiteur vérifie lui-même, ce qui vaut
+ * infiniment plus qu’un témoignage recopié.
  *
- * ## Ce qui n’y figure pas, et pourquoi
+ * ## Peu de projets, montrés en profondeur
+ *
+ * Deux études de cas à trois écrans plutôt que six vignettes. Ce qui convainc un
+ * prospect, ce n’est pas la longueur du portfolio, c’est de voir un produit
+ * fonctionner : l’accueil, la carte, le téléphone. Et un projet dont on n’est
+ * pas fier tire tout le reste vers le bas — on le retire.
+ *
+ * ## Ce qui n’y figure pas
  *
  * Aucun chiffre de résultat. Pas de « +40 % de commandes », pas de note sur
- * cinq, pas de logo client posé en bandeau. Le studio ne mesure pas encore ces
- * chiffres, et un résultat invérifiable sur la page qui sert à prouver le
- * sérieux détruit exactement ce qu’elle cherche à établir. Chaque ligne dit ce
- * qui a été **construit**, un fait que la capture confirme à l’écran.
- *
- * ## Mise en page
- *
- * Même grammaire que `CraftSection` : grille à colonnes explicites, alternance
- * à partir de `md`, ordre du DOM toujours texte puis image. Aucune carte
- * bordée — un filet et un changement de fond suffisent, comme partout ailleurs.
+ * cinq, pas de logo client posé en bandeau. Les seuls chiffres cités sont ceux
+ * que le site affiche lui-même — les 108 références du catalogue Nuréa se
+ * vérifient en un clic.
  */
 export function WorkSection() {
   return (
@@ -48,7 +52,7 @@ export function WorkSection() {
             Des sites et des outils qui tournent, aujourd’hui.
           </h2>
           <p className="lede mt-gap-sm max-w-[52ch]">
-            Trois commerces marseillais, trois problèmes différents. Les adresses sont publiques,
+            Deux commerces marseillais, deux problèmes différents. Les adresses sont publiques,
             allez voir par vous-même.
           </p>
         </Reveal>
@@ -62,7 +66,7 @@ export function WorkSection() {
         <Reveal delay={60}>
           <div className="mt-gap-lg">
             <Button href={REALISATIONS_HREF} variant="quiet" arrow>
-              Voir toutes les réalisations
+              Voir le détail des réalisations
             </Button>
           </div>
         </Reveal>
@@ -72,9 +76,10 @@ export function WorkSection() {
 }
 
 /**
- * Une réalisation. Exportée : la page `/realisations` rend la liste complète
- * avec exactement la même figure, pour que l’aperçu et la page ne divergent
- * jamais.
+ * Une réalisation : un écran d’ouverture, puis deux écrans en bande.
+ *
+ * Exportée — la page `/realisations` rend exactement la même figure, pour que
+ * l’aperçu et la page ne divergent jamais.
  */
 export function WorkEntry({
   projet,
@@ -120,32 +125,61 @@ export function WorkEntry({
       </Reveal>
 
       <Reveal delay={60} className={plateFirst ? 'md:order-1' : undefined}>
-        {projet.url ? (
-          <a
-            href={projet.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="work-plate"
-            aria-label={`Ouvrir le site ${projet.nom} (nouvelle fenêtre)`}
-          >
-            <Plate
-              src={projet.image}
-              alt={projet.alt}
-              ratio="16/9"
-              sizes={WORK_SIZES}
-              priority={priority}
-            />
-          </a>
-        ) : (
-          <Plate
-            src={projet.image}
-            alt={projet.alt}
-            ratio="16/9"
-            sizes={WORK_SIZES}
+        <div className="grid gap-gap-xs">
+          <MainScreen
+            ecran={projet.ecranPrincipal}
+            url={projet.url}
+            nom={projet.nom}
             priority={priority}
           />
-        )}
+
+          {/* Les deux écrans de détail ne portent pas de lien : un seul point
+              d’entrée par projet suffit, et trois liens vers la même cible
+              encombrent la navigation au clavier pour rien. */}
+          <div className="grid grid-cols-2 gap-gap-xs">
+            {projet.ecrans.map((ecran) => (
+              <Plate
+                key={ecran.src}
+                src={ecran.src}
+                alt={ecran.alt}
+                ratio="4/3"
+                sizes={STRIP_SIZES}
+              />
+            ))}
+          </div>
+        </div>
       </Reveal>
     </article>
+  );
+}
+
+/** L’écran d’ouverture, cliquable quand le projet est en ligne. */
+function MainScreen({
+  ecran,
+  url,
+  nom,
+  priority,
+}: {
+  ecran: Ecran;
+  url?: string;
+  nom: string;
+  priority: boolean;
+}) {
+  const plate = (
+    <Plate src={ecran.src} alt={ecran.alt} ratio="16/9" sizes={MAIN_SIZES} priority={priority} />
+  );
+
+  if (!url) return plate;
+
+  return (
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="work-plate"
+      aria-label={`Ouvrir le site ${nom} (nouvelle fenêtre)`}
+    >
+      {plate}
+    </a>
   );
 }

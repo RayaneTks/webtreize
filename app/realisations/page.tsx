@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { PageShell } from '@/components/layout/PageShell';
 import { PageCtaBand } from '@/components/sections/PageCtaBand';
-import { Reveal } from '@/components/motion/Reveal';
 import { WorkEntry } from '@/components/sections/WorkSection';
 import { REALISATIONS } from '@/lib/data/realisations';
 import { breadcrumbJsonLd, pageMetadata, webPageJsonLd } from '@/lib/seo';
@@ -33,7 +32,7 @@ export default function RealisationsPage() {
       <PageShell
         eyebrow="Réalisations"
         title="Ce que nous avons livré."
-        description="Des commerces de Marseille, des besoins différents, des outils qui tournent tous les jours. Chaque adresse est publique : ouvrez-les."
+        description="Deux commerces de Marseille, deux besoins différents, des outils qui tournent tous les jours. Chaque adresse est publique : ouvrez-les."
       >
         <section className="section-pad border-t border-line bg-surface">
           <div className="site-container grid gap-gap-xl">
@@ -46,23 +45,6 @@ export default function RealisationsPage() {
                 priority={index === 0}
               />
             ))}
-          </div>
-        </section>
-
-        <section className="section-pad">
-          <div className="site-container">
-            <Reveal>
-              <p className="eyebrow">Ce que vous ne verrez pas ici</p>
-              <h2 className="mt-gap-xs max-w-[24ch] text-display-sm font-extrabold">
-                Aucun chiffre que nous ne pouvons pas prouver.
-              </h2>
-              <p className="lede mt-gap-sm max-w-[52ch]">
-                Pas de «&#8239;+40&#8239;% de commandes&#8239;», pas de note sur cinq, pas de logo
-                posé en bandeau. Nous préférons vous donner les adresses et vous laisser juger. Le
-                jour où un client acceptera de communiquer ses chiffres réels, ils arriveront ici
-                avec son nom.
-              </p>
-            </Reveal>
           </div>
         </section>
 
