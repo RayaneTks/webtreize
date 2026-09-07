@@ -10,8 +10,8 @@ import { test, expect, type APIRequestContext } from '@playwright/test';
  * du cahier des charges autrement qu’à l’œil.
  */
 
-/** Les quatre routes indexables, dans l’ordre du sitemap. */
-const ROUTES = ['/', '/services', '/about', '/contact'] as const;
+/** Les routes indexables, dans l’ordre du sitemap. */
+const ROUTES = ['/', '/services', '/realisations', '/about', '/contact'] as const;
 
 /** Le fragment de `<head>` porteur du canonical. */
 const CANONICAL = /<link[^>]+rel="canonical"[^>]+href="([^"]+)"/;
@@ -125,7 +125,7 @@ test.describe('HTML servi — sans JavaScript', () => {
     expect(robots).toMatch(/Sitemap:\s*https?:\/\/\S+\/sitemap\.xml/);
   });
 
-  test('le sitemap déclare les quatre routes indexables', async ({ request }) => {
+  test('le sitemap déclare toutes les routes indexables, et rien d’autre', async ({ request }) => {
     const response = await request.get('/sitemap.xml');
     expect(response.status()).toBe(200);
 

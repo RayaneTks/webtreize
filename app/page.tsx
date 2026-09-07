@@ -8,6 +8,7 @@ import { FaqSection } from '@/components/sections/FaqSection';
 import { HeroSection } from '@/components/sections/HeroSection';
 import { ProcessSection } from '@/components/sections/ProcessSection';
 import { PromisesSection } from '@/components/sections/PromisesSection';
+import { WorkSection } from '@/components/sections/WorkSection';
 import { FAQ_ITEMS } from '@/lib/data/faq';
 import {
   breadcrumbJsonLd,
@@ -54,6 +55,7 @@ export default function HomePage() {
         <HeroSection />
         <ApproachSection />
         <CraftSection />
+        <WorkSection />
         <PromisesSection />
         <ProcessSection />
         <AuditSection />

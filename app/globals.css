@@ -175,6 +175,29 @@
 
   /* — Micro-interactions — */
 
+  /* Une capture de réalisation est cliquable : elle ouvre le site en ligne.
+     Au survol, la photographie se rapproche très légèrement — le geste d’un
+     tirage qu’on approche de l’œil, pas un effet d’interface. Aucun
+     soulèvement : il faudrait une ombre portée pour le lire, et la charte
+     l’interdit. Aucun changement de fond, aucun cadre : seule l’image bouge.
+
+     `@media (hover: hover)` : sur un écran tactile il n’y a pas de survol, et
+     un état laissé collé après un appui est un défaut. */
+  .work-plate {
+    display: block;
+  }
+
+  .work-plate img {
+    transition: transform var(--dur-long) var(--ease-out);
+  }
+
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .work-plate:hover img,
+    .work-plate:focus-visible img {
+      transform: scale(1.035);
+    }
+  }
+
   /* Soulignement dessiné de gauche à droite. Un filet de 1 px, pas un
      `text-decoration` qui saute d’un état à l’autre. */
   .link-draw {

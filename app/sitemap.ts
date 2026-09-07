@@ -13,6 +13,7 @@ import { PAGES, type PageKey, absoluteUrl } from '@/lib/seo';
 const LAST_MODIFIED: Record<PageKey, string> = {
   home: CONTENT_PUBLISHED_AT,
   services: CONTENT_PUBLISHED_AT,
+  realisations: CONTENT_PUBLISHED_AT,
   about: CONTENT_PUBLISHED_AT,
   contact: CONTENT_PUBLISHED_AT,
 };

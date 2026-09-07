@@ -32,6 +32,7 @@ export type NavItem = {
  */
 export const NAV_ITEMS = [
   { label: 'Services', href: '/services' },
+  { label: 'Réalisations', href: '/realisations' },
   { label: 'Le studio', href: '/about' },
   { label: 'Contact', href: '/contact' },
 ] as const satisfies readonly NavItem[];

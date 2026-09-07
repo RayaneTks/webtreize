@@ -15,7 +15,7 @@ import { CONTACT_EMAIL, SITE_URL, SNAPCHAT_URL } from '@/lib/constants';
 
 export const SITE_NAME = 'WebTreize';
 
-export type PageKey = 'home' | 'services' | 'about' | 'contact';
+export type PageKey = 'home' | 'services' | 'realisations' | 'about' | 'contact';
 
 type PageDefinition = {
   /** Chemin absolu depuis la racine, sans barre oblique finale (« / » pour l’accueil). */
@@ -50,6 +50,14 @@ export const PAGES: Record<PageKey, PageDefinition> = {
       'Création de site, référencement local, fiche Google et outils métier : nos quatre chantiers pour les commerces et les artisans de Marseille et de PACA.',
     ogTitle: 'Sites web, SEO local et outils métier',
     ogSubtitle: 'Quatre chantiers, un seul objectif — que vos clients vous trouvent',
+  },
+  realisations: {
+    path: '/realisations',
+    title: 'Réalisations : sites et outils livrés à Marseille',
+    description:
+      'Les sites et les outils métier que nous avons livrés à des commerces de Marseille : commande en ligne, catalogue, caisse et coût de revient. Adresses publiques.',
+    ogTitle: 'Ce que nous avons livré',
+    ogSubtitle: 'Des sites et des outils qui tournent, aujourd’hui',
   },
   about: {
     path: '/about',
