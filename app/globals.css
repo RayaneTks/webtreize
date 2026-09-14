@@ -364,9 +364,20 @@
 /* -------------------------------------------------------------------------- */
 
 /* — Reveal (SPEC 4.1) —
-   Aucun masquage par défaut : sans JavaScript, tout le contenu est peint
-   immédiatement. Le voile n’existe que sous `html.js`, classe posée avant la
-   première peinture par un script inline du <head>. */
+   Rien n’est masqué par défaut, ni sans JavaScript, ni avec.
+
+   Le masquage ne concerne que les blocs situés SOUS la ligne de flottaison au
+   chargement : c’est `RevealObserver` qui leur pose `data-reveal-pending` après
+   avoir mesuré leur position, puis le retire à leur entrée dans la fenêtre.
+
+   Auparavant, tout bloc `Reveal` était voilé jusqu’à ce que l’observateur passe
+   — c’est-à-dire jusqu’à l’hydratation. Ce qui était déjà à l’écran attendait
+   donc le JavaScript : Lighthouse mesurait un LCP mobile de 3,9 s sur /contact,
+   égal au temps d’interactivité, alors que la page était peinte à 0,8 s. Ce qui
+   est visible au chargement ne doit jamais dépendre d’un script.
+
+   Masquer un bloc hors écran ne produit aucun clignotement : personne ne le
+   voit disparaître. `transition: none` évite même d’animer ce masquage. */
 [data-reveal] {
   --reveal-delay: 0ms;
 }
@@ -377,14 +388,10 @@ html.js [data-reveal] {
     transform var(--dur-reveal) var(--ease-out) var(--reveal-delay);
 }
 
-html.js [data-reveal]:not([data-revealed]) {
+html.js [data-reveal][data-reveal-pending] {
   opacity: 0;
   transform: translateY(14px);
-}
-
-html.js [data-reveal][data-revealed] {
-  opacity: 1;
-  transform: none;
+  transition: none;
 }
 
 /* — Masque de ligne du h1 (SPEC 4.2) —
@@ -419,6 +426,8 @@ html.js [data-line-mask] {
    `opacity-0` dans le rendu serveur et levé par le `onLoad` de `next/image` ;
    sans JavaScript ce gestionnaire n’est jamais appelé et les photos restaient
    invisibles pour toujours. Il n’existe donc que sous `html.js`. */
+/* Une plaque `priority` — l’image LCP — ne porte pas `data-plate-image` : elle
+   est peinte dès son arrivée, sans attendre le `onLoad` de l’hydratation. */
 html.js [data-plate-image] {
   transition: opacity var(--dur-long) var(--ease-out);
 }
@@ -598,8 +607,8 @@ html.js [data-plate-image]:not([data-plate-loaded]) {
     scroll-behavior: auto;
   }
 
-  /* Le contenu reste visible même si l’observateur ne pose jamais data-revealed. */
-  html.js [data-reveal]:not([data-revealed]) {
+  /* Aucun bloc n’est voilé, même si l’observateur en marquait un. */
+  html.js [data-reveal][data-reveal-pending] {
     opacity: 1;
     transform: none;
   }

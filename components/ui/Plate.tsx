@@ -101,7 +101,10 @@ export function Plate(props: PlateProps) {
           placeholder="blur"
           blurDataURL={SAND_BLUR_DATA_URL}
           onLoad={() => setIsLoaded(true)}
-          data-plate-image=""
+          // L’image prioritaire est l’élément LCP : aucun fondu, elle se peint dès
+          // qu’elle arrive. Un fondu levé par `onLoad` attendait l’hydratation et
+          // repoussait le LCP mobile au-delà de 4 s.
+          data-plate-image={priority ? undefined : ''}
           // `undefined` retire l’attribut : le sélecteur `:not([data-plate-loaded])`
           // du socle ne le voit donc pas tant que la photo n’est pas arrivée.
           data-plate-loaded={isLoaded ? '' : undefined}
