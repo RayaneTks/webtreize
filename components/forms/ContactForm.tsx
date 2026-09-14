@@ -6,6 +6,7 @@ import { Controller, useForm, type FieldErrors } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/Button';
 import { Field } from '@/components/ui/Field';
+import { track } from '@/lib/analytics';
 import { CONTACT_EMAIL } from '@/lib/constants';
 import {
   CONTACT_HONEYPOT_FIELD,
@@ -113,6 +114,14 @@ export function ContactForm() {
   const honeypotRef = useRef<HTMLInputElement>(null);
   const renderedAtRef = useRef(0);
   const successHeadingRef = useRef<HTMLHeadingElement>(null);
+  /** « debut_formulaire » n’est émis qu’une fois par visite du formulaire. */
+  const startedRef = useRef(false);
+
+  const onFirstInput = () => {
+    if (startedRef.current) return;
+    startedRef.current = true;
+    track('debut_formulaire');
+  };
 
   // Horodatage de rendu, posé au montage. Une soumission arrivée moins de trois
   // secondes après n’est pas humaine : la route la rejette en silence.
@@ -148,6 +157,9 @@ export function ContactForm() {
     const data: ContactResponse | null = await response.json().catch(() => null);
 
     if (response.ok && data?.success) {
+      // Compté uniquement sur réponse positive du serveur : un envoi refusé ou
+      // perdu n’est pas une conversion.
+      track('envoi_formulaire');
       setIsSent(true);
       return;
     }
@@ -223,7 +235,12 @@ export function ContactForm() {
           </ul>
         </div>
       ) : (
-        <form noValidate onSubmit={handleSubmit(onValid, onInvalid)} className="grid gap-gap-sm">
+        <form
+          noValidate
+          onSubmit={handleSubmit(onValid, onInvalid)}
+          onInput={onFirstInput}
+          className="grid gap-gap-sm"
+        >
           {/* Leurre. Ni visible, ni annoncé, ni atteignable au clavier. */}
           <input
             ref={honeypotRef}

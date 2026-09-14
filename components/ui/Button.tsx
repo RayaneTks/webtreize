@@ -1,5 +1,6 @@
 import type { Route } from 'next';
 import Link from 'next/link';
+import type { AnalyticsEvent } from '@/lib/analytics';
 import { clsx } from 'clsx';
 
 /**
@@ -46,6 +47,11 @@ type ButtonBaseProps = {
   arrow?: boolean;
   /** Bouton natif uniquement : libellé remplacé, largeur figée, `aria-busy`. */
   loading?: boolean;
+  /**
+   * Événement de mesure émis au clic, via l’attribut `data-track` lu par
+   * `TrackClicks`. Le bouton reste un composant serveur.
+   */
+  track?: AnalyticsEvent;
   className?: string;
   children: React.ReactNode;
 };
@@ -146,9 +152,13 @@ export function Button(props: ButtonProps) {
     size = 'md',
     arrow = false,
     loading = false,
+    track,
     className,
     children,
   } = props;
+
+  /** Attribut de mesure, posé sur l’élément rendu quel qu’il soit. */
+  const trackAttr = track ? { 'data-track': track } : {};
 
   const root = rootClass(variant, size, className);
   const arrowNode = arrow ? <Arrow /> : null;
@@ -178,7 +188,7 @@ export function Button(props: ButtonProps) {
     }
 
     return (
-      <button type={type} className={root}>
+      <button type={type} className={root} {...trackAttr}>
         {children}
         {arrowNode}
       </button>
@@ -196,6 +206,7 @@ export function Button(props: ButtonProps) {
         target={opensNewTab ? '_blank' : undefined}
         rel={opensNewTab ? 'noreferrer noopener' : undefined}
         className={root}
+        {...trackAttr}
       >
         {children}
         {/* `sr-only` est positionné en absolu : la mention n’ajoute aucun espace. */}
@@ -206,7 +217,7 @@ export function Button(props: ButtonProps) {
   }
 
   return (
-    <Link href={href as Route} className={root}>
+    <Link href={href as Route} className={root} {...trackAttr}>
       {children}
       {arrowNode}
     </Link>

@@ -1,5 +1,19 @@
 import type { NextConfig } from 'next';
 
+/**
+ * `unsafe-eval` n’est requis que par le rechargement à chaud du serveur de
+ * développement. Le build de production de Next ne l’utilise pas : l’autoriser
+ * en production élargissait la surface d’attaque sans aucun bénéfice.
+ */
+const isDev = process.env.NODE_ENV === 'development';
+
+/**
+ * Origine du script de mesure, autorisée seulement si la mesure est activée.
+ * Écrite en dur plutôt qu’importée de `lib/analytics.ts` : ce fichier est lu par
+ * Node avant la résolution des alias `@/`.
+ */
+const analyticsOrigin = process.env.NEXT_PUBLIC_ANALYTICS === 'plausible' ? ' https://plausible.io' : '';
+
 const securityHeaders = [
   { key: 'X-Content-Type-Options', value: 'nosniff' },
   { key: 'X-Frame-Options', value: 'DENY' },
@@ -10,14 +24,14 @@ const securityHeaders = [
     key: 'Content-Security-Policy',
     value: [
       "default-src 'self'",
-      // `unsafe-eval` reste en place pour cette passe : le retirer proprement
-      // demande un nonce posé par un middleware, ce qui basculerait les routes
-      // prérendues en rendu dynamique. Chantier suivant, documenté à part.
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+      // `unsafe-inline` reste requis : le script qui pose `html.js` et les blocs
+      // JSON-LD sont inline. Le remplacer par un nonce demande un middleware, qui
+      // basculerait les routes prérendues en rendu dynamique.
+      `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ''}${analyticsOrigin}`,
       "style-src 'self' 'unsafe-inline'",
       "img-src 'self' data: blob:",
       "font-src 'self'",
-      "connect-src 'self'",
+      `connect-src 'self'${analyticsOrigin}`,
       "frame-ancestors 'none'",
       "base-uri 'self'",
       "form-action 'self'",

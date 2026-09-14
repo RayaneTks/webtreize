@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import { TrackClicks } from '@/components/analytics/TrackClicks';
 import { Header } from '@/components/layout/Header';
 import { RevealObserver } from '@/components/motion/RevealObserver';
 
@@ -74,6 +75,7 @@ export function ClientShell({
   return (
     <>
       <RevealObserver />
+      <TrackClicks />
       <Header />
       <main id="main-content" tabIndex={-1} className="relative focus:outline-none">
         {children}
