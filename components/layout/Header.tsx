@@ -17,7 +17,7 @@ import { NAV_ITEMS } from '@/lib/data/site';
  * ## Ce que la navigation dessert
  *
  * Trois routes réelles — `/services`, `/about`, `/contact` — rendues en
- * `next/link`, plus le bouton « Parlons-en » vers `/contact`. Les ancres de
+ * `next/link`, plus le bouton « Audit gratuit » vers `/contact`. Les ancres de
  * l’accueil sont descendues dans le plan du footer : tant qu’elles occupaient
  * la barre, `/services` et `/about` n’avaient aucun lien entrant dans tout le
  * site (finding critique « seo-pages-orphelines »).
@@ -168,6 +168,10 @@ export function Header() {
     };
   }, [close, open]);
 
+  /** Une sous-page (une étude de cas) active la rubrique qui la contient. */
+  const isCurrent = (href: string) =>
+    pathname === href || (href !== '/' && pathname.startsWith(`${href}/`));
+
   return (
     <header
       ref={headerRef}
@@ -188,7 +192,7 @@ export function Header() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    aria-current={pathname === item.href ? 'page' : undefined}
+                    aria-current={isCurrent(item.href) ? 'page' : undefined}
                     className="nav-link inline-flex py-1"
                   >
                     {item.label}
@@ -198,21 +202,33 @@ export function Header() {
             </ul>
 
             <div className="hidden md:block">
-              <Button href="/contact" size="sm">
-                Parlons-en
+              <Button href="/contact" size="sm" track="clic_audit">
+                Audit gratuit
               </Button>
             </div>
 
-            <button
-              ref={triggerRef}
-              type="button"
-              aria-expanded={open}
-              aria-controls="mobile-menu"
-              onClick={() => (open ? close() : setOpen(true))}
-              className="press inline-flex h-9 items-center rounded-full bg-ink px-5 text-note font-semibold text-canvas transition md:hidden"
-            >
-              {open ? 'Fermer' : 'Menu'}
-            </button>
+            {/* Mobile : l’appel à l’audit reste visible sans ouvrir le menu.
+                Cibles de 44 px, le minimum recommandé pour un doigt. */}
+            <div className="flex items-center gap-2 md:hidden">
+              <Link
+                href="/contact"
+                data-track="clic_audit"
+                className="press inline-flex h-11 items-center rounded-full border border-line-strong px-4 text-note font-semibold text-ink transition"
+              >
+                Audit gratuit
+              </Link>
+
+              <button
+                ref={triggerRef}
+                type="button"
+                aria-expanded={open}
+                aria-controls="mobile-menu"
+                onClick={() => (open ? close() : setOpen(true))}
+                className="press inline-flex h-11 items-center rounded-full bg-ink px-4 text-note font-semibold text-canvas transition"
+              >
+                {open ? 'Fermer' : 'Menu'}
+              </button>
+            </div>
           </div>
         </div>
 
@@ -237,7 +253,7 @@ export function Header() {
                   <Link
                     href={item.href}
                     onClick={close}
-                    aria-current={pathname === item.href ? 'page' : undefined}
+                    aria-current={isCurrent(item.href) ? 'page' : undefined}
                     className="block rounded-xl px-4 py-3 text-body font-medium text-ink transition-colors hover:bg-sand"
                   >
                     {item.label}
@@ -247,8 +263,8 @@ export function Header() {
             </ul>
 
             <div className="mt-2">
-              <Button href="/contact" className="w-full">
-                Parlons-en
+              <Button href="/contact" className="w-full" track="clic_audit">
+                Audit gratuit
               </Button>
             </div>
           </div>

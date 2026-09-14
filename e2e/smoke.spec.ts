@@ -70,19 +70,20 @@ test.describe('WebTreize - Smoke tests', () => {
     expect(Math.abs((after?.y ?? 0) - (before?.y ?? 0))).toBeLessThanOrEqual(2);
   });
 
-  test('CTA du header visible selon le viewport', async ({ page }) => {
+  test('le CTA « Audit gratuit » est accessible sans ouvrir le menu', async ({ page }) => {
     await page.goto('/');
     const nav = page.locator('nav[aria-label="Navigation principale"]');
 
-    const desktopCta = nav.locator('a', { hasText: 'Parlons-en' }).first();
-    const mobileTrigger = nav.locator('button', { hasText: /Menu|Fermer/ }).first();
+    // Sur mobile comme sur ordinateur, l’appel à l’audit est visible d’emblée :
+    // aucun geste n’est nécessaire pour le trouver.
+    const cta = nav.locator('a:visible', { hasText: 'Audit gratuit' }).first();
+    await expect(cta).toBeVisible();
+    await expect(cta).toHaveAttribute('href', '/contact');
 
-    if (await mobileTrigger.isVisible()) {
-      await mobileTrigger.click();
-      await expect(page.locator('#mobile-menu a', { hasText: 'Parlons-en' })).toBeVisible();
-    } else {
-      await expect(desktopCta).toBeVisible();
-    }
+    const box = await cta.boundingBox();
+    expect(box, 'le CTA doit occuper une surface réelle').not.toBeNull();
+    // 44 px sur mobile, 36 px sur ordinateur où la cible est un pointeur fin.
+    expect(box!.height).toBeGreaterThanOrEqual(36);
   });
 
   /**
