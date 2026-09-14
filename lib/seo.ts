@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { CONTACT_EMAIL, SITE_URL, SNAPCHAT_URL } from '@/lib/constants';
+import { CONTACT_EMAIL, CONTACT_PHONE, SITE_URL, SOCIAL_PROFILES } from '@/lib/constants';
 
 /**
  * Source unique des métadonnées et des données structurées.
@@ -41,13 +41,13 @@ export const PAGES: Record<PageKey, PageDefinition> = {
     description:
       'Studio digital à Marseille, nous créons des sites sur mesure, travaillons votre visibilité locale dans le 13 et outillons votre quotidien. Audit écrit.',
     ogTitle: 'Création de site web et référencement local à Marseille',
-    ogSubtitle: 'Studio digital — Marseille et Bouches-du-Rhône',
+    ogSubtitle: 'Studio digital basé à Marseille',
   },
   services: {
     path: '/services',
     title: 'Site web, SEO local et outils métier à Marseille',
     description:
-      'Création de site, référencement local, fiche Google et outils métier : nos quatre chantiers pour les commerces et les artisans de Marseille et de PACA.',
+      'Création de site, référencement local, fiche Google et outils métier pour commerces et artisans. Basés à Marseille, à distance partout en France.',
     ogTitle: 'Sites web, SEO local et outils métier',
     ogSubtitle: 'Quatre chantiers, un seul objectif — que vos clients vous trouvent',
   },
@@ -55,7 +55,7 @@ export const PAGES: Record<PageKey, PageDefinition> = {
     path: '/realisations',
     title: 'Réalisations : sites et outils livrés à Marseille',
     description:
-      'Les sites et les outils métier que nous avons livrés à des commerces de Marseille : commande en ligne, catalogue, caisse et coût de revient. Adresses publiques.',
+      'Nos réalisations à Marseille : commande en ligne avec écran cuisine, catalogue de parfumerie, caisse et comptabilité. Deux études de cas détaillées.',
     ogTitle: 'Ce que nous avons livré',
     ogSubtitle: 'Des sites et des outils qui tournent, aujourd’hui',
   },
@@ -73,7 +73,7 @@ export const PAGES: Record<PageKey, PageDefinition> = {
     description:
       'Parlons de votre projet de site, de visibilité locale ou d’outil métier à Marseille. Décrivez votre situation en quelques lignes, nous répondons par écrit.',
     ogTitle: 'Parlons de votre projet',
-    ogSubtitle: 'Studio digital à Marseille — Bouches-du-Rhône et PACA',
+    ogSubtitle: 'Basés à Marseille — sur place dans le 13, à distance partout en France',
   },
 };
 
@@ -168,15 +168,15 @@ const LOGO_ID = `${SITE_URL}/#logo`;
 const AREA_SERVED = [
   { '@type': 'City', name: 'Marseille' },
   { '@type': 'AdministrativeArea', name: 'Bouches-du-Rhône' },
-  { '@type': 'AdministrativeArea', name: 'Provence-Alpes-Côte d’Azur' },
+  { '@type': 'Country', name: 'France' },
 ];
 
 /**
  * L’entité de marque. Injectée une seule fois, dans le layout racine.
  *
- * Ni `streetAddress`, ni `postalCode`, ni `telephone` : aucune de ces données
- * n’est publiable en l’état. Une adresse partielle vaut mieux qu’un code postal
- * générique (13000, non distribué) ou qu’un numéro inventé.
+ * Ni `streetAddress` ni `postalCode` : aucune adresse postale n’est publiée. Le
+ * téléphone et les profils sociaux ne sont déclarés que s’ils existent
+ * (`lib/constants.ts`) : jamais un numéro inventé, jamais un profil vide.
  */
 export function organizationJsonLd(): object {
   return {
@@ -205,9 +205,11 @@ export function organizationJsonLd(): object {
       addressRegion: 'Provence-Alpes-Côte d’Azur',
       addressCountry: 'FR',
     },
+    ...(CONTACT_PHONE ? { telephone: CONTACT_PHONE } : {}),
     contactPoint: {
       '@type': 'ContactPoint',
       email: CONTACT_EMAIL,
+      ...(CONTACT_PHONE ? { telephone: CONTACT_PHONE } : {}),
       contactType: 'customer service',
       areaServed: 'FR',
       availableLanguage: 'French',
@@ -215,7 +217,7 @@ export function organizationJsonLd(): object {
     areaServed: AREA_SERVED,
     // Uniquement des profils réellement détenus. Le domaine webtreize.fr a été
     // retiré : un second domaine racine en `sameAs` dédouble l’entité.
-    sameAs: [SNAPCHAT_URL],
+    sameAs: SOCIAL_PROFILES.map((profile) => profile.href),
   };
 }
 
@@ -245,6 +247,7 @@ export function professionalServiceJsonLd(): object {
     '@context': SCHEMA_CONTEXT,
     '@type': 'ProfessionalService',
     '@id': STUDIO_ID,
+    ...(CONTACT_PHONE ? { telephone: CONTACT_PHONE } : {}),
     name: SITE_NAME,
     url: SITE_URL,
     email: CONTACT_EMAIL,

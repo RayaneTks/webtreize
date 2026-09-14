@@ -134,9 +134,22 @@ test.describe('HTML servi — sans JavaScript', () => {
       (match) => new URL(match[1]).pathname.replace(/\/$/, '') || '/',
     );
 
-    expect(paths.sort()).toEqual([...ROUTES].sort());
-    // Les pages légales sont en `noindex` : les déclarer serait contradictoire.
-    expect(xml).not.toContain('/legal/');
+    const attendues = [
+      ...ROUTES,
+      '/realisations/magda-mania',
+      '/realisations/nurea-parfums',
+      // Seul document légal complet, donc seul indexable.
+      '/legal/politique-confidentialite',
+    ];
+    expect(paths.sort()).toEqual([...attendues].sort());
+
+    // Un document en brouillon porte `noindex` : le déclarer serait contradictoire.
+    expect(xml).not.toContain('/legal/mentions-legales');
+    expect(xml).not.toContain('/legal/cgv');
+
+    // Aucune URL du sitemap ne doit rediriger : toutes sur l’hôte canonique.
+    const hosts = new Set([...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => new URL(m[1]).host));
+    expect([...hosts]).toEqual(['www.webtreize.com']);
   });
 
   test('FAQPage n’est balisé que sur la page qui affiche les questions', async ({ request }) => {

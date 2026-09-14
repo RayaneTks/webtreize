@@ -18,7 +18,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: SITE_NAME,
     short_name: SITE_NAME,
     description:
-      'Studio digital à Marseille. Sites, visibilité locale et outils sur mesure pour les entreprises du 13.',
+      'Studio digital basé à Marseille. Sites, visibilité locale et outils sur mesure pour les commerces et les artisans.',
     lang: 'fr',
     dir: 'ltr',
     start_url: '/',

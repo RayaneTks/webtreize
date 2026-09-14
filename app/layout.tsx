@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { Newsreader, Plus_Jakarta_Sans } from 'next/font/google';
-import { SITE_URL } from '@/lib/constants';
+import { AnalyticsScript } from '@/components/analytics/AnalyticsScript';
+import { GOOGLE_SITE_VERIFICATION, SITE_URL } from '@/lib/constants';
 import { organizationJsonLd, PAGES, SITE_NAME, websiteJsonLd } from '@/lib/seo';
 
 /**
@@ -32,10 +33,20 @@ const jakarta = Plus_Jakarta_Sans({
   display: 'swap',
 });
 
+/**
+ * Newsreader ne sert qu’en graisse 300 (citations et grands chiffres), en
+ * romain et en italique. La graisse 400 était chargée sans aucun usage : deux
+ * fichiers de police téléchargés pour rien sur chaque page.
+ *
+ * Les deux familles passent par `next/font/google`, qui télécharge les fichiers
+ * au build et les sert depuis le domaine du site : aucune requête vers Google au
+ * chargement de la page, donc rien à déclarer dans la politique de
+ * confidentialité, et aucun aller-retour DNS de plus.
+ */
 const newsreader = Newsreader({
   subsets: ['latin'],
   variable: '--font-serif',
-  weight: ['300', '400'],
+  weight: ['300'],
   style: ['normal', 'italic'],
   display: 'swap',
 });
@@ -70,6 +81,10 @@ export const metadata: Metadata = {
   creator: SITE_NAME,
   publisher: SITE_NAME,
   formatDetection: { telephone: false, address: false, email: false },
+  // Validation Search Console par balise HTML — repli uniquement : la méthode
+  // recommandée est l’enregistrement DNS TXT, qui valide une propriété
+  // « Domaine » couvrant www, l’apex, http et https d’un seul coup.
+  ...(GOOGLE_SITE_VERIFICATION ? { verification: { google: GOOGLE_SITE_VERIFICATION } } : {}),
   // Valeurs communes seulement : chaque page remplace ce bloc par le sien.
   // Ni `images` ni `url` ici — Next attache l’`opengraph-image.tsx` de la route.
   openGraph: {
@@ -128,6 +143,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd()) }}
         />
+
+        <AnalyticsScript />
       </body>
     </html>
   );

@@ -1,36 +1,40 @@
 import type { MetadataRoute } from 'next';
 import { CONTENT_PUBLISHED_AT } from '@/lib/constants';
+import { isLegalDraft, LEGAL_DOCUMENTS, LEGAL_SLUGS } from '@/lib/data/legal';
+import { REALISATIONS, realisationHref } from '@/lib/data/realisations';
 import { PAGES, type PageKey, absoluteUrl } from '@/lib/seo';
 
 /**
- * Date de dernière modification réelle, par route.
+ * Le sitemap déclare exactement les URL indexables, et aucune autre.
  *
- * Jamais `new Date()` : le sitemap est généré au build, une date calculée
- * ferait passer les quatre pages pour modifiées à chaque déploiement et
- * détruirait le signal de fraîcheur. Ces valeurs se mettent à jour à la main,
- * quand le contenu de la page change vraiment.
- */
-const LAST_MODIFIED: Record<PageKey, string> = {
-  home: CONTENT_PUBLISHED_AT,
-  services: CONTENT_PUBLISHED_AT,
-  realisations: CONTENT_PUBLISHED_AT,
-  about: CONTENT_PUBLISHED_AT,
-  contact: CONTENT_PUBLISHED_AT,
-};
-
-/**
- * Les quatre pages indexables du site.
+ * - Les pages du catalogue `PAGES`.
+ * - Chaque étude de cas publiée.
+ * - Les documents légaux **publiés** : un document en brouillon porte `noindex`,
+ *   le déclarer ici enverrait deux signaux contradictoires. Dès qu’un document
+ *   est complété, il entre de lui-même dans le sitemap.
  *
- * `/legal/*` en est volontairement absent : ces pages portent `noindex`.
- * `/privacy` et `/terms` aussi : ce sont des redirections 308 déclarées dans
- * `next.config.ts`, pas des URLs à indexer.
+ * Toutes les URL sont construites sur l’hôte canonique (`SITE_URL`) : jamais une
+ * adresse qui redirige.
  *
- * Ni `changeFrequency` ni `priority` : Google ignore les deux depuis des
- * années, et une valeur ignorée qui prétend hiérarchiser est du bruit.
+ * `lastModified` n’est jamais `new Date()` : une date calculée au build ferait
+ * passer toutes les pages pour modifiées à chaque déploiement. Ni
+ * `changeFrequency` ni `priority` : Google ignore les deux.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
-  return (Object.keys(PAGES) as PageKey[]).map((key) => ({
+  const pages = (Object.keys(PAGES) as PageKey[]).map((key) => ({
     url: absoluteUrl(PAGES[key].path),
-    lastModified: LAST_MODIFIED[key],
+    lastModified: CONTENT_PUBLISHED_AT,
   }));
+
+  const etudes = REALISATIONS.map((projet) => ({
+    url: absoluteUrl(realisationHref(projet.id)),
+    lastModified: CONTENT_PUBLISHED_AT,
+  }));
+
+  const legal = LEGAL_SLUGS.filter((slug) => !isLegalDraft(slug)).map((slug) => ({
+    url: absoluteUrl(`/legal/${slug}`),
+    lastModified: LEGAL_DOCUMENTS[slug].updatedAt,
+  }));
+
+  return [...pages, ...etudes, ...legal];
 }
