@@ -21,7 +21,7 @@ import { breadcrumbJsonLd, customMetadata } from '@/lib/seo';
  * Étude de cas — une page par réalisation.
  *
  * Plan imposé, identique pour chaque projet : contexte, problème, solution,
- * interfaces, fonctionnalités, ce qui change au quotidien, appel à l’action.
+ * interfaces, fonctionnalités, ce que l’outil permet au quotidien, appel à l’action.
  *
  * Aucun chiffre, aucun témoignage n’est écrit ici : tout vient de
  * `lib/data/realisations.ts`, où chaque fonctionnalité a été vérifiée dans le
@@ -158,7 +158,7 @@ export default async function EtudeDeCasPage({ params }: Props) {
             <Reveal>
               <p className="eyebrow">Les interfaces</p>
               <h2 id="interfaces-title" className="sweep mt-gap-xs max-w-[22ch] text-display-sm font-extrabold">
-                À l’écran, tel qu’il est en ligne.
+                À l’écran, tel qu’il a été livré.
               </h2>
             </Reveal>
 
@@ -212,9 +212,9 @@ export default async function EtudeDeCasPage({ params }: Props) {
         <section aria-labelledby="quotidien-title" className="section-pad">
           <div className="site-container">
             <Reveal>
-              <p className="eyebrow">Le résultat pour le commerce</p>
+              <p className="eyebrow">Au quotidien</p>
               <h2 id="quotidien-title" className="sweep mt-gap-xs max-w-[22ch] text-display-sm font-extrabold">
-                Ce qui change au quotidien.
+                Ce que l’outil permet au quotidien.
               </h2>
             </Reveal>
 

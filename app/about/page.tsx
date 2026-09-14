@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import { PageShell } from '@/components/layout/PageShell';
 import { PageCtaBand } from '@/components/sections/PageCtaBand';
 import { SerifQuote, SerifQuoteEmphasis } from '@/components/sections/SerifQuote';
-import { TeamSection } from '@/components/sections/TeamSection';
 import { TestimonialsSection } from '@/components/sections/TestimonialsSection';
 import { Reveal } from '@/components/motion/Reveal';
 import { ContactChannels } from '@/components/ui/ContactChannels';
@@ -60,7 +59,7 @@ const ATELIER_ALT =
 const REFUS = [
   {
     title: 'Pas de faux avis, pas de chiffres gonflés',
-    body: 'Nous n’affichons que ce que vous pouvez vérifier : des sites en ligne dont l’adresse est publique, et des avis signés par les personnes qui les ont donnés.',
+    body: 'Nous n’affichons que ce qui existe : des écrans réellement livrés, et aucun avis que personne n’a donné.',
   },
   {
     title: 'Pas de jargon',
@@ -134,8 +133,6 @@ export default function AboutPage() {
             </Reveal>
           </div>
         </section>
-
-        <TeamSection />
 
         <TestimonialsSection />
 

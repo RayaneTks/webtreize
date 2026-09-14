@@ -5,7 +5,9 @@ import type { Route } from 'next';
  *
  * ## La règle : tout est vérifiable
  *
- * Chaque projet a une URL publique et chaque capture est celle du site en ligne.
+ * Chaque capture est celle du site livré. L’adresse publique n’est donnée que
+ * tant que le site est ouvert : Magda Mania affiche aujourd’hui « Site fermé »,
+ * et un prospect envoyé vers cette page conclurait à un projet abandonné.
  * Chaque fonctionnalité citée a été **vérifiée dans le code source livré** —
  * une route, un modèle de données, un écran — et non déduite d’une dépendance
  * ou d’une intention. Une bibliothèque installée n’est pas une fonctionnalité.
@@ -17,7 +19,7 @@ import type { Route } from 'next';
  * commandes » invérifiable sur la page qui sert à prouver le sérieux détruit
  * exactement ce qu’elle cherche à établir.
  *
- * La section « Ce qui change au quotidien » décrit donc des conséquences
+ * La section « Ce que l’outil permet au quotidien » décrit donc des conséquences
  * **opérationnelles** de ce qui a été construit — une commande arrive payée,
  * une rupture s’affiche d’elle-même — jamais un gain chiffré.
  *
@@ -103,7 +105,6 @@ export const REALISATIONS: readonly Realisation[] = [
         legende: 'Sur téléphone, là où la commande se passe vraiment.',
       },
     ],
-    url: 'https://magda-mania.vercel.app',
     chantier: 'outils',
     metaDescription:
       'Étude de cas Magda Mania : commande et paiement en ligne, écran cuisine en temps réel et notifications pour un stand de restauration à Marseille.',

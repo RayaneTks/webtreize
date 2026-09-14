@@ -57,7 +57,7 @@ export const PAGES: Record<PageKey, PageDefinition> = {
     description:
       'Nos réalisations à Marseille : commande en ligne avec écran cuisine, catalogue de parfumerie, caisse et comptabilité. Deux études de cas détaillées.',
     ogTitle: 'Ce que nous avons livré',
-    ogSubtitle: 'Des sites et des outils qui tournent, aujourd’hui',
+    ogSubtitle: 'Deux commerces marseillais, deux outils sur mesure',
   },
   about: {
     path: '/about',

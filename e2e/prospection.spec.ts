@@ -69,7 +69,7 @@ test.describe('Prospection — études de cas', () => {
         /^La solution$/,
         /^Les interfaces$/,
         /^Les fonctionnalités$/,
-        /^Ce qui change au quotidien\.?$/,
+        /^Ce que l’outil permet au quotidien\.?$/,
       ]) {
         const cible = page.getByText(section).first();
         await cible.scrollIntoViewIfNeeded();
@@ -120,16 +120,12 @@ test.describe('Prospection — contenu', () => {
     ).toBeVisible();
   });
 
-  test('aucune section témoignages ou équipe n’est rendue à vide', async ({ page }) => {
+  test('aucune section témoignages n’est rendue à vide', async ({ page }) => {
     await page.goto('/about');
     // Ces sections n’existent que si des données réelles ont été fournies.
     const temoignages = page.locator('#temoignages-title');
-    const equipe = page.locator('#equipe-title');
     if ((await temoignages.count()) > 0) {
       await expect(page.locator('section[aria-labelledby="temoignages-title"] li')).not.toHaveCount(0);
-    }
-    if ((await equipe.count()) > 0) {
-      await expect(page.locator('section[aria-labelledby="equipe-title"] li')).not.toHaveCount(0);
     }
   });
 

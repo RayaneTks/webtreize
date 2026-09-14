@@ -52,11 +52,11 @@ export function WorkSection() {
             id="realisations-title"
             className="sweep mt-gap-xs max-w-[20ch] text-display-md font-extrabold"
           >
-            Des sites et des outils qui tournent, aujourd’hui.
+            Des sites et des outils construits pour de vrais commerces.
           </h2>
           <p className="lede mt-gap-sm max-w-[52ch]">
-            Deux commerces marseillais, deux problèmes différents. Les adresses sont publiques,
-            allez voir par vous-même.
+            Deux commerces marseillais, deux problèmes différents, et le détail de ce qui a été
+            construit pour chacun.
           </p>
         </Reveal>
 

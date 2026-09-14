@@ -9,12 +9,12 @@
  * l’inverse.
  *
  * Une seule forme est autorisée : avec « www », sans barre oblique finale.
- * `NEXT_PUBLIC_SITE_URL` ne sert qu’aux déploiements de prévisualisation ; en
- * production, s’il est défini, il doit valoir exactement cette valeur.
+ * La valeur est écrite en dur et non lue dans l’environnement : une variable
+ * restée sur l’apex dans l’hébergeur suffisait à republier des canonicals vers
+ * une redirection. Les prévisualisations pointent aussi vers la production,
+ * ce qui est le comportement voulu pour un canonical.
  */
-export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL || 'https://www.webtreize.com'
-).replace(/\/+$/, '');
+export const SITE_URL = 'https://www.webtreize.com';
 
 export const CONTACT_EMAIL =
   process.env.NEXT_PUBLIC_CONTACT_EMAIL || process.env.CONTACT_EMAIL || 'contact@webtreize.com';
@@ -38,14 +38,20 @@ export const CONTACT_PHONE_DISPLAY = CONTACT_PHONE?.startsWith('+33')
 
 export const SNAPCHAT_URL = 'https://snapchat.com/add/webtreize';
 
-/** Profils professionnels — absents tant qu’ils ne sont pas réellement ouverts. */
+/** Compte Instagram du studio (@webtreize). */
+export const INSTAGRAM_URL = 'https://www.instagram.com/webtreize/';
+
+/**
+ * Page LinkedIn de l’entreprise — absente tant qu’elle n’existe pas. Un profil
+ * personnel n’a pas sa place ici : il n’engage pas le studio et ne peut pas
+ * figurer dans le `sameAs` de l’Organization.
+ */
 export const LINKEDIN_URL = process.env.NEXT_PUBLIC_LINKEDIN_URL?.trim() || undefined;
-export const INSTAGRAM_URL = process.env.NEXT_PUBLIC_INSTAGRAM_URL?.trim() || undefined;
 
 /** Les profils effectivement détenus, dans l’ordre d’affichage. */
 export const SOCIAL_PROFILES = [
   LINKEDIN_URL ? { label: 'LinkedIn', href: LINKEDIN_URL } : null,
-  INSTAGRAM_URL ? { label: 'Instagram', href: INSTAGRAM_URL } : null,
+  { label: 'Instagram', href: INSTAGRAM_URL },
   { label: 'Snapchat', href: SNAPCHAT_URL },
 ].filter((profile): profile is { label: string; href: string } => profile !== null);
 

@@ -32,7 +32,7 @@ export default function RealisationsPage() {
       <PageShell
         eyebrow="Réalisations"
         title="Ce que nous avons livré."
-        description="Deux commerces de Marseille, deux besoins différents, des outils qui tournent tous les jours. Chaque adresse est publique : ouvrez-les."
+        description="Deux commerces de Marseille, deux besoins différents, et ce qui a été construit pour chacun, écran par écran."
       >
         <section className="section-pad border-t border-line bg-surface">
           <div className="site-container grid gap-gap-xl">
