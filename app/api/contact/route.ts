@@ -105,6 +105,18 @@ function isTimeout(error: unknown): boolean {
   return name === 'TimeoutError' || name === 'AbortError';
 }
 
+/**
+ * Région d’exécution : Paris.
+ *
+ * Sans cette ligne, la fonction s’exécutait à Washington (`iad1`, lu dans
+ * l’en-tête `X-Vercel-Id` de la production) : chaque demande de contact, avec
+ * nom, courriel et téléphone, était traitée sur un serveur américain. Traiter en
+ * Europe ne supprime pas le transfert — Vercel et Resend restent des sociétés
+ * américaines, ce que la politique de confidentialité indique — mais limite la
+ * circulation effective des données au strict nécessaire.
+ */
+export const preferredRegion = 'cdg1';
+
 export async function POST(request: NextRequest) {
   // ── 1. Plafond de taille ────────────────────────────────────────────────────
   // Les Route Handlers de l’App Router n’imposent aucune limite : sans ce test,

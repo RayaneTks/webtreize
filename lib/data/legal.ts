@@ -1,3 +1,4 @@
+import { ANALYTICS_PROVIDER } from '@/lib/analytics';
 import { CONTACT_EMAIL, CONTENT_PUBLISHED_AT, SITE_URL } from '@/lib/constants';
 
 /**
@@ -82,7 +83,7 @@ const MENTIONS_LEGALES: LegalDocument = {
     {
       heading: 'Hébergement',
       paragraphs: [
-        'Le site est hébergé par [[À COMPLÉTER : dénomination sociale de l’hébergeur]], dont le siège est situé [[À COMPLÉTER : adresse de l’hébergeur]], joignable au [[À COMPLÉTER : téléphone de l’hébergeur]].',
+        'Le site est hébergé par Vercel Inc., 440 N Barranca Avenue #4133, Covina, CA 91723, États-Unis — vercel.com. L’hébergeur ne publie pas de numéro de téléphone ; il est joignable depuis son site.',
         'L’hébergeur assure la mise à disposition du site. Il n’intervient ni sur son contenu ni sur les demandes qui nous sont adressées.',
       ],
     },
@@ -90,7 +91,7 @@ const MENTIONS_LEGALES: LegalDocument = {
       heading: 'Propriété intellectuelle',
       paragraphs: [
         'Les textes, la charte graphique, la structure et le code de ce site sont la propriété de l’éditeur. Toute reproduction, adaptation ou diffusion, totale ou partielle, sans autorisation écrite préalable, est interdite.',
-        'Les photographies publiées sur ce site : [[À COMPLÉTER : auteur des photographies et licence d’utilisation, ou mention indiquant qu’elles sont la propriété de l’éditeur]].',
+        'Les photographies d’ambiance ont été générées par l’éditeur au moyen d’un outil d’intelligence artificielle, puis retouchées ; elles ne représentent ni des lieux ni des personnes réels. Les captures d’écran de la rubrique Réalisations reproduisent des sites conçus par le studio.',
         'Le code livré à un client lui est cédé dans les conditions prévues aux conditions générales de vente. Les bibliothèques libres utilisées restent régies par leurs licences respectives.',
       ],
     },
@@ -159,7 +160,7 @@ const POLITIQUE_CONFIDENTIALITE: LegalDocument = {
       heading: 'Ce que nous ne demandons pas',
       paragraphs: [
         'Ni adresse postale, ni budget, ni taille d’entreprise, ni secteur d’activité. Aucune case pré-cochée, aucune inscription à une lettre d’information dissimulée dans l’envoi.',
-        'Deux éléments techniques accompagnent l’envoi sans jamais être conservés : l’heure d’affichage du formulaire et un champ leurre invisible, tous deux destinés à écarter les envois automatisés. Votre adresse IP est retenue en mémoire vive pendant dix minutes, uniquement pour limiter le nombre d’envois par visiteur ; elle n’est écrite sur aucun disque et disparaît au redémarrage du serveur.',
+        'Deux éléments techniques accompagnent l’envoi sans jamais être conservés : l’heure d’affichage du formulaire et un champ leurre invisible, tous deux destinés à écarter les envois automatisés. Votre adresse IP est retenue en mémoire vive pendant dix minutes au plus, uniquement pour limiter le nombre d’envois par visiteur : notre application ne l’enregistre dans aucune base ni aucun fichier. L’hébergeur, comme tout hébergeur, consigne en revanche les requêtes dans ses journaux techniques (voir la durée de conservation plus bas).',
       ],
     },
     {
@@ -179,17 +180,18 @@ const POLITIQUE_CONFIDENTIALITE: LegalDocument = {
     {
       heading: 'Qui reçoit vos données',
       paragraphs: [
-        'Votre message est lu par le studio, et par personne d’autre. Deux prestataires techniques interviennent, en qualité de sous-traitants au sens de l’article 28 du RGPD :',
+        'Votre message est lu par le studio, et par personne d’autre. Trois prestataires techniques interviennent pour l’acheminer, en qualité de sous-traitants au sens de l’article 28 du RGPD :',
       ],
       bullets: [
-        'Resend, Inc., aux États-Unis, qui achemine le courriel contenant votre demande ;',
-        'l’hébergeur du site, qui met les pages à disposition et conserve les journaux techniques du serveur. Nous vous communiquons son identité sur simple demande.',
+        'Vercel Inc., société établie aux États-Unis, qui héberge le site et exécute le traitement du formulaire ;',
+        'Resend, Inc., société établie aux États-Unis, qui achemine le courriel contenant votre demande ;',
+        'le fournisseur de la messagerie du studio, qui héberge la boîte de réception où votre demande arrive.',
       ],
     },
     {
       heading: 'Transfert hors de l’Union européenne',
       paragraphs: [
-        'L’acheminement du courriel par Resend implique un transfert de vos données vers les États-Unis. Vous pouvez nous demander à tout moment quelles garanties encadrent ce transfert au titre du chapitre V du RGPD, et en obtenir la copie.',
+        'Vercel et Resend sont des sociétés établies aux États-Unis : le traitement de votre demande implique donc un transfert de vos données hors de l’Union européenne. Vous pouvez nous demander à tout moment quelles garanties encadrent ces transferts au titre du chapitre V du RGPD, et en obtenir la copie.',
         `Une seule adresse pour cette demande comme pour les autres : ${CONTACT_EMAIL}.`,
       ],
     },
@@ -204,10 +206,20 @@ const POLITIQUE_CONFIDENTIALITE: LegalDocument = {
     },
     {
       heading: 'Cookies et mesure d’audience',
-      paragraphs: [
-        'Ce site ne dépose aucun cookie, pas même un cookie de mesure d’audience. Il n’utilise ni Google Analytics, ni aucun autre outil de statistiques, ni pixel publicitaire, ni bouton de réseau social chargé depuis un serveur tiers. Les polices de caractères sont servies depuis notre propre domaine.',
-        'C’est la raison pour laquelle vous ne voyez aucun bandeau de consentement : il n’y a rien à consentir.',
-      ],
+      // Ce paragraphe lit la même constante que le script de mesure
+      // (`lib/analytics.ts`) : activer la mesure change ce texte dans le même
+      // déploiement. Il est impossible que l’un soit vrai et l’autre non.
+      paragraphs:
+        ANALYTICS_PROVIDER === 'plausible'
+          ? [
+              'Ce site ne dépose aucun cookie. Il mesure sa fréquentation avec Plausible Analytics, un outil sans cookie qui n’enregistre aucun identifiant persistant, ne suit pas les visiteurs d’un site à l’autre et héberge ses données dans l’Union européenne.',
+              'Sont mesurés, de façon agrégée : les pages consultées, la provenance des visites, le type d’appareil, et six actions — un clic sur un appel à l’audit, le début et l’envoi du formulaire, la consultation d’une étude de cas, un clic sur l’adresse e-mail ou sur le numéro de téléphone. Aucune de ces mesures ne permet de vous identifier.',
+              'Cette mesure entre dans l’exemption de consentement prévue par la CNIL pour la mesure d’audience strictement nécessaire : c’est pourquoi aucun bandeau ne vous est présenté. Un bloqueur de contenu suffit à la désactiver pour votre navigateur.',
+            ]
+          : [
+              'Ce site ne dépose aucun cookie, pas même un cookie de mesure d’audience. Il n’utilise ni Google Analytics, ni aucun autre outil de statistiques, ni pixel publicitaire, ni bouton de réseau social chargé depuis un serveur tiers. Les polices de caractères sont servies depuis notre propre domaine.',
+              'C’est la raison pour laquelle vous ne voyez aucun bandeau de consentement : il n’y a rien à consentir.',
+            ],
     },
     {
       heading: 'Vos droits',
@@ -436,10 +448,8 @@ export const LEGAL_TODO: readonly LegalTodo[] = [
     slug: 'mentions-legales',
     label: 'Numéro de TVA intracommunautaire, ou mention de franchise en base',
   },
-  { slug: 'mentions-legales', label: 'Numéro de téléphone professionnel, s’il est publié' },
+  { slug: 'mentions-legales', label: 'Numéro de téléphone professionnel (obligatoire, LCEN art. 6-III)' },
   { slug: 'mentions-legales', label: 'Nom, prénom et fonction du directeur de la publication' },
-  { slug: 'mentions-legales', label: 'Dénomination, adresse et téléphone de l’hébergeur' },
-  { slug: 'mentions-legales', label: 'Auteur et licence des photographies publiées' },
   { slug: 'cgv', label: 'Dénomination sociale du studio' },
   { slug: 'cgv', label: 'Régime de TVA applicable' },
   { slug: 'cgv', label: 'Médiateur de la consommation auquel le studio adhère' },
