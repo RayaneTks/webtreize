@@ -114,6 +114,9 @@ function isTimeout(error: unknown): boolean {
  * Europe ne supprime pas le transfert — Vercel et Resend restent des sociétés
  * américaines, ce que la politique de confidentialité indique — mais limite la
  * circulation effective des données au strict nécessaire.
+ *
+ * Cet export seul ne suffit pas : Vercel l’a ignoré en production (toujours
+ * `iad1`). La région est donc aussi fixée au niveau du projet, dans vercel.json.
  */
 export const preferredRegion = 'cdg1';
 
