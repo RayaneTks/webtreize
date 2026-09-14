@@ -1,9 +1,12 @@
 import { Reveal } from '@/components/motion/Reveal';
 import { Button } from '@/components/ui/Button';
 import { Plate } from '@/components/ui/Plate';
+import type { Route } from 'next';
+import Link from 'next/link';
 import {
   REALISATIONS_A_LA_UNE,
   REALISATIONS_HREF,
+  realisationHref,
   type Ecran,
   type Realisation,
 } from '@/lib/data/realisations';
@@ -66,7 +69,7 @@ export function WorkSection() {
         <Reveal delay={60}>
           <div className="mt-gap-lg">
             <Button href={REALISATIONS_HREF} variant="quiet" arrow>
-              Voir le détail des réalisations
+              Toutes les réalisations
             </Button>
           </div>
         </Reveal>
@@ -97,7 +100,9 @@ export function WorkEntry({
       <Reveal className={plateFirst ? 'md:order-2' : undefined}>
         <p className="eyebrow">{projet.secteur}</p>
         <h3 id={titleId} className="mt-gap-xs text-display-sm font-extrabold">
-          {projet.nom}
+          <Link href={realisationHref(projet.id) as Route} className="link-draw">
+            {projet.nom}
+          </Link>
         </h3>
         <p className="lede mt-gap-sm max-w-[46ch]">{projet.promesse}</p>
 
@@ -109,26 +114,29 @@ export function WorkEntry({
           ))}
         </ul>
 
-        {projet.url ? (
-          <p className="mt-gap-sm">
+        <p className="mt-gap-sm flex flex-wrap items-center gap-x-gap-sm gap-y-2">
+          <Button href={realisationHref(projet.id)} variant="quiet" size="sm" arrow>
+            Lire l’étude de cas
+          </Button>
+          {projet.url ? (
             <a
               href={projet.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="link-draw text-body font-semibold text-accent-deep"
+              className="link-draw inline-block py-2 text-note font-semibold text-accent-deep"
             >
               Voir le site en ligne
               <span className="sr-only"> (nouvelle fenêtre)</span>
             </a>
-          </p>
-        ) : null}
+          ) : null}
+        </p>
       </Reveal>
 
       <Reveal delay={60} className={plateFirst ? 'md:order-1' : undefined}>
         <div className="grid gap-gap-xs">
           <MainScreen
+            id={projet.id}
             ecran={projet.ecranPrincipal}
-            url={projet.url}
             nom={projet.nom}
             priority={priority}
           />
@@ -153,33 +161,19 @@ export function WorkEntry({
   );
 }
 
-/** L’écran d’ouverture, cliquable quand le projet est en ligne. */
-function MainScreen({
-  ecran,
-  url,
-  nom,
-  priority,
-}: {
-  ecran: Ecran;
-  url?: string;
-  nom: string;
-  priority: boolean;
-}) {
-  const plate = (
-    <Plate src={ecran.src} alt={ecran.alt} ratio="16/9" sizes={MAIN_SIZES} priority={priority} />
-  );
-
-  if (!url) return plate;
-
+/**
+ * L’écran d’ouverture mène à l’étude de cas, pas au site du client : le visiteur
+ * reste chez nous, sur la page qui explique ce qui a été construit. Le lien vers
+ * le site en ligne reste proposé en texte, juste à côté.
+ */
+function MainScreen({ id, ecran, nom, priority }: { id: string; ecran: Ecran; nom: string; priority: boolean }) {
   return (
-    <a
-      href={url}
-      target="_blank"
-      rel="noopener noreferrer"
+    <Link
+      href={realisationHref(id) as Route}
       className="work-plate"
-      aria-label={`Ouvrir le site ${nom} (nouvelle fenêtre)`}
+      aria-label={`Lire l’étude de cas ${nom}`}
     >
-      {plate}
-    </a>
+      <Plate src={ecran.src} alt={ecran.alt} ratio="16/9" sizes={MAIN_SIZES} priority={priority} />
+    </Link>
   );
 }
