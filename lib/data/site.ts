@@ -72,13 +72,10 @@ export type CraftBlock = {
   title: string;
   body: string;
   /**
-   * Libellé du cadrage en attente, affiché à la place de la photo.
-   * Les trois blocs ont leur image : ce repli n’est plus alimenté, il reste
-   * pour un futur bloc dont la photo ne serait pas encore livrée.
+   * Chemin dans /public/images. Obligatoire : un bloc sans photo ne se publie
+   * pas, et aucun cadrage d’attente ne peut apparaître sur l’accueil.
    */
-  plate?: string;
-  /** Chemin dans /public/images — absent tant que la photo n’est pas livrée. */
-  imageSrc?: string;
+  imageSrc: string;
   /** Alternative textuelle définitive, écrite avant la photo (cf. docs/imagerie.md). */
   imageAlt: string;
 };
@@ -100,7 +97,7 @@ export const CRAFT_BLOCKS: readonly CraftBlock[] = [
     eyebrow: 'La visibilité',
     title: 'Être là quand quelqu’un cherche votre métier.',
     body:
-      'Fiche Google soignée, référencement local, avis suivis. La majorité de vos appels viennent d’une recherche faite à deux rues d’ici — c’est là que nous travaillons.',
+      'Fiche Google soignée, référencement local, avis suivis. Quand un client cherche votre métier près de chez lui, ce qu’il trouve à ce moment-là décide souvent de l’appel — c’est là que nous travaillons.',
     imageSrc: '/images/craft-visibilite.jpg',
     imageAlt:
       'Devanture d’un petit commerce marseillais en fin d’après-midi, vue depuis le trottoir d’en face.',
@@ -235,7 +232,7 @@ export const SERVICES = [
       'Un site pensé pour la façon dont vos clients vous appellent. Rapide sur téléphone, clair en trois secondes, et sans modèle recyclé.',
     points: [
       'Une seule action évidente sur chaque page',
-      'Vérifié sur téléphone et sur connexion lente avant la mise en ligne',
+      'Objectif de performance : les Core Web Vitals de Google dans le vert sur mobile, mesurés avant la mise en ligne',
       'Le code, les accès et le domaine sont à vous',
     ],
   },
@@ -246,7 +243,7 @@ export const SERVICES = [
       'Apparaître dans les recherches faites autour de vous. Nous travaillons le site, la fiche Google et les avis ensemble, parce que Google les lit ensemble.',
     points: [
       'Nous regardons tout ce qui bloque, et nous vous l’écrivons',
-      'Les recherches faites à deux rues de chez vous',
+      'Les recherches de votre métier dans votre zone',
       'Un point chiffré chaque mois, en français',
     ],
   },

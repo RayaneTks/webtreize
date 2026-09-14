@@ -37,14 +37,16 @@ export function HeroSection() {
 
         <Reveal delay={60}>
           <p className="lede mx-auto mt-gap-sm max-w-[52ch]">
-            Nous concevons des sites, des fiches Google et des outils sur mesure pour les entreprises
-            du 13 — avec le même soin que vous mettez à recevoir un client.
+            Nous concevons des sites, des fiches Google et des outils sur mesure pour les commerces
+            et les artisans — avec le même soin que vous mettez à recevoir un client.
           </p>
         </Reveal>
 
         <Reveal delay={120}>
           <div className="mt-gap-md flex flex-wrap items-center justify-center gap-x-gap-sm gap-y-gap-xs">
-            <Button href="/#audit">Commencer par un audit</Button>
+            <Button href="/#audit" track="clic_audit">
+              Commencer par un audit
+            </Button>
             <Button href="/#approche" variant="text" arrow>
               Découvrir notre approche
             </Button>

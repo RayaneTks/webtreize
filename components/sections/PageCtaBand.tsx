@@ -28,7 +28,9 @@ import { Button } from '@/components/ui/Button';
 export function PageCtaBand({
   title = 'Commençons simplement.',
   description = 'Vous nous parlez de votre activité, nous vous renvoyons par écrit ce qui vous freine. Gratuit, sans engagement.',
-  href = '/#audit',
+  // Directement le formulaire : renvoyer vers l’ancre de l’accueil imposait un
+  // détour d’une page avant de pouvoir écrire.
+  href = '/contact',
   label = 'Demander mon audit',
 }: {
   title?: string;
@@ -49,7 +51,7 @@ export function PageCtaBand({
         </Reveal>
         <Reveal delay={60}>
           <div className="mt-gap-md">
-            <Button href={href} variant="inverse" arrow>
+            <Button href={href} variant="inverse" arrow track="clic_audit">
               {label}
             </Button>
           </div>

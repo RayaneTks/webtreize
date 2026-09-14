@@ -67,15 +67,9 @@ export function CraftSection() {
 }
 
 /**
- * Plaque du bloc : la vraie photo dès que `imageSrc` est renseigné,
- * sinon le cadrage en attente.
+ * Plaque du bloc. La photo est obligatoire dans les données : il n’existe plus
+ * de cadrage d’attente, donc plus aucun moyen de publier un emplacement vide.
  */
 function CraftPlate({ block }: { block: CraftBlock }) {
-  if (block.imageSrc) {
-    return (
-      <Plate src={block.imageSrc} alt={block.imageAlt} ratio="4/3" sizes={CRAFT_PLATE_SIZES} />
-    );
-  }
-
-  return <Plate ratio="4/3" caption={block.plate} />;
+  return <Plate src={block.imageSrc} alt={block.imageAlt} ratio="4/3" sizes={CRAFT_PLATE_SIZES} />;
 }

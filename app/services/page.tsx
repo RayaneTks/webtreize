@@ -30,7 +30,7 @@ export default function ServicesPage() {
     <>
       <PageShell
         eyebrow="Nos prestations"
-        title="Sites, référencement et outils pour les entreprises du 13."
+        title="Sites, référencement et outils sur mesure."
         description="Quatre chantiers, un seul objectif : que vos clients vous trouvent et sachent quoi faire ensuite."
       >
         <ServicesPageContent />

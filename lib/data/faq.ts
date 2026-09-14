@@ -17,7 +17,7 @@ export const FAQ_ITEMS = [
   },
   {
     q: 'En combien de temps est-ce que je vois des résultats ?',
-    a: 'Une fiche Google optimisée bouge en une à deux semaines. Un site refait demande quatre à huit semaines. L’audit vous donne un calendrier adapté à votre situation, pas une moyenne.',
+    a: 'Sur une fiche Google retravaillée, les premiers effets apparaissent en général en quelques semaines, sans délai garanti : Google reste seul maître de son classement. Un site refait demande quatre à huit semaines. L’audit vous donne un calendrier adapté à votre situation, pas une moyenne.',
   },
   {
     q: 'Et si je n’y connais rien ?',

@@ -1,6 +1,13 @@
 import Link from 'next/link';
 import { Logo } from '@/components/ui/Logo';
-import { CONTACT_EMAIL, CONTENT_PUBLISHED_AT, SNAPCHAT_URL } from '@/lib/constants';
+import {
+  CONTACT_EMAIL,
+  CONTACT_PHONE_DISPLAY,
+  CONTACT_PHONE_HREF,
+  CONTENT_PUBLISHED_AT,
+  GEO_LINE,
+  SOCIAL_PROFILES,
+} from '@/lib/constants';
 import { LEGAL_LINKS } from '@/lib/data/legal';
 import { HOME_SECTIONS, NAV_ITEMS } from '@/lib/data/site';
 
@@ -50,26 +57,45 @@ export function Footer() {
             <Logo />
 
             <p className="mt-gap-sm max-w-[38ch] text-body text-ink-muted">
-              Studio digital à Marseille. Sites, visibilité locale et outils sur mesure pour les
-              entreprises du 13.
+              Studio digital. Sites, visibilité locale et outils sur mesure pour les commerces et
+              les artisans.
             </p>
 
             <address className="mt-gap-sm grid gap-1 not-italic">
-              <p className="text-note text-ink-faint">Marseille, Provence-Alpes-Côte d’Azur</p>
+              <p className="text-note text-ink-faint">{GEO_LINE}</p>
 
-              <a href={`mailto:${CONTACT_EMAIL}`} className="nav-link inline-flex w-fit py-1">
+              <a
+                href={`mailto:${CONTACT_EMAIL}`}
+                data-track="clic_email"
+                className="nav-link inline-flex w-fit py-2"
+              >
                 {CONTACT_EMAIL}
               </a>
 
-              <a
-                href={SNAPCHAT_URL}
-                target="_blank"
-                rel="noreferrer noopener"
-                className="nav-link inline-flex w-fit py-1"
-              >
-                Snapchat @webtreize
-                <span className="sr-only"> (nouvelle fenêtre)</span>
-              </a>
+              {CONTACT_PHONE_HREF ? (
+                <a
+                  href={CONTACT_PHONE_HREF}
+                  data-track="clic_telephone"
+                  className="nav-link inline-flex w-fit py-2"
+                >
+                  {CONTACT_PHONE_DISPLAY}
+                </a>
+              ) : null}
+
+              <p className="flex flex-wrap gap-x-gap-sm">
+                {SOCIAL_PROFILES.map((profile) => (
+                  <a
+                    key={profile.href}
+                    href={profile.href}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className="nav-link inline-flex w-fit py-2"
+                  >
+                    {profile.label}
+                    <span className="sr-only"> (nouvelle fenêtre)</span>
+                  </a>
+                ))}
+              </p>
             </address>
           </div>
 

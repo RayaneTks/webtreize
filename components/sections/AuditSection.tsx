@@ -2,7 +2,7 @@ import { Lamp } from '@/components/motion/Lamp';
 import { Reveal } from '@/components/motion/Reveal';
 import { AuditBrief } from '@/components/sections/AuditBrief';
 import { Button } from '@/components/ui/Button';
-import { CONTACT_EMAIL } from '@/lib/constants';
+import { CONTACT_EMAIL, GEO_LINE } from '@/lib/constants';
 import { AUDIT } from '@/lib/data/site';
 
 /**
@@ -75,18 +75,22 @@ export function AuditSection() {
 
         <Reveal delay={180}>
           <div className="mt-gap-md">
-            <Button href="/contact" variant="inverse" arrow>
+            <Button href="/contact" variant="inverse" arrow track="clic_audit">
               Demander mon audit
             </Button>
           </div>
           <p className="mt-gap-md text-note text-canvas/60">
             Ou écrivez-nous directement&#8239;:{' '}
-            <a href={`mailto:${CONTACT_EMAIL}`} className="link-draw font-semibold text-canvas">
+            <a
+              href={`mailto:${CONTACT_EMAIL}`}
+              data-track="clic_email"
+              className="link-draw font-semibold text-canvas"
+            >
               {CONTACT_EMAIL}
             </a>
           </p>
           <p className="mt-gap-xs text-note text-canvas/60">
-            Marseille, Provence-Alpes-Côte d’Azur · du lundi au vendredi, 9&#160;h – 18&#160;h
+            {GEO_LINE} Du lundi au vendredi, 9&#160;h – 18&#160;h.
           </p>
         </Reveal>
       </div>
