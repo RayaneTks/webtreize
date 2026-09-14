@@ -2,8 +2,11 @@ import type { Metadata } from 'next';
 import { PageShell } from '@/components/layout/PageShell';
 import { PageCtaBand } from '@/components/sections/PageCtaBand';
 import { SerifQuote, SerifQuoteEmphasis } from '@/components/sections/SerifQuote';
+import { TeamSection } from '@/components/sections/TeamSection';
+import { TestimonialsSection } from '@/components/sections/TestimonialsSection';
 import { Reveal } from '@/components/motion/Reveal';
 import { ContactChannels } from '@/components/ui/ContactChannels';
+import { GEO_LINE } from '@/lib/constants';
 import { Plate } from '@/components/ui/Plate';
 import { breadcrumbJsonLd, pageMetadata, webPageJsonLd } from '@/lib/seo';
 
@@ -18,13 +21,17 @@ import { breadcrumbJsonLd, pageMetadata, webPageJsonLd } from '@/lib/seo';
  * lignes plus haut (finding « about-duplique-la-home »). Deux URL portant les
  * mêmes blocs, sur le site d’un studio qui vend du référencement.
  *
- * Le contenu est désormais propre à la page : l’origine du nom, le lieu, et ce
- * que le studio refuse de faire. Rien qui soit déjà écrit ailleurs, rien qui ne
- * soit vérifiable.
+ * Le contenu est désormais propre à la page : pourquoi un petit studio, où il
+ * travaille, qui répond, et ce qu’il refuse de faire. Rien qui soit déjà écrit
+ * ailleurs, rien qui ne soit vérifiable.
+ *
+ * L’étymologie « WebTreize, c’est le 13 en provençal » a été retirée : une page
+ * qui doit inspirer confiance ne s’ouvre pas sur une affirmation que le
+ * visiteur ne peut pas vérifier.
  *
  * ## Accent
  *
- * Une seule terre cuite dans le corps de page : le « 13 » de la citation. Les
+ * Une seule terre cuite dans le corps de page : le mot souligné de la citation. Les
  * étiquettes restent en `.eyebrow` (encre pâle) et non en `.eyebrow-accent` :
  * avec le point du logotype du header et celui du footer, la règle des trois de
  * la charte est déjà à son plafond.
@@ -52,8 +59,8 @@ const ATELIER_ALT =
  */
 const REFUS = [
   {
-    title: 'Pas de témoignages, pas de logos clients',
-    body: 'Nous n’affichons rien que nous ne puissions montrer. Ce site est notre seule pièce à conviction : sa vitesse, sa lisibilité, son code.',
+    title: 'Pas de faux avis, pas de chiffres gonflés',
+    body: 'Nous n’affichons que ce que vous pouvez vérifier : des sites en ligne dont l’adresse est publique, et des avis signés par les personnes qui les ont donnés.',
   },
   {
     title: 'Pas de jargon',
@@ -74,23 +81,23 @@ export default function AboutPage() {
         description="Un seul interlocuteur, du premier échange à la mise en ligne. Et un site dont vous gardez tous les accès."
       >
         <section
-          aria-labelledby="nom-title"
+          aria-labelledby="taille-title"
           className="section-pad border-t border-line bg-surface text-center"
         >
           <div className="site-container">
-            <h2 id="nom-title" className="sr-only">
-              L’origine du nom
+            <h2 id="taille-title" className="sr-only">
+              Pourquoi un petit studio
             </h2>
             <Reveal>
               <SerifQuote>
-                WebTreize, c’est le <SerifQuoteEmphasis>13</SerifQuoteEmphasis> en provençal.
+                Un petit studio, <SerifQuoteEmphasis>volontairement</SerifQuoteEmphasis>.
               </SerifQuote>
             </Reveal>
             <Reveal delay={60}>
               <p className="lede mx-auto mt-gap-lg max-w-[54ch] text-left sm:text-center">
-                Le nom dit d’où nous travaillons et pour qui. Les entreprises d’ici méritent une
-                présence en ligne à la hauteur de leur savoir-faire réel&#8239;: c’est la seule conviction
-                dont ce studio a besoin.
+                Nous prenons peu de projets à la fois, pour les tenir de bout en bout. Pas de
+                commercial qui promet, pas d’équipe qui découvre le dossier après la
+                signature&#8239;: la personne qui vous écoute est celle qui construit.
               </p>
             </Reveal>
           </div>
@@ -105,9 +112,9 @@ export default function AboutPage() {
               </h2>
               <div className="mt-gap-sm max-w-[54ch] space-y-4 text-body text-ink-muted">
                 <p>
-                  Nous travaillons depuis Marseille, pour des commerces et des artisans des
-                  Bouches-du-Rhône. Nous nous déplaçons dans le 13, et à distance ailleurs&#8239;: voir un
-                  comptoir, une devanture, un atelier, cela change ce que nous écrivons ensuite.
+                  {GEO_LINE} Quand c’est possible, nous venons voir&#8239;: un comptoir, une
+                  devanture, un atelier, cela change ce que nous écrivons ensuite. Sinon, un appel
+                  en visio et quelques photos suffisent pour démarrer.
                 </p>
                 <p>
                   Vous parlez à la personne qui conçoit, qui développe et qui met en ligne. Il n’y a
@@ -127,6 +134,10 @@ export default function AboutPage() {
             </Reveal>
           </div>
         </section>
+
+        <TeamSection />
+
+        <TestimonialsSection />
 
         <section aria-labelledby="refus-title" className="section-pad bg-surface">
           <div className="site-container">
