@@ -1,4 +1,5 @@
 import type { Route } from 'next';
+import ECRANS from './ecrans-realisations.json';
 
 /**
  * Les réalisations du studio, et leurs études de cas.
@@ -88,52 +89,61 @@ export type Realisation = {
   readonly etude: EtudeDeCas;
 };
 
-const img = (projet: string, ecran: string) => `/images/realisations/${projet}/${ecran}.jpg`;
+/**
+ * Chemin courant d’un écran, empreinte de contenu comprise (voir
+ * `scripts/maquettes.mjs`). Un écran absent du manifeste casse le build : mieux
+ * vaut une erreur qu’une image manquante en production.
+ */
+function img(projet: string, ecran: string): string {
+  const src = (ECRANS as Record<string, string>)[`${projet}/${ecran}`];
+  if (!src) throw new Error(`Écran introuvable : ${projet}/${ecran} — lancer node scripts/maquettes.mjs --index`);
+  return src;
+}
 
 /* — Nuréa Parfums — */
 
 const NUREA = {
   accueil: {
     src: img('nurea-parfums', 'boutique-accueil'),
-    alt: 'L’accueil noir de Nuréa Parfums : le titre « Les grands parfums, choisis un par un. » et une mosaïque de trois flacons numérotés — Baccarat Rouge 540, Tobacco Vanille, Marrakech Intense.',
+    alt: 'L’accueil sombre de Nuréa Parfums : le titre « Les grands parfums, choisis un par un. », deux boutons cuivre et trois parfums de la sélection du moment.',
     format: 'ordinateur',
     donnees: 'reelles',
-    legende: 'L’accueil : trois flacons du catalogue, numérotés et légendés, et la promesse de la parfumerie.',
+    legende: 'L’accueil de la boutique : l’accroche, la commande et trois parfums du catalogue.',
   },
   fiche: {
     src: img('nurea-parfums', 'boutique-fiche'),
-    alt: 'La fiche « Contre Moi » de Louis Vuitton : la photo du flacon, le nom en grand titre, les formats 10, 50 et 80 ml et le bouton « Commander sur Snapchat ».',
+    alt: 'La fiche « Contre Moi » de Louis Vuitton : la photo du flacon, les formats 10, 50 et 80 ml et le bouton cuivre « Commander sur Snapchat ».',
     format: 'ordinateur',
     donnees: 'reelles',
     legende: 'Une fiche par parfum : le flacon, les formats, la commande en un geste.',
   },
   ficheMobile: {
     src: img('nurea-parfums', 'boutique-fiche-mobile'),
-    alt: 'La fiche « Tobacco Vanille » de Tom Ford sur téléphone, avec le bouton de commande fixé en bas.',
+    alt: 'La fiche « Tobacco Vanille » de Tom Ford sur téléphone, avec le bouton « Commander sur Snapchat » fixé en bas.',
     format: 'telephone',
     donnees: 'reelles',
-    legende: 'Sur téléphone, la commande toujours à portée de pouce.',
+    legende: 'Sur téléphone, le bouton de commande toujours visible.',
   },
   tableau: {
     src: img('nurea-parfums', 'gestion-tableau'),
-    alt: 'La fiche d’un lot d’achat : l’encaissé, moins l’achat des parfums et les frais, égale la marge nette du lot, avec le registre des ventes rattachées.',
+    alt: 'Le tableau de bord de la gestion : l’encaissé du mois en grand avec la marge nette, ce qu’il reste à faire, la journée, les parfums les plus vendus et les lots ouverts.',
     format: 'ordinateur',
     donnees: 'exemple',
-    legende: 'Un lot d’achat : l’encaissé, l’achat et les frais donnent la marge nette de l’envoi.',
+    legende: 'L’accueil de la gestion : le mois, ce qu’il reste à faire, les parfums qui se vendent.',
   },
   caisse: {
     src: img('nurea-parfums', 'gestion-caisse'),
-    alt: 'L’écran « Vendre » sur téléphone : deux articles dont un offert, un total de 85 €, 100 € reçus en espèces, 15 € à rendre et le bouton « Encaisser 85 € ».',
+    alt: 'L’écran « Vendre » sur téléphone : un parfum en 50 ml à 85 €, le montant reçu en espèces et le bouton bordeaux « Encaisser 85 € ».',
     format: 'telephone',
     donnees: 'exemple',
-    legende: 'La vente au comptoir : le parfum, le règlement, la monnaie à rendre, l’encaissement en un geste.',
+    legende: 'La vente au comptoir : l’article, le montant reçu, puis « Encaisser ».',
   },
   gestionAccueil: {
     src: img('nurea-parfums', 'gestion-accueil'),
-    alt: 'L’accueil de la gestion sur téléphone : ce qu’il reste à faire, l’encaissé du jour et du mois, et la marge de chaque lot ouvert.',
+    alt: 'L’accueil de la gestion sur téléphone : les commandes en retard, les clients à relancer, l’encaissé du mois et de la journée.',
     format: 'telephone',
     donnees: 'exemple',
-    legende: 'L’accueil de la gestion : ce qu’il reste à faire, la journée, le mois, chaque lot.',
+    legende: 'La gestion sur téléphone : ce qu’il reste à faire, le mois, la journée.',
   },
 } as const satisfies Record<string, Ecran>;
 
@@ -142,38 +152,38 @@ const NUREA = {
 const MAGDA = {
   carte: {
     src: img('magda-mania', 'client-carte'),
-    alt: 'La carte Magda Mania sur fond nuit : la rubrique « Nos menus » avec les prix, le Menu Pasta Box épuisé et le bouton « Voir ma commande ».',
+    alt: 'La carte Magda Mania sur fond clair : pastilles de catégories, encart « Bienvenue au skatepark », menus en cartes arrondies avec photo, prix et bouton rose, et la barre « Voir ma commande ».',
     format: 'telephone',
     donnees: 'exemple',
-    legende: 'La carte vue depuis le skatepark : les menus, un produit épuisé, le panier en cours.',
-  },
-  suivi: {
-    src: img('magda-mania', 'client-suivi'),
-    alt: 'L’écran rose « C’est prêt. » avec le numéro de commande MM-135 en très grand, les étapes de préparation et le reçu de 12,90 € réglé en ligne.',
-    format: 'telephone',
-    donnees: 'exemple',
-    legende: 'Le suivi : quand la commande est prête, le client est prévenu, reçu à l’appui.',
-  },
-  cuisine: {
-    src: img('magda-mania', 'cuisine'),
-    alt: 'L’écran cuisine : quatre tickets colorés par état — en retard, en préparation, à lancer, nouvelle — avec leur minuterie et leur bouton d’action, et le rail des commandes prêtes au comptoir.',
-    format: 'ordinateur',
-    donnees: 'exemple',
-    legende: 'L’écran cuisine en plein coup de feu : chaque commande payée arrive en temps réel, dans l’ordre.',
-  },
-  gerant: {
-    src: img('magda-mania', 'gerant-carte'),
-    alt: 'Le tableau « Carte & stocks » : prix, TVA et interrupteur de disponibilité par produit, deux produits en rupture, et le stock du jour avec une alerte de stock bas.',
-    format: 'ordinateur',
-    donnees: 'exemple',
-    legende: 'L’espace gérant : la carte, les ruptures et le stock du jour.',
+    legende: 'La carte : les catégories, les menus en photo, le panier toujours à portée.',
   },
   panier: {
     src: img('magda-mania', 'client-panier'),
-    alt: 'La composition du Menu Paninis à 8,90 € : le panini, la boisson et les sauces à choisir, puis le bouton « Ajouter ».',
+    alt: 'La fiche du Menu Paninis ouverte en bas de l’écran : photo, choix du panini avec Raclette sélectionné, choix de la boisson, bouton rose « Ajouter · 8,90 € ».',
     format: 'telephone',
     donnees: 'exemple',
-    legende: 'Un menu se compose en trois choix : le panini, la boisson, les sauces.',
+    legende: 'Composer un menu : le panini, la boisson, puis l’ajout au panier.',
+  },
+  suivi: {
+    src: img('magda-mania', 'client-suivi'),
+    alt: 'Le suivi de la commande MM-135 : le grand numéro, les étapes reçue, en préparation, prête, l’heure annoncée par la cuisine et le reçu de 12,90 €.',
+    format: 'telephone',
+    donnees: 'exemple',
+    legende: 'Le suivi en direct, avec l’heure annoncée par la cuisine et le reçu.',
+  },
+  cuisine: {
+    src: img('magda-mania', 'cuisine'),
+    alt: 'L’écran cuisine sombre avec quatre tickets — prête, en retard, en préparation, nouvelle — aux grands numéros, avec articles, options, temps restant et bouton d’action.',
+    format: 'ordinateur',
+    donnees: 'exemple',
+    legende: 'L’écran cuisine en temps réel, lisible à deux mètres.',
+  },
+  gerant: {
+    src: img('magda-mania', 'gerant-carte'),
+    alt: 'La page « Carte & stocks » de l’espace gérant : produits par catégorie avec interrupteur de disponibilité, un menu en rupture, le stock bas et les sauces à activer.',
+    format: 'ordinateur',
+    donnees: 'exemple',
+    legende: 'L’espace gérant : la carte, les ruptures, le stock bas, les sauces.',
   },
 } as const satisfies Record<string, Ecran>;
 
@@ -182,38 +192,38 @@ const MAGDA = {
 const E1D = {
   fiche: {
     src: img('encore-un-dessert', 'fiche-dessert'),
-    alt: 'Fiche technique de la tarte cacahuète caramel : cinq composants avec poids, prix au kilo et coût, un coût de revient de 5,99 €, puis les prix particulier (44 €) et pro (38 €) avec leurs marges de 86,4 % et 84,2 % face à une marge cible de 65 %.',
+    alt: 'La recette de la tarte cacahuète caramel : coût de revient de 5,99 €, soit 0,75 € la part, la composition en cinq lignes avec grammages et coûts, puis le prix particulier (44 €, 86,4 % de marge) et pro (38 €, 84,2 %).',
     format: 'telephone',
     donnees: 'exemple',
-    legende: 'La fiche technique : chaque grammage a un prix, chaque tarte deux marges.',
+    legende: 'La fiche d’une tarte : sa composition, son coût de revient, sa marge particulier et pro.',
   },
   commandes: {
     src: img('encore-un-dessert', 'commandes'),
-    alt: 'Les commandes du mercredi 30 septembre : restaurants et particuliers, les desserts demandés, les notes de livraison, le statut et l’avancement en cuisine.',
+    alt: 'Les commandes du mercredi 30 septembre : restaurants et particuliers, leurs desserts, leurs notes de livraison, leur statut et leur avancement en cuisine.',
     format: 'telephone',
     donnees: 'exemple',
-    legende: 'Les commandes du jour, leur statut et ce que la cuisine a déjà fait.',
+    legende: 'Les commandes du jour, leur statut et leur avancement en cuisine.',
   },
   production: {
     src: img('encore-un-dessert', 'production'),
-    alt: 'L’onglet cuisine : 10 pièces faites sur 22, une case par pièce, puis chaque dessert avec le nombre restant ; la tarte cacahuète caramel est dépliée, une case par tarte pour chaque client.',
+    alt: 'La vue Cuisine : 10 pièces faites sur 22 ; la tarte cacahuète caramel est dépliée, avec une pastille par tarte pour chaque client.',
     format: 'telephone',
     donnees: 'exemple',
-    legende: 'La cuisine : toutes les commandes regroupées par dessert, cochées pièce par pièce.',
+    legende: 'La cuisine : toutes les commandes regroupées par dessert, cochées tarte par tarte.',
   },
   ingredients: {
     src: img('encore-un-dessert', 'ingredients'),
-    alt: 'Les matières premières par rayon : pour chacune, le conditionnement acheté et le prix normalisé au kilo, au litre ou à l’unité.',
+    alt: 'Les matières premières classées par rayon : pour chacune, le conditionnement acheté et le prix au kilo, au litre ou à l’unité.',
     format: 'telephone',
     donnees: 'exemple',
-    legende: 'Les matières premières, du conditionnement d’achat au prix au kilo.',
+    legende: 'Les matières premières par rayon, avec leur prix au kilo, au litre ou à l’unité.',
   },
   compta: {
     src: img('encore-un-dessert', 'compta'),
-    alt: 'La comptabilité des 30 derniers jours : chiffre d’affaires, coût matières, bénéfice net, pièces vendues, puis le bénéfice rapporté par chaque dessert.',
+    alt: 'Le tableau de bord des 30 derniers jours : chiffre d’affaires, bénéfice net, coût matières, marge globale, puis les desserts les plus rentables.',
     format: 'telephone',
     donnees: 'exemple',
-    legende: 'Le bilan du mois : chiffre d’affaires, coût matières, bénéfice net, et ce que rapporte chaque dessert.',
+    legende: 'Le bilan du mois : chiffre d’affaires, bénéfice, marge et desserts les plus rentables.',
   },
 } as const satisfies Record<string, Ecran>;
 
@@ -222,35 +232,35 @@ const E1D = {
 const CONCIERGERIE = {
   accueil: {
     src: img('conciergerie-nurea', 'accueil'),
-    alt: 'L’accueil du site de la Conciergerie Nuréa : le titre « Votre appartement génère des revenus. Vous ne gérez rien. », les calanques vues de la mer et une fiche des conditions.',
+    alt: 'L’accueil du site de la Conciergerie Nuréa : les calanques en plein cadre, le titre « Votre appartement génère des revenus. Vous ne gérez rien. », le bouton « Simuler mes revenus » et un bandeau commission, engagement, cautions.',
     format: 'ordinateur',
     donnees: 'reelles',
-    legende: 'L’accueil : la promesse, puis les conditions — commission, engagement, cautions, secteur.',
+    legende: 'L’accueil : la promesse, une action principale, puis les conditions.',
   },
   simulateur: {
     src: img('conciergerie-nurea', 'simulateur'),
-    alt: 'Le simulateur de revenus : curseurs du tarif par nuit et des nuits ouvertes, relevé estimatif jusqu’à 1 755 € nets par mois, formulaire de demande d’étude.',
+    alt: 'Le simulateur de revenus sur fond bleu profond : curseurs du tarif par nuit et des nuits disponibles, carte blanche avec 1 755 € nets par mois, le détail du calcul et le formulaire de demande d’étude.',
     format: 'ordinateur',
     donnees: 'exemple',
-    legende: 'Le simulateur : le calcul affiché ligne à ligne, puis la demande d’étude.',
+    legende: 'Le simulateur : le revenu net et son calcul, puis la demande d’étude.',
   },
   services: {
     src: img('conciergerie-nurea', 'services'),
-    alt: 'Les cinq missions de la conciergerie en registre numéroté, les options sur devis et les trois étapes, de l’évaluation au premier virement.',
+    alt: 'Les cinq missions de la conciergerie, chacune avec son icône et sa description, puis les options sur devis : maintenance, photographie, blanchisserie.',
     format: 'ordinateur',
     donnees: 'reelles',
-    legende: 'Cinq missions, les options sur devis et le déroulé en trois étapes.',
+    legende: 'Cinq missions, définies clairement, et les options sur devis.',
   },
   accueilMobile: {
     src: img('conciergerie-nurea', 'accueil-mobile'),
-    alt: 'L’accueil du site sur téléphone : titre, fiche des conditions, boutons Appeler et WhatsApp.',
+    alt: 'L’accueil du site sur téléphone : les calanques, le titre, les trois conditions et la barre Appeler / WhatsApp.',
     format: 'telephone',
     donnees: 'reelles',
     legende: 'Sur téléphone, les conditions tout de suite et WhatsApp à portée de pouce.',
   },
   demande: {
     src: img('conciergerie-nurea', 'demande-recue'),
-    alt: 'L’e-mail reçu par la conciergerie : prénom et e-mail de la propriétaire, 130 € par nuit, 24 nuits par mois, 1 755 € nets estimés, et la réponse qui part directement vers elle.',
+    alt: 'L’e-mail reçu par la conciergerie : le prénom et l’e-mail de la propriétaire, 130 € par nuit, 24 nuits par mois, 1 755 € nets estimés avec leur calcul, et le bouton pour lui répondre directement.',
     format: 'telephone',
     donnees: 'exemple',
     legende: 'La demande arrive par e-mail, avec les chiffres du bien.',
@@ -268,7 +278,7 @@ export const REALISATIONS: readonly Realisation[] = [
     livrables: ['site catalogue', 'espace de gestion', 'caisse sur téléphone', 'comptabilité'],
     accrochage: {
       large: [
-        { ecran: NUREA.fiche, legende: 'La boutique, côté client' },
+        { ecran: NUREA.accueil, legende: 'La boutique, côté client' },
         { ecran: NUREA.caisse, legende: 'La caisse, derrière le comptoir' },
       ],
       etroit: [
@@ -334,7 +344,7 @@ export const REALISATIONS: readonly Realisation[] = [
     accrochage: {
       large: [
         { ecran: MAGDA.cuisine, legende: 'L’écran de la cuisine' },
-        { ecran: MAGDA.suivi, legende: 'La commande prête, côté client' },
+        { ecran: MAGDA.carte, legende: 'La carte, côté client' },
       ],
       etroit: [
         { ecran: MAGDA.carte, legende: 'La carte' },
@@ -407,8 +417,8 @@ export const REALISATIONS: readonly Realisation[] = [
     livrables: ['application mobile de production', 'fiches techniques', 'commandes', 'comptabilité'],
     accrochage: {
       large: [
+        { ecran: E1D.fiche, legende: 'La fiche d’une tarte' },
         { ecran: E1D.production, legende: 'La production du jour' },
-        { ecran: E1D.fiche, legende: 'La fiche technique' },
         { ecran: E1D.compta, legende: 'Le bilan du mois' },
       ],
       etroit: [
@@ -474,7 +484,7 @@ export const REALISATIONS: readonly Realisation[] = [
     livrables: ['site vitrine', 'simulateur de revenus', 'demandes chiffrées par e-mail', 'contact WhatsApp'],
     accrochage: {
       large: [
-        { ecran: CONCIERGERIE.simulateur, legende: 'Le simulateur, côté propriétaire' },
+        { ecran: CONCIERGERIE.accueil, legende: 'Le site, côté propriétaire' },
         { ecran: CONCIERGERIE.demande, legende: 'La demande reçue' },
       ],
       etroit: [
