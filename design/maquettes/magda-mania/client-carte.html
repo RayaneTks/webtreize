@@ -6,128 +6,152 @@
 <title>Magda Mania — carte</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500;600&display=block" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=block" rel="stylesheet">
 <style>
+  /* Jetons relevés dans app/globals.css du dépôt magda-mania */
   :root {
-    --nuit: #0e1430; --nuit-2: #161d3f; --puits: #1a2248; --trait: #273158;
-    --texte: #f4f6fb; --texte-2: #a2b3da; --texte-3: #7a8cc0;
-    --rose: #f50054; --bleu: #0080f8; --bleu-texte: #4fa8ff; --or: #ffc023;
+    --magda-50: #fff0f5; --magda-100: #ffe1ec; --magda-600: #f50054; --magda-700: #cc0046;
+    --spark-300: #7fc0ff; --spark-600: #0080f8;
+    --night-50: #f4f6fb; --night-100: #e8ecf6; --night-200: #ccd5eb; --night-300: #a2b3da; --night-400: #6f88c5; --night-500: #4c66ae; --night-600: #3a5094; --night-900: #1d2749; --night-950: #0e1430;
+    --cream-50: #ffffff; --cream-100: #fbfaf9; --cream-200: #f2f1ef;
+    --radius-card: 20px;
+    --shadow-lift: 0 1px 2px rgb(14 20 48 / .05), 0 8px 24px -8px rgb(14 20 48 / .12);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { width: 390px; height: 844px; overflow: hidden; }
-  body { background: var(--nuit); color: var(--texte); font-family: 'Archivo', sans-serif; font-stretch: 100%; -webkit-font-smoothing: antialiased; position: relative; }
+  body { position: relative; background: var(--cream-100); color: var(--night-950); font: 15px/1.45 'Plus Jakarta Sans', sans-serif; -webkit-font-smoothing: antialiased; }
+  .d { font-family: 'Fredoka', sans-serif; letter-spacing: -.015em; }
   .num { font-variant-numeric: tabular-nums; }
+  svg.i { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; display: block; }
 
-  .statut { height: 47px; display: flex; align-items: center; justify-content: space-between; padding: 4px 28px 0 34px; font: 600 16px/1 'Archivo'; }
-  .statut svg { display: block; }
+  .statut { height: 47px; display: flex; align-items: center; justify-content: space-between; padding: 4px 28px 0 34px; font: 600 16px/1 'Plus Jakarta Sans'; color: var(--night-950); }
 
-  header { display: flex; align-items: center; gap: 12px; padding: 6px 20px 14px; }
-  header img { width: 40px; height: 40px; border-radius: 50%; }
-  header .nom { font-stretch: 125%; font-weight: 800; font-size: 17px; letter-spacing: -.01em; line-height: 1; }
-  header .etat { margin-top: 5px; font-size: 13px; color: var(--texte-2); display: flex; align-items: center; gap: 6px; }
-  header .etat i { width: 7px; height: 7px; background: var(--bleu-texte); border-radius: 50%; }
-  header .outils { margin-left: auto; display: flex; gap: 4px; }
-  header .outils span { width: 40px; height: 40px; display: grid; place-items: center; }
+  header { display: flex; align-items: center; gap: 12px; padding: 4px 16px 12px 20px; }
+  .logo { width: 44px; height: 44px; border-radius: 16px; background: var(--night-950); padding: 3px; flex: none; }
+  .logo img { width: 100%; height: 100%; object-fit: contain; }
+  header .nom { font-size: 19px; font-weight: 700; line-height: 1.05; }
+  header .sous { font-size: 13px; color: var(--night-500); margin-top: 2px; }
+  header .icone { margin-left: auto; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; color: var(--night-600); }
 
-  .accroche { padding: 18px 20px 20px; border-top: 1px solid var(--trait); }
-  .accroche h1 { font-stretch: 125%; font-weight: 900; font-size: 31px; line-height: 1.02; letter-spacing: -.025em; }
-  .accroche h1 em { font-style: normal; color: var(--rose); }
-  .accroche p { margin-top: 12px; font-size: 15px; line-height: 1.45; color: var(--texte-2); max-width: 330px; }
-  .accroche p b { color: var(--texte); font-weight: 600; }
-  .partenaire { display: flex; align-items: center; gap: 10px; margin-top: 16px; font-size: 13px; color: var(--texte-2); }
-  .partenaire img { width: 26px; height: 28px; }
-  .partenaire b { color: var(--texte); font-weight: 600; }
+  .pastilles { display: flex; gap: 8px; padding: 0 20px 14px; white-space: nowrap; overflow: hidden; border-bottom: 1px solid var(--night-100); }
+  .pastilles span { height: 40px; padding: 0 16px; border-radius: 999px; display: inline-flex; align-items: center; font-size: 14px; font-weight: 600; color: var(--night-600); background: var(--cream-50); border: 1px solid var(--night-100); }
+  .pastilles span.actif { background: var(--night-950); color: #fff; border-color: var(--night-950); }
 
-  nav { display: flex; gap: 22px; padding: 0 20px; border-top: 1px solid var(--trait); border-bottom: 1px solid var(--trait); white-space: nowrap; overflow: hidden; }
-  nav span { font-size: 15px; font-weight: 600; color: var(--texte-3); padding: 14px 0 12px; border-bottom: 3px solid transparent; }
-  nav span.actif { color: var(--texte); border-color: var(--rose); }
+  main { padding: 16px 20px 0; }
 
-  .rubrique { display: flex; align-items: baseline; justify-content: space-between; padding: 20px 20px 6px; }
-  .rubrique h2 { font-stretch: 125%; font-weight: 800; font-size: 20px; letter-spacing: -.015em; }
-  .rubrique span { font-size: 13px; color: var(--texte-3); }
+  .accueil { background: var(--night-950); color: #fff; border-radius: var(--radius-card); overflow: hidden; }
+  .accueil .haut { display: flex; gap: 14px; align-items: center; padding: 16px; }
+  .accueil img.l { width: 68px; height: 68px; flex: none; }
+  .accueil h1 { font-size: 21px; font-weight: 700; line-height: 1.1; }
+  .accueil h1 span { color: var(--spark-300); }
+  .accueil p { margin-top: 6px; font-size: 14px; line-height: 1.4; color: var(--night-200); }
+  .partenaire { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-top: 1px solid rgba(255,255,255,.1); font-size: 13px; color: var(--night-200); margin: 0 !important; }
+  .partenaire b { color: #fff; font-weight: 600; }
+  .partenaire img { width: 28px; height: 30px; background: #fff; border-radius: 8px; padding: 2px; }
 
-  ul { list-style: none; padding: 0 20px; }
-  li { display: grid; grid-template-columns: 68px 1fr auto; gap: 14px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--trait); }
-  li .photo { width: 68px; height: 68px; background: var(--puits); border-radius: 3px; display: grid; place-items: center; overflow: hidden; }
-  li .photo img { width: 64px; height: 64px; object-fit: contain; }
-  li .t { font-weight: 700; font-size: 16.5px; line-height: 1.2; }
-  li .d { margin-top: 4px; font-size: 13.5px; line-height: 1.35; color: var(--texte-2); }
-  li .halal { font-size: 12px; font-weight: 600; color: var(--bleu-texte); margin-left: 4px; }
-  li .droite { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
-  li .prix { font-weight: 800; font-size: 18px; font-stretch: 118%; letter-spacing: -.01em; }
-  li .plus { width: 36px; height: 36px; border: 1.5px solid #3a4677; border-radius: 3px; display: grid; place-items: center; }
-  li.epuise .photo img { filter: grayscale(1); opacity: .45; }
-  li.epuise .t, li.epuise .prix { color: var(--texte-3); }
-  li.epuise .marque { font-size: 12.5px; font-weight: 700; color: var(--or); }
+  .rubrique { margin: 24px 0 12px; }
+  .rubrique h2 { font-size: 21px; font-weight: 700; line-height: 1.15; }
+  .rubrique p { font-size: 14px; color: var(--night-500); margin-top: 2px; }
 
-  .barre { position: absolute; left: 0; right: 0; bottom: 0; padding: 12px 16px 28px; background: linear-gradient(to bottom, rgba(14,20,48,0), var(--nuit) 22%); }
-  .barre div { height: 56px; background: var(--rose); border-radius: 4px; display: flex; align-items: center; padding: 0 18px; gap: 12px; }
-  .barre .qte { font: 600 13px/1 'IBM Plex Mono'; background: rgba(14,20,48,.28); padding: 6px 8px; border-radius: 2px; }
-  .barre b { font-size: 17px; font-weight: 700; }
-  .barre .tot { margin-left: auto; font-size: 17px; font-weight: 700; }
+  .produits { display: flex; flex-direction: column; gap: 10px; }
+  .carte { display: flex; gap: 14px; background: var(--cream-50); border: 1px solid var(--night-100); border-radius: var(--radius-card); padding: 12px; box-shadow: var(--shadow-lift); }
+  .visuel { width: 92px; height: 92px; border-radius: 16px; background: var(--cream-200); display: grid; place-items: center; flex: none; position: relative; overflow: hidden; }
+  .visuel img { width: 84px; height: 84px; object-fit: contain; }
+  .visuel.plein img { width: 92px; height: 92px; object-fit: cover; }
+  .texte { flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: space-between; padding: 2px 0; }
+  .texte h3 { font-size: 17px; font-weight: 600; line-height: 1.2; display: flex; align-items: center; gap: 6px; }
+  .texte p { margin-top: 3px; font-size: 13.5px; line-height: 1.35; color: var(--night-500); }
+  .bas { display: flex; align-items: flex-end; justify-content: space-between; margin-top: 8px; }
+  .prix { font-size: 19px; font-weight: 700; }
+  .ajout { width: 40px; height: 40px; border-radius: 50%; background: var(--magda-600); color: #fff; display: grid; place-items: center; }
+  .halal { width: 22px; height: 22px; border-radius: 50%; border: 1px solid rgba(5,150,105,.4); background: #ecfdf5; color: #065f46; font: 600 8.5px/1 'Plus Jakarta Sans'; display: inline-grid; place-items: center; flex: none; }
+  .epuise { opacity: .6; box-shadow: none; }
+  .epuise .visuel img { filter: grayscale(.6); }
+  .epuise .bande { position: absolute; left: 0; right: 0; bottom: 0; background: rgba(14,20,48,.85); color: #fff; font-size: 11.5px; font-weight: 700; text-align: center; padding: 4px 0; }
+  .epuise .etat { font-size: 13px; font-weight: 600; color: var(--night-500); }
+
+  .panier { position: absolute; left: 16px; right: 16px; bottom: 28px; height: 60px; border-radius: 16px; background: var(--magda-600); color: #fff; display: flex; align-items: center; gap: 12px; padding: 0 14px 0 12px; box-shadow: 0 2px 4px rgb(14 20 48 / .07), 0 16px 32px -12px rgb(245 0 84 / .45); }
+  .panier .n { width: 34px; height: 34px; border-radius: 12px; background: rgba(255,255,255,.2); display: grid; place-items: center; font-weight: 800; font-size: 15px; }
+  .panier b { font-size: 16.5px; font-weight: 600; }
+  .panier .tot { margin-left: auto; font-size: 19px; font-weight: 700; }
 </style>
 </head>
 <body>
   <div class="statut">
     <span class="num">13:24</span>
-    <svg width="66" height="12" viewBox="0 0 66 12" fill="#f4f6fb" aria-hidden="true">
+    <svg width="66" height="12" viewBox="0 0 66 12" fill="#0e1430" aria-hidden="true">
       <rect x="0" y="8" width="3" height="4" rx=".6"/><rect x="5" y="6" width="3" height="6" rx=".6"/><rect x="10" y="3.5" width="3" height="8.5" rx=".6"/><rect x="15" y="1" width="3" height="11" rx=".6"/>
-      <rect x="38.5" y=".5" width="23" height="11" rx="2.6" fill="none" stroke="#f4f6fb" stroke-opacity=".45"/><rect x="40.5" y="2.5" width="15" height="7" rx="1.2"/><rect x="63" y="4" width="1.6" height="4" rx=".6" fill-opacity=".45"/>
+      <rect x="38.5" y=".5" width="23" height="11" rx="2.6" fill="none" stroke="#0e1430" stroke-opacity=".4"/><rect x="40.5" y="2.5" width="15" height="7" rx="1.2"/><rect x="63" y="4" width="1.6" height="4" rx=".6" fill-opacity=".4"/>
     </svg>
   </div>
 
   <header>
-    <img src="assets/logo.webp" alt="">
+    <span class="logo"><img src="assets/logo.webp" alt=""></span>
     <div>
-      <p class="nom">Magda Mania</p>
-      <p class="etat"><i></i>Cuisine ouverte</p>
+      <p class="nom d">Magda Mania</p>
+      <p class="sous">Commande &amp; retrait</p>
     </div>
-    <div class="outils">
-      <span><svg width="21" height="21" viewBox="0 0 21 21" fill="none" stroke="#f4f6fb" stroke-width="2.2"><circle cx="9" cy="9" r="6.6"/><path d="M14 14l5 5" stroke-linecap="square"/></svg></span>
-    </div>
+    <span class="icone"><svg class="i" width="22" height="22" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>
   </header>
 
-  <section class="accroche">
-    <h1>Un creux entre deux sessions&#8239;<em>?</em></h1>
-    <p>Commande d’ici, paie en ligne. <b>On te prévient quand c’est prêt</b> au comptoir.</p>
-    <p class="partenaire"><img src="assets/spartiates.png" alt=""><span>Avec les <b>Spartiates de Marseille</b></span></p>
-  </section>
-
-  <nav>
-    <span class="actif">Menus</span><span>Salé</span><span>Crêpes</span><span>Glaces</span><span>Boissons</span><span>Chaud</span>
+  <nav class="pastilles">
+    <span class="actif">Tout</span><span>Nos menus</span><span>Carte salée</span><span>Crêpes</span><span>Glaces</span>
   </nav>
 
-  <div class="rubrique"><h2>Nos menus</h2><span>Le plat, les frites et la boisson</span></div>
-  <ul>
-    <li>
-      <span class="photo"><img src="assets/menu-hot-dog.webp" alt=""></span>
-      <div><p class="t">Menu Hot-Dog <span class="halal">halal</span></p><p class="d">Hot-dog, frites, boisson</p></div>
-      <div class="droite"><span class="prix num">9,90&nbsp;€</span><span class="plus"><svg width="14" height="14" viewBox="0 0 14 14" stroke="#f4f6fb" stroke-width="2.2"><path d="M7 1v12M1 7h12"/></svg></span></div>
-    </li>
-    <li>
-      <span class="photo"><img src="assets/menu-panini.webp" alt=""></span>
-      <div><p class="t">Menu Paninis <span class="halal">halal</span></p><p class="d">Panini au choix, frites, boisson</p></div>
-      <div class="droite"><span class="prix num">8,90&nbsp;€</span><span class="plus"><svg width="14" height="14" viewBox="0 0 14 14" stroke="#f4f6fb" stroke-width="2.2"><path d="M7 1v12M1 7h12"/></svg></span></div>
-    </li>
-    <li>
-      <span class="photo"><img src="assets/menu-nuggets.webp" alt=""></span>
-      <div><p class="t">Menu Nuggets <span class="halal">halal</span></p><p class="d">6 nuggets, frites, boisson</p></div>
-      <div class="droite"><span class="prix num">8,90&nbsp;€</span><span class="plus"><svg width="14" height="14" viewBox="0 0 14 14" stroke="#f4f6fb" stroke-width="2.2"><path d="M7 1v12M1 7h12"/></svg></span></div>
-    </li>
-    <li class="epuise">
-      <span class="photo"><img src="assets/menu-pasta-box.webp" alt=""></span>
-      <div><p class="t">Menu Pasta Box</p><p class="d">Pâtes au choix, boisson</p></div>
-      <div class="droite"><span class="prix num">8,90&nbsp;€</span><span class="marque">Épuisé</span></div>
-    </li>
-    <li>
-      <span class="photo"><img src="assets/menu-enfant.webp" alt=""></span>
-      <div><p class="t">Menu Enfant</p><p class="d">4 nuggets, frites, Capri-Sun, compote</p></div>
-      <div class="droite"><span class="prix num">6,00&nbsp;€</span><span class="plus"><svg width="14" height="14" viewBox="0 0 14 14" stroke="#f4f6fb" stroke-width="2.2"><path d="M7 1v12M1 7h12"/></svg></span></div>
-    </li>
-  </ul>
+  <main>
+    <section class="accueil">
+      <div class="haut">
+        <img class="l" src="assets/logo.webp" alt="">
+        <div>
+          <h1 class="d">Bienvenue au <span>skatepark</span></h1>
+          <p>Commandez d’ici, sans quitter la session.</p>
+        </div>
+      </div>
+      <p class="partenaire"><img src="assets/spartiates.png" alt=""><span>Avec les <b>Spartiates de Marseille</b></span></p>
+    </section>
 
-  <div class="barre">
-    <div><span class="qte">1</span><b>Voir ma commande</b><span class="tot num">4,00&nbsp;€</span></div>
+    <div class="rubrique">
+      <h2 class="d">Nos menus</h2>
+      <p>Le plat, les frites et la boisson.</p>
+    </div>
+
+    <div class="produits">
+      <article class="carte">
+        <span class="visuel"><img src="assets/menu-hot-dog.webp" alt=""></span>
+        <div class="texte">
+          <div><h3 class="d">Menu Hot-Dog <span class="halal" lang="ar">حلال</span></h3><p>1 hot-dog + frites + boisson</p></div>
+          <div class="bas"><span class="prix d num">9,90&nbsp;€</span><span class="ajout"><svg class="i" width="20" height="20" viewBox="0 0 24 24" stroke-width="2.75"><path d="M5 12h14"/><path d="M12 5v14"/></svg></span></div>
+        </div>
+      </article>
+      <article class="carte">
+        <span class="visuel"><img src="assets/menu-panini.webp" alt=""></span>
+        <div class="texte">
+          <div><h3 class="d">Menu Paninis <span class="halal" lang="ar">حلال</span></h3><p>1 panini + frites + boisson</p></div>
+          <div class="bas"><span class="prix d num">8,90&nbsp;€</span><span class="ajout"><svg class="i" width="20" height="20" viewBox="0 0 24 24" stroke-width="2.75"><path d="M5 12h14"/><path d="M12 5v14"/></svg></span></div>
+        </div>
+      </article>
+      <article class="carte">
+        <span class="visuel plein"><img src="assets/menu-nuggets.webp" alt=""></span>
+        <div class="texte">
+          <div><h3 class="d">Menu Nuggets <span class="halal" lang="ar">حلال</span></h3><p>6 nuggets + frites + boisson</p></div>
+          <div class="bas"><span class="prix d num">8,90&nbsp;€</span><span class="ajout"><svg class="i" width="20" height="20" viewBox="0 0 24 24" stroke-width="2.75"><path d="M5 12h14"/><path d="M12 5v14"/></svg></span></div>
+        </div>
+      </article>
+      <article class="carte">
+        <span class="visuel"><img src="assets/menu-enfant.webp" alt=""></span>
+        <div class="texte">
+          <div><h3 class="d">Menu Enfant <span class="halal" lang="ar">حلال</span></h3><p>4 nuggets + frites + Capri-Sun + compote</p></div>
+          <div class="bas"><span class="prix d num">6,00&nbsp;€</span><span class="ajout"><svg class="i" width="20" height="20" viewBox="0 0 24 24" stroke-width="2.75"><path d="M5 12h14"/><path d="M12 5v14"/></svg></span></div>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <div class="panier">
+    <span class="n num">1</span>
+    <b class="d">Voir ma commande</b>
+    <span class="tot d num">4,00&nbsp;€</span>
+    <svg class="i" width="20" height="20" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
   </div>
 </body>
 </html>

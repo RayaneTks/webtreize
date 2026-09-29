@@ -6,170 +6,124 @@
 <title>Conciergerie Nuréa — simulateur de revenus</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&display=block" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=block" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css">
 <style>
   :root {
-    --calcaire: #F2F4F3;
-    --blanc: #FFFFFF;
-    --encre: #0F2A35;
-    --encre-douce: #4E6B77;
-    --filet: #CDD6D9;
+    --white: #FFFFFF;
+    --cloud: #FBFCFD;
+    --mist: #F1F7FA;
+    --azur-wash: #E3F0F6;
+    --ink: #11313E;
+    --ink-soft: #587685;
     --azur: #1E92B8;
-    --capitainerie: #0B4A61;
-    --capitainerie-filet: #2A6479;
-    --ciel: #A9D6E6;
-    --marge: 64px;
+    --azur-deep: #0C617C;
+    --sky: #7BC4DD;
+    --line: #E4EBEF;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { width: 1440px; height: 900px; overflow: hidden; }
   body {
-    background: var(--calcaire); color: var(--encre);
-    font-family: 'Archivo', sans-serif; font-size: 17px; line-height: 26px;
+    position: relative; background: var(--azur-deep); color: var(--white);
+    font-family: 'Geist', system-ui, sans-serif; font-size: 16px; line-height: 1.6;
     -webkit-font-smoothing: antialiased;
-    position: relative;
   }
-  .mono { font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; line-height: 16px; letter-spacing: .01em; }
-  .num { font-variant-numeric: tabular-nums lining-nums; }
+  .tabular { font-variant-numeric: tabular-nums; }
 
-  header {
-    height: 76px; padding: 0 var(--marge);
-    display: flex; align-items: center; justify-content: space-between;
-    border-bottom: 1px solid var(--filet);
-  }
-  .marque { display: flex; align-items: center; gap: 12px; }
-  .marque img { width: 34px; height: 34px; }
-  .marque b { font-weight: 650; font-stretch: 112%; font-size: 18px; letter-spacing: -.01em; }
-  nav { display: flex; align-items: center; gap: 36px; font-size: 15px; color: var(--encre-douce); }
-  nav .actif { color: var(--encre); font-weight: 600; box-shadow: inset 0 -2px 0 var(--azur); padding-bottom: 4px; margin-top: 6px; }
-  nav a.bouton { color: var(--encre); font-weight: 600; padding: 9px 16px; border: 1px solid var(--encre); border-radius: 3px; }
+  header { position: absolute; left: 0; right: 0; top: 0; height: 80px; padding: 0 120px; background: rgba(255,255,255,.97); border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; color: var(--ink); }
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .logo .mark { width: 36px; height: 36px; border-radius: 10px; background: rgba(30,146,184,.1); display: grid; place-items: center; }
+  .logo .nom { display: flex; flex-direction: column; line-height: 1; }
+  .logo .nom b { font-size: 16px; font-weight: 600; letter-spacing: -.01em; }
+  .logo .nom span { margin-top: 4px; font-size: 9.5px; font-weight: 500; letter-spacing: .3em; text-transform: uppercase; color: var(--azur); }
+  nav { display: flex; align-items: center; gap: 36px; font-size: 15px; font-weight: 500; color: var(--ink-soft); }
+  nav .actif { color: var(--ink); }
+  .pill { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 20px; border-radius: 999px; font-size: 15px; font-weight: 500; background: var(--azur); color: var(--white); }
+  .pill i { font-size: 18px; }
 
-  /* Colonne de réglage */
-  .reglage { position: absolute; left: var(--marge); top: 76px; width: 600px; padding-top: 76px; }
-  .reglage .mono { color: var(--encre-douce); }
-  h2 { margin-top: 22px; font-size: 52px; line-height: 56px; font-weight: 620; font-stretch: 110%; letter-spacing: -.026em; }
-  .intro { margin-top: 20px; max-width: 500px; color: var(--encre-douce); font-size: 18px; line-height: 28px; }
+  /* Réglages */
+  .reglages { position: absolute; left: 120px; top: 80px; width: 540px; padding-top: 128px; }
+  h2 { font-size: 52px; line-height: 1.05; font-weight: 600; letter-spacing: -.03em; text-wrap: balance; }
+  .intro { margin-top: 20px; font-size: 18px; line-height: 1.6; color: rgba(123,196,221,.95); max-width: 480px; }
 
-  .jauge { margin-top: 60px; }
-  .jauge + .jauge { margin-top: 52px; }
-  .jauge .tete { display: flex; justify-content: space-between; align-items: baseline; }
-  .jauge label { font-size: 16px; font-weight: 600; }
-  .jauge output { font-size: 34px; line-height: 40px; font-weight: 620; font-stretch: 108%; letter-spacing: -.02em; }
-  .regle { position: relative; margin-top: 14px; height: 40px; }
-  .regle .graduations {
-    position: absolute; left: 0; right: 0; top: 13px; height: 7px;
-    background: repeating-linear-gradient(90deg, var(--encre-douce) 0 1px, transparent 1px var(--pas));
-    background-size: calc(100% + 1px) 100%;
-    opacity: .55;
-  }
-  .regle .rail { position: absolute; left: 0; right: 0; top: 11px; height: 2px; background: var(--filet); }
-  .regle .rempli { position: absolute; left: 0; top: 11px; height: 2px; background: var(--azur); }
-  .regle .majeure { position: absolute; font-style: normal; top: 11px; width: 1px; height: 14px; background: var(--encre); }
-  .regle .majeure span { position: absolute; top: 18px; transform: translateX(-50%); white-space: nowrap; color: var(--encre-douce); }
-  .regle .majeure:first-of-type span { transform: none; }
-  .regle .majeure.fin span { transform: translateX(-100%); }
-  .regle .curseur {
-    position: absolute; top: 1px; width: 22px; height: 22px; margin-left: -11px;
-    border-radius: 50%; background: var(--blanc); border: 2px solid var(--encre);
-  }
-  .note { margin-top: 52px; padding-top: 16px; border-top: 1px solid var(--filet); font-size: 14px; line-height: 21px; color: var(--encre-douce); max-width: 600px; }
+  .curseur { margin-top: 56px; }
+  .curseur + .curseur { margin-top: 44px; }
+  .curseur .tete { display: flex; justify-content: space-between; align-items: baseline; }
+  .curseur label { font-size: 16px; font-weight: 500; color: rgba(255,255,255,.85); }
+  .curseur output { font-size: 30px; font-weight: 600; letter-spacing: -.02em; }
+  .rail { position: relative; margin-top: 16px; height: 24px; }
+  .rail .piste { position: absolute; left: 0; right: 0; top: 10px; height: 4px; border-radius: 4px; background: rgba(123,196,221,.22); }
+  .rail .plein { position: absolute; left: 0; top: 10px; height: 4px; border-radius: 4px; background: var(--sky); }
+  .rail .poignee { position: absolute; top: 0; width: 24px; height: 24px; margin-left: -12px; border-radius: 50%; background: var(--white); box-shadow: 0 0 0 5px rgba(30,146,184,.35), 0 4px 10px rgba(0,0,0,.2); }
+  .bornes { margin-top: 10px; display: flex; justify-content: space-between; font-size: 14px; color: rgba(123,196,221,.8); }
 
-  /* Relevé */
-  .releve {
-    position: absolute; left: 744px; top: 76px; right: 0; bottom: 0;
-    background: var(--capitainerie); color: var(--blanc);
-    padding: 76px var(--marge) 0 64px;
-  }
-  .releve .mono { color: var(--ciel); }
-  .lignes { margin-top: 22px; }
-  .ligne { display: flex; justify-content: space-between; align-items: baseline; padding: 11px 0; border-bottom: 1px solid var(--capitainerie-filet); font-size: 17px; }
-  .ligne span:first-child { color: #D6E9F0; }
-  .ligne span:last-child { font-weight: 560; }
-  .resultat { margin-top: 30px; }
-  .montant { font-variant-numeric: lining-nums proportional-nums; margin-top: 6px; font-size: 128px; line-height: 118px; font-weight: 600; font-stretch: 110%; letter-spacing: -.035em; }
-  .montant small { font-size: 56px; letter-spacing: -.01em; margin-left: 6px; font-weight: 500; }
-  .precision { margin-top: 14px; font-size: 14px; line-height: 21px; color: var(--ciel); max-width: 520px; }
+  /* Carte résultat + demande */
+  .carte { position: absolute; left: 760px; top: 184px; width: 560px; background: var(--white); color: var(--ink); border-radius: 24px; padding: 36px 40px 36px; box-shadow: 0 24px 60px -20px rgba(8,40,52,.55); }
+  .carte .libelle { font-size: 15px; font-weight: 500; color: var(--ink-soft); }
+  .montant { margin-top: 4px; font-size: 72px; line-height: 1; font-weight: 600; letter-spacing: -.04em; }
+  .montant span { font-size: 22px; font-weight: 500; letter-spacing: -.01em; color: var(--ink-soft); margin-left: 4px; }
+  .calcul { margin-top: 22px; border-radius: 16px; background: var(--mist); padding: 6px 18px; }
+  .calcul div { display: flex; justify-content: space-between; padding: 9px 0; font-size: 15px; color: var(--ink-soft); }
+  .calcul div + div { border-top: 1px solid var(--line); }
+  .calcul b { font-weight: 500; color: var(--ink); }
 
-  form { margin-top: 38px; padding-top: 24px; border-top: 1px solid var(--capitainerie-filet); }
-  form > p { font-size: 17px; font-weight: 600; }
-  .champs { margin-top: 16px; display: grid; grid-template-columns: 180px 1fr; column-gap: 12px; }
-  .champ span { display: block; color: var(--ciel); margin-bottom: 7px; }
-  .champ div { height: 48px; padding: 0 14px; display: flex; align-items: center; background: #0E5670; border: 1px solid #3C7A90; border-radius: 3px; font-size: 16px; }
-  .envoi { margin-top: 12px; display: flex; align-items: center; justify-content: space-between; }
-  .envoi b { background: var(--blanc); color: var(--encre); font-size: 16px; font-weight: 600; padding: 14px 22px; border-radius: 3px; }
-  .envoi .mono { color: var(--ciel); }
+  form { margin-top: 28px; }
+  form > p { font-size: 17px; font-weight: 600; letter-spacing: -.01em; }
+  .champs { margin-top: 14px; display: grid; grid-template-columns: 180px 1fr; gap: 12px; }
+  .champ span { display: block; font-size: 14px; font-weight: 500; color: var(--ink-soft); margin-bottom: 6px; }
+  .champ div { height: 48px; padding: 0 16px; display: flex; align-items: center; border-radius: 12px; border: 1px solid var(--line); background: var(--cloud); font-size: 16px; }
+  .envoyer { margin-top: 16px; height: 52px; border-radius: 12px; background: var(--azur); color: var(--white); display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 16px; font-weight: 600; }
+  .envoyer i { font-size: 18px; }
+  .mention { margin-top: 12px; text-align: center; font-size: 14px; font-weight: 400; color: var(--ink-soft); }
 </style>
 </head>
 <body>
   <header>
-    <div class="marque"><img src="assets/logo.svg" alt=""><b>Conciergerie Nuréa</b></div>
+    <div class="logo">
+      <span class="mark"><svg viewBox="0 0 24 24" width="22" height="22" fill="none"><path d="M2 14c1.5 0 1.5-2 3-2s1.5 2 3 2 1.5-2 3-2 1.5 2 3 2 1.5-2 3-2 1.5 2 3 2" stroke="#1E92B8" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="7.5" r="2.25" fill="#0C617C"/></svg></span>
+      <span class="nom"><b>Nuréa</b><span>Conciergerie</span></span>
+    </div>
     <nav>
-      <a>Missions</a><a>Déroulé</a><a class="actif">Simulateur</a><a>Questions</a>
-      <a class="bouton">Nous écrire sur WhatsApp</a>
+      <a>Services</a><a>Fonctionnement</a><a class="actif">Simulateur</a><a>Questions</a>
+      <a class="pill"><i class="ph-fill ph-whatsapp-logo"></i>Nous écrire</a>
     </nav>
   </header>
 
-  <section class="reglage">
-    <p class="mono">Simulateur de revenus</p>
+  <section class="reglages">
     <h2>Ce que votre bien peut générer.</h2>
-    <p class="intro">Réglez votre tarif et vos disponibilités. L’occupation de 75&#8239;% et notre commission de 25&#8239;% sont déduites.</p>
+    <p class="intro">Réglez votre tarif et vos nuits disponibles. L’occupation de 75&#8239;% et notre commission de 25&#8239;% sont déjà déduites.</p>
 
-    <div class="jauge">
-      <div class="tete"><label>Tarif par nuit</label><output class="num">130&nbsp;€</output></div>
-      <div class="regle" style="--pas: 16.6667px">
-        <div class="graduations"></div>
-        <div class="rail"></div>
-        <div class="rempli" style="width: 41.67px"></div>
-        <i class="majeure" style="left:0"><span class="mono num">80&nbsp;€</span></i>
-        <i class="majeure" style="left:100px"><span class="mono num">200&nbsp;€</span></i>
-        <i class="majeure" style="left:266.67px"><span class="mono num">400&nbsp;€</span></i>
-        <i class="majeure" style="left:433.33px"><span class="mono num">600&nbsp;€</span></i>
-        <i class="majeure fin" style="left:599px"><span class="mono num">800&nbsp;€</span></i>
-        <div class="curseur" style="left: 41.67px"></div>
-      </div>
+    <div class="curseur">
+      <div class="tete"><label>Tarif par nuit</label><output class="tabular">130&nbsp;€</output></div>
+      <div class="rail"><div class="piste"></div><div class="plein" style="width:37.5px"></div><div class="poignee" style="left:37.5px"></div></div>
+      <div class="bornes tabular"><span>80&nbsp;€</span><span>800&nbsp;€</span></div>
     </div>
 
-    <div class="jauge">
-      <div class="tete"><label>Nuits ouvertes à la location, par mois</label><output class="num">24 nuits</output></div>
-      <div class="regle" style="--pas: 24px">
-        <div class="graduations"></div>
-        <div class="rail"></div>
-        <div class="rempli" style="width: 456px"></div>
-        <i class="majeure" style="left:0"><span class="mono num">5</span></i>
-        <i class="majeure" style="left:120px"><span class="mono num">10</span></i>
-        <i class="majeure" style="left:240px"><span class="mono num">15</span></i>
-        <i class="majeure" style="left:360px"><span class="mono num">20</span></i>
-        <i class="majeure" style="left:480px"><span class="mono num">25</span></i>
-        <i class="majeure fin" style="left:599px"><span class="mono num">30</span></i>
-        <div class="curseur" style="left: 456px"></div>
-      </div>
+    <div class="curseur">
+      <div class="tete"><label>Nuits disponibles à la location, par mois</label><output class="tabular">24 nuits</output></div>
+      <div class="rail"><div class="piste"></div><div class="plein" style="width:410.4px"></div><div class="poignee" style="left:410.4px"></div></div>
+      <div class="bornes tabular"><span>5 nuits</span><span>30 nuits</span></div>
     </div>
-
-    <p class="note">Les chiffres réglés ici sont joints à votre demande d’étude. L’estimation est ensuite affinée selon le logement, sa localisation et ses disponibilités.</p>
   </section>
 
-  <section class="releve">
-    <p class="mono">Relevé estimatif, par mois</p>
-    <div class="lignes num">
-      <div class="ligne"><span>130&nbsp;€ × 24 nuits</span><span>3&#8239;120&nbsp;€</span></div>
-      <div class="ligne"><span>Occupation retenue, 75&#8239;%</span><span>2&#8239;340&nbsp;€</span></div>
-      <div class="ligne"><span>Commission Nuréa, 25&#8239;%</span><span>−&#8239;585&nbsp;€</span></div>
-    </div>
-    <div class="resultat">
-      <p class="mono">Revenus nets estimés</p>
-      <p class="montant"><span style="margin-right:.16em">1</span>755<small>&nbsp;€</small></p>
-      <p class="precision">Versés par les plateformes directement sur votre compte, commission déduite. Relevé mensuel détaillé.</p>
+  <section class="carte">
+    <p class="libelle">Revenus nets estimés</p>
+    <p class="montant tabular">1&#8239;755&nbsp;€<span>/ mois</span></p>
+    <div class="calcul tabular">
+      <div><span>130&nbsp;€ × 24 nuits</span><b>3&#8239;120&nbsp;€</b></div>
+      <div><span>Occupation estimée, 75&#8239;%</span><b>2&#8239;340&nbsp;€</b></div>
+      <div><span>Commission Nuréa, 25&#8239;%</span><b>−&#8239;585&nbsp;€</b></div>
     </div>
 
     <form>
-      <p>Recevez une étude personnalisée par e-mail sous 24&nbsp;heures.</p>
+      <p>Recevez une étude personnalisée sous 24&nbsp;h</p>
       <div class="champs">
-        <label class="champ"><span class="mono">Prénom</span><div>Hélène</div></label>
-        <label class="champ"><span class="mono">E-mail</span><div>h.marchetti@exemple.fr</div></label>
+        <label class="champ"><span>Prénom</span><div>Hélène</div></label>
+        <label class="champ"><span>E-mail</span><div>h.marchetti@exemple.fr</div></label>
       </div>
-      <div class="envoi">
-        <span class="mono">Gratuit, sans engagement</span>
-        <b>Recevoir mon étude gratuite</b>
-      </div>
+      <div class="envoyer">Recevoir mon étude gratuite <i class="ph ph-arrow-right"></i></div>
+      <p class="mention">Gratuit et sans engagement. Vos chiffres sont joints à la demande.</p>
     </form>
   </section>
 </body>

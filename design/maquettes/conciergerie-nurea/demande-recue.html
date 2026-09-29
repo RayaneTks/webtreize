@@ -6,120 +6,109 @@
 <title>Conciergerie Nuréa — demande d’étude reçue</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&display=block" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=block" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
 <style>
   :root {
-    --calcaire: #F2F4F3;
-    --blanc: #FFFFFF;
-    --encre: #0F2A35;
-    --encre-douce: #4E6B77;
-    --filet: #CDD6D9;
+    --white: #FFFFFF;
+    --mist: #F1F7FA;
+    --azur-wash: #E3F0F6;
+    --ink: #11313E;
+    --ink-soft: #587685;
     --azur: #1E92B8;
-    --azur-texte: #136F92;
-    --capitainerie: #0B4A61;
-    --capitainerie-filet: #2A6479;
-    --ciel: #A9D6E6;
+    --azur-deep: #0C617C;
+    --line: #E4EBEF;
     /* habillage neutre de la messagerie */
     --gris: #6B7378;
-    --gris-filet: #E3E6E8;
+    --gris-filet: #E6E8EA;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { width: 390px; height: 844px; overflow: hidden; }
   body {
-    background: var(--blanc); color: var(--encre);
-    font-family: 'Archivo', sans-serif; font-size: 15px; line-height: 22px;
-    -webkit-font-smoothing: antialiased; position: relative;
+    position: relative; background: var(--white); color: var(--ink);
+    font-family: 'Geist', system-ui, sans-serif; font-size: 15px; line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
   }
-  .mono { font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; line-height: 15px; letter-spacing: .01em; }
-  .num { font-variant-numeric: tabular-nums lining-nums; }
+  .tabular { font-variant-numeric: tabular-nums; }
 
-  .etat { height: 47px; padding: 0 26px 0 30px; display: flex; align-items: center; justify-content: space-between; font-size: 15px; font-weight: 600; }
-  .etat svg { display: block; }
+  .etat { height: 47px; padding: 0 26px 0 32px; display: flex; align-items: center; justify-content: space-between; font-size: 15px; font-weight: 600; }
   .etat .icones { display: flex; gap: 6px; align-items: center; }
+  .etat svg { display: block; }
 
-  /* Messagerie : habillage sobre, neutre */
-  .outils { height: 40px; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; font-size: 15px; color: var(--gris); }
-  .outils b { font-weight: 500; color: var(--encre); }
-  .entete { padding: 8px 20px 14px; border-bottom: 1px solid var(--gris-filet); }
-  .objet { font-size: 20px; line-height: 25px; font-weight: 620; letter-spacing: -.012em; }
-  .de { margin-top: 12px; display: flex; justify-content: space-between; align-items: baseline; }
-  .de b { font-weight: 600; }
-  .de span { color: var(--gris); font-size: 13px; }
-  .meta { margin-top: 2px; font-size: 13px; line-height: 19px; color: var(--gris); }
-  .meta em { font-style: normal; color: var(--encre); }
+  .outils { height: 44px; padding: 0 12px 0 8px; display: flex; align-items: center; justify-content: space-between; color: var(--gris); font-size: 16px; }
+  .outils span { display: inline-flex; align-items: center; gap: 2px; height: 44px; padding: 0 8px; }
+  .outils i { font-size: 20px; }
+  .entete { padding: 6px 20px 16px; border-bottom: 1px solid var(--gris-filet); }
+  .objet { font-size: 20px; line-height: 1.3; font-weight: 600; letter-spacing: -.015em; }
+  .de { margin-top: 12px; display: flex; align-items: center; gap: 10px; }
+  .avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--azur-wash); display: grid; place-items: center; flex: none; }
+  .de .qui { flex: 1; line-height: 1.35; }
+  .de .qui b { font-weight: 600; font-size: 15px; }
+  .de .qui span { display: block; font-size: 14px; color: var(--gris); }
+  .de time { font-size: 14px; color: var(--gris); align-self: flex-start; margin-top: 2px; }
 
-  /* Le message, au gabarit Nuréa */
-  .message { background: var(--calcaire); padding: 14px 16px 0; height: 624px; }
-  .feuille { background: var(--blanc); border: 1px solid var(--filet); }
-  .echelle { display: flex; height: 6px; }
-  .echelle i { flex: 1; background: var(--encre); }
-  .echelle i:nth-child(even) { background: var(--blanc); }
-  .corps { padding: 16px 18px 18px; }
-  .signature { display: flex; align-items: center; justify-content: space-between; }
-  .signature .m { display: flex; align-items: center; gap: 8px; font-weight: 650; font-stretch: 110%; font-size: 14px; }
-  .signature img { width: 22px; height: 22px; }
-  .signature .mono { color: var(--encre-douce); }
-  h1 { text-wrap: balance; margin-top: 16px; font-size: 22px; line-height: 27px; font-weight: 620; font-stretch: 106%; letter-spacing: -.02em; }
-  table { margin-top: 14px; width: 100%; border-collapse: collapse; border-top: 1px solid var(--encre); }
-  td { padding: 9px 0; border-bottom: 1px solid var(--filet); vertical-align: baseline; }
-  td:first-child { color: var(--encre-douce); font-size: 14px; }
+  .message { padding: 20px 20px 0; }
+  h2 { font-size: 22px; line-height: 1.2; font-weight: 600; letter-spacing: -.02em; text-wrap: balance; }
+  table { margin-top: 14px; width: 100%; border-collapse: collapse; }
+  td { padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
+  td:first-child { color: var(--ink-soft); }
   td:last-child { text-align: right; font-weight: 600; }
-  td a { color: var(--azur-texte); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; font-weight: 500; }
-  .total { margin-top: 16px; background: var(--capitainerie); color: var(--blanc); padding: 14px 16px 15px; }
-  .total .mono { color: var(--ciel); }
-  .total p.m { margin-top: 4px; font-size: 34px; line-height: 38px; font-weight: 600; font-stretch: 108%; letter-spacing: -.025em; }
-  .total p.m small { font-size: 16px; font-weight: 500; letter-spacing: 0; color: var(--ciel); }
-  .calcul { margin-top: 10px; color: var(--encre-douce); line-height: 16px; }
-  .repondre { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--filet); font-size: 14px; line-height: 20px; }
+  td a { color: var(--azur); font-weight: 500; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(30,146,184,.4); }
+  .total { margin-top: 16px; border-radius: 16px; background: var(--azur-wash); padding: 16px 18px; }
+  .total .libelle { font-size: 14px; font-weight: 500; color: var(--azur-deep); }
+  .total .m { margin-top: 2px; font-size: 32px; line-height: 1.1; font-weight: 600; letter-spacing: -.035em; color: var(--azur-deep); }
+  .total .m span { font-size: 16px; font-weight: 500; letter-spacing: 0; margin-left: 2px; }
+  .total .calcul { margin-top: 8px; font-size: 14px; line-height: 1.45; color: var(--ink-soft); }
+  .note { margin-top: 16px; font-size: 14px; color: var(--ink-soft); }
 
-  .barre { position: absolute; left: 0; right: 0; bottom: 0; height: 64px; background: var(--blanc); border-top: 1px solid var(--gris-filet); display: flex; align-items: flex-start; justify-content: space-between; padding: 12px 20px 0; font-size: 15px; color: var(--gris); }
-  .barre b { font-weight: 600; color: var(--encre); }
+  .barre { position: absolute; left: 0; right: 0; bottom: 0; height: 84px; border-top: 1px solid var(--gris-filet); background: var(--white); display: flex; align-items: flex-start; gap: 10px; padding: 10px 16px 0; }
+  .barre a { height: 48px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; border-radius: 999px; font-size: 15px; font-weight: 600; }
+  .barre .sec { width: 48px; border: 1px solid var(--gris-filet); color: var(--gris); }
+  .barre .sec i { font-size: 20px; }
+  .barre .rep { flex: 1; background: var(--ink); color: var(--white); }
+  .barre .rep i { font-size: 18px; }
 </style>
 </head>
 <body>
   <div class="etat">
-    <span class="num">10:42</span>
+    <span class="tabular">10:42</span>
     <span class="icones">
-      <svg width="17" height="11" viewBox="0 0 17 11" fill="#0F2A35"><rect x="0" y="7.5" width="3" height="3.5" rx=".6"/><rect x="4.6" y="5" width="3" height="6" rx=".6"/><rect x="9.2" y="2.5" width="3" height="8.5" rx=".6"/><rect x="13.8" y="0" width="3" height="11" rx=".6"/></svg>
-      <svg width="15" height="11" viewBox="0 0 15 11" fill="none" stroke="#0F2A35" stroke-width="1.6" stroke-linecap="round"><path d="M1.2 3.9a9 9 0 0 1 12.6 0"/><path d="M3.6 6.3a5.6 5.6 0 0 1 7.8 0"/><circle cx="7.5" cy="9" r=".9" fill="#0F2A35" stroke="none"/></svg>
-      <svg width="25" height="12" viewBox="0 0 25 12"><rect x=".5" y=".5" width="21" height="11" rx="3" fill="none" stroke="#0F2A35" opacity=".45"/><rect x="2" y="2" width="15" height="8" rx="1.6" fill="#0F2A35"/><rect x="22.6" y="4" width="1.6" height="4" rx=".8" fill="#0F2A35" opacity=".45"/></svg>
+      <svg width="17" height="11" viewBox="0 0 17 11" fill="#11313E"><rect x="0" y="7.5" width="3" height="3.5" rx=".6"/><rect x="4.6" y="5" width="3" height="6" rx=".6"/><rect x="9.2" y="2.5" width="3" height="8.5" rx=".6"/><rect x="13.8" y="0" width="3" height="11" rx=".6"/></svg>
+      <svg width="15" height="11" viewBox="0 0 15 11" fill="none" stroke="#11313E" stroke-width="1.6" stroke-linecap="round"><path d="M1.2 3.9a9 9 0 0 1 12.6 0"/><path d="M3.6 6.3a5.6 5.6 0 0 1 7.8 0"/><circle cx="7.5" cy="9" r=".9" fill="#11313E" stroke="none"/></svg>
+      <svg width="25" height="12" viewBox="0 0 25 12"><rect x=".5" y=".5" width="21" height="11" rx="3" fill="none" stroke="#11313E" opacity=".45"/><rect x="2" y="2" width="15" height="8" rx="1.6" fill="#11313E"/><rect x="22.6" y="4" width="1.6" height="4" rx=".8" fill="#11313E" opacity=".45"/></svg>
     </span>
   </div>
 
-  <div class="outils"><span>‹ Réception</span><span class="num">3 sur 12</span></div>
+  <div class="outils"><span><i class="ph ph-caret-left"></i>Réception</span><span><i class="ph ph-archive"></i></span></div>
 
   <div class="entete">
     <p class="objet">Nouvelle demande d’étude — Hélène</p>
-    <p class="de"><b>Simulateur</b><span class="num">Aujourd’hui, 10:41</span></p>
-    <p class="meta">À&#8239;: <em>Conciergerie Nuréa</em></p>
-    <p class="meta">Répondre à&#8239;: <em>h.marchetti@exemple.fr</em></p>
-  </div>
-
-  <div class="message">
-    <div class="feuille">
-      <div class="echelle"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-      <div class="corps">
-        <div class="signature">
-          <span class="m"><img src="assets/logo.svg" alt="">Conciergerie Nuréa</span>
-          <span class="mono">Demande d’étude</span>
-        </div>
-        <h1>Nouvelle demande d’étude de revenus</h1>
-        <table class="num">
-          <tr><td>Prénom</td><td>Hélène</td></tr>
-          <tr><td>E-mail</td><td><a>h.marchetti@exemple.fr</a></td></tr>
-          <tr><td>Tarif par nuit</td><td>130&nbsp;€</td></tr>
-          <tr><td>Nuits par mois</td><td>24</td></tr>
-        </table>
-        <div class="total">
-          <p class="mono">Revenus nets estimés</p>
-          <p class="m"><span style="margin-right:.14em">1</span>755&nbsp;€ <small>par mois</small></p>
-        </div>
-        <p class="mono calcul num">130&nbsp;€ × 24 nuits × 75&#8239;% d’occupation, moins 25&#8239;% de commission.</p>
-        <p class="repondre">Répondre à cet e-mail contacte directement Hélène.</p>
-      </div>
+    <div class="de">
+      <span class="avatar"><svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M2 14c1.5 0 1.5-2 3-2s1.5 2 3 2 1.5-2 3-2 1.5 2 3 2 1.5-2 3-2 1.5 2 3 2" stroke="#1E92B8" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="7.5" r="2.25" fill="#0C617C"/></svg></span>
+      <span class="qui"><b>Simulateur</b><span>À&#8239;: Conciergerie Nuréa</span></span>
+      <time class="tabular">10:41</time>
     </div>
   </div>
 
-  <div class="barre"><span>Archiver</span><b>Répondre à Hélène</b></div>
+  <div class="message">
+    <h2>Nouvelle demande d’étude de revenus</h2>
+    <table class="tabular">
+      <tr><td>Prénom</td><td>Hélène</td></tr>
+      <tr><td>E-mail</td><td><a>h.marchetti@exemple.fr</a></td></tr>
+      <tr><td>Tarif par nuit</td><td>130&nbsp;€</td></tr>
+      <tr><td>Nuits par mois</td><td>24</td></tr>
+    </table>
+    <div class="total">
+      <p class="libelle">Revenus nets estimés</p>
+      <p class="m tabular">1&#8239;755&nbsp;€<span> / mois</span></p>
+      <p class="calcul tabular">130&nbsp;€ × 24 nuits × 75&#8239;% d’occupation, moins 25&#8239;% de commission.</p>
+    </div>
+    <p class="note">Répondre à cet e-mail contacte directement Hélène.</p>
+  </div>
+
+  <div class="barre">
+    <a class="sec"><i class="ph ph-arrow-bend-double-up-left"></i></a>
+    <a class="rep"><i class="ph ph-arrow-bend-up-left"></i>Répondre à Hélène</a>
+  </div>
 </body>
 </html>

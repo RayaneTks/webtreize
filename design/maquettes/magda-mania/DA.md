@@ -1,130 +1,96 @@
-# Magda Mania — audit et direction artistique
+# Magda Mania — DA réelle et versions améliorées
 
-## 1. Audit de l’application réelle
+Retour client sur la première version (fond nuit, Archivo, mono) : trop éloignée de la DA
+de l'app. Cette version repart de l'app réelle et l'améliore sans la réinventer.
 
-Sources : code du dépôt `RayaneTks/magda-mania` (`app/globals.css`, `components/client/*`,
-`components/kitchen/*`, `components/admin/*`, `db/seed-data.ts`), anciennes captures
-(`503d4e9`), affiche A4 du stand.
+## 1. DA réelle relevée
 
-### Face client (carte, options, suivi) : 5/10
-- Réussi : le fond est solide (option de sauce obligatoire avec « Sans sauce » en premier,
-  ruptures affichées, suivi en temps réel, Web Push expliqué avant d’être demandé). Le
-  bandeau d’accueil sur fond nuit sert bien le logo néon.
-- Bas de gamme / générique : c’est le gabarit d’appli de livraison. Cartes blanches à
-  coins de 20 px et ombre portée, pastilles de catégories avec émojis (🎡 ⭐ 🥪), boutons
-  « + » ronds roses répétés à chaque ligne, bandeau dégradé rose-bleu en haut, trame de
-  points en fond. Le fond crème coupe l’appli de son identité : l’affiche du stand, elle,
-  est sur fond nuit.
-- Typo : Fredoka (arrondie, enfantine) pour les titres, Plus Jakarta pour le reste. Aucune
-  des deux ne vient du logo ni du lieu ; le logo porte déjà toute la rondeur nécessaire.
-- Ton : l’appli vouvoie (« Commandez d’ici… », « Votre commande ») alors que la clientèle
-  est faite de riders ; la présentation passe au tutoiement, à répercuter dans l’appli.
-- Incohérences : les anciennes captures montrent des « Menu Panini americano » à 7,90 € ;
-  le fichier de carte (`seed-data.ts`) dit « Menu Paninis » à 8,90 € avec choix du panini.
-  On suit le code.
-- Suivi : le numéro est le bon élément dominant, mais pris dans une carte arrondie avec
-  une pulsation `pulse-ring`, des étapes en ronds à icônes, un vert émeraude étranger à
-  la marque.
+Sources : dépôt `RayaneTks/magda-mania` (`app/globals.css`, `app/layout.tsx`,
+`components/client/*`, `components/ui/*`, `components/order/OrderTracker.tsx`,
+`components/kitchen/*`, `components/admin/*`, `db/seed-data.ts`) et anciennes captures
+(`503d4e9` : magda-mania.jpg, magda-carte.jpg, magda-mobile.jpg).
 
-### Écran cuisine : 6/10
-- Réussi : l’intention est celle d’un vrai KDS : tri par ancienneté, compteur de minutes,
-  paliers de temps restant (5/10/15/20/30), consigne mise en évidence, bouton unique pour
-  l’étape suivante, annulation avec motif obligatoire, son et Web Push de cuisine.
-- À corriger : numéro de commande à 24 px, articles à 15 px, options à 12 px : illisible
-  à 2 m. L’état ne se lit qu’au liseré (rouge/émeraude/or), pas en bloc. Les tickets
-  « prêtes » restent mêlés à la production. Compteurs en pastilles. Barre d’outils très
-  chargée (six boutons de même poids).
+**Polices** (`layout.tsx`, next/font) : Fredoka 500/600/700 pour les titres, noms de
+produits et prix (`font-display`, interlettrage −0,015em) ; Plus Jakarta Sans 400–800 pour
+le texte.
 
-### Espace gérant : 5/10
-- Réussi : le bon geste est au bon endroit (interrupteur de disponibilité, stock ± en
-  plein service, filtres « En rupture » / « Stock bas », édition de la carte à part).
-- Générique : chaque produit est une carte arrondie séparée (30 cartes à faire défiler),
-  interrupteurs vert/rouge avec « OK / ✕ », barre dégradée, émojis de catégories. Aucune
-  densité de logiciel pro : pas de tableau, pas de colonnes, le prix et la TVA en petit
-  gris sous le nom.
+**Couleurs** (`globals.css`, `@theme`)
 
-## 2. Direction artistique
-
-**Concept.** L’enseigne néon allumée au-dessus du stand : tout est sur la nuit du logo,
-le texte est blanc comme un tube éteint, et deux tubes seulement s’allument, le rose
-quand c’est à toi de bouger, le bleu quand ça suit son cours.
-
-**Références réelles.** Affiche A3/A4 du stand (fond nuit, grande capitale grasse) ;
-menu-boards de street-food à lettres blanches et prix alignés ; graphismes de planches
-et marquages de skatepark en grotesque large et grasse (numéros de modules, panneaux
-de zones) ; tickets de caisse thermiques (chasse fixe, filets pointillés) ; KDS pro
-Toast et Square KDS : bandeau d’en-tête coloré par état, minuterie en haut à droite,
-bouton d’avancement unique en bas, rail des commandes prêtes.
-
-**Palette** (partie du logo et de `globals.css`)
-
-| Rôle | Hex | Usage |
+| Jeton | Hex | Usage dans l'app |
 | --- | --- | --- |
-| Nuit | `#0e1430` | fond client et cuisine, encre du gérant |
-| Nuit profonde | `#080c1f` | fond d’écran cuisine, entre les tickets |
-| Nuit relevée / filets | `#161d3f` / `#273158` / `#3a4677` | surfaces, séparateurs, contours |
-| Blanc tube | `#f4f6fb` | texte, bouton d’action cuisine |
-| Texte secondaire | `#a2b3da` / `#7a8cc0` | options, légendes |
-| Rose néon | `#f50054` | ce qui réclame un geste : commander, payer, « c’est prêt », retard, rupture |
-| Bleu néon | `#0080f8` (texte `#4fa8ff`) | en cours, en direct, ouvert |
-| Or | `#ffc023` | à lancer, nouvelle, consigne client, stock bas |
-| Papier (gérant) | `#f3f4f8` / `#ffffff` | fond et tableaux du back-office |
+| `magda-600` | `#f50054` | rose du néon : bouton principal, « + », barre panier, quantités en cuisine |
+| `magda-50/100/500/700` | `#fff0f5` `#ffe1ec` `#ff0a60` `#cc0046` | option choisie, pastille « Obligatoire » |
+| `spark-600` / `spark-300` | `#0080f8` / `#7fc0ff` | bleu du néon : « skatepark », filet de marque |
+| `gold-400` | `#ffc023` | alertes, « Nouvelle », consigne client, temps restant |
+| `night-950` | `#0e1430` | texte, pastille active, carte d'accueil, fond cuisine |
+| `night-900/800` | `#1d2749` / `#2c3a64` | tickets et filets de la cuisine |
+| `night-500/400/100` | `#4c66ae` `#6f88c5` `#e8ecf6` | textes secondaires, bordures |
+| `cream-100` / `cream-200` / blanc | `#fbfaf9` / `#f2f1ef` / `#ffffff` | fond clair, puits photo, cartes |
+| emerald / red (Tailwind) | `#10b981` / `#ef4444` | prête, disponible / retard, rupture |
 
-Règle : jamais plus de deux tubes allumés sur un même élément ; aucun dégradé décoratif,
-aucun halo (le néon est suggéré par la couleur pleine, pas par un glow).
+**Formes** : `--radius-card` 20 px (cartes), 16 px (vignettes, boutons, options), 12 px
+(boutons cuisine et admin), pastilles `rounded-full` ; ombre `shadow-lift` douce ;
+`stripe-band`, filet dégradé rose → bleu de 6 px en tête des écrans ; icônes Lucide trait 2.
 
-**Typographie** (Google Fonts, deux familles)
-- **Archivo** variable (axe de largeur 62–125) : une seule famille, trois voix.
-  Large 118–125 % noir 800–900 pour l’enseigne, les titres et les numéros de commande
-  (la grotesque large des planches et des marquages) ; normale pour l’interface ;
-  étroite 82–92 % pour les libellés longs de la cuisine (« Lancer la préparation »).
-- **IBM Plex Mono** : ce qui sort d’une imprimante à tickets : heures, minuteries,
-  téléphones, reçu du client, historique.
-- Échelle téléphone : 12,5 / 13,5 / 15 / 17 / 20 / 31 / 44 / 118. Échelle cuisine :
-  13,5 / 16 / 21 / 28 / 44. Chiffres tabulaires pour tous les montants. Espaces fines
-  (U+202F) avant « : ? % » et entre nombre et unité, insécable devant « € ».
-- Pas de capitales espacées ; interlettrage négatif sur les grands corps.
+**Composants** : carte produit blanche (vignette 96 px sur `cream-200`, nom Fredoka, prix
+Fredoka gras, « + » rond rose), pastilles de catégories 44 px, barre « Voir ma commande »
+rose flottante, fiche produit en feuille arrondie, suivi avec carte numéro nuit + 3 étapes
+à icônes, tickets cuisine `night-900` bordés à 2 px, espace gérant clair avec onglets
+pastilles et interrupteurs vert/rouge.
 
-**Grille.** Téléphone : marges de 20 px, pas de 4 px, lignes de carte de 92 px. Cuisine :
-4 colonnes de tickets + rail de 268 px, gouttières de 10 px, boutons tactiles ≥ 44 px
-(60 px pour l’action principale). Gérant : 2 colonnes (tableau + colonne service de
-352 px), lignes de tableau de 44 px.
+**Ton** : vouvoiement (« Commandez d'ici », « Votre commande », « On vous prévient »).
 
-**Composants.** Rayons de 2 à 4 px (étiquette, ticket), jamais de carte arrondie. Ligne
-de carte : vignette dans un puits nuit, nom, description, prix large aligné à droite,
-« + » en contour. Ticket cuisine : bandeau plein à la couleur de l’état (or à lancer,
-bleu en préparation, rose en retard), numéro à 44 px, quantité en case (pleine si ≥ 2),
-options en « libellé gris / valeur blanche », consigne sur aplat or, pied mono
-« payée hh:mm / total ». Interrupteur gérant : nuit quand disponible, rose en rupture.
+## 2. Audit rapide
 
-**Ton.** Tutoiement, phrases courtes, vocabulaire du lieu (« session », « comptoir »).
-« Un creux entre deux sessions ? », « C’est prêt. », « Annonce ton numéro au comptoir ».
+- Client (6/10) : identité juste, mais écran chargé : émojis dans les pastilles et les
+  titres, grosse carte d'accueil avec trame de points et trois niveaux de texte, halo rose
+  sous chaque « + », mention « à composer » en 11 px, prix pris dans un bandeau translucide
+  sur la fiche produit.
+- Suivi (6/10) : bon numéro dominant, mais libellé en capitales espacées, pulsation,
+  encadrés colorés empilés.
+- Cuisine (6/10) : bonnes fonctions (temps restant, consignes, annulation motivée), mais
+  numéro à 24 px, articles à 15 px, options à 12 px : illisible à 2 m. En-tête chargé de
+  six boutons de même poids. Téléphone du client affiché sur chaque ticket.
+- Gérant (5/10) : bons gestes, mais trente cartes séparées, interrupteurs « OK / ✕ »,
+  prix et TVA en 12 px, émojis de catégories.
 
-**À faire.** Un élément dominant par écran (l’accroche, le numéro, la file de tickets,
-le tableau). Montrer les états réels (épuisé, retard, nouvelle, rupture, stock bas).
-Données qui se recoupent d’un écran à l’autre.
+## 3. Améliorations apportées
 
-**À ne pas faire.** Fond crème, Fredoka, émojis, pastilles de statut en série, halos,
-cartes à ombre, fausse notification iOS, vert émeraude (étranger à la marque).
+Communes : mêmes polices, mêmes jetons, mêmes rayons, même vocabulaire (cartes arrondies,
+pastilles, photos produit, boutons roses). Grille de 4/8 px, marges de 20 px sur
+téléphone, cibles de 44 px au moins, corps de 14 à 17 px, chiffres tabulaires, espaces
+fines avant « : % » et insécables devant « € ». Émojis remplacés par du texte ou des
+icônes Lucide de même trait. Aucun halo ni trame.
 
-## 3. Écrans et données d’exemple
+- **Carte client** : pastilles sans émojis ; carte d'accueil resserrée (logo, une phrase,
+  bande partenaire séparée) ; cartes produit plus aérées, photo mieux cadrée, prix en
+  19 px ; une seule action forte, la barre « Voir ma commande ».
+- **Composer un menu** : prix dans le bouton d'ajout ; photo seule dans son puits ;
+  options en deux lignes (garniture / composition) au lieu d'un libellé tiret ;
+  pastille « Obligatoire » conservée.
+- **Suivi** : numéro à 64 px, libellé en casse normale, étapes à icônes conservées,
+  estimation de la cuisine et confirmation des alertes lisibles, reçu simplifié.
+- **Cuisine** : quatre colonnes au lieu de trois ; état en pastille pleine en tête de
+  ticket (Prête, En retard, En préparation, Nouvelle) ; numéro à 54 px, articles à 22 px,
+  options à 17 px, attente à 26 px ; libellés « Votre boisson » ramenés à « Boisson » ;
+  téléphone retiré ; indicateurs d'en-tête passés en texte discret, une seule commande
+  (« Fermer la cuisine »).
+- **Gérant** : produits regroupés par catégorie dans une carte à lignes ; interrupteur
+  plus grand avec libellé « Disponible / En rupture » ; ligne en rupture teintée avec
+  l'explication ; « Stock bas » et « Sauces et boissons » (panneau réel de la page) en
+  colonne à droite.
 
-Samedi 26 septembre 2026, service de midi. Numéros du jour depuis MM-101 (règle du code).
+## 4. Données d'exemple
 
-- `client-carte.html` (13:24) : carte, rubrique « Nos menus », Menu Pasta Box épuisé,
-  panier à 4,00 € (une Crêpe Nutella).
-- `client-panier.html` (13:25) : composition du Menu Paninis 8,90 € (Raclette, Oasis
-  tropical, Sans sauce).
-- `client-suivi.html` (13:39) : MM-135, Sofia A., prête ; Menu Paninis 8,90 € + Crêpe
-  Nutella 4,00 € = 12,90 €, dont TVA 10 % 1,17 € sur base 11,73 €, Apple Pay.
-- `cuisine.html` (13:42) : MM-134 (17 min, en retard, 18,80 €), MM-136 (11 min,
-  14,90 €), MM-138 (6 min, 17,00 €), MM-139 (2 min, nouvelle, 12,00 €) ; au comptoir
-  MM-133 et MM-135 (prête depuis 3 min, même commande que le suivi).
-- `gerant-carte.html` : Carte & stocks, 29 produits, 2 ruptures (Menu Pasta Box, Pasta
-  Box, cohérent avec la carte client), pomme d’amour en stock bas (4, alerte à 5),
-  « 4 en cuisine » comme sur l’écran cuisine.
+Samedi 26 septembre 2026. Numéros du jour à partir de MM-101 (règle du code).
 
-Écarts assumés par rapport à l’appli : tutoiement ; commandes prêtes regroupées dans un
-rail « Au comptoir » (mêmes données, mêmes actions) ; stock suivi et prise de commande
-réunis dans une colonne à droite de la page Carte & stocks (fonctions existantes,
-réparties dans l’appli entre cette page, l’écran cuisine et les réglages).
+- Carte 13:24 : panier d'une Crêpe Nutella, 4,00 €.
+- Composer 13:25 : Menu Paninis 8,90 € (Raclette choisi).
+- Suivi 13:42 : MM-135, Sofia A., en préparation, prête dans environ 4 min (vers 13:46) ;
+  Menu Paninis (Raclette, Oasis tropical, Sans sauce) 8,90 € + Crêpe Nutella 4,00 € =
+  12,90 €, dont TVA 10 % 1,17 € (base 11,73 €), Apple Pay.
+- Cuisine 13:42 : MM-133 prête (15,90 €), MM-134 en retard 17 min (18,80 €), MM-135
+  (même commande que le suivi, palier 5 min), MM-136 nouvelle (12,00 €). Compteurs 1 / 2 /
+  1 / 1.
+- Gérant : 29 produits, Menu Pasta Box et Pasta Box en rupture, pomme d'amour à 4 (alerte
+  à 5), Algérienne épuisée (aucune commande en cours ne la demande).

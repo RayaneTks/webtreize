@@ -5,205 +5,181 @@
 <meta name="format" content="telephone">
 <meta name="viewport" content="width=390">
 <title>Ordres — commandes du jour</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500;600&display=block" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=block" rel="stylesheet">
 <style>
 :root {
-  --papier: #F3F3EF;
-  --encre: #141414;
-  --graphite: #5E5E59;
-  --gris: #9A9A93;
-  --trait: #D8D8D1;
-  --bleu: #1F3DAA;
-  --orange: #E2661A;
-  --rouge: #C22F1B;
-  --blanc: #FFFFFF;
-  --sans: 'Archivo', system-ui, sans-serif;
-  --mono: 'IBM Plex Mono', ui-monospace, monospace;
-  --m: 16px;
+  /* Tokens de src/index.css (Palette Artisan Pâtisserie) */
+  --bg: #FDF8F2;          /* gourmand-bg : crème chaude */
+  --choc: #241309;        /* gourmand-chocolate : texte & CTA */
+  --biscuit: #9B7558;     /* gourmand-biscuit : secondaire */
+  --cocoa: #5C3D2E;       /* gourmand-cocoa : tertiaire */
+  --border: #EAD8C3;      /* gourmand-border : caramel pâle */
+  --caramel: #C05621;     /* gourmand-caramel : accent */
+  --straw: #B83232;       /* gourmand-strawberry : danger */
+  --white: #FFFFFF;
+  /* Dérivés, sans nouvelle teinte */
+  --soft: #F8EFE5;        /* fond des blocs internes (bg × border) */
+  --line: #F1E6D8;        /* séparateurs fins dans les cartes */
+  --ok: #047857;          /* le vert « marge » déjà employé par l'app */
+  --ok-soft: #E7F3EC;
+  --caramel-soft: #FBEADF;
+  --r: 20px;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html, body {
-  width: 390px; height: 844px; overflow: hidden;
-  background: var(--papier); color: var(--encre);
-  font-family: var(--sans); font-size: 15px; line-height: 1.35;
-  -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
-}
+html, body { width: 390px; height: 844px; overflow: hidden; background: var(--bg); color: var(--choc);
+  font-family: 'Inter', system-ui, sans-serif; font-size: 15px; line-height: 1.4;
+  -webkit-font-smoothing: antialiased; font-feature-settings: "cv11", "ss01"; }
 body { position: relative; }
-.num { font-family: var(--mono); font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
-.saisie { color: var(--bleu); }
-.cond { font-stretch: 78%; }
+.t { font-variant-numeric: tabular-nums; }
+.ic { display: block; flex-shrink: 0; }
 
-/* Barre d'état : 47 px, couleur du fond */
-.etat { height: 47px; display: flex; align-items: center; justify-content: space-between; padding: 2px 24px 0 34px; }
-.etat time { font: 600 16px/1 var(--sans); letter-spacing: -0.01em; }
-.etat svg { display: block; }
+.etat { height: 47px; display: flex; align-items: center; justify-content: space-between; padding: 2px 26px 0 34px; }
+.etat time { font: 600 16px/1 'Inter', sans-serif; letter-spacing: -0.01em; }
 
-/* En-tête d'écran */
-.tete { padding: 6px var(--m) 0; }
-.tete .ligne { display: flex; align-items: center; justify-content: space-between; min-height: 36px; }
-.surtitre { font: 500 14px/1.2 var(--sans); font-stretch: 85%; color: var(--graphite); }
-.titre { font: 700 32px/1.02 var(--sans); font-stretch: 82%; letter-spacing: -0.012em; margin-top: 6px; }
-.retour { font: 500 16px/1 var(--sans); color: var(--graphite); display: inline-flex; align-items: center; gap: 6px; }
-.btn { display: inline-flex; align-items: center; gap: 6px; height: 36px; padding: 0 12px; border: 1.5px solid var(--encre); border-radius: 3px;
-  font: 600 14px/1 var(--sans); font-stretch: 85%; color: var(--encre); background: transparent; }
-.btn.plein { background: var(--encre); color: var(--papier); }
-.btns { display: flex; gap: 8px; }
+.head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 8px 20px 0; }
+.head h1 { font-size: 30px; line-height: 1.1; font-weight: 700; letter-spacing: -0.025em; }
+.head p { margin-top: 4px; font-size: 15px; font-weight: 500; color: var(--biscuit); }
+.add { width: 44px; height: 44px; border-radius: 14px; background: var(--choc); color: #fff; display: grid; place-items: center; flex-shrink: 0; }
+.iconbtn { width: 44px; height: 44px; border-radius: 14px; border: 1px solid var(--border); background: var(--white); color: var(--cocoa); display: grid; place-items: center; flex-shrink: 0; }
 
-/* Intitulés de section : graisse et chasse étroite, pas de capitales espacées */
-.intitule { display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
-  font: 700 13px/1.2 var(--sans); font-stretch: 75%; letter-spacing: 0.01em; color: var(--encre); }
-.intitule sup { font-size: 0.7em; line-height: 0; }
-.intitule .aide { font-weight: 500; color: var(--graphite); }
-.filet { border-top: 2px solid var(--encre); }
-.filet-fin { border-top: 1px solid var(--trait); }
+.card { background: var(--white); border: 1px solid var(--border); border-radius: var(--r); box-shadow: 0 1px 2px rgba(36, 19, 9, 0.04); }
+.tile { width: 40px; height: 40px; border-radius: 12px; background: var(--soft); color: var(--cocoa); display: grid; place-items: center; flex-shrink: 0; }
+.label { font-size: 13px; font-weight: 600; color: var(--biscuit); }
+.section { font-size: 17px; font-weight: 700; letter-spacing: -0.01em; }
 
-/* Onglets du bas : six mots, pas d'icônes */
-.onglets { position: absolute; left: 0; right: 0; bottom: 0; height: 84px; background: var(--papier);
-  border-top: 1px solid var(--trait); display: grid; grid-template-columns: repeat(6, 1fr); padding: 0 6px; }
-.onglets span { position: relative; display: flex; justify-content: center; padding-top: 19px;
-  font: 600 13.5px/1 var(--sans); font-stretch: 80%; color: var(--gris); }
-.onglets span.actif { color: var(--encre); font-weight: 750; }
-.onglets span.actif::before { content: ''; position: absolute; top: -1px; left: 8px; right: 8px; height: 3px; background: var(--encre); }
-.onglets span b.pastille { position: absolute; top: 13px; right: 4px; min-width: 17px; height: 17px; padding: 0 4px; border-radius: 9px;
-  background: var(--orange); color: #fff; font: 600 11px/17px var(--mono); text-align: center; }
-.indicateur { position: absolute; bottom: 8px; left: 50%; width: 134px; height: 5px; margin-left: -67px; border-radius: 3px; background: var(--encre); }
+.pills { display: flex; gap: 8px; }
+.pill { height: 40px; padding: 0 16px; border-radius: 999px; display: inline-flex; align-items: center; gap: 6px;
+  font-size: 14px; font-weight: 600; color: var(--cocoa); background: var(--white); border: 1px solid var(--border); }
+.pill.on { background: var(--choc); color: #fff; border-color: var(--choc); }
+
+.chip { display: inline-flex; align-items: center; height: 24px; padding: 0 9px; border-radius: 999px; font-size: 12.5px; font-weight: 600; white-space: nowrap; }
+.chip.pro { background: var(--choc); color: #fff; }
+.chip.part { background: var(--soft); color: var(--cocoa); }
+.chip.attente { background: var(--caramel-soft); color: #9A4318; }
+.chip.prete { background: var(--ok-soft); color: var(--ok); }
+
+.btn { height: 48px; border-radius: 14px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-size: 15px; font-weight: 600; }
+.btn.primary { background: var(--choc); color: #fff; }
+.btn.secondary { background: var(--white); color: var(--choc); border: 1px solid var(--border); }
+
+.nav { position: absolute; left: 0; right: 0; bottom: 0; height: 84px; background: var(--bg); border-top: 1px solid var(--border);
+  display: grid; grid-template-columns: repeat(6, 1fr); padding: 8px 4px 0; }
+.nav span { display: flex; flex-direction: column; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; color: var(--biscuit); }
+.nav span.on { color: var(--choc); }
+.nav span.on .ic { stroke-width: 2.4; }
+.nav .dot { position: absolute; }
+.home { position: absolute; bottom: 8px; left: 50%; width: 134px; height: 5px; margin-left: -67px; border-radius: 3px; background: var(--choc); }
 
 
-  .tete .ligne { min-height: 40px; }
-  .resume { margin-top: 7px; font: 400 14px/1.3 var(--sans); color: var(--graphite); }
-  .resume b { font-weight: 600; }
-  .resume b { font-weight: 500; color: var(--orange); }
-  .vues { display: grid; grid-template-columns: 1fr 1fr; margin: 14px var(--m) 0; border-bottom: 1px solid var(--trait); }
-  .vues span { position: relative; display: flex; align-items: center; justify-content: center; gap: 7px; height: 44px;
-    font: 600 16px/1 var(--sans); color: var(--gris); }
-  .vues span.on { color: var(--encre); font-weight: 700; }
-  .vues span.on::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 3px; background: var(--encre); }
-  .vues b { font: 600 12px/20px var(--mono); min-width: 22px; height: 20px; padding: 0 5px; border-radius: 10px; background: var(--orange); color: #fff; text-align: center; }
+  .seg { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin: 20px 20px 0; padding: 4px; background: var(--soft); border-radius: 16px; }
+  .seg span { height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 15px; font-weight: 600; color: var(--cocoa); }
+  .seg span.on { background: var(--choc); color: #fff; }
+  .seg b { min-width: 24px; height: 22px; padding: 0 7px; border-radius: 999px; background: var(--caramel); color: #fff; font-size: 12.5px; font-weight: 700; display: grid; place-items: center; }
+  .seg span.on b { background: rgba(255,255,255,.18); }
 
-  .filtres { display: flex; align-items: center; justify-content: space-between; margin: 12px var(--m) 0; font: 500 14px/1 var(--sans); color: var(--graphite); }
-  .filtres .grp { display: flex; gap: 14px; align-items: center; }
-  .filtres .on { color: var(--encre); font-weight: 700; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 5px; }
-  .filtres .v { width: 1px; height: 16px; background: var(--trait); }
-
-  .jour { margin: 14px var(--m) 0; }
-  .jour + .jour { margin-top: 12px; }
-  .jour .intitule { padding-bottom: 7px; border-bottom: 2px solid var(--encre); }
-  .jour .intitule .num { font: 400 12.5px/1 var(--mono); color: var(--graphite); letter-spacing: -0.02em; }
-  ul { list-style: none; }
-  .cmd { display: grid; grid-template-columns: 22px 1fr auto; column-gap: 8px; padding: 9px 0 9px; border-bottom: 1px solid var(--trait); }
-  .marque { width: 13px; height: 13px; margin-top: 4px; border: 1.75px solid var(--encre); border-radius: 1px; }
-  .ready .marque { background: var(--encre); }
-  .client { display: flex; align-items: baseline; gap: 8px; }
-  .client b { font: 650 17px/1.2 var(--sans); }
-  .client .type { font: 600 13px/1 var(--sans); font-stretch: 78%; color: var(--graphite); }
-  .pro .client .type { color: var(--encre); }
-  .articles { margin-top: 4px; font-size: 14px; line-height: 1.3; color: var(--encre); }
-  .art { display: block; }
-  .art + .art { margin-top: 1px; }
-  .articles .q { display: inline-block; min-width: 17px; font: 600 13.5px/1 var(--mono); }
-  .articles .sep { color: var(--graphite); }
-  .note { margin-top: 3px; font-size: 13px; line-height: 1.3; color: var(--graphite); font-style: italic; }
-  .etat-cmd { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; padding-top: 2px; }
-  .st { font: 600 14px/1.1 var(--sans); color: var(--graphite); white-space: nowrap; }
-  .ready .st { color: var(--encre); font-weight: 750; }
-  .prog { font: 400 12.5px/1 var(--mono); color: var(--graphite); letter-spacing: -0.02em; white-space: nowrap; }
-  .pending .prog { color: var(--orange); font-weight: 500; }
-  .demain .cmd { padding: 10px 0; }
+  .pills { margin: 16px 20px 0; }
+  .pills .pill { height: 36px; padding: 0 14px; }
+  .jour { display: flex; justify-content: space-between; align-items: baseline; margin: 22px 20px 10px; }
+  .jour .section { font-size: 17px; }
+  .jour span:last-child { font-size: 14px; color: var(--biscuit); font-weight: 500; }
+  .list { padding: 0 20px; display: grid; gap: 12px; }
+  .cmd { padding: 14px 16px; }
+  .r1 { display: flex; align-items: center; gap: 8px; }
+  .r1 h3 { font-size: 16.5px; font-weight: 700; letter-spacing: -0.01em; }
+  .r1 .st { margin-left: auto; }
+  .items { margin-top: 8px; font-size: 15px; line-height: 1.5; color: var(--choc); }
+  .items .t { font-weight: 700; color: var(--caramel); display: inline-block; min-width: 24px; }
+  .note { margin-top: 6px; font-size: 13.5px; color: var(--biscuit); }
+  .r3 { display: flex; align-items: center; gap: 12px; margin-top: 12px; }
+  .prog { flex: 1; height: 6px; border-radius: 3px; background: var(--soft); overflow: hidden; }
+  .prog i { display: block; height: 100%; background: var(--caramel); border-radius: 3px; }
+  .cu { font-size: 13.5px; font-weight: 600; color: var(--cocoa); }
+  .done { display: inline-flex; align-items: center; gap: 6px; font-size: 13.5px; font-weight: 600; color: var(--ok); }
   </style>
 </head>
 <body>
 
 <div class="etat"><time>6:42</time>
   <svg width="68" height="12" viewBox="0 0 68 12" aria-hidden="true">
-    <g fill="#141414"><rect x="0" y="8" width="3" height="4" rx=".6"/><rect x="5" y="5.5" width="3" height="6.5" rx=".6"/><rect x="10" y="3" width="3" height="9" rx=".6"/><rect x="15" y="0" width="3" height="12" rx=".6"/></g>
-    <path d="M30 3.2a9 9 0 0 1 11 0M32 6.1a5.4 5.4 0 0 1 7 0M34.2 9a1.9 1.9 0 0 1 2.6 0" fill="none" stroke="#141414" stroke-width="1.7" stroke-linecap="round"/>
-    <rect x="45.5" y=".75" width="19" height="10.5" rx="2.6" fill="none" stroke="#141414" stroke-opacity=".45"/>
-    <rect x="47.3" y="2.5" width="12.5" height="7" rx="1.3" fill="#141414"/>
-    <path d="M66.3 4.2v3.6" stroke="#141414" stroke-opacity=".45" stroke-width="1.4" stroke-linecap="round"/>
+    <g fill="#241309"><rect x="0" y="8" width="3" height="4" rx=".6"/><rect x="5" y="5.5" width="3" height="6.5" rx=".6"/><rect x="10" y="3" width="3" height="9" rx=".6"/><rect x="15" y="0" width="3" height="12" rx=".6"/></g>
+    <path d="M30 3.2a9 9 0 0 1 11 0M32 6.1a5.4 5.4 0 0 1 7 0M34.2 9a1.9 1.9 0 0 1 2.6 0" fill="none" stroke="#241309" stroke-width="1.7" stroke-linecap="round"/>
+    <rect x="45.5" y=".75" width="19" height="10.5" rx="2.6" fill="none" stroke="#241309" stroke-opacity=".4"/>
+    <rect x="47.3" y="2.5" width="12.5" height="7" rx="1.3" fill="#241309"/>
+    <path d="M66.3 4.2v3.6" stroke="#241309" stroke-opacity=".4" stroke-width="1.4" stroke-linecap="round"/>
   </svg></div>
 
-<header class="tete">
-  <div class="ligne"><p class="surtitre">Mercredi 30 septembre</p><span class="btn plein">+ Commande</span></div>
-  <h1 class="titre">Ordres</h1>
-  <p class="resume">5 en attente · 7 sur Ordres · <b>12 restant cuisine</b></p>
+<header class="head">
+  <div><h1>Ordres</h1><p>5 en attente · 12 restant cuisine</p></div>
+  <span class="add"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="ic " aria-hidden="true"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg></span>
 </header>
-<div class="vues">
-  <span class="on">Commandes</span>
-  <span class="">Cuisine <b class="num">12</b></span>
+<div class="seg">
+  <span class="on"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic " aria-hidden="true"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><path d="M12 11h4"></path><path d="M12 16h4"></path><path d="M8 11h.01"></path><path d="M8 16h.01"></path></svg>Commandes</span>
+  <span class=""><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ic " aria-hidden="true"><path d="M17 21a1 1 0 0 0 1-1v-5.35c0-.457.316-.844.727-1.041a4 4 0 0 0-2.134-7.589 5 5 0 0 0-9.186 0 4 4 0 0 0-2.134 7.588c.411.198.727.585.727 1.041V20a1 1 0 0 0 1 1Z"></path><path d="M6 17h12"></path></svg>Cuisine <b class="t">12</b></span>
 </div>
-
-<section class="jour">
-  <p class="intitule"><span>Aujourd’hui</span> <span class="num">5 commandes · 16 pièces</span></p>
-  <ul>
-    <li class="cmd ready pro">
-      <i class="marque" aria-hidden="true"></i>
-      <div class="corps">
-        <p class="client"><b>Bistrot du Cours</b><span class="type">Pro</span></p>
-        <p class="articles"><span class="art"><span class="num q saisie">3</span>Tarte cacahuète caramel</span><span class="art"><span class="num q saisie">2</span>Tarte amandine</span></p>
-        <p class="note">Livraison avant 11 h, entrée de service</p>
+<div class="pills"><span class="pill on">Toutes</span><span class="pill">En attente</span><span class="pill">Prête</span><span class="pill">Livrée</span></div>
+<div class="jour"><span class="section">Aujourd’hui</span><span>mer. 30 sept. · 5 commandes</span></div>
+<div class="list">
+    <article class="card cmd">
+      <div class="r1">
+        <h3>Bistrot du Cours</h3>
+        <span class="chip pro">Pro</span>
+        <span class="chip prete st">Prête</span>
       </div>
-      <div class="etat-cmd"><span class="st">Prête</span><span class="num prog">5 pièces</span></div>
-    </li>
-    <li class="cmd pending pro">
-      <i class="marque" aria-hidden="true"></i>
-      <div class="corps">
-        <p class="client"><b>La Cantine Chave</b><span class="type">Pro</span></p>
-        <p class="articles"><span class="art"><span class="num q saisie">4</span>Tarte chocolat lait</span><span class="art"><span class="num q saisie">2</span>Flan vanille</span></p>
-        
+      <p class="items"><span class="t">3 ×</span> Tarte cacahuète caramel<br><span class="t">2 ×</span> Tarte amandine</p>
+      <p class="note">Livraison avant 11 h, entrée de service</p>
+      <div class="r3">
+        <span class="done"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="ic " aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>5 pièces prêtes</span>
       </div>
-      <div class="etat-cmd"><span class="st">En attente</span><span class="num prog">cuisine 4/6</span></div>
-    </li>
-    <li class="cmd pending particulier">
-      <i class="marque" aria-hidden="true"></i>
-      <div class="corps">
-        <p class="client"><b>Sonia B.</b><span class="type">Particulier</span></p>
-        <p class="articles"><span class="art"><span class="num q saisie">1</span>Tarte cacahuète caramel</span></p>
-        <p class="note">Plaque « 40 ans Karim »</p>
+    </article>
+    <article class="card cmd">
+      <div class="r1">
+        <h3>La Cantine Chave</h3>
+        <span class="chip pro">Pro</span>
+        <span class="chip attente st">En attente</span>
       </div>
-      <div class="etat-cmd"><span class="st">En attente</span><span class="num prog">cuisine 0/1</span></div>
-    </li>
-    <li class="cmd pending pro">
-      <i class="marque" aria-hidden="true"></i>
-      <div class="corps">
-        <p class="client"><b>Café Lulu</b><span class="type">Pro</span></p>
-        <p class="articles"><span class="art"><span class="num q saisie">2</span>Tiramisu</span><span class="art"><span class="num q saisie">1</span>Flan vanille</span></p>
-        
+      <p class="items"><span class="t">4 ×</span> Tarte chocolat lait<br><span class="t">2 ×</span> Flan vanille</p>
+      
+      <div class="r3">
+        <span class="prog"><i style="width:66.66666666666666%"></i></span><span class="t cu">Cuisine 4/6</span>
       </div>
-      <div class="etat-cmd"><span class="st">En attente</span><span class="num prog">cuisine 0/3</span></div>
-    </li>
-    <li class="cmd ready particulier">
-      <i class="marque" aria-hidden="true"></i>
-      <div class="corps">
-        <p class="client"><b>Mehdi A.</b><span class="type">Particulier</span></p>
-        <p class="articles"><span class="art"><span class="num q saisie">1</span>Tarte amandine</span></p>
-        <p class="note">Retrait à 17 h 30</p>
+    </article>
+    <article class="card cmd">
+      <div class="r1">
+        <h3>Sonia B.</h3>
+        <span class="chip part">Particulier</span>
+        <span class="chip attente st">En attente</span>
       </div>
-      <div class="etat-cmd"><span class="st">Prête</span><span class="num prog">1 pièce</span></div>
-    </li></ul>
-</section>
-<section class="jour demain">
-  <p class="intitule"><span>Demain, jeudi 1<sup>er</sup> octobre</span> <span class="num">2 commandes</span></p>
-  <ul>
-    <li class="cmd pending pro">
-      <i class="marque" aria-hidden="true"></i>
-      <div class="corps">
-        <p class="client"><b>Bistrot du Cours</b><span class="type">Pro</span></p>
-        <p class="articles"><span class="art"><span class="num q saisie">3</span>Tarte cacahuète caramel</span><span class="art"><span class="num q saisie">2</span>Tarte chocolat lait</span></p>
-        
+      <p class="items"><span class="t">1 ×</span> Tarte cacahuète caramel</p>
+      <p class="note">Plaque « 40 ans Karim »</p>
+      <div class="r3">
+        <span class="prog"><i style="width:0%"></i></span><span class="t cu">Cuisine 0/1</span>
       </div>
-      <div class="etat-cmd"><span class="st">En attente</span><span class="num prog">cuisine 0/5</span></div>
-    </li>
-    <li class="cmd pending particulier">
-      <i class="marque" aria-hidden="true"></i>
-      <div class="corps">
-        <p class="client"><b>Claire M.</b><span class="type">Particulier</span></p>
-        <p class="articles"><span class="art"><span class="num q saisie">1</span>Tiramisu</span></p>
-        
+    </article>
+    <article class="card cmd">
+      <div class="r1">
+        <h3>Café Lulu</h3>
+        <span class="chip pro">Pro</span>
+        <span class="chip attente st">En attente</span>
       </div>
-      <div class="etat-cmd"><span class="st">En attente</span><span class="num prog">cuisine 0/1</span></div>
-    </li></ul>
-</section>
-
-<nav class="onglets" aria-label="Navigation"><span class="">Compta</span><span class="actif">Ordres</span><span class="">Vendre</span><span class="">Recettes</span><span class="">Bases</span><span class="">Matières</span><i class="indicateur"></i></nav>
+      <p class="items"><span class="t">2 ×</span> Tiramisu<br><span class="t">1 ×</span> Flan vanille</p>
+      
+      <div class="r3">
+        <span class="prog"><i style="width:0%"></i></span><span class="t cu">Cuisine 0/3</span>
+      </div>
+    </article>
+    <article class="card cmd">
+      <div class="r1">
+        <h3>Mehdi A.</h3>
+        <span class="chip part">Particulier</span>
+        <span class="chip prete st">Prête</span>
+      </div>
+      <p class="items"><span class="t">1 ×</span> Tarte amandine</p>
+      <p class="note">Retrait à 17 h 30</p>
+      <div class="r3">
+        <span class="done"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="ic " aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>1 pièce prête</span>
+      </div>
+    </article></div>
+<nav class="nav"><span class=""><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ic " aria-hidden="true"><rect width="7" height="9" x="3" y="3" rx="1"></rect><rect width="7" height="5" x="14" y="3" rx="1"></rect><rect width="7" height="9" x="14" y="12" rx="1"></rect><rect width="7" height="5" x="3" y="16" rx="1"></rect></svg>Compta</span><span class="on"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" class="ic " aria-hidden="true"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><path d="M12 11h4"></path><path d="M12 16h4"></path><path d="M8 11h.01"></path><path d="M8 16h.01"></path></svg>Ordres</span><span class=""><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ic " aria-hidden="true"><rect width="16" height="20" x="4" y="2" rx="2"></rect><line x1="8" x2="16" y1="6" y2="6"></line><line x1="16" x2="16" y1="14" y2="18"></line><path d="M16 10h.01"></path><path d="M12 10h.01"></path><path d="M8 10h.01"></path><path d="M12 14h.01"></path><path d="M8 14h.01"></path><path d="M12 18h.01"></path><path d="M8 18h.01"></path></svg>Vendre</span><span class=""><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ic " aria-hidden="true"><path d="M17 21a1 1 0 0 0 1-1v-5.35c0-.457.316-.844.727-1.041a4 4 0 0 0-2.134-7.589 5 5 0 0 0-9.186 0 4 4 0 0 0-2.134 7.588c.411.198.727.585.727 1.041V20a1 1 0 0 0 1 1Z"></path><path d="M6 17h12"></path></svg>Recettes</span><span class=""><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ic " aria-hidden="true"><path d="M4.5 3h15"></path><path d="M6 3v16a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V3"></path><path d="M6 14h12"></path></svg>Bases</span><span class=""><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="ic " aria-hidden="true"><path d="M12 20.94c1.5 0 2.75 1.06 4 1.06 3 0 6-8 6-12.22A4.91 4.91 0 0 0 17 5c-2.22 0-4 1.44-5 2-1-.56-2.78-2-5-2a4.9 4.9 0 0 0-5 4.78C2 14 5 22 8 22c1.25 0 2.5-1.06 4-1.06Z"></path><path d="M10 2c1 .5 2 2 2 5"></path></svg>Matières</span><i class="home"></i></nav>
 </body>
 </html>

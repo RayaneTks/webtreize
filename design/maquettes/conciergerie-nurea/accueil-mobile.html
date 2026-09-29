@@ -6,97 +6,108 @@
 <title>Conciergerie Nuréa — accueil, téléphone</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&display=block" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=block" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css">
 <style>
   :root {
-    --calcaire: #F2F4F3;
-    --blanc: #FFFFFF;
-    --encre: #0F2A35;
-    --encre-douce: #4E6B77;
-    --filet: #CDD6D9;
+    --white: #FFFFFF;
+    --ink: #11313E;
+    --ink-soft: #587685;
     --azur: #1E92B8;
-    --capitainerie: #0B4A61;
-    --marge: 24px;
+    --azur-deep: #0C617C;
+    --sky: #7BC4DD;
+    --line: #E4EBEF;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { width: 390px; height: 844px; overflow: hidden; }
   body {
-    background: var(--calcaire); color: var(--encre);
-    font-family: 'Archivo', sans-serif; font-size: 16px; line-height: 24px;
-    -webkit-font-smoothing: antialiased; position: relative;
+    position: relative; background: var(--ink); color: var(--white);
+    font-family: 'Geist', system-ui, sans-serif; font-size: 16px; line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
   }
-  .mono { font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; line-height: 15px; letter-spacing: .01em; }
-  .num { font-variant-numeric: tabular-nums lining-nums; }
+  .tabular { font-variant-numeric: tabular-nums; }
 
-  .etat { height: 47px; padding: 0 26px 0 30px; display: flex; align-items: center; justify-content: space-between; font-size: 15px; font-weight: 600; }
-  .etat svg { display: block; }
+  .photo { position: absolute; inset: 0 0 84px; }
+  .photo img { width: 100%; height: 100%; object-fit: cover; object-position: 12% 50%; filter: saturate(.92) contrast(1.04); }
+  .voile { position: absolute; inset: 0 0 84px;
+    background:
+      linear-gradient(180deg, rgba(17,49,62,1) 0%, rgba(17,49,62,.9) 12%, rgba(17,49,62,.55) 55%, rgba(17,49,62,.92) 88%, rgba(17,49,62,1) 100%),
+      linear-gradient(90deg, rgba(17,49,62,.5), rgba(17,49,62,.1));
+  }
+
+  .etat { position: relative; height: 47px; padding: 0 26px 0 32px; display: flex; align-items: center; justify-content: space-between; font-size: 15px; font-weight: 600; }
   .etat .icones { display: flex; gap: 6px; align-items: center; }
+  .etat svg { display: block; }
 
-  header { height: 56px; padding: 0 var(--marge); display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--filet); }
-  .marque { display: flex; align-items: center; gap: 9px; }
-  .marque img { width: 28px; height: 28px; }
-  .marque b { font-weight: 650; font-stretch: 110%; font-size: 16px; letter-spacing: -.01em; }
-  header a { font-size: 14px; font-weight: 600; padding: 7px 12px; border: 1px solid var(--encre); border-radius: 3px; }
+  header { position: relative; height: 64px; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; }
+  .logo { display: flex; align-items: center; gap: 10px; }
+  .logo .mark { width: 36px; height: 36px; border-radius: 10px; background: rgba(255,255,255,.1); display: grid; place-items: center; }
+  .logo .nom { display: flex; flex-direction: column; line-height: 1; }
+  .logo .nom b { font-size: 16px; font-weight: 600; letter-spacing: -.01em; }
+  .logo .nom span { margin-top: 4px; font-size: 9px; font-weight: 500; letter-spacing: .3em; text-transform: uppercase; color: rgba(123,196,221,.85); }
+  .pill { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 18px; border-radius: 999px; font-size: 15px; font-weight: 500; }
+  .pill i { font-size: 18px; }
+  header .pill { border: 1px solid rgba(255,255,255,.25); background: rgba(255,255,255,.1); }
 
-  figure { height: 176px; overflow: hidden; background: var(--capitainerie); }
-  figure img { width: 100%; height: 100%; object-fit: cover; object-position: 0% 60%; filter: saturate(.88); display: block; }
+  main { position: relative; padding: 36px 20px 0; }
+  .surtitre { font-size: 14px; font-weight: 500; color: var(--sky); }
+  h1 { margin-top: 12px; font-size: 36px; line-height: 1.05; text-wrap: balance; font-weight: 600; letter-spacing: -.035em; }
+  .sous { margin-top: 10px; font-size: 28px; line-height: 1.1; font-weight: 600; letter-spacing: -.03em; color: var(--sky); }
+  .simuler { margin-top: 24px; display: inline-flex; align-items: center; gap: 8px; height: 44px; font-size: 16px; font-weight: 600; }
+  .simuler i { font-size: 18px; color: var(--sky); }
 
-  main { padding: 24px var(--marge) 0; }
-  main > .mono { color: var(--encre-douce); }
-  h1 { margin-top: 12px; font-size: 32px; line-height: 35px; font-weight: 620; font-stretch: 104%; letter-spacing: -.024em; }
-  h1 span { display: block; color: var(--azur); }
-  .chapeau { margin-top: 14px; font-size: 15px; line-height: 22px; color: var(--encre-douce); }
-  .principal { margin-top: 20px; display: block; text-align: center; background: var(--encre); color: var(--blanc); font-weight: 600; font-size: 16px; padding: 14px 0; border-radius: 3px; }
-
-  .echelle { margin-top: 28px; height: 6px; border: 1px solid var(--encre); background: repeating-linear-gradient(90deg, var(--encre) 0 34px, var(--calcaire) 34px 68px); }
-  dl div { display: flex; justify-content: space-between; align-items: baseline; padding: 11px 0; border-bottom: 1px solid var(--filet); }
-  dt { color: var(--encre-douce); }
+  dl { position: absolute; left: 20px; right: 20px; bottom: 108px; border-radius: 16px; border: 1px solid rgba(255,255,255,.12); background: rgba(17,49,62,.6); }
+  dl div { display: flex; align-items: center; justify-content: space-between; height: 52px; padding: 0 18px; }
+  dl div + div { border-top: 1px solid rgba(255,255,255,.1); }
+  dt { font-size: 15px; color: rgba(123,196,221,.9); }
   dd { font-size: 16px; font-weight: 600; }
 
-  .barre {
-    position: absolute; left: 0; right: 0; bottom: 0; height: 76px;
-    background: var(--blanc); border-top: 1px solid var(--filet);
-    display: grid; grid-template-columns: 1fr 1.4fr; gap: 10px; padding: 10px 16px 24px;
-  }
-  .barre a { display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 600; border-radius: 3px; }
-  .barre .appel { border: 1px solid var(--encre); }
-  .barre .wa { background: var(--encre); color: var(--blanc); }
+  .barre { position: absolute; left: 0; right: 0; bottom: 0; height: 84px; background: var(--white); border-top: 1px solid var(--line); display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 10px 12px 26px; }
+  .barre a { display: flex; align-items: center; justify-content: center; gap: 8px; border-radius: 999px; font-size: 15px; font-weight: 600; }
+  .barre i { font-size: 18px; }
+  .barre .appel { border: 1px solid var(--line); color: var(--ink); }
+  .barre .appel i { color: var(--ink-soft); }
+  .barre .wa { background: var(--azur); color: var(--white); }
 </style>
 </head>
 <body>
+  <div class="photo"><img src="assets/calanques-haut.jpg" alt=""></div>
+  <div class="voile"></div>
+
   <div class="etat">
-    <span class="num">10:42</span>
+    <span class="tabular">10:42</span>
     <span class="icones">
-      <svg width="17" height="11" viewBox="0 0 17 11" fill="#0F2A35"><rect x="0" y="7.5" width="3" height="3.5" rx=".6"/><rect x="4.6" y="5" width="3" height="6" rx=".6"/><rect x="9.2" y="2.5" width="3" height="8.5" rx=".6"/><rect x="13.8" y="0" width="3" height="11" rx=".6"/></svg>
-      <svg width="15" height="11" viewBox="0 0 15 11" fill="none" stroke="#0F2A35" stroke-width="1.6" stroke-linecap="round"><path d="M1.2 3.9a9 9 0 0 1 12.6 0"/><path d="M3.6 6.3a5.6 5.6 0 0 1 7.8 0"/><circle cx="7.5" cy="9" r=".9" fill="#0F2A35" stroke="none"/></svg>
-      <svg width="25" height="12" viewBox="0 0 25 12"><rect x=".5" y=".5" width="21" height="11" rx="3" fill="none" stroke="#0F2A35" opacity=".45"/><rect x="2" y="2" width="15" height="8" rx="1.6" fill="#0F2A35"/><rect x="22.6" y="4" width="1.6" height="4" rx=".8" fill="#0F2A35" opacity=".45"/></svg>
+      <svg width="17" height="11" viewBox="0 0 17 11" fill="#fff"><rect x="0" y="7.5" width="3" height="3.5" rx=".6"/><rect x="4.6" y="5" width="3" height="6" rx=".6"/><rect x="9.2" y="2.5" width="3" height="8.5" rx=".6"/><rect x="13.8" y="0" width="3" height="11" rx=".6"/></svg>
+      <svg width="15" height="11" viewBox="0 0 15 11" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round"><path d="M1.2 3.9a9 9 0 0 1 12.6 0"/><path d="M3.6 6.3a5.6 5.6 0 0 1 7.8 0"/><circle cx="7.5" cy="9" r=".9" fill="#fff" stroke="none"/></svg>
+      <svg width="25" height="12" viewBox="0 0 25 12"><rect x=".5" y=".5" width="21" height="11" rx="3" fill="none" stroke="#fff" opacity=".5"/><rect x="2" y="2" width="15" height="8" rx="1.6" fill="#fff"/><rect x="22.6" y="4" width="1.6" height="4" rx=".8" fill="#fff" opacity=".5"/></svg>
     </span>
   </div>
 
   <header>
-    <div class="marque"><img src="assets/logo.svg" alt=""><b>Conciergerie Nuréa</b></div>
-    <a>Nous écrire</a>
+    <div class="logo">
+      <span class="mark"><svg viewBox="0 0 24 24" width="22" height="22" fill="none"><path d="M2 14c1.5 0 1.5-2 3-2s1.5 2 3 2 1.5-2 3-2 1.5 2 3 2 1.5-2 3-2 1.5 2 3 2" stroke="#7BC4DD" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="7.5" r="2.25" fill="#1E92B8"/></svg></span>
+      <span class="nom"><b>Nuréa</b><span>Conciergerie</span></span>
+    </div>
+    <a class="pill"><i class="ph-fill ph-whatsapp-logo"></i>Nous écrire</a>
   </header>
 
-  <figure><img src="assets/mer-calanques.jpg" alt=""></figure>
-
   <main>
-    <p class="mono">Conciergerie Airbnb, Marseille</p>
-    <h1>Votre appartement génère des revenus. <span>Vous ne gérez rien.</span></h1>
-    <p class="chapeau">Accueil, ménage, réservations, clés et cautions Swikly. Deux associés, un interlocuteur direct.</p>
-    <a class="principal">Simuler mes revenus</a>
-
-    <div class="echelle"></div>
-    <dl>
-      <div><dt class="mono">Commission</dt><dd class="num">25&#8239;% sur l’encaissé</dd></div>
-      <div><dt class="mono">Engagement</dt><dd>Aucun</dd></div>
-      <div><dt class="mono">Cautions</dt><dd>Swikly, au prorata</dd></div>
-    </dl>
+    <p class="surtitre">Conciergerie Airbnb à Marseille</p>
+    <h1>Votre appartement génère des revenus.</h1>
+    <p class="sous">Vous ne gérez rien.</p>
+    <a class="simuler">Simuler mes revenus <i class="ph ph-arrow-right"></i></a>
   </main>
 
+  <dl>
+    <div><dt>Commission</dt><dd class="tabular">25&#8239;% sur l’encaissé</dd></div>
+    <div><dt>Engagement</dt><dd>Aucun</dd></div>
+    <div><dt>Cautions</dt><dd>Swikly, au prorata</dd></div>
+  </dl>
+
   <div class="barre">
-    <a class="appel">Appeler</a>
-    <a class="wa">Écrire sur WhatsApp</a>
+    <a class="appel"><i class="ph-fill ph-phone"></i>Appeler</a>
+    <a class="wa"><i class="ph-fill ph-whatsapp-logo"></i>WhatsApp</a>
   </div>
 </body>
 </html>

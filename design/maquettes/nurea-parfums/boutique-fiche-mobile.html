@@ -6,76 +6,73 @@
 <title>Nuréa Parfums — fiche parfum, téléphone</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Instrument+Sans:wght@400;500;600&display=block" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Instrument+Sans:wght@400;500;600&display=block" rel="stylesheet">
 <style>
   :root {
-    --encre: #0A0508; --encre-2: #140E12;
-    --papier: #FDF8F4; --texte-2: #E4D2DA; --texte-3: #B49FAB; --inactif: #6E5A64;
-    --cuivre: #C4956A; --filet: rgba(196,149,106,.22); --filet-fort: rgba(196,149,106,.45);
+    --bg: #0A0508; --surface: #140E12; --text: #FDF8F4; --muted: #E4D2DA; --subtle: #B49FAB;
+    --accent: #C4956A; --border: rgba(196,149,106,.16); --border-strong: rgba(196,149,106,.4);
     --serif: 'Newsreader', Georgia, serif; --sans: 'Instrument Sans', system-ui, sans-serif;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { width: 390px; height: 844px; overflow: hidden; background: var(--encre); color: var(--papier);
-    font: 400 15px/1.55 var(--sans); -webkit-font-smoothing: antialiased; position: relative; }
+  html, body { width: 390px; height: 844px; overflow: hidden; background: var(--bg); color: var(--text);
+    font: 400 16px/1.6 var(--sans); -webkit-font-smoothing: antialiased; position: relative; }
+  .label { font: 600 12px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
 
-  /* Barre d'état : sobre, dans la couleur du fond */
   .etat { height: 47px; display: flex; align-items: center; justify-content: space-between; padding: 6px 28px 0 34px; font: 600 16px/1 var(--sans); }
   .etat .ic { display: flex; gap: 6px; align-items: center; }
   .barres { display: flex; gap: 2px; align-items: flex-end; height: 11px; }
-  .barres i { width: 3px; background: var(--papier); border-radius: 1px; }
+  .barres i { width: 3px; background: var(--text); border-radius: 1px; }
   .pile { width: 24px; height: 12px; border: 1px solid rgba(253,248,244,.5); border-radius: 3px; padding: 1.5px; }
-  .pile i { display: block; height: 100%; width: 74%; background: var(--papier); border-radius: 1px; }
+  .pile i { display: block; height: 100%; width: 74%; background: var(--text); border-radius: 1px; }
 
-  header { height: 56px; display: grid; grid-template-columns: 48px 1fr 48px; align-items: center; padding: 0 8px; border-bottom: 1px solid var(--filet); }
-  .retour { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; }
-  .retour i { width: 11px; height: 11px; border-left: 1.5px solid var(--papier); border-bottom: 1.5px solid var(--papier); transform: rotate(45deg); margin-left: 4px; }
-  .logo { display: flex; align-items: center; justify-content: center; gap: 9px; }
-  .logo .m { width: 28px; height: 28px; }
-  .logo .w { height: 14px; }
+  header { height: 60px; display: grid; grid-template-columns: 44px 1fr 44px; align-items: center; padding: 0 16px; border-bottom: 1px solid var(--border); }
+  .carre { width: 44px; height: 44px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--text); }
+  .carre svg { width: 20px; height: 20px; }
+  header .logo { justify-self: center; height: 30px; }
 
-  .planche { height: 346px; overflow: hidden; border-bottom: 1px solid var(--filet); background: var(--encre-2); }
-  .planche img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 52%; display: block; }
+  .visuel { margin: 16px 16px 0; height: 320px; border: 1px solid var(--border); overflow: hidden; }
+  .visuel img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 54%; display: block; }
 
-  .fiche { padding: 22px 24px 0; }
-  .marque { font-size: 15px; font-weight: 500; color: var(--texte-2); }
-  h1 { margin-top: 2px; font: 500 46px/1 var(--serif); letter-spacing: -0.025em; font-variation-settings: "opsz" 60; }
-  .chapo { margin-top: 12px; font: 400 17px/1.45 var(--serif); color: var(--texte-2); }
+  .infos { padding: 22px 24px 0; }
+  h1 { margin-top: 12px; font: 500 40px/1.05 var(--serif); letter-spacing: -0.015em; }
+  .texte { margin-top: 10px; font-size: 16px; color: var(--muted); }
+  .formats { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border); }
+  .formats p { font-size: 14px; color: var(--subtle); }
+  .formats div { margin-top: 6px; display: flex; gap: 14px; align-items: baseline; font: 500 24px/1 var(--serif); }
+  .formats i { font-style: normal; color: var(--accent); font-size: 16px; }
+  .formats small { font: 400 14px var(--sans); color: var(--subtle); margin-left: 3px; }
 
-  .formats-tete { margin-top: 20px; padding-top: 10px; border-top: 1px solid var(--filet-fort); font-size: 13px; font-weight: 500; }
-  .formats { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 8px; }
-  .formats div { font: 400 30px/1 var(--serif); font-variant-numeric: lining-nums tabular-nums; padding-bottom: 4px; }
-  .formats div + div { padding-left: 16px; border-left: 1px solid var(--filet); }
-  .formats small { font-size: 14px; color: var(--texte-3); margin-left: 3px; }
-
-  /* Barre de commande fixe */
-  .barre { position: absolute; left: 0; right: 0; bottom: 0; padding: 12px 16px 30px; background: var(--encre); border-top: 1px solid var(--filet); }
-  .plein { height: 52px; background: var(--cuivre); color: var(--encre); font-weight: 600; font-size: 16px; display: flex; align-items: center; justify-content: center; }
-  .barre p { margin-top: 8px; text-align: center; font-size: 12.5px; color: var(--texte-3); }
+  .barre { position: absolute; left: 0; right: 0; bottom: 0; padding: 12px 16px 28px; background: var(--bg); border-top: 1px solid var(--border); }
+  .btn { height: 52px; display: flex; align-items: center; justify-content: center; gap: 10px; background: var(--accent); color: var(--bg);
+    font: 600 13px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; }
+  .btn img { width: 20px; height: 20px; }
+  .barre p { margin-top: 8px; text-align: center; font-size: 13px; color: var(--subtle); }
 </style>
 </head>
 <body>
   <div class="etat"><span>9:41</span><span class="ic"><span class="barres"><i style="height:4px"></i><i style="height:6px"></i><i style="height:8px"></i><i style="height:11px"></i></span><span class="pile"><i></i></span></span></div>
 
   <header>
-    <span class="retour"><i></i></span>
-    <span class="logo"><img class="m" src="assets/monogramme-cercle-cuivre.svg" alt=""><img class="w" src="assets/nurea-wordmark-ivory.webp" alt="Nuréa Parfums"></span>
-    <span></span>
+    <span class="carre"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg></span>
+    <img class="logo" src="assets/nurea-logo-horizontal-dark-1024.webp" alt="Nuréa Parfums">
+    <span class="carre"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>
   </header>
 
-  <figure class="planche"><img src="assets/tom-ford-tobacco-vanille.webp" alt="Tom Ford — Tobacco Vanille"></figure>
+  <div class="visuel"><img src="assets/tom-ford-tobacco-vanille.webp" alt="Tom Ford — Tobacco Vanille"></div>
 
-  <section class="fiche">
-    <p class="marque">Tom Ford</p>
+  <section class="infos">
+    <span class="label">Tom Ford</span>
     <h1>Tobacco Vanille</h1>
-    <p class="chapo">En main propre à Marseille, ou par envoi partout en France.</p>
-
-    <p class="formats-tete">Votre flacon Nuréa, au format de votre choix</p>
-    <div class="formats"><div>10<small>ml</small></div><div>50<small>ml</small></div><div>80<small>ml</small></div></div>
+    <p class="texte">Remise à Marseille ou envoi en France.</p>
+    <div class="formats">
+      <p>Dans un flacon Nuréa, au format de votre choix</p>
+      <div><span>10<small>ml</small></span><i>·</i><span>50<small>ml</small></span><i>·</i><span>80<small>ml</small></span></div>
+    </div>
   </section>
 
   <div class="barre">
-    <div class="plein">Commander sur Snapchat</div>
-    <p>Le nom du parfum est copié, prêt à coller.</p>
+    <div class="btn"><img src="assets/snapchat.svg" alt="">Commander sur Snapchat</div>
+    <p>Le bouton copie aussi le nom du parfum.</p>
   </div>
 </body>
 </html>

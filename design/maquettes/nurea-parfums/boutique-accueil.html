@@ -6,94 +6,96 @@
 <title>Nuréa Parfums — accueil</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Instrument+Sans:wght@400;500;600&display=block" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Instrument+Sans:wght@400;500;600&display=block" rel="stylesheet">
 <style>
+  /* Charte Nuréa v3 — valeurs de app/globals.css */
   :root {
-    --encre: #0A0508; --encre-2: #140E12;
-    --papier: #FDF8F4; --texte-2: #E4D2DA; --texte-3: #B49FAB;
-    --cuivre: #C4956A; --filet: rgba(196,149,106,.22); --filet-fort: rgba(196,149,106,.45);
+    --bg: #0A0508; --surface: #140E12; --text: #FDF8F4; --muted: #E4D2DA; --subtle: #B49FAB;
+    --accent: #C4956A; --border: rgba(196,149,106,.16); --border-strong: rgba(196,149,106,.4);
     --serif: 'Newsreader', Georgia, serif; --sans: 'Instrument Sans', system-ui, sans-serif;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { width: 1440px; height: 900px; overflow: hidden; background: var(--encre); color: var(--papier);
-    font: 400 15px/1.6 var(--sans); -webkit-font-smoothing: antialiased; font-feature-settings: "kern"; }
-  .serif { font-family: var(--serif); }
+  html, body { width: 1440px; height: 900px; overflow: hidden; background: var(--bg); color: var(--text);
+    font: 400 16px/1.7 var(--sans); -webkit-font-smoothing: antialiased; }
+  .label { font: 600 12px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
 
-  /* Coque */
-  header { position: absolute; left: 0; right: 0; top: 0; height: 88px; padding: 0 72px;
-    display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--filet); }
-  .logo { display: flex; align-items: center; gap: 14px; }
-  .logo img.m { width: 38px; height: 38px; }
-  .logo img.w { height: 21px; }
-  nav { display: flex; gap: 40px; font-weight: 500; font-size: 15px; color: var(--texte-2); }
-  nav a { color: inherit; text-decoration: none; }
+  header { height: 80px; padding: 0 72px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; border-bottom: 1px solid var(--border); }
+  header .logo { height: 36px; }
+  nav { display: flex; gap: 40px; }
+  nav span { font: 600 12px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+  .outils { justify-self: end; display: flex; align-items: center; gap: 8px; color: var(--muted); font: 500 14px var(--sans); }
+  .outils svg { width: 20px; height: 20px; }
 
-  /* Colonne de texte */
-  .texte { position: absolute; left: 72px; top: 88px; width: 504px; bottom: 0; display: flex; flex-direction: column; }
-  .lieu { margin-top: 64px; font-size: 14px; color: var(--texte-3); }
-  h1 { margin-top: 20px; font: 500 64px/1.02 var(--serif); letter-spacing: -0.022em; font-variation-settings: "opsz" 72; }
-  .chapo { margin-top: 32px; font: 400 21px/1.5 var(--serif); color: var(--texte-2); font-variation-settings: "opsz" 18; max-width: 468px; }
-  .actions { margin-top: 40px; display: flex; align-items: center; gap: 32px; }
-  .plein { background: var(--cuivre); color: var(--encre); font-weight: 600; font-size: 15px; padding: 15px 26px; }
-  .lien { font-weight: 500; font-size: 15px; color: var(--papier); padding-bottom: 3px; border-bottom: 1px solid var(--filet-fort); }
+  main { display: grid; grid-template-columns: 488px 1fr; column-gap: 72px; padding: 0 72px; height: 820px; align-items: center; }
 
-  /* Légende des planches */
-  .legende {  border-top: 1px solid var(--filet); }
-  .legende li { list-style: none; display: grid; grid-template-columns: 32px 1fr; padding: 11px 0; border-bottom: 1px solid var(--filet); align-items: baseline; }
-  .legende .n { font: 400 15px/1 var(--serif); color: var(--cuivre); font-variant-numeric: lining-nums; }
-  .legende .nom { font: 500 19px/1.3 var(--serif); }
-  .legende .marque { font-size: 13px; color: var(--texte-3); margin-left: 10px; font-family: var(--sans); font-weight: 400; }
-  .bas { margin-top: auto; margin-bottom: 33px; }
-  .mention { margin-top: 14px; font-size: 12.5px; line-height: 1.6; color: var(--texte-3); max-width: 480px; }
+  .hero .label { display: block; }
+  h1 { margin-top: 24px; font: 500 64px/1.04 var(--serif); letter-spacing: -0.015em; }
+  .lead { margin-top: 24px; font-size: 17px; line-height: 1.7; color: var(--muted); max-width: 440px; }
+  .ctas { margin-top: 40px; display: flex; gap: 16px; }
+  .btn { height: 52px; padding: 0 28px; display: inline-flex; align-items: center; gap: 10px; font: 600 13px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; }
+  .btn.solid { background: var(--accent); color: var(--bg); }
+  .btn.outline { border: 1px solid var(--accent); color: var(--accent); }
+  .btn img { width: 18px; height: 18px; }
+  .faits { margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border); display: flex; gap: 40px; }
+  .faits div b { display: block; font: 500 32px/1 var(--serif); }
+  .faits div span { display: block; margin-top: 8px; font-size: 14px; color: var(--subtle); line-height: 1.4; }
 
-  /* Mosaïque : un grand flacon, deux petits, bord contre bord */
-  .mosaique { position: absolute; left: 624px; top: 120px; width: 744px; height: 747px;
-    display: grid; grid-template-columns: 494px 249px; grid-template-rows: 373px 373px; gap: 1px; background: var(--filet); border: 1px solid var(--filet); }
-  .mosaique figure { position: relative; overflow: hidden; background: var(--encre-2); }
-  .mosaique figure:first-child { grid-row: 1 / 3; }
-  .mosaique img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .mosaique .num { position: absolute; left: 12px; bottom: 10px; font: 400 15px/1 var(--serif); color: var(--papier);
-    background: var(--encre); padding: 5px 8px 6px; font-variant-numeric: lining-nums; }
-
-  .chiffres { position: absolute; left: 624px; top: 88px; height: 32px; width: 744px; display: flex; justify-content: space-between; align-items: center;
-    font-size: 13px; color: var(--texte-3); font-variant-numeric: tabular-nums; }
-  .chiffres b { color: var(--papier); font-weight: 500; }
+  .selection-tete { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 24px; }
+  .selection-tete h2 { font: 500 28px/1.1 var(--serif); }
+  .selection-tete a { font: 500 14px var(--sans); color: var(--accent); border-bottom: 1px solid var(--border-strong); padding-bottom: 4px; }
+  .cartes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .carte { border: 1px solid var(--border); background: var(--surface); }
+  .carte .visuel { position: relative; aspect-ratio: 2 / 3; overflow: hidden; }
+  .carte img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .badge { position: absolute; left: 0; top: 0; background: var(--accent); color: var(--bg); font: 600 11px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; padding: 8px 12px; }
+  .carte .texte { min-height: 112px; padding: 20px 20px 24px; border-top: 1px solid var(--border); }
+  .carte .texte .label { font-size: 11px; }
+  .carte .texte p { margin-top: 10px; font: 500 22px/1.2 var(--serif); }
 </style>
 </head>
 <body>
   <header>
-    <div class="logo">
-      <img class="m" src="assets/monogramme-cercle-cuivre.svg" alt="">
-      <img class="w" src="assets/nurea-wordmark-ivory.webp" alt="Nuréa Parfums">
+    <img class="logo" src="assets/nurea-logo-horizontal-dark-1024.webp" alt="Nuréa Parfums">
+    <nav><span>Catalogue</span><span>Marques</span><span>La parfumerie</span><span>Contact</span></nav>
+    <div class="outils">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      Rechercher
     </div>
-    <nav><a>Catalogue</a><a>Marques</a><a>La parfumerie</a><a>Contact</a></nav>
   </header>
 
-  <div class="chiffres"><span><b>114</b> références · <b>44</b> marques</span><span>Remise en main propre à Marseille · envoi partout en France</span></div>
+  <main>
+    <section class="hero">
+      <span class="label">Parfumerie à Marseille</span>
+      <h1>Les grands parfums, choisis un par un.</h1>
+      <p class="lead">Les plus grandes marques, pour homme et pour femme. Le prix se donne en direct, sur Snapchat&#8239;; le parfum se remet en main propre ou part par envoi.</p>
+      <div class="ctas">
+        <span class="btn solid">Voir le catalogue</span>
+        <span class="btn outline">Commander un parfum</span>
+      </div>
+      <div class="faits">
+        <div><b>114</b><span>références</span></div>
+        <div><b>44</b><span>marques</span></div>
+        <div><b>10 · 50 · 80</b><span>ml, en flacon Nuréa</span></div>
+      </div>
+    </section>
 
-  <section class="texte">
-    <p class="lieu">Parfumerie à Marseille</p>
-    <h1>Les grands<br>parfums, choisis<br>un par un.</h1>
-    <p class="chapo">Un catalogue tenu à la main. Le prix se donne en message&#8239;; le parfum se remet en main propre ou part par envoi.</p>
-    <div class="actions">
-      <span class="plein">Voir le catalogue</span>
-      <span class="lien">Commander sur Snapchat</span>
-    </div>
-
-    <div class="bas">
-      <ol class="legende">
-        <li><span class="n">1</span><span class="nom">Baccarat Rouge 540<span class="marque">Maison Francis Kurkdjian</span></span></li>
-        <li><span class="n">2</span><span class="nom">Tobacco Vanille<span class="marque">Tom Ford</span></span></li>
-        <li><span class="n">3</span><span class="nom">Marrakech Intense<span class="marque">Aesop</span></span></li>
-      </ol>
-      <p class="mention">Photographies des flacons d’origine, pour reconnaître chaque référence. Votre parfum vous est remis dans un flacon Nuréa personnalisé, en&nbsp;10, 50 ou&nbsp;80&#8239;ml.</p>
-    </div>
-  </section>
-
-  <div class="mosaique">
-    <figure><img src="assets/mfk-baccarat-rouge-540.webp" alt="Maison Francis Kurkdjian — Baccarat Rouge 540"><span class="num">1</span></figure>
-    <figure><img src="assets/tom-ford-tobacco-vanille.webp" alt="Tom Ford — Tobacco Vanille"><span class="num">2</span></figure>
-    <figure><img src="assets/aesop-marrakech-intense.webp" alt="Aesop — Marrakech Intense"><span class="num">3</span></figure>
-  </div>
+    <section>
+      <div class="selection-tete"><h2>Sélection du moment</h2><a>Voir les 114 références</a></div>
+      <div class="cartes">
+        <article class="carte">
+          <div class="visuel"><img src="assets/armani-stronger-with-you-oud.webp" alt="Giorgio Armani — Stronger With You Oud"><span class="badge">Nouveau</span></div>
+          <div class="texte"><span class="label">Giorgio Armani</span><p>Stronger With You Oud</p></div>
+        </article>
+        <article class="carte">
+          <div class="visuel"><img src="assets/tom-ford-tobacco-vanille.webp" alt="Tom Ford — Tobacco Vanille"></div>
+          <div class="texte"><span class="label">Tom Ford</span><p>Tobacco Vanille</p></div>
+        </article>
+        <article class="carte">
+          <div class="visuel"><img src="assets/chanel-gabrielle.webp" alt="Chanel — Gabrielle Chanel"></div>
+          <div class="texte"><span class="label">Chanel</span><p>Gabrielle Chanel</p></div>
+        </article>
+      </div>
+    </section>
+  </main>
 </body>
 </html>

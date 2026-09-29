@@ -6,232 +6,205 @@
 <title>Magda Mania — écran cuisine</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500;600;700&display=block" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=block" rel="stylesheet">
 <style>
+  /* Palette « night » de l'écran cuisine (app/globals.css + KitchenBoard / OrderTicket) */
   :root {
-    --fond: #080c1f; --nuit: #0e1430; --nuit-2: #161d3f; --trait: #273158; --trait-fort: #3a4677;
-    --texte: #f4f6fb; --texte-2: #a2b3da; --texte-3: #7a8cc0;
-    --rose: #f50054; --bleu: #0080f8; --bleu-texte: #4fa8ff; --or: #ffc023;
+    --magda-300: #ff8fb7; --magda-500: #ff0a60; --magda-600: #f50054;
+    --gold-200: #ffe789; --gold-300: #ffd44c; --gold-400: #ffc023; --gold-500: #f9a109;
+    --night-200: #ccd5eb; --night-300: #a2b3da; --night-400: #6f88c5; --night-500: #4c66ae; --night-700: #314279; --night-800: #2c3a64; --night-900: #1d2749; --night-950: #0e1430;
+    --cream-50: #ffffff;
+    --em-300: #6ee7b7; --em-500: #10b981; --red-300: #fca5a5; --red-500: #ef4444;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { width: 1440px; height: 900px; overflow: hidden; }
-  body { background: var(--fond); color: var(--texte); font-family: 'Archivo', sans-serif; -webkit-font-smoothing: antialiased; }
+  body { position: relative; background: var(--night-950); color: var(--cream-50); font: 15px/1.45 'Plus Jakarta Sans', sans-serif; -webkit-font-smoothing: antialiased; }
+  .d { font-family: 'Fredoka', sans-serif; letter-spacing: -.015em; }
   .num { font-variant-numeric: tabular-nums; }
-  .mono { font-family: 'IBM Plex Mono', monospace; }
+  svg.i { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; display: block; flex: none; }
 
-  /* ---------- Bandeau ---------- */
-  .bandeau { height: 84px; display: flex; align-items: stretch; border-bottom: 1px solid var(--trait); background: var(--nuit); }
-  .marque { display: flex; align-items: center; gap: 12px; padding: 0 24px; width: 260px; border-right: 1px solid var(--trait); }
-  .marque img { width: 42px; height: 42px; border-radius: 50%; }
-  .marque b { display: block; font-stretch: 125%; font-weight: 900; font-size: 22px; letter-spacing: -.02em; line-height: 1; }
-  .marque span { display: block; margin-top: 5px; font: 500 12.5px/1 'IBM Plex Mono'; color: var(--texte-2); }
+  /* ---------- En-tête ---------- */
+  header { border-bottom: 1px solid var(--night-800); }
+  .barre { height: 72px; display: flex; align-items: center; gap: 12px; padding: 0 24px; }
+  .barre img { width: 40px; height: 40px; border-radius: 12px; }
+  .barre .t b { display: block; font-size: 19px; font-weight: 700; line-height: 1.1; }
+  .barre .t span { display: block; font-size: 13px; color: var(--night-400); }
+  .compteurs { display: flex; gap: 8px; margin-left: 28px; }
+  .cpt { height: 40px; display: inline-flex; align-items: center; gap: 8px; padding: 0 14px; border-radius: 12px; font-size: 14px; font-weight: 500; }
+  .cpt b { font-family: 'Fredoka'; font-size: 20px; font-weight: 700; }
+  .c-gold { background: rgb(255 192 35 / .15); color: var(--gold-300); }
+  .c-magda { background: rgb(255 10 96 / .15); color: var(--magda-300); }
+  .c-em { background: rgb(16 185 129 / .15); color: var(--em-300); }
+  .c-red { background: rgb(239 68 68 / .2); color: var(--red-300); }
+  .droite { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+  .etat { display: inline-flex; align-items: center; gap: 7px; font-size: 13.5px; font-weight: 600; color: var(--em-300); padding: 0 6px; }
+  .sep { width: 1px; height: 28px; background: var(--night-800); margin: 0 6px; }
+  .ouvert { height: 48px; display: inline-flex; align-items: center; gap: 10px; padding: 0 16px 0 14px; border-radius: 12px; background: var(--night-900); border: 1px solid var(--night-800); }
+  .ouvert i { width: 10px; height: 10px; border-radius: 50%; background: var(--em-500); }
+  .ouvert span { font-size: 13px; color: var(--night-300); line-height: 1.2; }
+  .ouvert span b { display: block; font-size: 14.5px; color: var(--cream-50); font-weight: 700; }
+  .ic { width: 44px; height: 44px; border-radius: 12px; background: var(--night-900); border: 1px solid var(--night-800); display: grid; place-items: center; color: var(--night-300); }
 
-  .compteurs { display: flex; }
-  .compteur { display: flex; align-items: center; gap: 12px; padding: 0 26px; border-right: 1px solid var(--trait); position: relative; }
-  .compteur::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 5px; }
-  .compteur b { font-stretch: 110%; font-weight: 900; font-size: 40px; line-height: 1; }
-  .compteur span { font-size: 15px; font-weight: 600; color: var(--texte-2); line-height: 1.15; }
-  .c-or::before { background: var(--or); } .c-bleu::before { background: var(--bleu); } .c-blanc::before { background: var(--texte); } .c-rose::before { background: var(--rose); }
-  .c-rose b, .c-rose span { color: var(--rose); }
-  .c-rose { background: rgba(245,0,84,.1); }
+  /* ---------- Tickets ---------- */
+  main { padding: 20px 24px 0; }
+  .grille { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; align-items: start; }
+  .ticket { background: var(--night-900); border: 2px solid var(--night-800); border-radius: 16px; overflow: hidden; }
+  .ticket.retard { border-color: var(--red-500); background: #2d1b30; }
+  .ticket.prete { border-color: var(--em-500); background: #15293d; }
+  .ticket.nouvelle { border-color: var(--gold-400); box-shadow: 0 0 0 3px rgb(255 192 35 / .18); }
 
-  .etat { margin-left: auto; display: flex; align-items: center; gap: 22px; padding: 0 20px 0 24px; }
-  .direct { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: var(--bleu-texte); }
-  .direct i { width: 9px; height: 9px; border-radius: 50%; background: var(--bleu-texte); }
-  .son { font-size: 14px; font-weight: 600; color: var(--texte-2); display: flex; align-items: center; gap: 7px; }
-  .heure { font: 600 34px/1 'IBM Plex Mono'; letter-spacing: -.02em; }
-  .ouverture { height: 52px; border: 2px solid var(--trait-fort); border-radius: 4px; padding: 0 16px; display: flex; flex-direction: column; justify-content: center; }
-  .ouverture small { font-size: 12px; font-weight: 600; color: var(--bleu-texte); }
-  .ouverture b { font-size: 15px; font-weight: 700; margin-top: 2px; }
+  .haut { padding: 16px 16px 14px; border-bottom: 1px solid var(--night-800); }
+  .haut .l1 { display: flex; align-items: center; justify-content: space-between; }
+  .statut { display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 14px; border-radius: 999px; font-size: 15.5px; font-weight: 700; }
+  .s-prep { background: rgb(255 10 96 / .15); color: var(--magda-300); }
+  .s-red { background: var(--red-500); color: #fff; }
+  .s-em { background: var(--em-500); color: var(--night-950); }
+  .s-gold { background: var(--gold-400); color: var(--night-950); }
+  .attente { font-family: 'Fredoka'; font-size: 26px; font-weight: 600; color: var(--night-200); }
+  .retard .attente { color: var(--red-300); }
+  .no { margin-top: 12px; font-size: 54px; font-weight: 700; line-height: 1; letter-spacing: -.02em; }
+  .qui { margin-top: 8px; display: flex; justify-content: space-between; font-size: 17px; color: var(--night-300); }
+  .qui span { color: var(--night-400); font-size: 14.5px; }
 
-  /* ---------- Plan de travail ---------- */
-  main { display: grid; grid-template-columns: 1fr 268px; gap: 16px; padding: 16px 16px 16px; height: 816px; }
-  .file { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; min-width: 0; }
+  .articles { list-style: none; padding: 4px 16px; }
+  .articles li { display: flex; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--night-800); }
+  .articles li:last-child { border-bottom: 0; }
+  .qte { width: 36px; height: 36px; border-radius: 10px; background: var(--magda-600); display: grid; place-items: center; font-family: 'Fredoka'; font-size: 18px; font-weight: 700; flex: none; }
+  .nom { font-size: 22px; font-weight: 600; line-height: 1.2; padding-top: 4px; }
+  .opts { margin-top: 4px; }
+  .opts p { font-size: 17px; line-height: 1.45; color: var(--night-200); font-weight: 500; }
+  .opts p span { color: var(--night-400); font-weight: 400; }
+  .consigne { margin-top: 10px; display: inline-flex; align-items: center; gap: 7px; background: var(--gold-400); color: var(--night-950); border-radius: 8px; padding: 6px 12px; font-size: 16px; font-weight: 700; }
+  .message { margin: 4px 16px 14px; display: flex; gap: 8px; border: 1px solid rgb(249 161 9 / .4); background: rgb(249 161 9 / .1); color: var(--gold-200); border-radius: 12px; padding: 10px 12px; font-size: 14.5px; line-height: 1.4; }
+  .message b { font-weight: 700; }
 
-  .ticket { background: var(--nuit); border: 1px solid var(--trait); border-radius: 4px; display: flex; flex-direction: column; min-width: 0; overflow: hidden; }
-  .ticket.neuve { outline: 3px solid var(--or); outline-offset: -1px; }
-  .tt { padding: 10px 14px 12px; }
-  .tt .ligne1 { display: flex; justify-content: space-between; align-items: center; font-size: 15px; font-weight: 700; }
-  .tt .no { margin-top: 6px; font-stretch: 118%; font-weight: 900; font-size: 44px; letter-spacing: -.035em; line-height: .95; white-space: nowrap; }
-  .tt .min { font: 700 28px/1 'IBM Plex Mono'; letter-spacing: -.03em; }
-  .tt .min small { font-size: 15px; font-weight: 600; margin-left: 3px; }
-  .t-or .tt { background: var(--or); color: #0e1430; }
-  .t-bleu .tt { background: var(--bleu); color: #fff; }
-  .t-rose .tt { background: var(--rose); color: #fff; }
+  .restant { padding: 12px 16px; border-top: 1px solid var(--night-800); }
+  .restant .l { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 14px; font-weight: 600; color: var(--night-300); }
+  .restant .l span { display: inline-flex; align-items: center; gap: 6px; }
+  .restant .l b { color: var(--gold-300); font-weight: 800; }
+  .restant .l b.zero { color: var(--red-300); }
+  .paliers { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+  .paliers span { height: 46px; border-radius: 12px; background: var(--night-800); display: grid; place-items: center; font-size: 16px; font-weight: 800; color: var(--night-200); }
+  .paliers span.on { background: var(--gold-400); color: var(--night-950); }
 
-  .client { display: flex; justify-content: space-between; align-items: baseline; padding: 11px 14px; border-bottom: 1px dashed var(--trait-fort); }
-  .client b { font-size: 17px; font-weight: 700; }
-  .client span { font: 500 13px/1 'IBM Plex Mono'; color: var(--texte-3); }
+  .actions { display: flex; gap: 8px; padding: 12px 16px 16px; border-top: 1px solid var(--night-800); }
+  .go { flex: 1; height: 60px; border-radius: 12px; background: var(--magda-600); display: flex; align-items: center; justify-content: center; gap: 10px; font-family: 'Fredoka'; font-size: 19px; font-weight: 600; }
+  .go.em { background: var(--em-500); color: var(--night-950); }
+  .x { width: 60px; height: 60px; border-radius: 12px; background: var(--night-800); display: grid; place-items: center; color: var(--night-400); flex: none; }
 
-  .articles { list-style: none; padding: 4px 14px 0; flex: 1; }
-  .articles > li { display: grid; grid-template-columns: 34px 1fr; gap: 10px; padding: 11px 0; border-bottom: 1px solid var(--trait); }
-  .articles > li:last-child { border-bottom: 0; }
-  .qte { width: 34px; height: 34px; border: 2px solid var(--texte); border-radius: 3px; display: grid; place-items: center; font: 700 19px/1 'IBM Plex Mono'; }
-  .qte.x2 { background: var(--texte); color: var(--nuit); }
-  .nom { font-stretch: 92%; font-weight: 800; font-size: 21px; line-height: 1.1; padding-top: 4px; }
-  .opts { margin-top: 6px; }
-  .opts p { font-size: 16px; line-height: 1.35; color: var(--texte); font-weight: 500; }
-  .opts p span { color: var(--texte-3); font-weight: 400; }
-  .consigne { margin-top: 8px; background: var(--or); color: #0e1430; font-weight: 800; font-size: 16px; padding: 5px 9px; border-radius: 2px; display: inline-block; }
-  .message { margin: 8px 14px 4px; border: 2px solid var(--or); padding: 8px 10px; font-size: 15px; line-height: 1.35; color: var(--texte); border-radius: 3px; }
-  .message b { color: var(--or); display: block; font-size: 13px; margin-bottom: 2px; }
-
-  .pied { display: flex; justify-content: space-between; padding: 8px 14px; font: 500 13.5px/1.2 'IBM Plex Mono'; color: var(--texte-3); border-top: 1px dashed var(--trait-fort); }
-  .pied b { color: var(--texte-2); font-weight: 600; }
-  .restant { padding: 10px 12px 10px; border-top: 1px solid var(--trait); }
-  .restant .lib { display: flex; justify-content: space-between; font-size: 13.5px; font-weight: 600; color: var(--texte-2); margin-bottom: 7px; }
-  .restant .lib b { font: 700 14px/1 'IBM Plex Mono'; color: var(--or); }
-  .restant .lib b.zero { color: var(--rose); }
-  .paliers { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; }
-  .paliers span { height: 44px; display: grid; place-items: center; background: var(--nuit-2); border: 1px solid var(--trait); border-radius: 3px; font: 600 17px/1 'IBM Plex Mono'; color: var(--texte-2); }
-  .paliers span.on { background: var(--or); border-color: var(--or); color: #0e1430; font-weight: 700; }
-
-  .actions { display: flex; gap: 6px; padding: 10px; border-top: 1px solid var(--trait); }
-  .go { flex: 1; height: 60px; background: var(--texte); color: #0e1430; border-radius: 4px; display: grid; place-items: center; font-stretch: 82%; font-weight: 800; font-size: 19px; white-space: nowrap; letter-spacing: -.01em; }
-  .x { width: 52px; flex: none; height: 60px; border: 1px solid var(--trait-fort); border-radius: 4px; display: grid; place-items: center; }
-
-  /* ---------- Comptoir ---------- */
-  .comptoir { background: var(--nuit); border: 1px solid var(--trait); border-radius: 4px; display: flex; flex-direction: column; overflow: hidden; }
-  .comptoir h2 { display: flex; justify-content: space-between; align-items: baseline; padding: 16px 16px 14px; font-stretch: 112%; font-weight: 900; font-size: 22px; letter-spacing: -.02em; border-bottom: 1px solid var(--trait); }
-  .comptoir h2 span { font-stretch: 100%; font-size: 14px; font-weight: 600; color: var(--texte-2); }
-  .prete { padding: 14px 16px 16px; border-bottom: 1px solid var(--trait); }
-  .prete .l1 { display: flex; justify-content: space-between; align-items: baseline; }
-  .prete .no { white-space: nowrap; font-stretch: 112%; font-weight: 900; font-size: 38px; letter-spacing: -.03em; line-height: 1; }
-  .prete .dep { font: 600 13.5px/1 'IBM Plex Mono'; color: var(--texte-2); }
-  .prete .l2 { margin-top: 8px; font-size: 16px; font-weight: 600; display: flex; justify-content: space-between; align-items: baseline; }
-  .prete .l3 { margin-top: 3px; font-size: 14px; color: var(--texte-2); }
-  .prete .remise { margin-top: 12px; height: 54px; border: 2px solid var(--texte); border-radius: 4px; display: grid; place-items: center; font-weight: 800; font-size: 17px; }
-  .recentes { margin-top: auto; padding: 14px 16px 16px; border-top: 1px solid var(--trait); }
-  .recentes h3 { font-size: 13.5px; font-weight: 600; color: var(--texte-3); margin-bottom: 8px; }
-  .recentes p { display: grid; grid-template-columns: 64px 1fr auto; font: 500 13px/1.9 'IBM Plex Mono'; color: var(--texte-2); }
-  .recentes p b { color: var(--texte); font-weight: 600; }
-  .recentes p em { font-style: normal; }
-  .recentes p em.annulee { color: var(--rose); }
+  .recentes { position: absolute; left: 24px; bottom: 24px; display: flex; align-items: center; gap: 10px; }
+  .recentes h2 { font-size: 16px; font-weight: 600; color: var(--night-400); margin-right: 6px; }
+  .recentes span { height: 36px; display: inline-flex; align-items: center; gap: 8px; padding: 0 14px; border-radius: 12px; background: var(--night-900); font-size: 14px; color: var(--night-400); }
+  .recentes span b { color: var(--night-200); font-weight: 700; }
+  .recentes em { font-style: normal; color: #34d399; }
+  .recentes em.annulee { color: #f87171; }
 </style>
 </head>
 <body>
-  <header class="bandeau">
-    <div class="marque">
-      <img src="assets/logo.webp" alt="">
-      <div><b>Cuisine</b><span>samedi 26/09</span></div>
-    </div>
-    <div class="compteurs">
-      <div class="compteur c-or"><b class="num">2</b><span>à lancer</span></div>
-      <div class="compteur c-bleu"><b class="num">2</b><span>en préparation</span></div>
-      <div class="compteur c-blanc"><b class="num">2</b><span>prêtes</span></div>
-      <div class="compteur c-rose"><b class="num">1</b><span>en retard</span></div>
-    </div>
-    <div class="etat">
-      <span class="direct"><i></i>En direct</span>
-      <span class="son"><svg width="18" height="16" viewBox="0 0 18 16" fill="none" stroke="#a2b3da" stroke-width="2"><path d="M2 5.5h3.5L10 1.5v13l-4.5-4H2z" stroke-linejoin="round"/><path d="M13 5c1.3 1.6 1.3 4.4 0 6M15.5 3c2.4 2.8 2.4 7.2 0 10"/></svg>Son actif</span>
-      <span class="heure num">13:42</span>
-      <div class="ouverture"><small>Cuisine ouverte</small><b>Fermer la cuisine</b></div>
+  <header>
+    <div class="barre">
+      <img src="assets/cuisine-192.png" alt="">
+      <div class="t"><b class="d">Cuisine</b><span>Équipe cuisine</span></div>
+
+      <div class="compteurs">
+        <span class="cpt c-gold"><b class="num">1</b>À lancer</span>
+        <span class="cpt c-magda"><b class="num">2</b>En cuisson</span>
+        <span class="cpt c-em"><b class="num">1</b>Prêtes</span>
+        <span class="cpt c-red"><b class="num">1</b>En retard</span>
+      </div>
+
+      <div class="droite">
+        <span class="etat"><svg class="i" width="17" height="17" viewBox="0 0 24 24"><path d="M12 20h.01"/><path d="M2 8.82a15 15 0 0 1 20 0"/><path d="M5 12.859a10 10 0 0 1 14 0"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/></svg>En direct</span>
+        <span class="etat"><svg class="i" width="17" height="17" viewBox="0 0 24 24"><path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"/><path d="M16 9a5 5 0 0 1 0 6"/><path d="M19.364 18.364a9 9 0 0 0 0-12.728"/></svg>Son actif</span>
+        <span class="etat"><svg class="i" width="17" height="17" viewBox="0 0 24 24"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M22 8c0-2.3-.8-4.3-2-6"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/><path d="M4 2C2.8 3.7 2 5.7 2 8"/></svg>Alertes actives</span>
+        <span class="sep"></span>
+        <span class="ouvert"><i></i><span>Cuisine ouverte<b>Fermer la cuisine</b></span></span>
+        <span class="ic"><svg class="i" width="19" height="19" viewBox="0 0 24 24"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg></span>
+        <span class="ic"><svg class="i" width="19" height="19" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg></span>
+      </div>
     </div>
   </header>
 
   <main>
-    <section class="file">
+    <div class="grille">
+
+      <!-- MM-133 : prête -->
+      <article class="ticket prete">
+        <div class="haut">
+          <div class="l1"><span class="statut s-em">Prête</span><span class="attente num">20 min</span></div>
+          <p class="no d num">MM-133</p>
+          <p class="qui">Nathan G. <span class="num">15,90&nbsp;€</span></p>
+        </div>
+        <ul class="articles">
+          <li><span class="qte num">1</span><div><p class="nom d">Menu Hot-Dog</p><div class="opts"><p><span>Boisson</span> Coca</p><p><span>Sauces</span> Ketchup</p></div></div></li>
+          <li><span class="qte num">2</span><div><p class="nom d">Frites</p><div class="opts"><p><span>Sauces</span> Mayonnaise</p></div></div></li>
+        </ul>
+        <div class="actions"><span class="go em"><svg class="i" width="22" height="22" viewBox="0 0 24 24" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Remise au client</span><span class="x"><svg class="i" width="22" height="22" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span></div>
+      </article>
 
       <!-- MM-134 : en préparation, en retard -->
-      <article class="ticket t-rose">
-        <div class="tt">
-          <div class="ligne1"><span>En retard</span><span class="min num">17<small>min</small></span></div>
-          <p class="no num">MM-134</p>
+      <article class="ticket retard">
+        <div class="haut">
+          <div class="l1"><span class="statut s-red"><svg class="i" width="15" height="15" viewBox="0 0 24 24" stroke-width="2.5"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>En retard</span><span class="attente num">17 min</span></div>
+          <p class="no d num">MM-134</p>
+          <p class="qui">Yanis R. <span class="num">18,80&nbsp;€</span></p>
         </div>
-        <div class="client"><b>Yanis R.</b><span>06 •• •• 73 20</span></div>
         <ul class="articles">
-          <li><span class="qte">1</span><div><p class="nom">Menu Nuggets</p><div class="opts"><p><span>Boisson</span> Ice tea</p><p><span>Sauces</span> Barbecue</p></div></div></li>
-          <li><span class="qte">1</span><div><p class="nom">Menu Hot-Dog</p><div class="opts"><p><span>Boisson</span> Coca zéro</p><p><span>Sauces</span> Mayonnaise, Ketchup</p></div></div></li>
+          <li><span class="qte num">1</span><div><p class="nom d">Menu Nuggets</p><div class="opts"><p><span>Boisson</span> Ice tea</p><p><span>Sauces</span> Barbecue</p></div></div></li>
+          <li><span class="qte num">1</span><div><p class="nom d">Menu Hot-Dog</p><div class="opts"><p><span>Boisson</span> Coca zéro</p><p><span>Sauces</span> Mayonnaise, Ketchup</p></div></div></li>
         </ul>
-        <p class="pied"><span>payée 13:25</span><b class="num">18,80&nbsp;€</b></p>
         <div class="restant">
-          <div class="lib"><span>Temps restant</span><b class="zero">à l’instant</b></div>
+          <div class="l"><span><svg class="i" width="16" height="16" viewBox="0 0 24 24"><path d="M10 2h4"/><path d="m12 14 3-3"/><circle cx="12" cy="14" r="8"/></svg>Temps restant</span><b class="zero">à l’instant</b></div>
           <div class="paliers"><span>5</span><span>10</span><span>15</span><span>20</span><span>30</span></div>
         </div>
-        <div class="actions"><span class="go">Marquer prête</span><span class="x"><svg width="18" height="18" viewBox="0 0 18 18" stroke="#a2b3da" stroke-width="2.4"><path d="M2 2l14 14M16 2L2 16"/></svg></span></div>
+        <div class="actions"><span class="go"><svg class="i" width="22" height="22" viewBox="0 0 24 24"><path d="m16 16 2 2 4-4"/><path d="M21 10V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l2-1.14"/><path d="m7.5 4.27 9 5.15"/><path d="M3.29 7 12 12l8.71-5"/><path d="M12 22V12"/></svg>Marquer prête</span><span class="x"><svg class="i" width="22" height="22" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span></div>
       </article>
 
-      <!-- MM-136 : en préparation -->
-      <article class="ticket t-bleu">
-        <div class="tt">
-          <div class="ligne1"><span>En préparation</span><span class="min num">11<small>min</small></span></div>
-          <p class="no num">MM-136</p>
+      <!-- MM-135 : en préparation -->
+      <article class="ticket">
+        <div class="haut">
+          <div class="l1"><span class="statut s-prep">En préparation</span><span class="attente num">15 min</span></div>
+          <p class="no d num">MM-135</p>
+          <p class="qui">Sofia A. <span class="num">12,90&nbsp;€</span></p>
         </div>
-        <div class="client"><b>Léa M.</b><span>07 •• •• 09 55</span></div>
         <ul class="articles">
-          <li><span class="qte">1</span><div><p class="nom">Menu Paninis</p><div class="opts"><p><span>Panini</span> Poulet</p><p><span>Boisson</span> Coca</p><p><span>Sauces</span> Algérienne</p></div><span class="consigne">Bien grillé</span></div></li>
-          <li><span class="qte">1</span><div><p class="nom">Menu Enfant</p><div class="opts"><p><span>Sauces</span> Ketchup</p></div></div></li>
+          <li><span class="qte num">1</span><div><p class="nom d">Menu Paninis</p><div class="opts"><p><span>Panini</span> Raclette</p><p><span>Boisson</span> Oasis tropical</p><p><span>Sauces</span> Sans sauce</p></div></div></li>
+          <li><span class="qte num">1</span><div><p class="nom d">Crêpe Nutella</p></div></li>
         </ul>
-        <p class="pied"><span>payée 13:31</span><b class="num">14,90&nbsp;€</b></p>
         <div class="restant">
-          <div class="lib"><span>Temps restant</span><b>~4&#8239;min</b></div>
+          <div class="l"><span><svg class="i" width="16" height="16" viewBox="0 0 24 24"><path d="M10 2h4"/><path d="m12 14 3-3"/><circle cx="12" cy="14" r="8"/></svg>Temps restant</span><b>~4&#8239;min</b></div>
           <div class="paliers"><span class="on">5</span><span>10</span><span>15</span><span>20</span><span>30</span></div>
         </div>
-        <div class="actions"><span class="go">Marquer prête</span><span class="x"><svg width="18" height="18" viewBox="0 0 18 18" stroke="#a2b3da" stroke-width="2.4"><path d="M2 2l14 14M16 2L2 16"/></svg></span></div>
+        <div class="actions"><span class="go"><svg class="i" width="22" height="22" viewBox="0 0 24 24"><path d="m16 16 2 2 4-4"/><path d="M21 10V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l2-1.14"/><path d="m7.5 4.27 9 5.15"/><path d="M3.29 7 12 12l8.71-5"/><path d="M12 22V12"/></svg>Marquer prête</span><span class="x"><svg class="i" width="22" height="22" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span></div>
       </article>
 
-      <!-- MM-138 : reçue, à lancer -->
-      <article class="ticket t-or">
-        <div class="tt">
-          <div class="ligne1"><span>À lancer</span><span class="min num">6<small>min</small></span></div>
-          <p class="no num">MM-138</p>
+      <!-- MM-136 : nouvelle -->
+      <article class="ticket nouvelle">
+        <div class="haut">
+          <div class="l1"><span class="statut s-gold">Nouvelle</span><span class="attente num">2 min</span></div>
+          <p class="no d num">MM-136</p>
+          <p class="qui">Chloé D. <span class="num">12,00&nbsp;€</span></p>
         </div>
-        <div class="client"><b>Karim S.</b><span>06 •• •• 17 38</span></div>
         <ul class="articles">
-          <li><span class="qte x2">2</span><div><p class="nom">Panini</p><div class="opts"><p><span>Panini</span> Américain</p><p><span>Sauces</span> Barbecue</p></div></div></li>
-          <li><span class="qte">1</span><div><p class="nom">Frites</p><div class="opts"><p><span>Sauces</span> Mayonnaise, Ketchup</p></div></div></li>
-          <li><span class="qte x2">2</span><div><p class="nom">Canette 33&#8239;cl</p><div class="opts"><p><span>Soda</span> Coca cherry</p></div></div></li>
+          <li><span class="qte num">1</span><div><p class="nom d">Crêpe Nutella</p><div class="opts"><p><span>Toppings</span> Oreo</p></div><span class="consigne"><svg class="i" width="15" height="15" viewBox="0 0 24 24" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Coupée en deux</span></div></li>
+          <li><span class="qte num">1</span><div><p class="nom d">Crêpe Sucre</p></div></li>
+          <li><span class="qte num">1</span><div><p class="nom d">Chocolat chaud</p><div class="opts"><p><span>Supplément</span> Chantilly</p></div></div></li>
         </ul>
-        <p class="pied"><span>payée 13:36</span><b class="num">17,00&nbsp;€</b></p>
         <div class="restant">
-          <div class="lib"><span>Temps restant</span></div>
+          <div class="l"><span><svg class="i" width="16" height="16" viewBox="0 0 24 24"><path d="M10 2h4"/><path d="m12 14 3-3"/><circle cx="12" cy="14" r="8"/></svg>Temps restant</span></div>
           <div class="paliers"><span>5</span><span>10</span><span>15</span><span>20</span><span>30</span></div>
         </div>
-        <div class="actions"><span class="go">Lancer la préparation</span><span class="x"><svg width="18" height="18" viewBox="0 0 18 18" stroke="#a2b3da" stroke-width="2.4"><path d="M2 2l14 14M16 2L2 16"/></svg></span></div>
+        <div class="actions"><span class="go"><svg class="i" width="22" height="22" viewBox="0 0 24 24"><path d="M17 21a1 1 0 0 0 1-1v-5.35c0-.457.316-.844.727-1.041a4 4 0 0 0-2.134-7.589 5 5 0 0 0-9.186 0 4 4 0 0 0-2.134 7.588c.411.198.727.585.727 1.041V20a1 1 0 0 0 1 1Z"/><path d="M6 17h12"/></svg>Lancer la préparation</span><span class="x"><svg class="i" width="22" height="22" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span></div>
       </article>
+    </div>
 
-      <!-- MM-139 : reçue, nouvelle -->
-      <article class="ticket t-or neuve">
-        <div class="tt">
-          <div class="ligne1"><span>Nouvelle</span><span class="min num">2<small>min</small></span></div>
-          <p class="no num">MM-139</p>
-        </div>
-        <div class="client"><b>Chloé D.</b><span>06 •• •• 58 14</span></div>
-        <ul class="articles">
-          <li><span class="qte">1</span><div><p class="nom">Crêpe Nutella</p><div class="opts"><p><span>Toppings</span> Oreo</p></div></div></li>
-          <li><span class="qte">1</span><div><p class="nom">Crêpe Sucre</p></div></li>
-          <li><span class="qte">1</span><div><p class="nom">Chocolat chaud</p><div class="opts"><p><span>Supplément</span> Chantilly</p></div></div></li>
-        </ul>
-        <p class="message"><b>Message du client</b>Crêpe Nutella coupée en deux, c’est pour deux enfants.</p>
-        <p class="pied"><span>payée 13:40</span><b class="num">12,00&nbsp;€</b></p>
-        <div class="restant">
-          <div class="lib"><span>Temps restant</span></div>
-          <div class="paliers"><span>5</span><span>10</span><span>15</span><span>20</span><span>30</span></div>
-        </div>
-        <div class="actions"><span class="go">Lancer la préparation</span><span class="x"><svg width="18" height="18" viewBox="0 0 18 18" stroke="#a2b3da" stroke-width="2.4"><path d="M2 2l14 14M16 2L2 16"/></svg></span></div>
-      </article>
-    </section>
-
-    <aside class="comptoir">
-      <h2>Au comptoir <span>2 prêtes</span></h2>
-      <div class="prete">
-        <p class="no num">MM-133</p>
-        <p class="l2"><span>Nathan G.</span><span class="dep num">depuis 5&#8239;min</span></p><p class="l3">1 Menu Hot-Dog · 2 Frites</p>
-        <p class="remise">Remise au client</p>
-      </div>
-      <div class="prete">
-        <p class="no num">MM-135</p>
-        <p class="l2"><span>Sofia A.</span><span class="dep num">depuis 3&#8239;min</span></p><p class="l3">1 Menu Paninis · 1 Crêpe Nutella</p>
-        <p class="remise">Remise au client</p>
-      </div>
-      <div class="recentes">
-        <h3>Terminées récemment</h3>
-        <p><b>MM-137</b><span>Enzo T.</span><em>retirée</em></p>
-        <p><b>MM-132</b><span>Hugo L.</span><em class="annulee">annulée</em></p>
-        <p><b>MM-131</b><span>Maëlle P.</span><em>retirée</em></p>
-        <p><b>MM-130</b><span>Ryan B.</span><em>retirée</em></p>
-      </div>
-    </aside>
+    <div class="recentes">
+      <h2 class="d">Terminées récemment</h2>
+      <span><b>MM-132</b>Hugo L.<em>retirée</em></span>
+      <span><b>MM-131</b>Maëlle P.<em class="annulee">annulée</em></span>
+      <span><b>MM-130</b>Ryan B.<em>retirée</em></span>
+      <span><b>MM-129</b>Inès K.<em>retirée</em></span>
+    </div>
   </main>
 </body>
 </html>
