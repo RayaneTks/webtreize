@@ -8,7 +8,12 @@ import { test, expect } from '@playwright/test';
  * réapparaît, aucune section de crédibilité affichée à vide.
  */
 
-const ETUDES = ['/realisations/magda-mania', '/realisations/nurea-parfums'] as const;
+const ETUDES = [
+  '/realisations/nurea-parfums',
+  '/realisations/magda-mania',
+  '/realisations/encore-un-dessert',
+  '/realisations/conciergerie-nurea',
+] as const;
 
 test.describe('Prospection — référencement', () => {
   test('le canonical est sur l’hôte servi par l’hébergeur (www)', async ({ request }) => {
@@ -85,6 +90,20 @@ test.describe('Prospection — études de cas', () => {
       expect(ld.some((bloc) => bloc.includes('BreadcrumbList'))).toBe(true);
     });
   }
+
+  test('les écrans reconstitués sont signalés comme données d’exemple', async ({ page }) => {
+    for (const route of ['/', '/realisations', ...ETUDES]) {
+      await page.goto(route);
+      await expect(page.getByText('données d’exemple').first(), route).toBeAttached();
+    }
+  });
+
+  test('chaque réalisation de l’accueil mène à son étude de cas', async ({ page }) => {
+    await page.goto('/');
+    for (const route of ETUDES) {
+      await expect(page.locator(`#realisations a[href="${route}"]`).first(), route).toBeAttached();
+    }
+  });
 
   test('une étude de cas inconnue renvoie un 404', async ({ page }) => {
     const response = await page.goto('/realisations/projet-inexistant');

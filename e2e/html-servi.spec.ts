@@ -138,6 +138,8 @@ test.describe('HTML servi — sans JavaScript', () => {
       ...ROUTES,
       '/realisations/magda-mania',
       '/realisations/nurea-parfums',
+      '/realisations/encore-un-dessert',
+      '/realisations/conciergerie-nurea',
       // Seul document légal complet, donc seul indexable.
       '/legal/politique-confidentialite',
     ];
