@@ -1,5 +1,5 @@
 import { OG_CONTENT_TYPE, OG_SIZE, ogImage } from '@/lib/og';
-import { getRealisation, REALISATIONS } from '@/lib/data/realisations';
+import { getRealisation, metierEtLieu, REALISATIONS } from '@/lib/data/realisations';
 
 export const alt = 'WebTreize — étude de cas';
 export const size = OG_SIZE;
@@ -15,6 +15,6 @@ export default async function Image({ params }: { params: Promise<{ slug: string
 
   return ogImage({
     title: projet ? `Étude de cas : ${projet.nom}` : 'Étude de cas',
-    subtitle: projet ? projet.secteur : 'Réalisations WebTreize',
+    subtitle: projet ? metierEtLieu(projet) : 'Réalisations WebTreize',
   });
 }

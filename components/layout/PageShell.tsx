@@ -23,25 +23,30 @@ export function PageShell({
   eyebrow = 'WebTreize',
   title,
   description,
+  header,
   children,
 }: {
   eyebrow?: string;
-  title: string;
+  title?: string;
   description?: string;
+  /** Remplace l’en-tête par défaut — une étude de cas compose le sien. */
+  header?: ReactNode;
   children: ReactNode;
 }) {
   return (
     <div className="min-h-screen bg-canvas text-ink">
       <ClientShell footer={<Footer />}>
-        <section className="pb-gap-lg pt-gap-xl">
-          <div className="site-container">
-            <Reveal>
-              <p className="eyebrow">{eyebrow}</p>
-              <h1 className="mt-gap-sm max-w-[16ch] text-display-lg font-extrabold">{title}</h1>
-              {description ? <p className="lede mt-gap-sm max-w-[52ch]">{description}</p> : null}
-            </Reveal>
-          </div>
-        </section>
+        {header ?? (
+          <section className="pb-gap-lg pt-gap-xl">
+            <div className="site-container">
+              <Reveal>
+                <p className="eyebrow">{eyebrow}</p>
+                <h1 className="mt-gap-sm max-w-[16ch] text-display-lg font-extrabold">{title}</h1>
+                {description ? <p className="lede mt-gap-sm max-w-[52ch]">{description}</p> : null}
+              </Reveal>
+            </div>
+          </section>
+        )}
         {children}
       </ClientShell>
     </div>

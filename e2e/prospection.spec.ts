@@ -68,18 +68,17 @@ test.describe('Prospection — études de cas', () => {
 
       await expect(page.locator('h1')).toHaveCount(1);
 
-      for (const section of [
-        /^Le contexte$/,
-        /^Le problème$/,
-        /^La solution$/,
-        /^Les interfaces$/,
-        /^Les fonctionnalités$/,
-        /^Ce que l’outil permet au quotidien\.?$/,
-      ]) {
+      for (const section of [/^Ce qui a changé$/, /^Le contexte$/, /^Le problème$/, /^Notre réponse$/]) {
         const cible = page.getByText(section).first();
         await cible.scrollIntoViewIfNeeded();
         await expect(cible, String(section)).toBeVisible();
       }
+
+      // Chaque côté du produit montre au moins un écran, avec sa légende.
+      await expect(page.locator('section[aria-labelledby^="cote-"] figure figcaption').first()).toBeVisible();
+
+      // Aucun lien vers le site du client n’est publié.
+      expect(await page.locator('main a[target="_blank"]').count()).toBe(0);
 
       // Appel à l’action vers le formulaire.
       await expect(page.locator('a[href="/contact"]', { hasText: /audit/i }).last()).toBeVisible();

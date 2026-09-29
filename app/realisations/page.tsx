@@ -1,8 +1,13 @@
 import type { Metadata } from 'next';
 import { PageShell } from '@/components/layout/PageShell';
-import { MENTION_DONNEES_EXEMPLE, ProjectCard } from '@/components/realisations/ProjectCard';
+import { ProjectList } from '@/components/realisations/ProjectRow';
 import { PageCtaBand } from '@/components/sections/PageCtaBand';
-import { REALISATIONS } from '@/lib/data/realisations';
+import {
+  livrablesEnPhrase,
+  MENTION_DONNEES_EXEMPLE,
+  metierEtLieu,
+  REALISATIONS,
+} from '@/lib/data/realisations';
 import { breadcrumbJsonLd, pageMetadata, webPageJsonLd } from '@/lib/seo';
 
 export const metadata: Metadata = pageMetadata('realisations');
@@ -16,8 +21,11 @@ const JSON_LD = [
 ];
 
 /**
- * Les réalisations, au complet : chaque projet en pleine largeur, avec la même
- * carte que l’accueil (`ProjectCard`) — l’aperçu et la page ne divergent pas.
+ * Les réalisations, au complet.
+ *
+ * Un index d’abord — le sommaire d’un catalogue : en quatre lignes, le prospect
+ * voit s’il y a un métier proche du sien. Puis les mêmes lignes de projet que
+ * l’accueil (`ProjectList`), titrées en `h2`.
  *
  * Aucun chiffre de résultat n’est affiché — voir la doctrine en tête de
  * `lib/data/realisations.ts`.
@@ -30,21 +38,35 @@ export default function RealisationsPage() {
         title="Ce que nous avons livré."
         description="Une parfumerie, un snack, une pâtisserie, une conciergerie. Pour chacun, ce qu’il fallait résoudre, et ce qui a été construit, écran par écran."
       >
-        <section aria-label="Projets" className="section-pad border-t border-line">
-          <div className="site-container grid gap-gap-xl">
+        <nav aria-label="Index des réalisations" className="site-container">
+          <ol role="list" className="border-b border-line">
             {REALISATIONS.map((projet, index) => (
-              <ProjectCard
-                key={projet.id}
-                projet={projet}
-                headingLevel="h2"
-                // La première scène est l’élément le plus grand au chargement.
-                priority={index === 0}
-              />
+              <li key={projet.id} className="border-t border-line">
+                <a
+                  href={`#projet-${projet.id}`}
+                  className="group grid items-baseline gap-x-gap-md py-3 md:grid-cols-12"
+                >
+                  <span aria-hidden="true" className="projet__num md:col-span-1 md:mb-0">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <span className="text-title font-extrabold text-ink md:col-span-4">
+                    <span className="link-draw">{projet.nom}</span>
+                  </span>
+                  <span className="text-note text-ink-muted md:col-span-3">{metierEtLieu(projet)}</span>
+                  <span className="hidden text-note text-ink-muted md:col-span-4 md:block">
+                    {livrablesEnPhrase(projet)}
+                  </span>
+                </a>
+              </li>
             ))}
-            <p className="max-w-[60ch] border-t border-line pt-gap-md text-note text-ink-faint">
-              {MENTION_DONNEES_EXEMPLE}
-            </p>
-          </div>
+          </ol>
+        </nav>
+
+        <section aria-label="Projets" className="section-pad">
+          <ProjectList projets={REALISATIONS} headingLevel="h2" />
+          <p className="site-container mt-gap-lg border-t border-line pt-gap-md text-note text-ink-muted">
+            {MENTION_DONNEES_EXEMPLE}
+          </p>
         </section>
 
         <PageCtaBand
