@@ -7,8 +7,12 @@ import { PageShell } from '@/components/layout/PageShell';
 import { Reveal } from '@/components/motion/Reveal';
 import { PageCtaBand } from '@/components/sections/PageCtaBand';
 import { TestimonialsSection } from '@/components/sections/TestimonialsSection';
-import { Plate } from '@/components/ui/Plate';
+import { DeviceFrame } from '@/components/realisations/Devices';
+import { MENTION_DONNEES_EXEMPLE } from '@/components/realisations/ProjectCard';
+import { fondSombre, ProjectStage } from '@/components/realisations/ProjectStage';
+import { cn } from '@/lib/utils';
 import {
+  aDesDonneesExemple,
   getRealisation,
   REALISATIONS,
   REALISATIONS_HREF,
@@ -50,8 +54,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   });
 }
 
-const MAIN_SIZES = '(min-width: 1280px) 1224px, 100vw';
-const HALF_SIZES = '(min-width: 1120px) 540px, (min-width: 700px) 46vw, 100vw';
+const BROWSER_SIZES = '(min-width: 1280px) 1000px, 90vw';
+const PHONE_SIZES = '(min-width: 1280px) 280px, (min-width: 768px) 26vw, 60vw';
 
 export default async function EtudeDeCasPage({ params }: Props) {
   const { slug } = await params;
@@ -95,31 +99,34 @@ export default async function EtudeDeCasPage({ params }: Props) {
           </ol>
         </nav>
 
-        {/* — L’écran d’ouverture — */}
-        <div className="plate-container tirage">
-          <Plate
-            src={projet.ecranPrincipal.src}
-            alt={projet.ecranPrincipal.alt}
-            ratio="16/9"
-            priority
-            sizes={MAIN_SIZES}
-          />
+        {/* — La scène du projet — */}
+        <div className="site-container tirage">
+          <ProjectStage projet={projet} priority />
         </div>
 
-        {projet.url ? (
-          <p className="site-container mt-gap-sm text-note text-ink-faint">
-            En ligne&#8239;:{' '}
-            <a
-              href={projet.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="link-draw font-semibold text-accent-deep"
-            >
-              {projet.url.replace(/^https?:\/\//, '')}
-              <span className="sr-only"> (nouvelle fenêtre)</span>
-            </a>
-          </p>
-        ) : null}
+        <div className="site-container mt-gap-sm flex flex-wrap items-center justify-between gap-gap-sm">
+          <ul aria-label="Ce qui a été livré" className="flex flex-wrap gap-2">
+            {projet.livrables.map((livrable) => (
+              <li key={livrable} className="rounded-full border border-line px-3 py-1 text-note text-ink-muted">
+                {livrable}
+              </li>
+            ))}
+          </ul>
+          {projet.url ? (
+            <p className="text-note text-ink-faint">
+              En ligne&#8239;:{' '}
+              <a
+                href={projet.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="link-draw font-semibold text-accent-deep"
+              >
+                {projet.url.replace(/^https?:\/\//, '')}
+                <span className="sr-only"> (nouvelle fenêtre)</span>
+              </a>
+            </p>
+          ) : null}
+        </div>
 
         {/* — Contexte et problème — */}
         <section aria-labelledby="contexte-title" className="section-pad">
@@ -162,13 +169,15 @@ export default async function EtudeDeCasPage({ params }: Props) {
               </h2>
             </Reveal>
 
-            <div className="mt-gap-lg grid gap-gap-md md:grid-cols-2">
-              {projet.ecrans.map((ecran, i) => (
-                <Reveal key={ecran.src} delay={i * 60}>
-                  <Interface ecran={ecran} />
-                </Reveal>
+            <div className="mt-gap-lg grid gap-gap-xl">
+              {etude.interfaces.map((groupe) => (
+                <GroupeInterfaces key={groupe.titre} titre={groupe.titre} ecrans={groupe.ecrans} fond={projet.scene.fond} />
               ))}
             </div>
+
+            {aDesDonneesExemple(projet) ? (
+              <p className="mt-gap-lg max-w-[60ch] text-note text-ink-faint">{MENTION_DONNEES_EXEMPLE}</p>
+            ) : null}
           </div>
         </section>
 
@@ -286,13 +295,49 @@ function Paragraphes({ textes, large = false }: { textes: readonly string[]; lar
   );
 }
 
-function Interface({ ecran }: { ecran: Ecran }) {
+/**
+ * Un groupe d’écrans (« Côté client », « Côté cuisine »…). Les écrans
+ * d’ordinateur sont montrés en grand, un par ligne ; les téléphones côte à
+ * côte, sur l’aplat du client pour qu’ils se lisent comme des appareils.
+ */
+function GroupeInterfaces({ titre, ecrans, fond }: { titre: string; ecrans: readonly Ecran[]; fond: string }) {
+  const ordinateurs = ecrans.filter((e) => e.format === 'ordinateur');
+  const telephones = ecrans.filter((e) => e.format === 'telephone');
+
   return (
-    <figure>
-      <Plate src={ecran.src} alt={ecran.alt} ratio="4/3" sizes={HALF_SIZES} />
-      {ecran.legende ? (
-        <figcaption className="mt-gap-xs text-note text-ink-muted">{ecran.legende}</figcaption>
-      ) : null}
-    </figure>
+    <div>
+      <h3 className="text-title-sm font-bold text-ink">{titre}</h3>
+      <div className="mt-gap-md grid gap-gap-lg">
+        {ordinateurs.map((ecran) => (
+          <Reveal key={ecran.src}>
+            <figure>
+              <div className="rounded-plate-lg p-[4%]" style={{ backgroundColor: fond }}>
+                <DeviceFrame ecran={ecran} sizes={BROWSER_SIZES} />
+              </div>
+              {ecran.legende ? (
+                <figcaption className="mt-gap-xs text-note text-ink-muted">{ecran.legende}</figcaption>
+              ) : null}
+            </figure>
+          </Reveal>
+        ))}
+        {telephones.length > 0 ? (
+          <Reveal>
+            <div
+              className="grid grid-cols-2 gap-x-gap-md gap-y-gap-lg rounded-plate-lg px-[6%] py-gap-lg md:flex md:justify-center md:gap-[5%]"
+              style={{ backgroundColor: fond }}
+            >
+              {telephones.map((ecran) => (
+                <figure key={ecran.src} className="md:w-[24%] md:max-w-[280px]">
+                  <DeviceFrame ecran={ecran} sizes={PHONE_SIZES} />
+                  {ecran.legende ? (
+                    <figcaption className={cn('mt-gap-sm text-note', fondSombre(fond) ? 'text-white/80' : 'text-ink-muted')}>{ecran.legende}</figcaption>
+                  ) : null}
+                </figure>
+              ))}
+            </div>
+          </Reveal>
+        ) : null}
+      </div>
+    </div>
   );
 }

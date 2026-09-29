@@ -198,6 +198,151 @@
     }
   }
 
+  /* — Les écrans des réalisations —
+     Un navigateur et un téléphone dessinés en CSS autour de chaque écran.
+     Les proportions internes (barre, encoche, rayons) sont exprimées en `cqw` :
+     le cadre garde exactement le même dessin à 90 px comme à 1200 px de large.
+
+     Ce sont les seules ombres du site. La charte les proscrit sur ses propres
+     plaques ; ici, un appareil posé sur l’aplat d’un client doit se détacher,
+     sinon il se lit comme une image collée. Une ombre, douce, jamais colorée. */
+  .device-browser {
+    container-type: inline-size;
+    box-shadow:
+      0 0 0 1px rgb(0 0 0 / 0.08),
+      0 28px 56px -22px rgb(12 8 4 / 0.55),
+      0 10px 20px -12px rgb(12 8 4 / 0.3);
+  }
+
+  .device-browser {
+    overflow: hidden;
+    border-radius: 0.55rem;
+    background: #fff;
+  }
+
+  .device-browser__bar {
+    display: flex;
+    align-items: center;
+    gap: 2cqw;
+    height: 3.6cqw;
+    padding: 0 1.6cqw;
+    background: #f2efeb;
+    border-bottom: 1px solid rgb(0 0 0 / 0.07);
+  }
+
+  .device-browser__dots {
+    display: flex;
+    gap: 0.7cqw;
+  }
+
+  .device-browser__dots i {
+    width: 0.95cqw;
+    height: 0.95cqw;
+    border-radius: 50%;
+    background: #d9d3cb;
+  }
+
+  .device-browser__url {
+    flex: 0 1 44cqw;
+    margin: 0 auto;
+    transform: translateX(-2.5cqw);
+    overflow: hidden;
+    border-radius: 99px;
+    background: #fff;
+    color: #6b6259;
+    font-size: 1.3cqw;
+    line-height: 2.3cqw;
+    text-align: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .device-browser__screen {
+    position: relative;
+    aspect-ratio: 1440 / 900;
+    background: #eee;
+  }
+
+  /* Le conteneur de requêtes ne peut pas se mesurer lui-même : `.device-phone`
+     porte le contexte, `__body` dessine le boîtier en `cqw`. */
+  .device-phone {
+    container-type: inline-size;
+  }
+
+  .device-phone__body {
+    padding: 3cqw;
+    border-radius: 15cqw;
+    background: #121110;
+    box-shadow:
+      0 0 0 1px rgb(0 0 0 / 0.08),
+      0 28px 56px -22px rgb(12 8 4 / 0.55),
+      0 10px 20px -12px rgb(12 8 4 / 0.3);
+  }
+
+  .device-phone__screen {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 390 / 844;
+    border-radius: 12.5cqw;
+    background: #000;
+  }
+
+  /* L’îlot de l’écran : posé sur la barre d’état de la capture, entre l’heure
+     et les icônes, comme sur l’appareil. */
+  .device-phone__island {
+    position: absolute;
+    top: 2.6cqw;
+    left: 50%;
+    z-index: 1;
+    width: 27cqw;
+    height: 7.6cqw;
+    transform: translateX(-50%);
+    border-radius: 99px;
+    background: #000;
+  }
+
+  /* — La scène d’un projet —
+     Un aplat aux couleurs du client, et ses écrans posés dessus. Positions en
+     pourcentage de la scène : la composition est la même à toutes les tailles.
+     Chaque placement a été vérifié pour tenir dans le cadre au ratio 16/10. */
+  .stage {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 16 / 10;
+  }
+
+  .stage > * {
+    position: absolute;
+    transition: translate var(--dur-long) var(--ease-out);
+  }
+
+  .stage[data-composition="vitrine-gestion"] .stage__o1 { left: 4%; top: 7%; width: 58%; }
+  .stage[data-composition="vitrine-gestion"] .stage__o2 { left: 34%; top: 32%; width: 54%; }
+  .stage[data-composition="vitrine-gestion"] .stage__t1 { right: 3.5%; top: 10%; width: 16%; }
+
+  .stage[data-composition="ordinateur-telephones"] .stage__o1 { left: 5%; top: 10%; width: 68%; }
+  .stage[data-composition="ordinateur-telephones"] .stage__t1 { right: 17%; top: 28%; width: 18%; }
+  .stage[data-composition="ordinateur-telephones"] .stage__t2 { right: 3%; top: 16%; width: 18%; }
+
+  .stage[data-composition="trois-telephones"] .stage__t1 { left: 15%; top: 15%; width: 22%; }
+  .stage[data-composition="trois-telephones"] .stage__t2 { left: 39%; top: 7%; width: 22%; }
+  .stage[data-composition="trois-telephones"] .stage__t3 { left: 63%; top: 15%; width: 22%; }
+
+  .stage[data-composition="ordinateur-telephone"] .stage__o1 { left: 5%; top: 10%; width: 70%; }
+  .stage[data-composition="ordinateur-telephone"] .stage__t1 { right: 5%; top: 20%; width: 20%; }
+
+  /* Au survol, les écrans du dessus s’avancent d’un rien — `translate`, pas
+     `transform`, pour ne jamais entrer en conflit avec la montée au défilement. */
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .stage-link:hover .stage__o2,
+    .stage-link:hover .stage__t1,
+    .stage-link:hover .stage__t2,
+    .stage-link:hover .stage__t3,
+    .stage-link:focus-visible .stage__t1 {
+      translate: 0 -1.2%;
+    }
+  }
+
   /* — La lumière de l’atelier —
      Une lueur chaude qui suit le regard, sur la seule section sombre du site.
      Réservée à l’encre : sur l’ivoire, une lueur chaude serait invisible ou
@@ -537,6 +682,18 @@ html.js [data-plate-image]:not([data-plate-loaded]) {
   }
 }
 
+/* — Les écrans montent en place —
+   Posés un peu plus bas sur l’aplat, ils remontent à leur place pendant que la
+   scène entre dans la fenêtre. L’état décalé ne vit que dans le `from`. */
+@keyframes ecran-monte {
+  from {
+    transform: translate3d(0, 12%, 0);
+  }
+  to {
+    transform: none;
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
     /* La frise est mesurée sur `.brief`, conteneur en flux qui ne se transforme
@@ -583,6 +740,28 @@ html.js [data-plate-image]:not([data-plate-loaded]) {
          exact où il est entièrement dans la fenêtre. Se terminer plus tard
          laisserait un titre visible et pourtant coupé. */
       animation-range: entry 0% entry 100%;
+    }
+
+    /* La scène ne bouge jamais ; les écrans posés dessus montent en place
+       pendant qu’elle entre dans la fenêtre, chacun à son rythme. */
+    .stage {
+      view-timeline-name: --stage;
+      view-timeline-axis: block;
+    }
+
+    .stage__o2,
+    .stage__t1,
+    .stage__t2,
+    .stage__t3 {
+      animation-name: ecran-monte;
+      animation-timing-function: var(--ease-out);
+      animation-fill-mode: both;
+      animation-timeline: --stage;
+      animation-range: entry 5% cover 42%;
+    }
+
+    .stage__t2 {
+      animation-range: entry 0% cover 36%;
     }
 
     .rule-top,

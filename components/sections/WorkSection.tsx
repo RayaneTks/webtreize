@@ -1,179 +1,64 @@
 import { Reveal } from '@/components/motion/Reveal';
+import { MENTION_DONNEES_EXEMPLE, ProjectGrid } from '@/components/realisations/ProjectCard';
 import { Button } from '@/components/ui/Button';
-import { Plate } from '@/components/ui/Plate';
-import type { Route } from 'next';
-import Link from 'next/link';
-import {
-  REALISATIONS_A_LA_UNE,
-  REALISATIONS_HREF,
-  realisationHref,
-  type Ecran,
-  type Realisation,
-} from '@/lib/data/realisations';
-
-/** L’écran d’ouverture occupe une colonne sur deux à partir de `md`. */
-const MAIN_SIZES = '(min-width: 1120px) 520px, (min-width: 700px) 46vw, 100vw';
-
-/** Les deux écrans de la bande sont deux fois plus étroits. */
-const STRIP_SIZES = '(min-width: 1120px) 254px, (min-width: 700px) 23vw, 50vw';
+import { REALISATIONS, REALISATIONS_HREF } from '@/lib/data/realisations';
 
 /**
- * « Ce que nous avons livré » — l’aperçu des réalisations sur l’accueil.
+ * « Réalisations » — la section qui fait basculer un visiteur hésitant.
  *
- * ## Pourquoi cette section existe
+ * ## Montrer des outils, pas des pages d’accueil
  *
- * Le site affirmait son sérieux sans jamais rien montrer : aucune réalisation,
- * aucun nom, aucune capture (finding « preuve-absente-plan-honnete »). C’était
- * le dernier trou de crédibilité. Il se comble avec des projets réellement en
- * ligne, dont l’URL est cliquable : le visiteur vérifie lui-même, ce qui vaut
- * infiniment plus qu’un témoignage recopié.
- *
- * ## Peu de projets, montrés en profondeur
- *
- * Deux études de cas à trois écrans plutôt que six vignettes. Ce qui convainc un
- * prospect, ce n’est pas la longueur du portfolio, c’est de voir un produit
- * fonctionner : l’accueil, la carte, le téléphone. Et un projet dont on n’est
- * pas fier tire tout le reste vers le bas — on le retire.
+ * Un prospect ne doute pas qu’un studio sache faire une page d’accueil. Il doute
+ * qu’on comprenne son métier. Chaque projet est donc mis en scène avec ce qui
+ * se passe derrière la vitrine : la caisse d’une parfumerie, l’écran de la
+ * cuisine d’un snack, le coût de revient d’une tarte, la demande chiffrée
+ * d’un propriétaire. C’est ce qui distingue un studio d’un générateur de sites.
  *
  * ## Ce qui n’y figure pas
  *
- * Aucun chiffre de résultat. Pas de « +40 % de commandes », pas de note sur
- * cinq, pas de logo client posé en bandeau. Les seuls chiffres cités sont ceux
- * que le site affiche lui-même — les 108 références du catalogue Nuréa se
- * vérifient en un clic.
+ * Aucun résultat chiffré présenté comme mesuré, aucun logo en bandeau, aucun
+ * avis. Les écrans de gestion portent des données d’exemple, et la section le
+ * dit : les chiffres d’un client ne se publient pas pour vendre au suivant.
  */
 export function WorkSection() {
   return (
     <section id="realisations" aria-labelledby="realisations-title" className="section-pad">
       <div className="site-container">
-        <Reveal>
-          <p className="eyebrow">Nos réalisations</p>
-          <h2
-            id="realisations-title"
-            className="sweep mt-gap-xs max-w-[20ch] text-display-md font-extrabold"
-          >
-            Des sites et des outils construits pour de vrais commerces.
-          </h2>
-          <p className="lede mt-gap-sm max-w-[52ch]">
-            Deux commerces marseillais, deux problèmes différents, et le détail de ce qui a été
-            construit pour chacun.
-          </p>
-        </Reveal>
-
-        <div className="mt-gap-xl grid gap-gap-xl">
-          {REALISATIONS_A_LA_UNE.map((projet, index) => (
-            <WorkEntry key={projet.id} projet={projet} plateFirst={index % 2 === 1} />
-          ))}
-        </div>
-
-        <Reveal delay={60}>
-          <div className="mt-gap-lg">
+        <Reveal className="grid items-end gap-gap-md md:grid-cols-[minmax(0,1fr)_auto]">
+          <div>
+            <p className="eyebrow">Réalisations</p>
+            <h2
+              id="realisations-title"
+              className="sweep mt-gap-xs max-w-[18ch] text-display-md font-extrabold"
+            >
+              Quatre métiers, quatre outils sur mesure.
+            </h2>
+            <p className="lede mt-gap-sm max-w-[56ch]">
+              Une parfumerie, un snack de skatepark, une pâtisserie, une conciergerie. Chaque fois,
+              la vitrine et ce qu’il y a derrière&#8239;: la caisse, la cuisine, les marges, les
+              demandes.
+            </p>
+          </div>
+          <div className="hidden md:block">
             <Button href={REALISATIONS_HREF} variant="quiet" arrow>
               Toutes les réalisations
             </Button>
           </div>
         </Reveal>
-      </div>
-    </section>
-  );
-}
 
-/**
- * Une réalisation : un écran d’ouverture, puis deux écrans en bande.
- *
- * Exportée — la page `/realisations` rend exactement la même figure, pour que
- * l’aperçu et la page ne divergent jamais.
- */
-export function WorkEntry({
-  projet,
-  plateFirst,
-  priority = false,
-}: {
-  projet: Realisation;
-  plateFirst: boolean;
-  priority?: boolean;
-}) {
-  const titleId = `realisation-${projet.id}-title`;
+        <div className="mt-gap-xl">
+          <ProjectGrid projets={REALISATIONS} />
+        </div>
 
-  return (
-    <article aria-labelledby={titleId} className="grid items-center gap-gap-lg md:grid-cols-2">
-      <Reveal className={plateFirst ? 'md:order-2' : undefined}>
-        <p className="eyebrow">{projet.secteur}</p>
-        <h3 id={titleId} className="mt-gap-xs text-display-sm font-extrabold">
-          <Link href={realisationHref(projet.id) as Route} className="link-draw">
-            {projet.nom}
-          </Link>
-        </h3>
-        <p className="lede mt-gap-sm max-w-[46ch]">{projet.promesse}</p>
-
-        <ul className="mt-gap-sm grid max-w-[46ch] gap-gap-xs">
-          {projet.livre.map((point) => (
-            <li key={point} className="rule-top pt-gap-xs text-body text-ink-muted">
-              {point}
-            </li>
-          ))}
-        </ul>
-
-        <p className="mt-gap-sm flex flex-wrap items-center gap-x-gap-sm gap-y-2">
-          <Button href={realisationHref(projet.id)} variant="quiet" size="sm" arrow>
-            Lire l’étude de cas
-          </Button>
-          {projet.url ? (
-            <a
-              href={projet.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="link-draw inline-block py-2 text-note font-semibold text-accent-deep"
-            >
-              Voir le site en ligne
-              <span className="sr-only"> (nouvelle fenêtre)</span>
-            </a>
-          ) : null}
-        </p>
-      </Reveal>
-
-      <Reveal delay={60} className={plateFirst ? 'md:order-1' : undefined}>
-        <div className="grid gap-gap-xs">
-          <MainScreen
-            id={projet.id}
-            ecran={projet.ecranPrincipal}
-            nom={projet.nom}
-            priority={priority}
-          />
-
-          {/* Les deux écrans de détail ne portent pas de lien : un seul point
-              d’entrée par projet suffit, et trois liens vers la même cible
-              encombrent la navigation au clavier pour rien. */}
-          <div className="grid grid-cols-2 gap-gap-xs">
-            {projet.ecrans.map((ecran) => (
-              <Plate
-                key={ecran.src}
-                src={ecran.src}
-                alt={ecran.alt}
-                ratio="4/3"
-                sizes={STRIP_SIZES}
-              />
-            ))}
+        <div className="mt-gap-lg flex flex-col gap-gap-md border-t border-line pt-gap-md md:flex-row md:items-center md:justify-between">
+          <p className="max-w-[60ch] text-note text-ink-faint">{MENTION_DONNEES_EXEMPLE}</p>
+          <div className="md:hidden">
+            <Button href={REALISATIONS_HREF} variant="quiet" arrow>
+              Toutes les réalisations
+            </Button>
           </div>
         </div>
-      </Reveal>
-    </article>
-  );
-}
-
-/**
- * L’écran d’ouverture mène à l’étude de cas, pas au site du client : le visiteur
- * reste chez nous, sur la page qui explique ce qui a été construit. Le lien vers
- * le site en ligne reste proposé en texte, juste à côté.
- */
-function MainScreen({ id, ecran, nom, priority }: { id: string; ecran: Ecran; nom: string; priority: boolean }) {
-  return (
-    <Link
-      href={realisationHref(id) as Route}
-      className="work-plate"
-      aria-label={`Lire l’étude de cas ${nom}`}
-    >
-      <Plate src={ecran.src} alt={ecran.alt} ratio="16/9" sizes={MAIN_SIZES} priority={priority} />
-    </Link>
+      </div>
+    </section>
   );
 }
