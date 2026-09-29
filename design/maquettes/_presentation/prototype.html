@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Accrochage des réalisations</title>
+<!--
+  Prototype statique de design/maquettes/PRESENTATION.md.
+  Deux parties : la section « Réalisations » de l’accueil, puis l’étude de cas
+  Nuréa Parfums. Les images sont les JPEG actuels de public/images/realisations/,
+  en remplacement des écrans en cours de refonte.
+  Aucun cadre d’appareil, aucune ombre, aucun dégradé.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;1,6..72,300&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --canvas: #f6f3ee; --surface: #fffdfa; --sand: #eae3d8; --ink: #17130f; --accent: #c4552b;
+    --ink-muted: #6b6259; --ink-faint: #756c65; --accent-deep: #a8461f;
+    --line: rgba(23, 19, 15, .14); --line-strong: rgba(23, 19, 15, .5);
+    --ease-out: cubic-bezier(.32, .72, 0, 1);
+    --dur-micro: 150ms; --dur-state: 250ms; --dur-reveal: 450ms;
+    --gap-xs: clamp(.75rem, 1.2vw, 1rem);
+    --gap-sm: clamp(1.25rem, 2.2vw, 1.75rem);
+    --gap-md: clamp(1.75rem, 3.4vw, 2.75rem);
+    --gap-lg: clamp(2.5rem, 5vw, 4rem);
+    --gap-xl: clamp(3.5rem, 7vw, 6rem);
+    --section: clamp(4.75rem, 11vw, 10.5rem);
+    --r-plate: clamp(1rem, 2vw, 1.625rem);
+    --r-plate-lg: clamp(1.125rem, 2.4vw, 2.125rem);
+    /* Accrochage : ratios des écrans et somme de référence (ordinateur + téléphone). */
+    --r-o: 1.6; --r-t: .4621; --ref: 2.0621;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { background: var(--canvas); color: var(--ink); -webkit-text-size-adjust: 100%; }
+  body { margin: 0; font: 400 max(1rem, 16px)/1.7 'Plus Jakarta Sans', system-ui, sans-serif; background: var(--canvas); font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1; -webkit-font-smoothing: antialiased; overflow-x: clip; }
+  h1, h2, h3 { margin: 0; font-weight: 800; color: var(--ink); text-wrap: balance; }
+  p, li, dd { text-wrap: pretty; hyphens: auto; }
+  p, ul, ol, dl, dd, figure { margin: 0; padding: 0; }
+  ul, ol { list-style: none; }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+  a:focus-visible { outline: 2px solid var(--accent-deep); outline-offset: 2px; }
+
+  .site-container { width: 100%; max-width: 1120px; margin-inline: auto; padding-inline: 20px; }
+  .plate-container { width: 100%; max-width: 1280px; margin-inline: auto; padding-inline: 20px; }
+  @media (min-width: 640px) { .site-container, .plate-container { padding-inline: 24px; } }
+  @media (min-width: 768px) { .site-container { padding-inline: 32px; } .plate-container { padding-inline: 28px; } }
+
+  .section-pad { padding-block: var(--section); }
+  .eyebrow { font-size: .8125rem; line-height: 1.4; letter-spacing: .1em; font-weight: 600; text-transform: uppercase; color: var(--ink-faint); }
+  .lede { font-size: 1.0625rem; line-height: 1.72; color: var(--ink-muted); }
+  .note { font-size: .875rem; line-height: 1.6; }
+  .display-md { font-size: clamp(2rem, 4.6vw, 3.75rem); line-height: 1.02; letter-spacing: -.045em; }
+  .display-sm { font-size: clamp(1.875rem, 4.2vw, 3.375rem); line-height: 1.03; letter-spacing: -.04em; }
+  .display-lg { font-size: clamp(2.25rem, 5.8vw, 4.75rem); line-height: 1; letter-spacing: -.05em; }
+  .title { font-size: 1.375rem; line-height: 1.3; letter-spacing: -.03em; }
+  .title-sm { font-size: 1.1875rem; line-height: 1.35; letter-spacing: -.025em; font-weight: 700; }
+  .rule-top { border-top: 1px solid var(--line); padding-top: var(--gap-sm); }
+
+  .link-draw { background: linear-gradient(currentColor, currentColor) no-repeat 0 100% / 0 1px; padding-bottom: .12em; transition: background-size var(--dur-state) var(--ease-out); }
+
+  /* ======================================================================
+     L’accrochage : une plaque sable, des écrans nus, tous à la même hauteur.
+     ====================================================================== */
+  .acc {
+    container-type: inline-size;
+    background: var(--sand);
+    border-radius: var(--r-plate-lg);
+    padding: 6.5%;
+  }
+  .acc__rang {
+    display: grid;
+    grid-template-columns: var(--cols);
+    column-gap: 3cqi;
+    align-items: start;
+    margin-inline: auto;
+    /* Largeur du rang : la hauteur des écrans est la même d’un projet à l’autre. */
+    width: min(100%, calc(var(--somme) / var(--ref) * 97cqi + (var(--n) - 1) * 3cqi));
+  }
+  .acc__rang--etroit { display: none; }
+  @media (max-width: 767.98px) {
+    .acc { padding: 7% 7% 6%; }
+    .acc__rang--large { display: none; }
+    .acc__rang--etroit { display: grid; --cols: 1fr 1fr; column-gap: 4cqi; width: min(100%, 30rem); }
+  }
+  .ecran img { width: 100%; height: auto; background: var(--canvas); }
+  .ecran--o img { aspect-ratio: 1440 / 900; border-radius: 4px; }
+  .ecran--t img { aspect-ratio: 390 / 844; border-radius: 14% / 6.5%; }
+  /* Un filet intérieur d’encre à 14 % : le bord d’un écran clair ne se perd pas dans le sable. */
+  .ecran { position: relative; }
+  .ecran__img { position: relative; }
+  .ecran__img::after { content: ''; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 1px var(--line); pointer-events: none; }
+  .ecran--o .ecran__img { border-radius: 4px; }
+  .ecran--t .ecran__img { border-radius: 14% / 6.5%; }
+  .ecran figcaption { margin-top: .75em; font-size: .875rem; line-height: 1.45; color: var(--ink-muted); max-width: 38ch; }
+  .ecran figcaption .ex { white-space: nowrap; }
+
+  /* ======================================================================
+     Accueil : quatre projets, une ligne chacun.
+     ====================================================================== */
+  .work-head { display: grid; gap: var(--gap-md); align-items: end; }
+  @media (min-width: 768px) { .work-head { grid-template-columns: minmax(0, 1fr) auto; } }
+  .quiet { display: inline-flex; align-items: center; gap: .5em; min-height: 44px; font-weight: 600; font-size: .9375rem; border-bottom: 1px solid var(--line-strong); }
+  .work-list { margin-top: var(--gap-xl); display: grid; gap: var(--gap-xl); }
+  .projet { position: relative; }
+  .projet__legende { margin-top: var(--gap-sm); display: grid; gap: var(--gap-xs) var(--gap-lg); }
+  @media (min-width: 768px) { .projet__legende { grid-template-columns: repeat(12, minmax(0, 1fr)); } .projet__id { grid-column: 1 / 7; } .projet__texte { grid-column: 7 / 13; padding-top: .35rem; } }
+  @media (min-width: 1024px) { .projet__id { grid-column: 1 / 6; } }
+  .projet__num { display: block; font-family: 'Newsreader', Georgia, serif; font-weight: 300; font-size: 1.375rem; line-height: 1; color: var(--ink-faint); font-variant-numeric: tabular-nums lining-nums; margin-bottom: .6rem; }
+  .projet__meta { margin-top: .5rem; color: var(--ink-muted); }
+  .projet__texte p:first-child { color: var(--ink-muted); max-width: 46ch; }
+  .projet__livre { margin-top: .75rem; color: var(--ink-muted); max-width: 52ch; }
+  .projet__livre b { font-weight: 600; color: var(--ink); }
+  .projet__cue { margin-top: var(--gap-xs); display: inline-flex; gap: .45em; font-weight: 600; font-size: .9375rem; color: var(--ink); }
+  .projet__cue i { font-style: normal; transition: transform var(--dur-state) var(--ease-out); }
+  /* Un seul lien par projet : le nom. Il s’étend à toute la ligne. */
+  .projet__lien::after { content: ''; position: absolute; inset: 0; border-radius: var(--r-plate-lg); }
+  .projet__lien:focus-visible { outline: none; }
+  .projet__lien:focus-visible::after { outline: 2px solid var(--accent-deep); outline-offset: 6px; }
+  @media (hover: hover) {
+    .projet:hover .projet__lien, .projet__lien:focus-visible { background-size: 100% 2px; }
+    .projet:hover .projet__cue i { transform: translateX(4px); }
+  }
+  .work-foot { margin-top: var(--gap-lg); padding-top: var(--gap-md); border-top: 1px solid var(--line); color: var(--ink-faint); max-width: 60ch; }
+
+  /* ======================================================================
+     Étude de cas
+     ====================================================================== */
+  .cas-head { padding-top: clamp(2.5rem, 6vw, 5rem); }
+  .ariane { display: flex; flex-wrap: wrap; gap: .5rem; color: var(--ink-faint); }
+  .ariane a { color: var(--ink-muted); }
+  .cas-head h1 { margin-top: var(--gap-sm); }
+  .cas-intro { margin-top: var(--gap-md); display: grid; gap: var(--gap-lg); }
+  @media (min-width: 1024px) { .cas-intro { grid-template-columns: repeat(12, minmax(0, 1fr)); } .cas-intro > p { grid-column: 1 / 7; } .fiche { grid-column: 8 / 13; } }
+  .cas-intro > p { font-size: 1.1875rem; line-height: 1.6; color: var(--ink-muted); max-width: 44ch; }
+  .fiche { display: grid; }
+  .fiche div { display: grid; grid-template-columns: 7.5rem 1fr; gap: 1rem; padding-block: .6rem; border-top: 1px solid var(--line); font-size: .875rem; line-height: 1.55; }
+  .fiche div:last-child { border-bottom: 1px solid var(--line); }
+  .fiche dt { color: var(--ink-faint); }
+  .fiche dd { color: var(--ink); }
+  .fiche .a-confirmer { color: var(--ink-faint); font-style: italic; }
+  .cas-hero { margin-top: var(--gap-lg); }
+
+  .bloc { padding-block: var(--gap-xl); }
+  .bloc + .bloc { border-top: 1px solid var(--line); }
+  /* Le récit se lit d’un trait : pas de filet entre contexte, problème et réponse. */
+  .bloc.recit { padding-block: var(--gap-md); }
+  .bloc.recit + .bloc.recit { border-top: 0; }
+  .recit--debut { padding-top: var(--gap-xl) !important; }
+  .recit--fin { padding-bottom: var(--gap-xl) !important; }
+  .bloc__grille { display: grid; gap: var(--gap-sm) var(--gap-lg); }
+  @media (min-width: 1024px) { .bloc__grille { grid-template-columns: repeat(12, minmax(0, 1fr)); } .bloc__label { grid-column: 1 / 4; } .bloc__corps { grid-column: 4 / 11; } .quotidien.bloc__corps { grid-column: 4 / 13; } }
+  .bloc__label { padding-top: .3rem; }
+  .corps p + p { margin-top: 1rem; }
+  .corps p { color: var(--ink-muted); max-width: 62ch; }
+
+  .quotidien { display: grid; gap: var(--gap-sm) var(--gap-lg); counter-reset: q; }
+  @media (min-width: 768px) { .quotidien { grid-template-columns: 1fr 1fr; } }
+  .quotidien li { border-top: 1px solid var(--line); padding-top: var(--gap-xs); font-size: 1.1875rem; line-height: 1.45; letter-spacing: -.015em; font-weight: 500; color: var(--ink); }
+
+  .cote__tete { display: grid; gap: var(--gap-sm) var(--gap-lg); }
+  @media (min-width: 1024px) { .cote__tete { grid-template-columns: repeat(12, minmax(0, 1fr)); } .cote__tete h2 { grid-column: 1 / 4; } .cote__tete ul { grid-column: 4 / 13; } }
+  .cote__tete ul { display: grid; gap: 0 var(--gap-lg); }
+  @media (min-width: 768px) { .cote__tete ul { grid-template-columns: 1fr 1fr; } }
+  .cote__tete li { border-top: 1px solid var(--line); padding-block: .6rem; color: var(--ink-muted); }
+  .planches { margin-top: var(--gap-lg); display: grid; gap: var(--gap-md); }
+  .acc--planche { --ref: 1.5; }
+  .agrandir { display: none; margin-top: .5rem; font-size: .875rem; font-weight: 600; color: var(--ink); }
+  @media (max-width: 767.98px) { .agrandir { display: inline-block; } .acc--planche .acc__rang { display: grid; width: 100%; } .acc--planche .acc__rang--etroit { display: none; } }
+
+  .technique { margin-top: var(--gap-lg); color: var(--ink-faint); }
+  .suivant { border-top: 1px solid var(--line); padding-block: var(--gap-xl); }
+  .suivant__lien { position: relative; display: grid; gap: var(--gap-md); }
+  @media (min-width: 768px) { .suivant__lien { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: end; } }
+  .suivant__nom { margin-top: .5rem; display: inline; }
+  @media (hover: hover) { .suivant__lien:hover .suivant__nom { background-size: 100% 2px; } }
+
+  .separateur { background: var(--ink); color: var(--canvas); text-align: center; padding: 1.25rem; font-size: .8125rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 600; }
+
+  /* Mouvement : une apparition, une seule fois, et rien si l’on préfère moins d’animations. */
+  @media (prefers-reduced-motion: no-preference) {
+    .js [data-reveal] { transition: opacity var(--dur-reveal) var(--ease-out), transform var(--dur-reveal) var(--ease-out); }
+    .js [data-reveal][data-pending] { opacity: 0; transform: translateY(14px); transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================================================================
+     1 · ACCUEIL — section #realisations
+     =================================================================== -->
+<section id="realisations" class="section-pad" aria-labelledby="realisations-title">
+  <div class="site-container">
+    <div class="work-head">
+      <div>
+        <p class="eyebrow">Réalisations</p>
+        <h2 id="realisations-title" class="display-md" style="margin-top:var(--gap-xs);max-width:18ch">Quatre métiers, quatre outils sur mesure.</h2>
+        <p class="lede" style="margin-top:var(--gap-sm);max-width:56ch">Une parfumerie, un snack de skatepark, une pâtisserie, une conciergerie. Chaque fois, la vitrine et ce qu’il y a derrière&#8239;: la caisse, la cuisine, les marges, les demandes.</p>
+      </div>
+      <a class="quiet" href="#">Toutes les réalisations <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+
+  <ol class="work-list" role="list">
+
+    <!-- 01 · Nuréa Parfums — ordinateur + téléphone -->
+    <li>
+      <article class="projet" aria-labelledby="p1">
+        <div class="plate-container" data-reveal>
+          <div class="acc">
+            <div class="acc__rang acc__rang--large" style="--cols: 1.6fr .4621fr; --somme: 2.0621; --n: 2">
+              <figure class="ecran ecran--o"><div class="ecran__img"><img src="../../../public/images/realisations/nurea-accueil.jpg" alt="L’accueil du site Nuréa Parfums : un flacon sur un marbre sombre et le titre « L’excellence du parfum »." width="1440" height="900" loading="lazy"></div><figcaption>Le site, côté client</figcaption></figure>
+              <figure class="ecran ecran--t"><div class="ecran__img"><img src="../../../public/images/realisations/nurea-caisse.jpg" alt="La caisse sur téléphone : deux parfums, le client, le mode de règlement et le bouton « Encaisser 291 € »." width="390" height="844" loading="lazy"></div><figcaption>La caisse, derrière le comptoir</figcaption></figure>
+            </div>
+            <div class="acc__rang acc__rang--etroit" style="--n: 2">
+              <figure class="ecran ecran--t"><div class="ecran__img"><img src="../../../public/images/realisations/nurea-mobile.jpg" alt="Une fiche parfum du site, sur téléphone." width="390" height="844" loading="lazy"></div><figcaption>Le site</figcaption></figure>
+              <figure class="ecran ecran--t"><div class="ecran__img"><img src="../../../public/images/realisations/nurea-caisse.jpg" alt="La caisse sur téléphone : deux parfums, le client et le bouton « Encaisser 291 € »." width="390" height="844" loading="lazy"></div><figcaption>La caisse</figcaption></figure>
+            </div>
+          </div>
+        </div>
+        <div class="site-container projet__legende" data-reveal>
+          <div class="projet__id">
+            <span class="projet__num" aria-hidden="true">01</span>
+            <h3 id="p1" class="display-sm"><a class="projet__lien link-draw" href="#cas">Nuréa Parfums</a></h3>
+            <p class="projet__meta">Parfumerie, Marseille</p>
+          </div>
+          <div class="projet__texte">
+            <p>Un catalogue de plus de cent parfums à la hauteur des maisons représentées, et derrière, la caisse, les lots d’achat et la comptabilité.</p>
+            <p class="projet__livre"><b>Livré</b>&ensp;Site catalogue, back-office, caisse mobile, comptabilité.</p>
+            <span class="projet__cue" aria-hidden="true">Lire l’étude de cas <i>→</i></span>
+          </div>
+        </div>
+      </article>
+    </li>
+
+    <!-- 02 · Magda Mania — téléphone + ordinateur -->
+    <li>
+      <article class="projet" aria-labelledby="p2">
+        <div class="plate-container" data-reveal>
+          <div class="acc">
+            <div class="acc__rang acc__rang--large" style="--cols: .4621fr 1.6fr; --somme: 2.0621; --n: 2">
+              <figure class="ecran ecran--t"><div class="ecran__img"><img src="../../../public/images/realisations/magda-carte.jpg" alt="La carte de Magda Mania sur téléphone : les menus avec photo et prix, un produit marqué « Épuisé » et le panier." width="390" height="844" loading="lazy"></div><figcaption>La carte, côté client</figcaption></figure>
+              <figure class="ecran ecran--o"><div class="ecran__img"><img src="../../../public/images/realisations/magda-cuisine.jpg" alt="L’écran cuisine : trois colonnes « À préparer », « En préparation » et « Prêtes », un ticket par commande payée." width="1440" height="900" loading="lazy"></div><figcaption>L’écran de la cuisine</figcaption></figure>
+            </div>
+            <div class="acc__rang acc__rang--etroit" style="--n: 2">
+              <figure class="ecran ecran--t"><div class="ecran__img"><img src="../../../public/images/realisations/magda-carte.jpg" alt="La carte de Magda Mania sur téléphone." width="390" height="844" loading="lazy"></div><figcaption>La carte</figcaption></figure>
+              <figure class="ecran ecran--t"><div class="ecran__img"><img src="../../../public/images/realisations/magda-suivi.jpg" alt="Le suivi de commande : « Ta commande n° 47 est prête »." width="390" height="844" loading="lazy"></div><figcaption>Le suivi</figcaption></figure>
+            </div>
+          </div>
+        </div>
+        <div class="site-container projet__legende" data-reveal>
+          <div class="projet__id">
+            <span class="projet__num" aria-hidden="true">02</span>
+            <h3 id="p2" class="display-sm"><a class="projet__lien link-draw" href="#">Magda Mania</a></h3>
+            <p class="projet__meta">Snack, skatepark de Marseille</p>
+          </div>
+          <div class="projet__texte">
+            <p>Commande et paiement depuis le téléphone, écran de préparation en cuisine, et une notification quand c’est prêt.</p>
+            <p class="projet__livre"><b>Livré</b>&ensp;Click &amp; collect, paiement en ligne, écran cuisine, espace gérant.</p>
+            <span class="projet__cue" aria-hidden="true">Lire l’étude de cas <i>→</i></span>
+          </div>
+        </div>
+      </article>
+    </li>
+
+    <!-- 03 · Encore 1 Dessert — trois téléphones -->
+    <li>
+      <article class="projet" aria-labelledby="p3">
+        <div class="plate-container" data-reveal>
+          <div class="acc">
+            <div class="acc__rang acc__rang--large" style="--cols: 1fr 1fr 1fr; --somme: 1.3863; --n: 3">
+              <figure class="ecran ecran--t"><div class="ecran__img"><img src="../../../public/images/realisations/e1d-commandes.jpg" alt="Les commandes du jour et ce qu’il faut produire." width="390" height="844" loading="lazy"></div><figcaption>Les commandes du jour</figcaption></figure>
+              <figure class="ecran ecran--t"><div class="ecran__img"><img src="../../../public/images/realisations/e1d-fiche.jpg" alt="La fiche technique d’une tarte : composition en grammes, coût de revient, prix et marges." width="390" height="844" loading="lazy"></div><figcaption>La fiche technique</figcaption></figure>
+              <figure class="ecran ecran--t"><div class="ecran__img"><img src="../../../public/images/realisations/e1d-compta.jpg" alt="La comptabilité du mois : bénéfice net, chiffre d’affaires, coût matières." width="390" height="844" loading="lazy"></div><figcaption>La comptabilité</figcaption></figure>
+            </div>
+            <div class="acc__rang acc__rang--etroit" style="--n: 2">
+              <figure class="ecran ecran--t"><div class="ecran__img"><img src="../../../public/images/realisations/e1d-fiche.jpg" alt="La fiche technique d’une tarte." width="390" height="844" loading="lazy"></div><figcaption>La fiche technique</figcaption></figure>
+              <figure class="ecran ecran--t"><div class="ecran__img"><img src="../../../public/images/realisations/e1d-commandes.jpg" alt="Les commandes du jour." width="390" height="844" loading="lazy"></div><figcaption>Les commandes</figcaption></figure>
+            </div>
+          </div>
+        </div>
+        <div class="site-container projet__legende" data-reveal>
+          <div class="projet__id">
+            <span class="projet__num" aria-hidden="true">03</span>
+            <h3 id="p3" class="display-sm"><a class="projet__lien link-draw" href="#">Encore 1 Dessert</a></h3>
+            <p class="projet__meta">Pâtisserie, production et vente</p>
+          </div>
+          <div class="projet__texte">
+            <p>Le coût de revient de chaque tarte, les commandes des particuliers et des restaurants, la comptabilité&#8239;: toute la pâtisserie tient dans un téléphone.</p>
+            <p class="projet__livre"><b>Livré</b>&ensp;Fiches techniques, coût de revient, commandes, comptabilité.</p>
+            <span class="projet__cue" aria-hidden="true">Lire l’étude de cas <i>→</i></span>
+          </div>
+        </div>
+      </article>
+    </li>
+
+    <!-- 04 · Conciergerie Nuréa — ordinateur + téléphone -->
+    <li>
+      <article class="projet" aria-labelledby="p4">
+        <div class="plate-container" data-reveal>
+          <div class="acc">
+            <div class="acc__rang acc__rang--large" style="--cols: 1.6fr .4621fr; --somme: 2.0621; --n: 2">
+              <figure class="ecran ecran--o"><div class="ecran__img"><img src="../../../public/images/realisations/conciergerie-simulateur.jpg" alt="Le simulateur de revenus : tarif par nuit, nuits louées, revenu net estimé et formulaire de demande." width="1440" height="900" loading="lazy"></div><figcaption>Le simulateur, côté propriétaire</figcaption></figure>
+              <figure class="ecran ecran--t"><div class="ecran__img"><img src="../../../public/images/realisations/conciergerie-demande.jpg" alt="L’e-mail reçu par la conciergerie, avec le tarif, les nuits et le revenu estimé du bien." width="390" height="844" loading="lazy"></div><figcaption>La demande reçue</figcaption></figure>
+            </div>
+            <div class="acc__rang acc__rang--etroit" style="--n: 2">
+              <figure class="ecran ecran--t"><div class="ecran__img"><img src="../../../public/images/realisations/conciergerie-mobile.jpg" alt="L’accueil du site sur téléphone, avec le bouton WhatsApp." width="390" height="844" loading="lazy"></div><figcaption>Le site</figcaption></figure>
+              <figure class="ecran ecran--t"><div class="ecran__img"><img src="../../../public/images/realisations/conciergerie-demande.jpg" alt="L’e-mail reçu par la conciergerie." width="390" height="844" loading="lazy"></div><figcaption>La demande reçue</figcaption></figure>
+            </div>
+          </div>
+        </div>
+        <div class="site-container projet__legende" data-reveal>
+          <div class="projet__id">
+            <span class="projet__num" aria-hidden="true">04</span>
+            <h3 id="p4" class="display-sm"><a class="projet__lien link-draw" href="#">Conciergerie Nuréa</a></h3>
+            <p class="projet__meta">Conciergerie Airbnb, Marseille</p>
+          </div>
+          <div class="projet__texte">
+            <p>Un site qui répond aux questions d’un propriétaire avant le premier appel, et un simulateur qui transforme la visite en demande chiffrée.</p>
+            <p class="projet__livre"><b>Livré</b>&ensp;Site vitrine, simulateur de revenus, demandes par e-mail, contact WhatsApp.</p>
+            <span class="projet__cue" aria-hidden="true">Lire l’étude de cas <i>→</i></span>
+          </div>
+        </div>
+      </article>
+    </li>
+  </ol>
+
+  <div class="site-container">
+    <p class="work-foot note">Les écrans de gestion sont présentés avec des données d’exemple&#8239;: les chiffres de nos clients restent chez eux.</p>
+  </div>
+</section>
+
+<div class="separateur" aria-hidden="true">Prototype · page étude de cas</div>
+
+<!-- ===================================================================
+     2 · ÉTUDE DE CAS — /realisations/nurea-parfums
+     =================================================================== -->
+<main id="cas">
+  <header class="cas-head">
+    <div class="site-container">
+      <nav aria-label="Fil d’Ariane"><ol class="ariane note"><li><a href="#">Accueil</a></li><li aria-hidden="true">/</li><li><a href="#">Réalisations</a></li><li aria-hidden="true">/</li><li aria-current="page" style="color:var(--ink)">Nuréa Parfums</li></ol></nav>
+      <h1 class="display-lg">Nuréa Parfums</h1>
+      <div class="cas-intro">
+        <p>Un catalogue de plus de cent parfums à la hauteur des maisons représentées, et derrière, la caisse, les lots d’achat et la comptabilité.</p>
+        <dl class="fiche">
+          <div><dt>Métier</dt><dd>Parfumerie, vente directe</dd></div>
+          <div><dt>Lieu</dt><dd>Marseille</dd></div>
+          <div><dt>Année</dt><dd class="a-confirmer">à renseigner</dd></div>
+          <div><dt>Livré</dt><dd>Site catalogue, back-office, caisse mobile, comptabilité</dd></div>
+          <div><dt>Rôle du studio</dt><dd class="a-confirmer">à renseigner (ex.&nbsp;: conception, design, développement, mise en ligne, suivi)</dd></div>
+        </dl>
+      </div>
+    </div>
+    <div class="plate-container cas-hero">
+      <div class="acc">
+        <div class="acc__rang acc__rang--large" style="--cols: 1.6fr .4621fr; --somme: 2.0621; --n: 2">
+          <figure class="ecran ecran--o"><div class="ecran__img"><img src="../../../public/images/realisations/nurea-accueil.jpg" alt="L’accueil du site Nuréa Parfums." width="1440" height="900"></div><figcaption>Le site, côté client</figcaption></figure>
+          <figure class="ecran ecran--t"><div class="ecran__img"><img src="../../../public/images/realisations/nurea-caisse.jpg" alt="La caisse sur téléphone." width="390" height="844"></div><figcaption>La caisse, derrière le comptoir</figcaption></figure>
+        </div>
+        <div class="acc__rang acc__rang--etroit" style="--n: 2">
+          <figure class="ecran ecran--t"><div class="ecran__img"><img src="../../../public/images/realisations/nurea-mobile.jpg" alt="Une fiche parfum sur téléphone." width="390" height="844" loading="lazy"></div><figcaption>Le site</figcaption></figure>
+          <figure class="ecran ecran--t"><div class="ecran__img"><img src="../../../public/images/realisations/nurea-caisse.jpg" alt="La caisse sur téléphone." width="390" height="844" loading="lazy"></div><figcaption>La caisse</figcaption></figure>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="site-container">
+    <!-- Ce qui change : le résumé pour qui n’a qu’une minute -->
+    <section class="bloc" aria-labelledby="change" style="margin-top:var(--gap-lg)">
+      <div class="bloc__grille">
+        <h2 id="change" class="eyebrow bloc__label">Ce qui a changé</h2>
+        <ol class="quotidien bloc__corps">
+          <li>Un client parcourt tout le catalogue seul, et arrive avec une demande qui nomme déjà le parfum voulu.</li>
+          <li>Chaque vente est rattachée à un lot d’achat&#8239;: ce que coûte un lot et ce qu’il a rapporté se lisent au même endroit.</li>
+          <li>Une vente, un encaissement et une dépense sont saisis au moment où ils ont lieu, depuis le téléphone.</li>
+          <li>Une référence ajoutée ou retirée l’est par le commerçant, directement.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Le récit -->
+    <section class="bloc recit recit--debut" aria-labelledby="contexte">
+      <div class="bloc__grille">
+        <h2 id="contexte" class="eyebrow bloc__label">Le contexte</h2>
+        <div class="bloc__corps corps"><p>Nuréa Parfums vend à Marseille des parfums de grandes maisons, pour homme et pour femme. Les commandes se passent en direct, par message, et les flacons sont remis en main propre ou envoyés.</p></div>
+      </div>
+    </section>
+    <section class="bloc recit" aria-labelledby="probleme">
+      <div class="bloc__grille">
+        <h2 id="probleme" class="eyebrow bloc__label">Le problème</h2>
+        <div class="bloc__corps corps"><p>Vendre par messages fonctionne tant que le catalogue tient dans une conversation. Au-delà de cent références, un client ne peut plus parcourir l’offre seul, et chaque question sur un parfum devient un échange de plus.</p><p>Côté gestion, le même canal ne dit rien de ce qui a été vendu, encaissé ou dépensé&#8239;: il fallait un outil pour tenir les chiffres de l’activité, pas seulement une vitrine.</p></div>
+      </div>
+    </section>
+    <section class="bloc recit recit--fin" aria-labelledby="reponse">
+      <div class="bloc__grille">
+        <h2 id="reponse" class="eyebrow bloc__label">Notre réponse</h2>
+        <div class="bloc__corps corps"><p>Un site catalogue qui présente toute l’offre, par marque et par parfum, avec une fiche par référence et un bouton de commande qui nomme déjà le parfum voulu.</p><p>Derrière, un espace de gestion privé, installable sur téléphone, qui suit l’activité de bout en bout&#8239;: le client, la vente, le lot d’achat auquel elle se rattache, l’encaissement, et la comptabilité qui en découle.</p></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Côté client -->
+  <section class="bloc" aria-labelledby="cote-client" style="border-top:1px solid var(--line)">
+    <div class="site-container cote__tete">
+      <h2 id="cote-client" class="title" style="font-weight:800">Côté client</h2>
+      <ul>
+        <li>Catalogue complet, avec recherche, filtres par gamme et tri</li>
+        <li>Une page par marque et une fiche par parfum</li>
+        <li>Commande depuis chaque fiche, le parfum déjà nommé</li>
+        <li>Affichage clair ou sombre, au choix du visiteur</li>
+      </ul>
+    </div>
+    <div class="plate-container planches">
+      <div class="acc acc--planche">
+        <div class="acc__rang" style="--cols: 1fr; --somme: 1.6; --ref: 1.6; --n: 1">
+          <figure class="ecran ecran--o"><div class="ecran__img"><img src="../../../public/images/realisations/nurea-grille.jpg" alt="Le catalogue : la recherche, les filtres par gamme et les fiches parfum en photo." width="1440" height="900" loading="lazy"></div><figcaption>Le catalogue&#8239;: recherche, filtres par gamme, une photo par référence.</figcaption><a class="agrandir link-draw" href="../../../public/images/realisations/nurea-grille.jpg">Voir l’écran en grand</a></figure>
+        </div>
+      </div>
+      <div class="acc acc--planche">
+        <div class="acc__rang" style="--cols: 1fr; --somme: 1.6; --ref: 1.6; --n: 1">
+          <figure class="ecran ecran--o"><div class="ecran__img"><img src="../../../public/images/realisations/nurea-fiche.jpg" alt="La fiche d’un parfum : la photo du flacon, la marque, la description et le bouton de commande." width="1440" height="900" loading="lazy"></div><figcaption>Une fiche par parfum, et la commande en un geste.</figcaption><a class="agrandir link-draw" href="../../../public/images/realisations/nurea-fiche.jpg">Voir l’écran en grand</a></figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Côté gestion -->
+  <section class="bloc" aria-labelledby="cote-gestion" style="border-top:1px solid var(--line)">
+    <div class="site-container cote__tete">
+      <h2 id="cote-gestion" class="title" style="font-weight:800">Côté gestion</h2>
+      <ul>
+        <li>Caisse sur téléphone&#8239;: vendre, encaisser, suivre la journée</li>
+        <li>Fiches clients et historique de leurs commandes</li>
+        <li>Lots d’achat, avec leurs dépenses et les ventes rattachées</li>
+        <li>Comptabilité, journal et export, statistiques de vente</li>
+        <li>Catalogue, marques et publication des références</li>
+      </ul>
+    </div>
+    <div class="plate-container planches">
+      <div class="acc acc--planche">
+        <div class="acc__rang" style="--cols: 1fr; --somme: 1.6; --ref: 1.6; --n: 1">
+          <figure class="ecran ecran--o"><div class="ecran__img"><img src="../../../public/images/realisations/nurea-admin.jpg" alt="Le tableau de bord de gestion : chiffre d’affaires du mois, marge, lot d’achat en cours, ventes des trente derniers jours." width="1440" height="900" loading="lazy"></div><figcaption>Le tableau de bord&#8239;: le mois, le lot en cours et sa rentabilité. <span class="ex">Données d’exemple.</span></figcaption><a class="agrandir link-draw" href="../../../public/images/realisations/nurea-admin.jpg">Voir l’écran en grand</a></figure>
+        </div>
+      </div>
+      <div class="acc acc--planche">
+        <div class="acc__rang" style="--cols: 1fr 1fr; --somme: .9242; --n: 2">
+          <figure class="ecran ecran--t"><div class="ecran__img"><img src="../../../public/images/realisations/nurea-caisse.jpg" alt="La caisse sur téléphone : deux parfums, le client, le mode de règlement et le bouton « Encaisser 291 € »." width="390" height="844" loading="lazy"></div><figcaption>La caisse, sur le téléphone, au moment de la remise. <span class="ex">Données d’exemple.</span></figcaption></figure>
+          <figure class="ecran ecran--t"><div class="ecran__img"><img src="../../../public/images/realisations/nurea-mobile.jpg" alt="La fiche parfum sur téléphone." width="390" height="844" loading="lazy"></div><figcaption>La fiche, sur le téléphone du client.</figcaption></figure>
+        </div>
+      </div>
+    </div>
+    <div class="site-container">
+      <p class="technique note">Construit avec Next.js, PostgreSQL, Prisma. Application installable.</p>
+    </div>
+  </section>
+
+  <!-- Suivant -->
+  <nav class="suivant" aria-label="Autre réalisation">
+    <div class="site-container">
+      <a class="suivant__lien" href="#">
+        <div>
+          <p class="eyebrow">Étude de cas suivante</p>
+          <p class="display-sm" style="font-weight:800;margin-top:.5rem"><span class="suivant__nom link-draw">Magda Mania</span></p>
+          <p class="note" style="color:var(--ink-muted);margin-top:.5rem">Snack, skatepark de Marseille</p>
+        </div>
+        <div class="acc" style="padding:5%">
+          <div class="acc__rang" style="--cols: .4621fr 1.6fr; --somme: 2.0621; --n: 2">
+            <figure class="ecran ecran--t"><div class="ecran__img"><img src="../../../public/images/realisations/magda-carte.jpg" alt="" width="390" height="844" loading="lazy"></div></figure>
+            <figure class="ecran ecran--o"><div class="ecran__img"><img src="../../../public/images/realisations/magda-cuisine.jpg" alt="" width="1440" height="900" loading="lazy"></div></figure>
+          </div>
+        </div>
+      </a>
+    </div>
+  </nav>
+</main>
+
+<script>
+  // Apparition unique à l’entrée dans la fenêtre — l’équivalent de <Reveal>.
+  document.documentElement.classList.add('js');
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+    const els = [...document.querySelectorAll('[data-reveal]')].filter(el => el.getBoundingClientRect().top > innerHeight);
+    els.forEach(el => el.setAttribute('data-pending', ''));
+    const io = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) { e.target.removeAttribute('data-pending'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
+    els.forEach(el => io.observe(el));
+  }
+</script>
+</body>
+</html>

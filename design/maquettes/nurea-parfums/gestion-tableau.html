@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="format" content="ordinateur">
+<title>Nuréa Gestion — lot d’achat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Instrument+Sans:wght@400;500;600&display=block" rel="stylesheet">
+<style>
+  :root {
+    --papier: #FDF8F4; --papier-2: #F6EEE8;
+    --encre: #0A0508; --texte-2: #3D343A; --texte-3: #6B6270;
+    --bordeaux: #7B0B1D; --ocre: #A35B12;
+    --filet: rgba(10,5,8,.10); --filet-2: rgba(10,5,8,.18);
+    --serif: 'Newsreader', Georgia, serif; --sans: 'Instrument Sans', system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1440px; height: 900px; overflow: hidden; background: var(--papier); color: var(--encre);
+    font: 400 14px/1.45 var(--sans); -webkit-font-smoothing: antialiased; }
+  .num { font-variant-numeric: tabular-nums lining-nums; }
+
+  /* Barre de l'app */
+  .app { height: 56px; display: flex; align-items: center; padding: 0 48px; border-bottom: 1px solid var(--filet-2); background: var(--papier-2); }
+  .marque { display: flex; align-items: center; gap: 10px; width: 184px; font-weight: 600; font-size: 15px; }
+  .marque img { width: 26px; height: 26px; }
+  .onglets { display: flex; gap: 32px; height: 100%; font-weight: 500; font-size: 14px; color: var(--texte-2); }
+  .onglets span { display: flex; align-items: center; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+  .onglets .ici { color: var(--encre); border-bottom-color: var(--bordeaux); }
+  .recherche { margin-left: auto; width: 320px; height: 34px; border: 1px solid var(--filet-2); background: var(--papier); display: flex; align-items: center; justify-content: space-between; padding: 0 12px; color: var(--texte-3); font-size: 13px; }
+  .recherche kbd { font: 500 12px var(--sans); color: var(--texte-3); border: 1px solid var(--filet-2); padding: 1px 6px; }
+
+  main { padding: 0 48px; }
+  .ariane { margin-top: 22px; font-size: 13px; color: var(--texte-3); }
+  .ariane span { margin: 0 8px; }
+  .titre { margin-top: 6px; display: flex; align-items: flex-end; justify-content: space-between; }
+  h1 { font: 500 40px/1.05 var(--serif); letter-spacing: -0.015em; font-variation-settings: "opsz" 48; }
+  .etat-lot { margin-top: 6px; font-size: 14px; color: var(--texte-2); }
+  .etat-lot b { font-weight: 500; color: var(--encre); }
+  .boutons { display: flex; gap: 8px; align-items: center; }
+  .btn { height: 38px; padding: 0 16px; display: flex; align-items: center; font-weight: 500; font-size: 14px; border: 1px solid var(--filet-2); background: var(--papier); }
+  .btn.plein { background: var(--bordeaux); color: var(--papier); border-color: var(--bordeaux); font-weight: 600; }
+  .btn.carre { width: 38px; padding: 0; justify-content: center; letter-spacing: 1px; }
+
+  /* L'équation du lot */
+  .equation { margin-top: 22px; display: grid; grid-template-columns: 1fr 28px 1fr 28px 0.8fr 28px 1.35fr 1fr; border-top: 1px solid var(--encre); border-bottom: 1px solid var(--filet-2); }
+  .equation > div { padding: 14px 0 16px; }
+  .equation .op { text-align: center; font: 400 30px/30px var(--serif); color: var(--texte-3); padding-top: 38px !important; }
+  .equation .lib { font-size: 13px; color: var(--texte-2); }
+  .equation .val { margin-top: 8px; font: 500 30px/1 var(--sans); letter-spacing: -0.01em; }
+  .equation .note { margin-top: 8px; font-size: 12.5px; color: var(--texte-3); }
+  .equation .marge .val { font: 500 54px/0.9 var(--serif); letter-spacing: -0.02em; margin-top: 4px; font-variation-settings: "opsz" 60; }
+  .equation .marge .note { color: var(--texte-2); }
+  .equation .du { border-left: 1px solid var(--filet-2); padding-left: 24px; }
+  .equation .du .val { color: var(--ocre); }
+
+  .corps { margin-top: 22px; display: grid; grid-template-columns: 1fr 392px; gap: 48px; }
+  .section-tete { display: flex; align-items: baseline; justify-content: space-between; padding-bottom: 8px; }
+  .section-tete h2 { font: 600 14px var(--sans); }
+  .section-tete h2 span { font-weight: 400; color: var(--texte-3); margin-left: 6px; }
+  .section-tete .act { font-size: 13px; font-weight: 500; color: var(--bordeaux); }
+
+  /* Registre des documents */
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  th { text-align: left; font-weight: 500; font-size: 12.5px; color: var(--texte-3); padding: 7px 0; border-top: 1px solid var(--encre); border-bottom: 1px solid var(--filet-2); }
+  td { padding: 0; height: 30px; border-bottom: 1px solid var(--filet); white-space: nowrap; }
+  td.client { font-weight: 500; width: 108px; }
+  td.doc { color: var(--texte-2); width: 250px; }
+  td.doc .att { color: var(--ocre); font-weight: 500; }
+  td.parf { color: var(--texte-2); overflow: hidden; text-overflow: ellipsis; max-width: 250px; }
+  th.r, td.r { text-align: right; width: 86px; }
+  td.du { color: var(--ocre); font-weight: 600; }
+  td.vide { color: var(--texte-3); }
+  tfoot td { height: 34px; border-top: 1px solid var(--encre); border-bottom: 3px double var(--encre); font-weight: 600; }
+  tfoot td.lib { font-weight: 500; color: var(--texte-2); }
+
+  /* Colonne droite */
+  .achat .grand { display: flex; justify-content: space-between; align-items: baseline; border-top: 1px solid var(--encre); padding: 12px 0 10px; }
+  .achat .grand span { font-size: 13px; color: var(--texte-2); }
+  .achat .grand b { font: 500 24px var(--sans); letter-spacing: -0.01em; }
+  .taux { border-top: 1px solid var(--filet-2); }
+  .taux div { display: flex; justify-content: space-between; height: 30px; align-items: center; border-bottom: 1px solid var(--filet); font-size: 13.5px; }
+  .taux div span:first-child { color: var(--texte-2); }
+  .taux .tot { border-bottom: 3px double var(--encre); font-weight: 600; border-top: 1px solid var(--encre); }
+  .taux .tot span:first-child { color: var(--encre); font-weight: 500; }
+  .lignes { margin-top: 14px; }
+  .lignes p.t { font-size: 12.5px; color: var(--texte-3); padding-bottom: 4px; }
+  .lignes div { display: flex; justify-content: space-between; height: 25px; align-items: center; font-size: 13px; border-bottom: 1px solid var(--filet); }
+  .lignes div span:first-child { color: var(--texte-2); }
+  .lignes div span:first-child i { font-style: normal; color: var(--texte-3); }
+  .lignes .reste span { color: var(--texte-3) !important; }
+
+  .frais { margin-top: 24px; }
+  .frais .ligne { display: grid; grid-template-columns: 1fr auto; padding: 7px 0; border-bottom: 1px solid var(--filet); }
+  .frais .ligne:first-of-type { border-top: 1px solid var(--encre); }
+  .frais .ligne b { font-weight: 500; }
+  .frais .ligne small { grid-column: 1; font-size: 12.5px; color: var(--texte-3); }
+  .frais .ligne .m { grid-row: 1; grid-column: 2; font-weight: 500; }
+</style>
+</head>
+<body>
+  <div class="app">
+    <div class="marque"><img src="assets/monogramme-cercle-encre.svg" alt="">Gestion</div>
+    <div class="onglets"><span class="ici">Accueil</span><span>Commandes</span><span>Vendre</span><span>Clients</span><span>Catalogue</span></div>
+    <div class="recherche"><span>Parfum, client, commande…</span><kbd>⌘K</kbd></div>
+  </div>
+
+  <main>
+    <p class="ariane">Accueil<span>/</span>Lots</p>
+    <div class="titre">
+      <div>
+        <h1>Commande d’août</h1>
+        <p class="etat-lot"><b>Ouvert</b> · arrivée prévue 29&nbsp;août · 14 documents</p>
+      </div>
+      <div class="boutons">
+        <span class="btn">Liste pour le fournisseur</span>
+        <span class="btn carre">···</span>
+        <span class="btn plein">Ajouter une dépense</span>
+      </div>
+    </div>
+
+    <section class="equation num">
+      <div><p class="lib">Encaissé</p><p class="val">1&#8239;965&nbsp;€</p><p class="note">acomptes compris</p></div>
+      <div class="op">−</div>
+      <div><p class="lib">Achat des parfums</p><p class="val">1&#8239;189,75&nbsp;€</p><p class="note">328&#8239;900&nbsp;DA payés au fournisseur</p></div>
+      <div class="op">−</div>
+      <div><p class="lib">Frais de lot</p><p class="val">230&nbsp;€</p><p class="note">3 dépenses</p></div>
+      <div class="op">=</div>
+      <div class="marge"><p class="lib">Marge nette</p><p class="val">545,25&nbsp;€</p><p class="note">28&#8239;% de l’Encaissé</p></div>
+      <div class="du"><p class="lib">À encaisser</p><p class="val">340&nbsp;€</p><p class="note">3 clients, hors commande en attente</p></div>
+    </section>
+
+    <div class="corps">
+      <section>
+        <div class="section-tete"><h2>Documents<span>14</span></h2><span class="act">Rattacher</span></div>
+        <table class="num">
+          <thead><tr><th>Client</th><th>Document</th><th>Parfums</th><th class="r">Total</th><th class="r">Payé</th><th class="r">À encaisser</th></tr></thead>
+          <tbody>
+            <tr><td class="client">Nadia B.</td><td class="doc">Commande du 11 août · livrée 30 août</td><td class="parf">Baccarat Rouge 540 · 80&#8239;ml</td><td class="r">200&nbsp;€</td><td class="r">200&nbsp;€</td><td class="r"></td></tr>
+            <tr><td class="client">Karim M.</td><td class="doc">Commande du 12 août · livrée 30 août</td><td class="parf">Aventus · 80&#8239;ml, Bleu de Chanel · 50&#8239;ml</td><td class="r">290&nbsp;€</td><td class="r">290&nbsp;€</td><td class="r"></td></tr>
+            <tr><td class="client">Inès R.</td><td class="doc">Commande du 14 août · livrée 31 août</td><td class="parf">Libre · 80&#8239;ml</td><td class="r">140&nbsp;€</td><td class="r">140&nbsp;€</td><td class="r"></td></tr>
+            <tr><td class="client">Sofiane A.</td><td class="doc">Commande du 16 août · livrée 1<sup style="font-size:.7em">er</sup> sept.</td><td class="parf">Stronger With You Oud · 80&#8239;ml</td><td class="r">130&nbsp;€</td><td class="r">60&nbsp;€</td><td class="r du">70&nbsp;€</td></tr>
+            <tr><td class="client">Mehdi T.</td><td class="doc">Commande du 18 août · livrée 2 sept.</td><td class="parf">Tobacco Vanille · 80&#8239;ml</td><td class="r">210&nbsp;€</td><td class="r">210&nbsp;€</td><td class="r"></td></tr>
+            <tr><td class="client">Anthony D.</td><td class="doc">Commande du 20 août · livrée 3 sept.</td><td class="parf">Y · 80&#8239;ml, Eros · 80&#8239;ml</td><td class="r">260&nbsp;€</td><td class="r">100&nbsp;€</td><td class="r du">160&nbsp;€</td></tr>
+            <tr><td class="client">Rayan Z.</td><td class="doc">Commande du 22 août · livrée 4 sept.</td><td class="parf">Noir Extreme · 80&#8239;ml</td><td class="r">140&nbsp;€</td><td class="r">140&nbsp;€</td><td class="r"></td></tr>
+            <tr><td class="client">Walid C.</td><td class="doc">Commande du 25 août</td><td class="parf">Oud Satin Mood · 80&#8239;ml</td><td class="r">210&nbsp;€</td><td class="r">100&nbsp;€</td><td class="r du">110&nbsp;€</td></tr>
+            <tr><td class="client">Chloé P.</td><td class="doc">Commande du 28 août · <span class="att">En attente</span></td><td class="parf">Black Orchid · 50&#8239;ml</td><td class="r">100&nbsp;€</td><td class="r">40&nbsp;€</td><td class="r"></td></tr>
+            <tr><td class="client">Leïla H.</td><td class="doc">Vente du 30 août</td><td class="parf">Coco Mademoiselle · 50&#8239;ml, Good Girl · 10&#8239;ml</td><td class="r">125&nbsp;€</td><td class="r">125&nbsp;€</td><td class="r"></td></tr>
+            <tr><td class="client">Yasmine K.</td><td class="doc">Vente du 30 août</td><td class="parf">Grand Soir · 80&#8239;ml</td><td class="r">200&nbsp;€</td><td class="r">200&nbsp;€</td><td class="r"></td></tr>
+            <tr><td class="client">Sarah K.</td><td class="doc">Vente du 31 août</td><td class="parf">La Nuit Trésor · 80&#8239;ml</td><td class="r">120&nbsp;€</td><td class="r">120&nbsp;€</td><td class="r"></td></tr>
+            <tr><td class="client">Camille V.</td><td class="doc">Vente du 2 sept.</td><td class="parf">Gris Dior · 50&#8239;ml</td><td class="r">140&nbsp;€</td><td class="r">140&nbsp;€</td><td class="r"></td></tr>
+            <tr><td class="client">Mélissa G.</td><td class="doc">Vente du 5 sept.</td><td class="parf">N°5 · 50&#8239;ml</td><td class="r">100&nbsp;€</td><td class="r">100&nbsp;€</td><td class="r"></td></tr>
+          </tbody>
+          <tfoot><tr><td class="lib" colspan="3">Encaissé · À encaisser</td><td class="r"></td><td class="r">1&#8239;965&nbsp;€</td><td class="r" style="color:var(--ocre)">340&nbsp;€</td></tr></tfoot>
+        </table>
+      </section>
+
+      <aside>
+        <section class="achat">
+          <div class="section-tete"><h2>Achat des parfums<span>en dinars</span></h2></div>
+          <div class="grand num"><span>Payé au fournisseur</span><b>328&#8239;900&nbsp;DA</b></div>
+          <div class="taux num">
+            <div><span>91&#8239;000&nbsp;DA au taux 275</span><span>330,91&nbsp;€</span></div>
+            <div><span>237&#8239;900&nbsp;DA au taux 277</span><span>858,84&nbsp;€</span></div>
+            <div class="tot"><span>Achat des parfums</span><span>1&#8239;189,75&nbsp;€</span></div>
+          </div>
+          <div class="lignes num">
+            <p class="t">Ligne par ligne · documents engagés</p>
+            <div><span>Tobacco Vanille <i>· Mehdi T. · taux 277</i></span><span>31&#8239;000&nbsp;DA</span></div>
+            <div><span>Oud Satin Mood <i>· Walid C. · taux 277</i></span><span>31&#8239;000&nbsp;DA</span></div>
+            <div><span>Baccarat Rouge 540 <i>· Nadia B. · taux 275</i></span><span>29&#8239;500&nbsp;DA</span></div>
+            <div><span>Grand Soir <i>· Yasmine K. · taux 277</i></span><span>29&#8239;500&nbsp;DA</span></div>
+            <div class="reste"><span>12 autres lignes</span><span>207&#8239;900&nbsp;DA</span></div>
+          </div>
+        </section>
+
+        <section class="frais">
+          <div class="section-tete"><h2>Frais de lot<span>3</span></h2></div>
+          <div class="ligne num"><b>Douane</b><span class="m">120&nbsp;€</span><small>29 août · Banque</small></div>
+          <div class="ligne num"><b>Transport</b><span class="m">65&nbsp;€</span><small>29 août · Espèces</small></div>
+          <div class="ligne num"><b>Transport</b><span class="m">45&nbsp;€</span><small>2 sept. · Espèces · coursier, deux envois</small></div>
+        </section>
+      </aside>
+    </div>
+  </main>
+</body>
+</html>

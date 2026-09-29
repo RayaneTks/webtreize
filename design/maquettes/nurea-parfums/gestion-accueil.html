@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="format" content="telephone">
+<title>Nuréa Gestion — accueil</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Instrument+Sans:wght@400;500;600&display=block" rel="stylesheet">
+<style>
+  :root {
+    --papier: #FDF8F4; --papier-2: #F6EEE8;
+    --encre: #0A0508; --texte-2: #3D343A; --texte-3: #6B6270;
+    --bordeaux: #7B0B1D; --ocre: #A35B12; --alerte: #9B1020;
+    --filet: rgba(10,5,8,.10); --filet-2: rgba(10,5,8,.20);
+    --serif: 'Newsreader', Georgia, serif; --sans: 'Instrument Sans', system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 390px; height: 844px; overflow: hidden; background: var(--papier); color: var(--encre);
+    font: 400 15px/1.4 var(--sans); -webkit-font-smoothing: antialiased; position: relative; }
+  .num { font-variant-numeric: tabular-nums lining-nums; }
+
+  .etat { height: 47px; display: flex; align-items: center; justify-content: space-between; padding: 6px 28px 0 34px; font: 600 16px/1 var(--sans); background: var(--papier-2); }
+  .etat .ic { display: flex; gap: 6px; align-items: center; }
+  .barres { display: flex; gap: 2px; align-items: flex-end; height: 11px; }
+  .barres i { width: 3px; background: var(--encre); border-radius: 1px; }
+  .pile { width: 24px; height: 12px; border: 1px solid rgba(10,5,8,.45); border-radius: 3px; padding: 1.5px; }
+  .pile i { display: block; height: 100%; width: 74%; background: var(--encre); border-radius: 1px; }
+
+  header { height: 48px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; background: var(--papier-2); border-bottom: 1px solid var(--filet-2); }
+  .marque { display: flex; align-items: center; gap: 9px; font-weight: 600; font-size: 15px; }
+  .marque img { width: 26px; height: 26px; }
+  .cherche { height: 32px; padding: 0 12px; border: 1px solid var(--filet-2); display: flex; align-items: center; font-size: 13px; color: var(--texte-2); background: var(--papier); }
+
+  .contenu { padding: 0 16px; }
+  h2 { display: flex; justify-content: space-between; align-items: baseline; margin-top: 16px; padding-bottom: 5px; border-bottom: 1px solid var(--encre); font-size: 13px; font-weight: 600; }
+  h2 span { font-weight: 400; color: var(--texte-3); }
+  .chev { width: 7px; height: 7px; border-right: 1.5px solid var(--texte-3); border-top: 1.5px solid var(--texte-3); transform: rotate(45deg); display: inline-block; margin: 0 2px 1px 8px; }
+
+  .ligne { display: flex; justify-content: space-between; align-items: center; min-height: 42px; border-bottom: 1px solid var(--filet); font-size: 14.5px; }
+  .ligne .ocre { color: var(--ocre); font-weight: 600; }
+  .ligne .alerte { color: var(--alerte); font-weight: 600; }
+  .btn { height: 30px; padding: 0 12px; border: 1px solid var(--encre); font-size: 13px; font-weight: 600; display: flex; align-items: center; }
+
+  .jour { display: grid; grid-template-columns: 1fr auto; align-items: end; padding: 10px 0 10px; border-bottom: 1px solid var(--filet); }
+  .jour p { font-size: 13px; color: var(--texte-2); }
+  .jour b { display: block; font: 500 38px/1 var(--serif); letter-spacing: -0.02em; margin-top: 4px; }
+  .jour small { font-size: 12.5px; color: var(--texte-3); text-align: right; line-height: 1.5; }
+
+  .argent { margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--encre); }
+  .argent .lib { font-size: 13px; color: var(--texte-2); }
+  .argent .grand { font: 500 58px/0.95 var(--serif); letter-spacing: -0.025em; margin-top: 6px; font-variation-settings: "opsz" 60; }
+  .argent .marge { margin-top: 8px; font-size: 13.5px; color: var(--texte-2); padding-bottom: 12px; border-bottom: 1px solid var(--filet); }
+  .argent .marge b { font-weight: 600; color: var(--encre); }
+  .paire { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--filet); }
+  .paire div { padding: 9px 0 10px; }
+  .paire div + div { border-left: 1px solid var(--filet); padding-left: 14px; }
+  .paire p { font-size: 13px; color: var(--texte-2); }
+  .paire b { display: block; font-size: 22px; font-weight: 600; margin-top: 2px; letter-spacing: -0.01em; }
+  .paire .ocre b { color: var(--ocre); }
+
+  .lot { display: grid; grid-template-columns: 1fr auto; padding: 8px 0 9px; border-bottom: 1px solid var(--filet); }
+  .lot b { font: 500 17px/1.25 var(--serif); }
+  .lot small { font-size: 12.5px; color: var(--texte-3); grid-column: 1; }
+  .lot .m { grid-row: 1 / 3; grid-column: 2; align-self: center; text-align: right; font-weight: 600; font-size: 15px; }
+  .lot .m i { display: block; font-style: normal; font-weight: 400; font-size: 12px; color: var(--texte-3); }
+
+  .onglets { position: absolute; left: 0; right: 0; bottom: 0; height: 70px; background: var(--papier-2); border-top: 1px solid var(--filet-2);
+    display: grid; grid-template-columns: repeat(5, 1fr); padding-bottom: 22px; font-size: 12px; font-weight: 500; color: var(--texte-3); }
+  .onglets span { display: flex; align-items: center; justify-content: center; position: relative; }
+  .onglets .ici { color: var(--bordeaux); font-weight: 600; }
+  .onglets .ici::before { content: ""; position: absolute; top: -1px; left: 22%; right: 22%; height: 2px; background: var(--bordeaux); }
+</style>
+</head>
+<body>
+  <div class="etat"><span>18:30</span><span class="ic"><span class="barres"><i style="height:4px"></i><i style="height:6px"></i><i style="height:8px"></i><i style="height:11px"></i></span><span class="pile"><i></i></span></span></div>
+
+  <header>
+    <div class="marque"><img src="assets/monogramme-cercle-encre.svg" alt="">Gestion</div>
+    <div class="cherche">Rechercher</div>
+  </header>
+
+  <div class="contenu num">
+    <h2>À faire</h2>
+    <div class="ligne"><span><span class="ocre">2 commandes</span> en retard</span><span class="chev"></span></div>
+    <div class="ligne"><span><b style="font-weight:600">60&nbsp;€</b> non attribués</span><span class="btn">Répartir</span></div>
+    <div class="ligne"><span><span class="alerte">3 clients</span> à relancer · plus de 30&#8239;j</span><span class="chev"></span></div>
+
+    <h2>Aujourd’hui · mercredi 30 septembre<span class="chev"></span></h2>
+    <div class="jour">
+      <div><p>Encaissé aujourd’hui</p><b>395&nbsp;€</b></div>
+      <small>3 ventes · 1 commande prise<br>À livrer demain · 2</small>
+    </div>
+
+    <div class="argent">
+      <p class="lib">Encaissé · septembre</p>
+      <p class="grand">6&#8239;480&nbsp;€</p>
+      <p class="marge">Marge nette · septembre <b>1&#8239;912&nbsp;€</b> · 30&#8239;%</p>
+    </div>
+    <div class="paire">
+      <div class="ocre"><p>À encaisser</p><b>760&nbsp;€</b></div>
+      <div><p>Trésorerie</p><b>5&#8239;215&nbsp;€</b></div>
+    </div>
+
+    <h2>Lots ouverts<span>Tous les lots<span class="chev"></span></span></h2>
+    <div class="lot"><b>Commande de septembre</b><small>arrivée prévue 3 oct. · 9 documents</small><span class="m">312&nbsp;€<i>marge nette du lot</i></span></div>
+    <div class="lot"><b>Commande d’août</b><small>arrivée prévue 29 août · 14 documents</small><span class="m">545,25&nbsp;€<i>marge nette du lot</i></span></div>
+  </div>
+
+  <nav class="onglets"><span class="ici">Accueil</span><span>Commandes</span><span>Vendre</span><span>Clients</span><span>Catalogue</span></nav>
+</body>
+</html>

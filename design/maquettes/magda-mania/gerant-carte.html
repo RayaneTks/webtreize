@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="format" content="ordinateur">
+<title>Magda Mania — carte et stocks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500;600&display=block" rel="stylesheet">
+<style>
+  :root {
+    --papier: #f3f4f8; --blanc: #ffffff; --encre: #0e1430; --encre-2: #465079; --encre-3: #6d769b;
+    --filet: #e3e6ef; --filet-fort: #c8cddd; --puits: #eef0f5;
+    --rose: #f50054; --rose-texte: #d3004a; --or: #ffc023; --or-texte: #8a5a00; --bleu: #0080f8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1440px; height: 900px; overflow: hidden; }
+  body { background: var(--papier); color: var(--encre); font: 14px/1.4 'Archivo', sans-serif; -webkit-font-smoothing: antialiased; }
+  .num { font-variant-numeric: tabular-nums; }
+  .mono { font-family: 'IBM Plex Mono', monospace; }
+
+  header { background: var(--encre); color: #f4f6fb; }
+  .barre { height: 60px; display: flex; align-items: center; gap: 12px; padding: 0 32px; }
+  .barre img { width: 34px; height: 34px; border-radius: 50%; }
+  .barre b { font-stretch: 125%; font-weight: 900; font-size: 17px; letter-spacing: -.015em; }
+  .barre .qui { font-size: 13px; color: #a2b3da; margin-left: 4px; }
+  .barre .droite { margin-left: auto; display: flex; align-items: center; gap: 18px; font-size: 13.5px; }
+  .barre .ouv { display: flex; align-items: center; gap: 8px; color: #a2b3da; }
+  .barre .ouv i { width: 8px; height: 8px; border-radius: 50%; background: #4fa8ff; }
+  .barre .ouv strong { color: #f4f6fb; font-weight: 600; }
+  .barre .lien { height: 36px; padding: 0 14px; border: 1px solid #3a4677; border-radius: 3px; display: flex; align-items: center; font-weight: 600; }
+  nav { display: flex; gap: 28px; padding: 0 32px; height: 46px; align-items: stretch; border-top: 1px solid #273158; }
+  nav span { display: flex; align-items: center; font-size: 14.5px; font-weight: 600; color: #8d9ac4; border-bottom: 3px solid transparent; padding-top: 3px; }
+  nav span.actif { color: #fff; border-color: #fff; }
+
+  .page { display: grid; grid-template-columns: 1fr 352px; gap: 28px; padding: 26px 32px 0; }
+  .titre { display: flex; align-items: baseline; gap: 18px; }
+  h1 { font-stretch: 125%; font-weight: 900; font-size: 32px; letter-spacing: -.03em; line-height: 1; }
+  .titre p { font-size: 14.5px; color: var(--encre-2); }
+  .titre p b { font-weight: 700; color: var(--rose-texte); }
+
+  .outils { display: flex; align-items: center; gap: 10px; margin-top: 20px; }
+  .recherche { width: 280px; height: 40px; background: var(--blanc); border: 1px solid var(--filet-fort); border-radius: 3px; display: flex; align-items: center; gap: 9px; padding: 0 12px; color: var(--encre-3); font-size: 14px; }
+  .filtres { display: flex; height: 40px; border: 1px solid var(--filet-fort); border-radius: 3px; background: var(--blanc); overflow: hidden; }
+  .filtres span { display: flex; align-items: center; gap: 7px; padding: 0 14px; font-weight: 600; font-size: 13.5px; color: var(--encre-2); border-right: 1px solid var(--filet); }
+  .filtres span:last-child { border-right: 0; }
+  .filtres span em { font-style: normal; font-weight: 500; color: var(--encre-3); }
+  .filtres span.actif { background: var(--encre); color: #fff; }
+  .filtres span.actif em { color: #a2b3da; }
+  .filtres span.rupt em { color: var(--rose-texte); font-weight: 700; }
+  .filtres span.bas em { color: var(--or-texte); font-weight: 700; }
+  .modifier { margin-left: auto; height: 40px; padding: 0 16px; background: var(--encre); color: #fff; border-radius: 3px; display: flex; align-items: center; font-weight: 600; font-size: 14px; }
+
+  table { width: 100%; margin-top: 16px; border-collapse: collapse; background: var(--blanc); border: 1px solid var(--filet); }
+  th { text-align: left; font-size: 12.5px; font-weight: 600; color: var(--encre-3); padding: 9px 14px; border-bottom: 1px solid var(--filet-fort); background: var(--blanc); }
+  th.d, td.d { text-align: right; }
+  td { padding: 0 14px; height: 44px; border-bottom: 1px solid var(--filet); font-size: 14px; vertical-align: middle; }
+  tr.cat td { height: 34px; background: var(--puits); font-weight: 700; font-size: 13px; color: var(--encre); border-bottom: 1px solid var(--filet); }
+  tr.cat td span { font-weight: 500; color: var(--encre-3); margin-left: 6px; }
+  .prod { display: flex; align-items: center; gap: 12px; font-weight: 600; }
+  .prod img { width: 32px; height: 32px; object-fit: contain; background: var(--puits); border-radius: 2px; }
+  .prod small { font-weight: 400; color: var(--encre-3); font-size: 13px; }
+  tr.off .prod img { filter: grayscale(1); opacity: .5; }
+  tr.off .prod > span { color: var(--encre-3); }
+  .illimite { color: var(--encre-3); font-size: 13px; }
+  .dispo { display: inline-flex; align-items: center; gap: 10px; justify-content: flex-end; font-size: 13px; font-weight: 600; color: var(--encre-2); }
+  .inter { width: 40px; height: 22px; border-radius: 11px; background: var(--encre); position: relative; }
+  .inter::after { content: ''; position: absolute; top: 3px; left: 21px; width: 16px; height: 16px; border-radius: 50%; background: #fff; }
+  .off .inter { background: var(--rose); }
+  .off .inter::after { left: 3px; }
+  .off .dispo { color: var(--rose-texte); }
+  .plus { color: var(--encre-3); font-weight: 800; letter-spacing: 1px; font-size: 15px; }
+  col.c1 { width: 44%; }
+  .lienx { font-size: 13px; color: var(--encre-3); text-decoration: underline; text-underline-offset: 2px; }
+
+  /* Colonne service */
+  aside { display: flex; flex-direction: column; gap: 16px; }
+  .bloc { background: var(--blanc); border: 1px solid var(--filet); }
+  .bloc h2 { font-stretch: 112%; font-weight: 800; font-size: 16px; padding: 14px 16px 12px; border-bottom: 1px solid var(--filet); display: flex; justify-content: space-between; align-items: baseline; }
+  .bloc h2 span { font-stretch: 100%; font-weight: 500; font-size: 12.5px; color: var(--encre-3); }
+  .prise { padding: 14px 16px 16px; }
+  .prise .l { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 700; }
+  .prise .l i { width: 10px; height: 10px; border-radius: 50%; background: var(--bleu); }
+  .prise p { margin-top: 6px; font-size: 13px; color: var(--encre-2); line-height: 1.45; }
+  .prise .btn { margin-top: 14px; height: 42px; border: 1.5px solid var(--encre); border-radius: 3px; display: grid; place-items: center; font-weight: 700; font-size: 14px; }
+
+  .aide { font-size: 13px; line-height: 1.5; color: var(--encre-2); padding: 0 4px; }
+  .aide b { color: var(--encre); font-weight: 700; }
+  .stock { list-style: none; }
+  .stock li { display: grid; grid-template-columns: 32px 1fr auto; align-items: center; gap: 12px; padding: 9px 16px; border-bottom: 1px solid var(--filet); }
+  .stock li:last-child { border-bottom: 0; }
+  .stock img { width: 32px; height: 32px; object-fit: contain; background: var(--puits); border-radius: 2px; }
+  .stock .n { font-weight: 600; font-size: 14px; }
+  .stock .s { font-size: 12.5px; color: var(--encre-3); }
+  .stock .s.bas { color: var(--or-texte); font-weight: 600; }
+  .pas { display: flex; align-items: center; border: 1px solid var(--filet-fort); border-radius: 3px; height: 34px; }
+  .pas span { width: 30px; display: grid; place-items: center; color: var(--encre-2); font-size: 17px; font-weight: 500; }
+  .pas b { width: 34px; text-align: center; font-size: 16px; font-weight: 800; border-left: 1px solid var(--filet); border-right: 1px solid var(--filet); line-height: 32px; }
+  li.bas .pas { border-color: var(--or); }
+  li.bas .pas b { background: var(--or); border-color: var(--or); }
+</style>
+</head>
+<body>
+  <header>
+    <div class="barre">
+      <img src="assets/logo.webp" alt="">
+      <b>Administration</b><span class="qui">Rémi · Gérant</span>
+      <div class="droite">
+        <span class="ouv"><i></i><strong>Commandes ouvertes</strong> · 4 en cuisine</span>
+        <span class="lien">Écran cuisine</span>
+      </div>
+    </div>
+    <nav><span>Ventes</span><span class="actif">Carte &amp; stocks</span><span>Commandes</span><span>Réglages</span><span>Comptes</span></nav>
+  </header>
+
+  <div class="page">
+    <main>
+      <div class="titre">
+        <h1>Carte &amp; stocks</h1>
+        <p>29 produits à la carte, <b>2 en rupture</b>&#8239;: ils ne sont plus proposés à la commande.</p>
+      </div>
+
+      <div class="outils">
+        <div class="recherche"><svg width="15" height="15" viewBox="0 0 21 21" fill="none" stroke="#6d769b" stroke-width="2.4"><circle cx="9" cy="9" r="6.6"/><path d="M14 14l5 5"/></svg>Rechercher un produit…</div>
+        <div class="filtres">
+          <span class="actif">À la carte <em class="num">29</em></span>
+          <span class="rupt">En rupture <em class="num">2</em></span>
+          <span class="bas">Stock bas <em class="num">1</em></span>
+        </div>
+        <span class="modifier">Modifier la carte</span>
+      </div>
+
+      <table>
+        <colgroup><col class="c1"><col style="width:10%"><col style="width:8%"><col style="width:13%"><col style="width:19%"><col style="width:6%"></colgroup>
+        <thead><tr><th>Produit</th><th class="d">Prix</th><th class="d">TVA</th><th>Stock</th><th class="d">Disponibilité</th><th class="d"></th></tr></thead>
+        <tbody>
+          <tr class="cat"><td colspan="6">Nos menus<span>5</span></td></tr>
+          <tr><td><div class="prod"><img src="assets/menu-hot-dog.webp" alt=""><span>Menu Hot-Dog</span></div></td><td class="d num">9,90&nbsp;€</td><td class="d num">10&#8239;%</td><td class="illimite">Illimité</td><td class="d"><span class="dispo">Disponible<i class="inter"></i></span></td><td class="d"><span class="plus">···</span></td></tr>
+          <tr><td><div class="prod"><img src="assets/menu-panini.webp" alt=""><span>Menu Paninis</span></div></td><td class="d num">8,90&nbsp;€</td><td class="d num">10&#8239;%</td><td class="illimite">Illimité</td><td class="d"><span class="dispo">Disponible<i class="inter"></i></span></td><td class="d"><span class="plus">···</span></td></tr>
+          <tr><td><div class="prod"><img src="assets/menu-nuggets.webp" alt=""><span>Menu Nuggets</span></div></td><td class="d num">8,90&nbsp;€</td><td class="d num">10&#8239;%</td><td class="illimite">Illimité</td><td class="d"><span class="dispo">Disponible<i class="inter"></i></span></td><td class="d"><span class="plus">···</span></td></tr>
+          <tr><td><div class="prod"><img src="assets/menu-enfant.webp" alt=""><span>Menu Enfant</span></div></td><td class="d num">6,00&nbsp;€</td><td class="d num">10&#8239;%</td><td class="illimite">Illimité</td><td class="d"><span class="dispo">Disponible<i class="inter"></i></span></td><td class="d"><span class="plus">···</span></td></tr>
+          <tr class="off"><td><div class="prod"><img src="assets/menu-pasta-box.webp" alt=""><span>Menu Pasta Box</span></div></td><td class="d num">8,90&nbsp;€</td><td class="d num">10&#8239;%</td><td class="illimite">Illimité</td><td class="d"><span class="dispo">En rupture<i class="inter"></i></span></td><td class="d"><span class="plus">···</span></td></tr>
+
+          <tr class="cat"><td colspan="6">Carte salée<span>4</span></td></tr>
+          <tr><td><div class="prod"><img src="assets/panini.webp" alt=""><span>Panini <small>· 4 garnitures</small></span></div></td><td class="d num">5,00&nbsp;€</td><td class="d num">10&#8239;%</td><td class="illimite">Illimité</td><td class="d"><span class="dispo">Disponible<i class="inter"></i></span></td><td class="d"><span class="plus">···</span></td></tr>
+          <tr><td><div class="prod"><img src="assets/hot-dog.webp" alt=""><span>Hot-Dog</span></div></td><td class="d num">5,00&nbsp;€</td><td class="d num">10&#8239;%</td><td class="illimite">Illimité</td><td class="d"><span class="dispo">Disponible<i class="inter"></i></span></td><td class="d"><span class="plus">···</span></td></tr>
+          <tr><td><div class="prod"><img src="assets/frites.webp" alt=""><span>Frites</span></div></td><td class="d num">3,00&nbsp;€</td><td class="d num">10&#8239;%</td><td class="illimite">Illimité</td><td class="d"><span class="dispo">Disponible<i class="inter"></i></span></td><td class="d"><span class="plus">···</span></td></tr>
+          <tr class="off"><td><div class="prod"><img src="assets/pasta-box.webp" alt=""><span>Pasta Box</span></div></td><td class="d num">7,00&nbsp;€</td><td class="d num">10&#8239;%</td><td class="illimite">Illimité</td><td class="d"><span class="dispo">En rupture<i class="inter"></i></span></td><td class="d"><span class="plus">···</span></td></tr>
+
+          <tr class="cat"><td colspan="6">Crêpes<span>6</span></td></tr>
+          <tr><td><div class="prod"><img src="assets/crepe-sucre.webp" alt=""><span>Crêpe Sucre</span></div></td><td class="d num">4,00&nbsp;€</td><td class="d num">10&#8239;%</td><td class="illimite">Illimité</td><td class="d"><span class="dispo">Disponible<i class="inter"></i></span></td><td class="d"><span class="plus">···</span></td></tr>
+          <tr><td><div class="prod"><img src="assets/crepe-nutella.webp" alt=""><span>Crêpe Nutella</span></div></td><td class="d num">4,00&nbsp;€</td><td class="d num">10&#8239;%</td><td class="illimite">Illimité</td><td class="d"><span class="dispo">Disponible<i class="inter"></i></span></td><td class="d"><span class="plus">···</span></td></tr>
+          <tr><td><div class="prod"><img src="assets/crepe-caramel.webp" alt=""><span>Crêpe Caramel beurre salé</span></div></td><td class="d num">4,00&nbsp;€</td><td class="d num">10&#8239;%</td><td class="illimite">Illimité</td><td class="d"><span class="dispo">Disponible<i class="inter"></i></span></td><td class="d"><span class="plus">···</span></td></tr>
+        </tbody>
+      </table>
+    </main>
+
+    <aside>
+      <section class="bloc">
+        <h2>Prise de commande</h2>
+        <div class="prise">
+          <p class="l"><i></i>Ouverte</p>
+          <p>Les clients commandent et paient depuis la carte. Fermer la prise de commande laisse la carte consultable.</p>
+          <p class="btn">Fermer la prise de commande</p>
+        </div>
+      </section>
+
+      <section class="bloc">
+        <h2>Stock du jour <span>décompté à chaque commande</span></h2>
+        <ul class="stock">
+          <li class="bas"><img src="assets/pomme-amour.webp" alt=""><div><p class="n">Pomme d’amour</p><p class="s bas">Stock bas&#8239;: 4 restantes</p></div><div class="pas"><span>−</span><b class="num">4</b><span>+</span></div></li>
+          <li><img src="assets/popcorn.webp" alt=""><div><p class="n">Popcorn</p><p class="s">Alerte à 5</p></div><div class="pas"><span>−</span><b class="num">17</b><span>+</span></div></li>
+          <li><img src="assets/chips.webp" alt=""><div><p class="n">Chips</p><p class="s">Alerte à 5</p></div><div class="pas"><span>−</span><b class="num">22</b><span>+</span></div></li>
+          <li><img src="assets/bonbons.webp" alt=""><div><p class="n">Bonbons</p><p class="s">Alerte à 5</p></div><div class="pas"><span>−</span><b class="num">31</b><span>+</span></div></li>
+          <li><img src="assets/chocolat.webp" alt=""><div><p class="n">Chocolat</p><p class="s">Alerte à 5</p></div><div class="pas"><span>−</span><b class="num">38</b><span>+</span></div></li>
+        </ul>
+      </section>
+
+      <p class="aide"><b>En plein service</b>, l’interrupteur retire le produit de la carte des clients à l’instant. Le stock baisse à chaque commande payée et remonte si une commande est annulée.</p>
+    </aside>
+  </div>
+</body>
+</html>

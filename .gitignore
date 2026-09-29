@@ -60,3 +60,7 @@ test-results
 # Dossier d’audit et captures de recette : artefacts de travail, non versionnés.
 /.audit
 /.shots
+
+# Aperçus locaux des maquettes (scripts/maquettes.mjs)
+design/maquettes/**/.apercu/
+design/maquettes/_presentation/captures/

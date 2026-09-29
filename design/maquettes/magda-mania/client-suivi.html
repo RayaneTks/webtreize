@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="format" content="telephone">
+<title>Magda Mania — commande prête</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500;600&display=block" rel="stylesheet">
+<style>
+  :root {
+    --nuit: #0e1430; --nuit-2: #161d3f; --trait: #273158; --trait-fort: #3a4677;
+    --texte: #f4f6fb; --texte-2: #a2b3da; --texte-3: #7a8cc0;
+    --rose: #f50054; --rose-fonce: #c20043; --bleu: #0080f8; --bleu-texte: #4fa8ff; --or: #ffc023;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 390px; height: 844px; overflow: hidden; }
+  body { position: relative; background: var(--nuit); color: var(--texte); font-family: 'Archivo', sans-serif; -webkit-font-smoothing: antialiased; }
+  .num { font-variant-numeric: tabular-nums; }
+  .mono { font-family: 'IBM Plex Mono', monospace; }
+
+  .signal { background: var(--rose); padding-bottom: 22px; }
+  .statut { height: 47px; display: flex; align-items: center; justify-content: space-between; padding: 4px 28px 0 34px; font: 600 16px/1 'Archivo'; }
+  .haut { display: flex; align-items: center; justify-content: space-between; padding: 8px 20px 0; font-size: 14px; font-weight: 600; }
+  .haut .retour { display: flex; align-items: center; gap: 8px; }
+  .haut img { width: 30px; height: 30px; border-radius: 50%; }
+
+  .pret { padding: 30px 20px 0; }
+  .pret .dit { font-stretch: 125%; font-weight: 900; font-size: 34px; line-height: 1; letter-spacing: -.02em; }
+  .pret .no { margin-top: 16px; font-stretch: 108%; font-weight: 900; line-height: .8; letter-spacing: -.035em; white-space: nowrap; }
+  .pret .no small { font-size: 44px; letter-spacing: -.02em; margin-right: 4px; }
+  .pret .no span { font-size: 118px; }
+  .pret .qui { margin-top: 14px; display: flex; justify-content: space-between; align-items: baseline; font-size: 17px; font-weight: 600; }
+  .pret .qui .mono { font-size: 13px; font-weight: 500; opacity: .85; }
+  .consigne { margin: 22px 20px 0; padding: 14px 16px; background: var(--nuit); border-radius: 4px; font-size: 15.5px; line-height: 1.4; }
+  .consigne b { font-weight: 700; }
+
+  .etapes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 20px 20px 0; }
+  .etapes div { font-size: 13px; font-weight: 600; color: var(--texte-2); }
+  .etapes div::before { content: ''; display: block; height: 4px; background: var(--texte-2); margin-bottom: 8px; border-radius: 1px; }
+  .etapes div.fait { color: var(--texte); }
+  .etapes div.fait::before { background: var(--texte); }
+  .etapes div.la { color: var(--rose); }
+  .etapes div.la::before { background: var(--rose); }
+
+  .ticket { margin: 22px 20px 0; border-top: 1px dashed var(--trait-fort); padding-top: 14px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; }
+  .ticket h2 { font-family: 'Archivo'; font-stretch: 115%; font-weight: 800; font-size: 16px; margin-bottom: 10px; }
+  .ligne { display: grid; grid-template-columns: 22px 1fr auto; gap: 8px; padding: 7px 0; }
+  .ligne b { font-weight: 600; color: var(--texte); }
+  .ligne .opt { font-family: 'Archivo'; color: var(--texte-2); font-size: 13px; margin-top: 3px; line-height: 1.4; }
+  .ligne .q { color: var(--texte-2); }
+  .totaux { border-top: 1px dashed var(--trait-fort); margin-top: 6px; padding-top: 10px; }
+  .totaux p { display: flex; justify-content: space-between; color: var(--texte-2); font-size: 12px; line-height: 1.7; }
+  .alerte { margin: 14px 20px 0; font-size: 13.5px; color: var(--texte-2); display: flex; gap: 8px; align-items: center; }
+  .alerte i { width: 7px; height: 7px; border-radius: 50%; background: var(--bleu-texte); flex: none; }
+  .bouton { position: absolute; left: 20px; right: 20px; bottom: 30px; height: 52px; border: 1.5px solid var(--trait-fort); border-radius: 4px; display: grid; place-items: center; font-size: 15.5px; font-weight: 600; }
+  .totaux p.total { color: var(--texte); font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+</style>
+</head>
+<body>
+  <section class="signal">
+    <div class="statut">
+      <span class="num">13:39</span>
+      <svg width="66" height="12" viewBox="0 0 66 12" fill="#fff" aria-hidden="true">
+        <rect x="0" y="8" width="3" height="4" rx=".6"/><rect x="5" y="6" width="3" height="6" rx=".6"/><rect x="10" y="3.5" width="3" height="8.5" rx=".6"/><rect x="15" y="1" width="3" height="11" rx=".6"/>
+        <rect x="38.5" y=".5" width="23" height="11" rx="2.6" fill="none" stroke="#fff" stroke-opacity=".6"/><rect x="40.5" y="2.5" width="12" height="7" rx="1.2"/><rect x="63" y="4" width="1.6" height="4" rx=".6" fill-opacity=".6"/>
+      </svg>
+    </div>
+    <div class="haut">
+      <span class="retour"><svg width="10" height="16" viewBox="0 0 10 16" fill="none" stroke="#fff" stroke-width="2.4"><path d="M8 2L2 8l6 6"/></svg>Carte</span>
+      <img src="assets/logo.webp" alt="">
+    </div>
+    <div class="pret">
+      <p class="dit">C’est prêt.</p>
+      <p class="no num"><small>MM-</small><span>135</span></p>
+      <p class="qui"><span>Sofia A.</span><span class="mono">samedi 26/09 · 13:39</span></p>
+    </div>
+    <p class="consigne">Annonce ton numéro au comptoir, <b>ta commande t’attend.</b></p>
+  </section>
+
+  <div class="etapes">
+    <div class="fait">Reçue</div>
+    <div class="fait">En préparation</div>
+    <div class="la">Prête</div>
+  </div>
+  <p class="alerte"><i></i>Alertes activées sur ce téléphone.</p>
+
+  <section class="ticket">
+    <h2>Ta commande</h2>
+    <div class="ligne">
+      <span class="q">1×</span>
+      <div><b>Menu Paninis</b><p class="opt">Raclette · Oasis tropical · Sans sauce</p></div>
+      <span class="num">8,90&nbsp;€</span>
+    </div>
+    <div class="ligne">
+      <span class="q">1×</span>
+      <div><b>Crêpe Nutella</b></div>
+      <span class="num">4,00&nbsp;€</span>
+    </div>
+    <div class="totaux">
+      <p class="total"><span>Total payé</span><span class="num">12,90&nbsp;€</span></p>
+      <p><span>dont TVA 10&#8239;% (base 11,73&nbsp;€)</span><span class="num">1,17&nbsp;€</span></p>
+      <p><span>Réglé par Apple Pay</span></p>
+    </div>
+  </section>
+  <p class="bouton">Retour à la carte</p>
+</body>
+</html>

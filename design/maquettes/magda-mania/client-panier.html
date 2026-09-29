@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="format" content="telephone">
+<title>Magda Mania — composer un menu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500;600&display=block" rel="stylesheet">
+<style>
+  :root {
+    --nuit: #0e1430; --nuit-2: #161d3f; --puits: #1a2248; --trait: #273158; --trait-fort: #3a4677;
+    --texte: #f4f6fb; --texte-2: #a2b3da; --texte-3: #7a8cc0;
+    --rose: #f50054; --bleu: #0080f8; --bleu-texte: #4fa8ff; --or: #ffc023;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 390px; height: 844px; overflow: hidden; }
+  body { background: #070a19; color: var(--texte); font-family: 'Archivo', sans-serif; -webkit-font-smoothing: antialiased; position: relative; }
+  .num { font-variant-numeric: tabular-nums; }
+
+  .statut { height: 47px; display: flex; align-items: center; justify-content: space-between; padding: 4px 28px 0 34px; font: 600 16px/1 'Archivo'; color: #8d97bb; }
+
+  .feuille { position: absolute; top: 58px; left: 0; right: 0; bottom: 0; background: var(--nuit); border-radius: 10px 10px 0 0; border-top: 1px solid var(--trait-fort); }
+  .poignee { width: 40px; height: 4px; border-radius: 2px; background: var(--trait-fort); margin: 8px auto 0; }
+
+  .tete { display: grid; grid-template-columns: 1fr 92px; gap: 12px; padding: 14px 20px 16px; border-bottom: 1px solid var(--trait); }
+  .tete h1 { font-stretch: 125%; font-weight: 900; font-size: 27px; line-height: 1; letter-spacing: -.02em; }
+  .tete p { margin-top: 8px; font-size: 14px; color: var(--texte-2); line-height: 1.4; }
+  .tete .prix { color: var(--texte); margin-top: 10px; font-stretch: 115%; font-weight: 800; font-size: 19px; }
+  .tete img { width: 92px; height: 92px; object-fit: contain; }
+
+  .groupe { padding: 16px 20px 6px; }
+  .groupe .ttl { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 8px; }
+  .groupe h2 { font-stretch: 115%; font-weight: 800; font-size: 17px; }
+  .groupe .regle { font-size: 12.5px; color: var(--texte-3); }
+  .groupe .regle b { color: var(--or); font-weight: 600; }
+  .groupe .regle b.ok { color: var(--bleu-texte); }
+
+  .choix { list-style: none; }
+  .choix li { display: flex; align-items: center; gap: 12px; min-height: 48px; border-bottom: 1px solid var(--trait); font-size: 15px; }
+  .choix li:last-child { border-bottom: 0; }
+  .choix li .n { font-weight: 600; }
+  .choix li .s { color: var(--texte-3); font-size: 13.5px; }
+  .radio { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--trait-fort); flex: none; display: grid; place-items: center; }
+  .sel .radio { border-color: var(--rose); }
+  .sel .radio::after { content: ''; width: 10px; height: 10px; border-radius: 50%; background: var(--rose); }
+
+  .grille { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .grille span { height: 42px; border: 1.5px solid var(--trait-fort); border-radius: 3px; display: flex; align-items: center; padding: 0 12px; font-size: 14.5px; font-weight: 500; color: var(--texte-2); }
+  .grille span.sel { border-color: var(--rose); color: var(--texte); background: rgba(245,0,84,.12); font-weight: 600; }
+  .grille span.large { grid-column: span 2; }
+
+  .barre { position: absolute; left: 0; right: 0; bottom: 0; padding: 12px 16px 28px; background: var(--nuit); border-top: 1px solid var(--trait); display: flex; gap: 10px; }
+  .pas { display: flex; align-items: center; border: 1.5px solid var(--trait-fort); border-radius: 4px; height: 56px; }
+  .pas span { width: 40px; display: grid; place-items: center; }
+  .pas b { width: 22px; text-align: center; font-weight: 700; font-size: 17px; }
+  .ajout { flex: 1; height: 56px; background: var(--rose); border-radius: 4px; display: flex; align-items: center; padding: 0 18px; font-size: 17px; font-weight: 700; }
+  .ajout .tot { margin-left: auto; }
+</style>
+</head>
+<body>
+  <div class="statut">
+    <span class="num">13:25</span>
+    <svg width="66" height="12" viewBox="0 0 66 12" fill="#8d97bb" aria-hidden="true">
+      <rect x="0" y="8" width="3" height="4" rx=".6"/><rect x="5" y="6" width="3" height="6" rx=".6"/><rect x="10" y="3.5" width="3" height="8.5" rx=".6"/><rect x="15" y="1" width="3" height="11" rx=".6"/>
+      <rect x="38.5" y=".5" width="23" height="11" rx="2.6" fill="none" stroke="#8d97bb" stroke-opacity=".6"/><rect x="40.5" y="2.5" width="15" height="7" rx="1.2"/><rect x="63" y="4" width="1.6" height="4" rx=".6" fill-opacity=".6"/>
+    </svg>
+  </div>
+
+  <div class="feuille">
+    <div class="poignee"></div>
+    <div class="tete">
+      <div>
+        <h1>Menu Paninis</h1>
+        <p>Un panini pressé sur plaque, des frites et une boisson.</p>
+        <p class="prix num">8,90&nbsp;€</p>
+      </div>
+      <img src="assets/menu-panini.webp" alt="">
+    </div>
+
+    <div class="groupe">
+      <div class="ttl"><h2>Ton panini</h2><span class="regle"><b class="ok">Choisi</b> · 1 au choix</span></div>
+      <ul class="choix">
+        <li><span class="radio"></span><span><span class="n">Américain</span> <span class="s">bœuf haché, tomate, mozzarella</span></span></li>
+        <li><span class="radio"></span><span><span class="n">Pesto</span> <span class="s">tomate, mozzarella, pesto</span></span></li>
+        <li class="sel"><span class="radio"></span><span><span class="n">Raclette</span> <span class="s">jambon, raclette</span></span></li>
+        <li><span class="radio"></span><span><span class="n">Poulet</span> <span class="s">oignons caramélisés, fromage</span></span></li>
+      </ul>
+    </div>
+
+    <div class="groupe">
+      <div class="ttl"><h2>Ta boisson</h2><span class="regle"><b class="ok">Choisie</b> · 1 au choix</span></div>
+      <div class="grille">
+        <span>Coca</span><span>Coca zéro</span>
+        <span>Coca cherry</span><span class="sel">Oasis tropical</span>
+        <span>Ice tea</span><span>Eau</span>
+        <span class="large">Oasis pomme cassis framboise</span>
+      </div>
+    </div>
+
+    <div class="groupe">
+      <div class="ttl"><h2>Tes sauces</h2><span class="regle"><b class="ok">Choisie</b> · 2 max, offertes</span></div>
+      <div class="grille">
+        <span class="sel">Sans sauce</span><span>Mayonnaise</span>
+        <span>Ketchup</span><span>Barbecue</span>
+        <span>Algérienne</span>
+      </div>
+    </div>
+
+    <div class="barre">
+      <div class="pas">
+        <span><svg width="14" height="14" viewBox="0 0 14 14" stroke="#a2b3da" stroke-width="2.4"><path d="M0 7h14"/></svg></span>
+        <b class="num">1</b>
+        <span><svg width="14" height="14" viewBox="0 0 14 14" stroke="#f4f6fb" stroke-width="2.4"><path d="M7 0v14M0 7h14"/></svg></span>
+      </div>
+      <div class="ajout"><span>Ajouter</span><span class="tot num">8,90&nbsp;€</span></div>
+    </div>
+  </div>
+</body>
+</html>

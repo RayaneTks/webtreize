@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="format" content="telephone">
+<title>Conciergerie Nuréa — accueil, téléphone</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&display=block" rel="stylesheet">
+<style>
+  :root {
+    --calcaire: #F2F4F3;
+    --blanc: #FFFFFF;
+    --encre: #0F2A35;
+    --encre-douce: #4E6B77;
+    --filet: #CDD6D9;
+    --azur: #1E92B8;
+    --capitainerie: #0B4A61;
+    --marge: 24px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 390px; height: 844px; overflow: hidden; }
+  body {
+    background: var(--calcaire); color: var(--encre);
+    font-family: 'Archivo', sans-serif; font-size: 16px; line-height: 24px;
+    -webkit-font-smoothing: antialiased; position: relative;
+  }
+  .mono { font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; line-height: 15px; letter-spacing: .01em; }
+  .num { font-variant-numeric: tabular-nums lining-nums; }
+
+  .etat { height: 47px; padding: 0 26px 0 30px; display: flex; align-items: center; justify-content: space-between; font-size: 15px; font-weight: 600; }
+  .etat svg { display: block; }
+  .etat .icones { display: flex; gap: 6px; align-items: center; }
+
+  header { height: 56px; padding: 0 var(--marge); display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--filet); }
+  .marque { display: flex; align-items: center; gap: 9px; }
+  .marque img { width: 28px; height: 28px; }
+  .marque b { font-weight: 650; font-stretch: 110%; font-size: 16px; letter-spacing: -.01em; }
+  header a { font-size: 14px; font-weight: 600; padding: 7px 12px; border: 1px solid var(--encre); border-radius: 3px; }
+
+  figure { height: 176px; overflow: hidden; background: var(--capitainerie); }
+  figure img { width: 100%; height: 100%; object-fit: cover; object-position: 0% 60%; filter: saturate(.88); display: block; }
+
+  main { padding: 24px var(--marge) 0; }
+  main > .mono { color: var(--encre-douce); }
+  h1 { margin-top: 12px; font-size: 32px; line-height: 35px; font-weight: 620; font-stretch: 104%; letter-spacing: -.024em; }
+  h1 span { display: block; color: var(--azur); }
+  .chapeau { margin-top: 14px; font-size: 15px; line-height: 22px; color: var(--encre-douce); }
+  .principal { margin-top: 20px; display: block; text-align: center; background: var(--encre); color: var(--blanc); font-weight: 600; font-size: 16px; padding: 14px 0; border-radius: 3px; }
+
+  .echelle { margin-top: 28px; height: 6px; border: 1px solid var(--encre); background: repeating-linear-gradient(90deg, var(--encre) 0 34px, var(--calcaire) 34px 68px); }
+  dl div { display: flex; justify-content: space-between; align-items: baseline; padding: 11px 0; border-bottom: 1px solid var(--filet); }
+  dt { color: var(--encre-douce); }
+  dd { font-size: 16px; font-weight: 600; }
+
+  .barre {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 76px;
+    background: var(--blanc); border-top: 1px solid var(--filet);
+    display: grid; grid-template-columns: 1fr 1.4fr; gap: 10px; padding: 10px 16px 24px;
+  }
+  .barre a { display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 600; border-radius: 3px; }
+  .barre .appel { border: 1px solid var(--encre); }
+  .barre .wa { background: var(--encre); color: var(--blanc); }
+</style>
+</head>
+<body>
+  <div class="etat">
+    <span class="num">10:42</span>
+    <span class="icones">
+      <svg width="17" height="11" viewBox="0 0 17 11" fill="#0F2A35"><rect x="0" y="7.5" width="3" height="3.5" rx=".6"/><rect x="4.6" y="5" width="3" height="6" rx=".6"/><rect x="9.2" y="2.5" width="3" height="8.5" rx=".6"/><rect x="13.8" y="0" width="3" height="11" rx=".6"/></svg>
+      <svg width="15" height="11" viewBox="0 0 15 11" fill="none" stroke="#0F2A35" stroke-width="1.6" stroke-linecap="round"><path d="M1.2 3.9a9 9 0 0 1 12.6 0"/><path d="M3.6 6.3a5.6 5.6 0 0 1 7.8 0"/><circle cx="7.5" cy="9" r=".9" fill="#0F2A35" stroke="none"/></svg>
+      <svg width="25" height="12" viewBox="0 0 25 12"><rect x=".5" y=".5" width="21" height="11" rx="3" fill="none" stroke="#0F2A35" opacity=".45"/><rect x="2" y="2" width="15" height="8" rx="1.6" fill="#0F2A35"/><rect x="22.6" y="4" width="1.6" height="4" rx=".8" fill="#0F2A35" opacity=".45"/></svg>
+    </span>
+  </div>
+
+  <header>
+    <div class="marque"><img src="assets/logo.svg" alt=""><b>Conciergerie Nuréa</b></div>
+    <a>Nous écrire</a>
+  </header>
+
+  <figure><img src="assets/mer-calanques.jpg" alt=""></figure>
+
+  <main>
+    <p class="mono">Conciergerie Airbnb, Marseille</p>
+    <h1>Votre appartement génère des revenus. <span>Vous ne gérez rien.</span></h1>
+    <p class="chapeau">Accueil, ménage, réservations, clés et cautions Swikly. Deux associés, un interlocuteur direct.</p>
+    <a class="principal">Simuler mes revenus</a>
+
+    <div class="echelle"></div>
+    <dl>
+      <div><dt class="mono">Commission</dt><dd class="num">25&#8239;% sur l’encaissé</dd></div>
+      <div><dt class="mono">Engagement</dt><dd>Aucun</dd></div>
+      <div><dt class="mono">Cautions</dt><dd>Swikly, au prorata</dd></div>
+    </dl>
+  </main>
+
+  <div class="barre">
+    <a class="appel">Appeler</a>
+    <a class="wa">Écrire sur WhatsApp</a>
+  </div>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="format" content="ordinateur">
+<title>Nuréa Parfums — fiche parfum</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Instrument+Sans:wght@400;500;600&display=block" rel="stylesheet">
+<style>
+  :root {
+    --encre: #0A0508; --encre-2: #140E12;
+    --papier: #FDF8F4; --texte-2: #E4D2DA; --texte-3: #B49FAB; --inactif: #6E5A64;
+    --cuivre: #C4956A; --filet: rgba(196,149,106,.22); --filet-fort: rgba(196,149,106,.45);
+    --serif: 'Newsreader', Georgia, serif; --sans: 'Instrument Sans', system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1440px; height: 900px; overflow: hidden; background: var(--encre); color: var(--papier);
+    font: 400 15px/1.6 var(--sans); -webkit-font-smoothing: antialiased; }
+
+  header { position: absolute; left: 0; right: 0; top: 0; height: 88px; padding: 0 72px;
+    display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--filet); }
+  .logo { display: flex; align-items: center; gap: 14px; }
+  .logo img.m { width: 38px; height: 38px; }
+  .logo img.w { height: 21px; }
+  nav { display: flex; gap: 40px; font-weight: 500; font-size: 15px; color: var(--texte-2); }
+  nav .ici { color: var(--cuivre); }
+
+  .planche { position: absolute; left: 72px; top: 120px; width: 498px; height: 747px; border: 1px solid var(--filet); background: var(--encre-2); overflow: hidden; }
+  .planche img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  .fiche { position: absolute; left: 642px; top: 120px; width: 726px; height: 747px; display: flex; flex-direction: column; }
+  .ariane { font-size: 13px; color: var(--texte-3); }
+  .ariane span { margin: 0 8px; color: var(--inactif); }
+  .ariane b { font-weight: 500; color: var(--texte-2); }
+
+  .marque { margin-top: 56px; font-size: 17px; font-weight: 500; color: var(--texte-2); }
+  h1 { margin-top: 6px; font: 500 112px/0.92 var(--serif); letter-spacing: -0.03em; font-variation-settings: "opsz" 72; }
+  .chapo { margin-top: 28px; font: 400 21px/1.5 var(--serif); color: var(--texte-2); max-width: 560px; font-variation-settings: "opsz" 18; }
+
+  /* Le flacon : ce que l'on reçoit, dit sans être montré */
+  .flacon { margin-top: 44px; border-top: 1px solid var(--filet-fort); }
+  .flacon .tete { display: flex; justify-content: space-between; align-items: baseline; padding: 12px 0 0; }
+  .flacon .tete p { font-size: 14px; font-weight: 500; }
+  .flacon .tete small { font-size: 13px; color: var(--texte-3); }
+  .formats { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 14px; border-bottom: 1px solid var(--filet); }
+  .formats div { padding: 4px 0 18px; font: 400 44px/1 var(--serif); font-variant-numeric: lining-nums tabular-nums; font-variation-settings: "opsz" 60; }
+  .formats div + div { padding-left: 24px; border-left: 1px solid var(--filet); }
+  .formats small { font: 400 17px var(--serif); color: var(--texte-3); margin-left: 4px; }
+
+  .commande { margin-top: auto; display: grid; grid-template-columns: 330px 1fr; column-gap: 32px; align-items: center; }
+  .plein { background: var(--cuivre); color: var(--encre); font-weight: 600; font-size: 16px; height: 56px; display: flex; align-items: center; justify-content: center; }
+  .aide { font-size: 13px; color: var(--texte-3); line-height: 1.5; }
+  .autres-canaux { grid-column: 1 / 3; margin-top: 18px; display: flex; gap: 28px; font-size: 14px; }
+  .autres-canaux .lien { font-weight: 500; border-bottom: 1px solid var(--filet-fort); padding-bottom: 2px; }
+  .autres-canaux .off { color: var(--inactif); }
+
+  .aussi { margin-top: 40px; padding-top: 14px; border-top: 1px solid var(--filet); }
+  .aussi p { font-size: 13px; color: var(--texte-3); display: flex; justify-content: space-between; }
+  .aussi p b { color: var(--papier); font-weight: 500; border-bottom: 1px solid var(--filet-fort); }
+  .aussi ul { list-style: none; margin-top: 10px; font: 400 19px/1.55 var(--serif); color: var(--texte-2); }
+  .aussi li { display: inline-block; white-space: nowrap; }
+  .aussi li:not(:last-child)::after { content: "·"; color: var(--cuivre); margin: 0 12px; }
+</style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img class="m" src="assets/monogramme-cercle-cuivre.svg" alt="">
+      <img class="w" src="assets/nurea-wordmark-ivory.webp" alt="Nuréa Parfums">
+    </div>
+    <nav><span>Catalogue</span><span class="ici">Marques</span><span>La parfumerie</span><span>Contact</span></nav>
+  </header>
+
+  <figure class="planche"><img src="assets/lv-contre-moi.webp" alt="Louis Vuitton — Contre Moi"></figure>
+
+  <section class="fiche">
+    <p class="ariane">Accueil<span>/</span>Les marques<span>/</span>Louis Vuitton<span>/</span><b>Contre Moi</b></p>
+
+    <p class="marque">Louis Vuitton</p>
+    <h1>Contre Moi</h1>
+    <p class="chapo">Remis en main propre à Marseille, ou envoyé partout en France. Le prix et la disponibilité se donnent en message.</p>
+
+    <div class="flacon">
+      <div class="tete"><p>Votre flacon Nuréa, au format de votre choix</p><small>Photographie&#8239;: le flacon d’origine de la marque</small></div>
+      <div class="formats">
+        <div>10<small>ml</small></div>
+        <div>50<small>ml</small></div>
+        <div>80<small>ml</small></div>
+      </div>
+    </div>
+
+    <div class="commande">
+      <span class="plein">Commander sur Snapchat</span>
+      <p class="aide">Le bouton ouvre Snapchat et copie le nom du parfum, prêt&nbsp;à&nbsp;coller dans le message.</p>
+      <p class="autres-canaux"><span class="lien">Passer par le formulaire</span><span class="off">WhatsApp, bientôt disponible</span></p>
+    </div>
+
+    <div class="aussi">
+      <p><span>Aussi chez Louis Vuitton · 7 parfums</span><b>Toute la marque</b></p>
+      <ul>
+        <li>Afternoon Swim</li><li>Attrape-Rêves</li><li>Imagination</li><li>L’Immensité</li><li>Nuit de Feu</li><li>Sur la Route</li><li>Symphony</li>
+      </ul>
+    </div>
+  </section>
+</body>
+</html>
