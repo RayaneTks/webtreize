@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=block" rel="stylesheet">
+<style>
+  :root { --ink:#11313e; --azur:#1e92b8; --deep:#0f4c63; --sky:#f1f7fa; --muted:#587685; --line:#e1ecf1; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html,body { width:390px; height:844px; overflow:hidden; background:#fff; color:var(--ink); font:14px/1.45 Inter, sans-serif; -webkit-font-smoothing:antialiased; }
+  .status { height:46px; display:flex; justify-content:space-between; align-items:center; padding:0 26px; font-weight:600; font-size:15px; }
+  .sb-i { display:inline-flex; gap:6px; align-items:center; }
+  .bar { padding:4px 18px 12px; display:flex; justify-content:space-between; color:var(--azur); font-weight:500; border-bottom:1px solid var(--line); }
+  .mail { padding:18px; }
+  .subj { font-size:21px; font-weight:700; line-height:1.2; letter-spacing:-.01em; }
+  .from { display:flex; gap:10px; align-items:center; margin:16px 0 18px; }
+  .av { width:40px; height:40px; border-radius:50%; background:var(--deep); color:#fff; display:grid; place-items:center; font-weight:700; }
+  .from b { display:block; }
+  .from p { font-size:12px; color:var(--muted); }
+  h2 { font-size:17px; margin-bottom:12px; }
+  table { width:100%; border-collapse:separate; border-spacing:0 4px; }
+  td { padding:10px 12px; font-size:14px; }
+  tr:nth-child(odd) td { background:var(--sky); }
+  tr td:first-child { color:var(--muted); border-radius:8px 0 0 8px; }
+  tr td:last-child { font-weight:600; text-align:right; border-radius:0 8px 8px 0; }
+  .gain td:last-child { color:var(--azur); font-size:19px; font-weight:700; }
+  .hint { margin-top:16px; font-size:12.5px; color:var(--muted); }
+  .reply { margin-top:22px; display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .reply span { text-align:center; padding:13px; border-radius:12px; font-weight:600; }
+  .r1 { background:var(--deep); color:#fff; }
+  .r2 { border:1px solid var(--line); color:var(--deep); }
+</style>
+</head>
+<body>
+  <div class="status"><span>10:21</span><span class="sb-i"><svg width="18" height="11" viewBox="0 0 18 11"><rect x="0" y="7" width="3" height="4" rx="1" fill="currentColor"/><rect x="5" y="5" width="3" height="6" rx="1" fill="currentColor"/><rect x="10" y="2.5" width="3" height="8.5" rx="1" fill="currentColor"/><rect x="15" y="0" width="3" height="11" rx="1" fill="currentColor"/></svg><svg width="16" height="11" viewBox="0 0 16 11"><path d="M8 2.2c2.3 0 4.4.9 6 2.4l1.2-1.3A10.3 10.3 0 0 0 8 .4 10.3 10.3 0 0 0 .8 3.3L2 4.6a8.5 8.5 0 0 1 6-2.4Zm0 3.4c1.4 0 2.6.5 3.6 1.4l1.2-1.3A7 7 0 0 0 8 3.8a7 7 0 0 0-4.8 1.9L4.4 7c1-.9 2.2-1.4 3.6-1.4Zm0 3.4c.5 0 1 .2 1.3.5L8 10.9 6.7 9.5c.3-.3.8-.5 1.3-.5Z" fill="currentColor"/></svg><svg width="26" height="12" viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.5" fill="none" stroke="currentColor" opacity=".4"/><rect x="2" y="2" width="16" height="8" rx="2" fill="currentColor"/><rect x="23.5" y="4" width="1.8" height="4" rx=".9" fill="currentColor" opacity=".5"/></svg></span></div>
+  <div class="bar"><span>‹ Boîte de réception</span><span>⋯</span></div>
+  <div class="mail">
+    <p class="subj">Nouvelle demande d’étude — Julien</p>
+    <div class="from"><span class="av">S</span><div><b>Simulateur · Conciergerie Nuréa</b><p>à contact@ · aujourd’hui 10:20</p></div></div>
+    <h2>Nouvelle demande d’étude de revenus</h2>
+    <table>
+      <tr><td>Prénom</td><td>Julien</td></tr>
+      <tr><td>E-mail</td><td>julien.m@exemple.fr</td></tr>
+      <tr><td>Tarif / nuit</td><td>140 €</td></tr>
+      <tr><td>Nuits / mois</td><td>20</td></tr>
+      <tr class="gain"><td>Revenus nets estimés</td><td>1 575 €</td></tr>
+    </table>
+    <p class="hint">Répondre à cet e-mail contacte directement Julien.</p>
+    <div class="reply"><span class="r1">Répondre</span><span class="r2">Transférer</span></div>
+  </div>
+</body>
+</html>

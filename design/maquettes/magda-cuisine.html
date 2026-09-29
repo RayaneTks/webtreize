@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=block" rel="stylesheet">
+<style>
+  :root { --n950:#070a1c; --n900:#0d1330; --n850:#121a3d; --n800:#1c2552; --n500:#7e86b0; --n300:#c3c8e4; --gold:#ffc023; --pink:#f50054; --blue:#40a2ff; --ok:#4ade80; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html,body { width:1440px; height:900px; overflow:hidden; background:var(--n950); color:#fff; font:14px/1.4 'Plus Jakarta Sans', sans-serif; -webkit-font-smoothing:antialiased; }
+  .d { font-family:Fredoka, sans-serif; }
+  header { height:72px; display:flex; align-items:center; gap:16px; padding:0 28px; border-bottom:1px solid var(--n800); background:var(--n900); }
+  header img { width:42px; height:42px; border-radius:50%; }
+  header h1 { font-size:22px; }
+  header p { color:var(--n500); font-size:12px; }
+  .live { display:flex; align-items:center; gap:8px; margin-left:22px; background:rgba(74,222,128,.12); color:var(--ok); padding:7px 13px; border-radius:30px; font-weight:600; font-size:13px; }
+  .live i { width:8px; height:8px; background:var(--ok); border-radius:50%; box-shadow:0 0 0 4px rgba(74,222,128,.2); }
+  .right { margin-left:auto; display:flex; align-items:center; gap:22px; color:var(--n300); }
+  .clock { font-size:28px; font-weight:600; color:#fff; }
+  .stat b { color:#fff; font-size:18px; display:block; line-height:1; }
+  .stat { font-size:11px; }
+  .cols { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; padding:20px 24px; height:calc(900px - 72px); }
+  .col { display:flex; flex-direction:column; gap:12px; min-height:0; }
+  .col h2 { display:flex; align-items:center; gap:10px; font-size:17px; padding:0 4px; }
+  .col h2 span { font:700 12px 'Plus Jakarta Sans'; background:var(--n800); padding:2px 9px; border-radius:20px; color:var(--n300); }
+  .col h2 i { width:10px; height:10px; border-radius:50%; }
+  .t { background:var(--n900); border:1px solid var(--n800); border-radius:16px; overflow:hidden; }
+  .t.new { border-color:rgba(255,192,35,.55); box-shadow:0 0 0 1px rgba(255,192,35,.25); }
+  .th { display:flex; justify-content:space-between; align-items:center; padding:12px 14px; border-bottom:1px solid var(--n800); }
+  .th .no { font-size:26px; font-weight:700; line-height:1; }
+  .th .who { color:var(--n300); font-size:13px; margin-left:10px; }
+  .th .age { font-size:12px; font-weight:700; padding:3px 9px; border-radius:20px; background:var(--n800); color:var(--n300); }
+  .th .age.warn { background:rgba(245,0,84,.18); color:#ff8fb7; }
+  .li { padding:8px 14px; display:grid; grid-template-columns:30px 1fr; gap:6px; }
+  .li b { font-size:16px; }
+  .li strong { font-size:15px; font-weight:600; }
+  .li p { color:var(--n500); font-size:12px; }
+  .note { margin:2px 14px 10px; background:rgba(255,192,35,.12); color:var(--gold); font-size:12px; font-weight:600; padding:6px 10px; border-radius:8px; }
+  .act { border-top:1px solid var(--n800); padding:10px 14px; }
+  .act span { display:block; text-align:center; padding:11px; border-radius:11px; font-weight:700; }
+  .a-gold { background:var(--gold); color:var(--n950); }
+  .a-blue { background:var(--blue); color:#fff; }
+  .a-pink { background:var(--pink); color:#fff; }
+  .paid { font-size:11px; color:var(--ok); font-weight:600; margin-left:8px; }
+</style>
+</head>
+<body>
+<header>
+  <img src="assets/magda/logo.webp" alt="">
+  <div><h1 class="d">Cuisine</h1><p>Magda Mania · écran de préparation</p></div>
+  <div class="live"><i></i>Prise de commande ouverte</div>
+  <div class="right">
+    <div class="stat"><b>23</b>commandes aujourd’hui</div>
+    <div class="stat"><b>6 min</b>préparation moyenne</div>
+    <div class="clock">16:44</div>
+  </div>
+</header>
+<div class="cols">
+  <section class="col">
+    <h2 class="d"><i style="background:var(--gold)"></i>À préparer <span>3</span></h2>
+    <div class="t new">
+      <div class="th"><div><span class="no d">n° 49</span><span class="who">Yanis</span><span class="paid">Payée</span></div><span class="age">à l’instant</span></div>
+      <div class="li"><b>2×</b><div><strong>Menu Hot-dog</strong><p>Frites · Ice Tea pêche</p></div></div>
+      <div class="li"><b>1×</b><div><strong>Glace 2 boules</strong><p>Vanille · Chocolat</p></div></div>
+      <div class="act"><span class="a-gold">Lancer la préparation</span></div>
+    </div>
+    <div class="t">
+      <div class="th"><div><span class="no d">n° 48</span><span class="who">Lina</span><span class="paid">Payée</span></div><span class="age">2 min</span></div>
+      <div class="li"><b>1×</b><div><strong>Menu Pasta Box</strong><p>Bolognaise · Eau</p></div></div>
+      <div class="note">Sans fromage</div>
+      <div class="act"><span class="a-gold">Lancer la préparation</span></div>
+    </div>
+    <div class="t">
+      <div class="th"><div><span class="no d">n° 46</span><span class="who">Enzo</span><span class="paid">Payée</span></div><span class="age">3 min</span></div>
+      <div class="li"><b>1×</b><div><strong>Crêpe Speculoos</strong><p>Chantilly</p></div></div>
+      <div class="act"><span class="a-gold">Lancer la préparation</span></div>
+    </div>
+  </section>
+  <section class="col">
+    <h2 class="d"><i style="background:var(--blue)"></i>En préparation <span>2</span></h2>
+    <div class="t">
+      <div class="th"><div><span class="no d">n° 45</span><span class="who">Rayan</span><span class="paid">Payée</span></div><span class="age warn">9 min</span></div>
+      <div class="li"><b>1×</b><div><strong>Menu Panini raclette</strong><p>Frites · Coca-Cola</p></div></div>
+      <div class="li"><b>1×</b><div><strong>Panini pesto</strong><p>—</p></div></div>
+      <div class="li"><b>2×</b><div><strong>Capri-Sun</strong><p>Multivitamine</p></div></div>
+      <div class="act"><span class="a-blue">Marquer prête</span></div>
+    </div>
+    <div class="t">
+      <div class="th"><div><span class="no d">n° 44</span><span class="who">Sofia</span><span class="paid">Payée</span></div><span class="age">5 min</span></div>
+      <div class="li"><b>1×</b><div><strong>Menu Nuggets</strong><p>Frites · Eau</p></div></div>
+      <div class="note">Allergie arachide signalée</div>
+      <div class="act"><span class="a-blue">Marquer prête</span></div>
+    </div>
+  </section>
+  <section class="col">
+    <h2 class="d"><i style="background:var(--pink)"></i>Prêtes, en attente du client <span>2</span></h2>
+    <div class="t">
+      <div class="th"><div><span class="no d">n° 47</span><span class="who">Adam</span><span class="paid">Prévenu par notification</span></div><span class="age">prête</span></div>
+      <div class="li"><b>1×</b><div><strong>Menu Panini poulet</strong><p>Frites · Coca-Cola</p></div></div>
+      <div class="li"><b>1×</b><div><strong>Crêpe Nutella banane</strong><p>Chantilly</p></div></div>
+      <div class="act"><span class="a-pink">Remise au client</span></div>
+    </div>
+    <div class="t">
+      <div class="th"><div><span class="no d">n° 43</span><span class="who">Noé</span><span class="paid">Prévenu par notification</span></div><span class="age">prête</span></div>
+      <div class="li"><b>3×</b><div><strong>Frites</strong><p>Ketchup</p></div></div>
+      <div class="act"><span class="a-pink">Remise au client</span></div>
+    </div>
+  </section>
+</div>
+</body>
+</html>

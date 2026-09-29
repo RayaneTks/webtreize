@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600&display=block" rel="stylesheet">
+<style>
+  :root { --bg:#0c0a09; --panel:#14110f; --panel2:#1a1613; --line:#2a241f; --ivory:#efe6d8; --muted:#a39687; --faint:#6f655b; --gold:#c8966a; --gold2:#e0b88f; --ok:#7fb48a; --warn:#d9a441; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html,body { width:1440px; height:900px; overflow:hidden; background:var(--bg); color:var(--ivory); font:13px/1.45 Inter, sans-serif; -webkit-font-smoothing:antialiased; }
+  .serif { font-family:'Cormorant Garamond', serif; font-weight:500; letter-spacing:.005em; }
+  .caps { font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--faint); font-weight:600; }
+  .num { font-variant-numeric:tabular-nums; }
+  .app { display:grid; grid-template-columns:232px 1fr; height:100%; }
+  aside { border-right:1px solid var(--line); padding:26px 18px; display:flex; flex-direction:column; gap:26px; background:#0a0807; }
+  aside img { width:120px; margin-left:8px; }
+  nav { display:grid; gap:2px; }
+  nav a { display:flex; align-items:center; gap:11px; padding:9px 10px; border-radius:8px; color:var(--muted); text-decoration:none; font-weight:500; }
+  nav a.on { background:var(--panel2); color:var(--ivory); }
+  nav a.on i { background:var(--gold); }
+  nav i { width:6px; height:6px; border-radius:50%; background:#3a322b; }
+  nav .sep { height:1px; background:var(--line); margin:10px 6px; }
+  nav em { margin-left:auto; font-style:normal; font-size:11px; background:#2c231b; color:var(--gold2); padding:1px 7px; border-radius:20px; }
+  .day { margin-top:auto; border:1px solid var(--line); border-radius:10px; padding:14px; }
+  .day b { display:block; font-size:22px; margin-top:6px; }
+  .day span { color:var(--muted); font-size:12px; }
+  main { padding:26px 34px; display:grid; grid-template-rows:auto auto 1fr; gap:22px; }
+  header { display:flex; align-items:end; justify-content:space-between; }
+  header h1 { font-size:34px; line-height:1; }
+  header p { color:var(--muted); margin-top:6px; }
+  .tools { display:flex; gap:10px; }
+  .search { width:340px; white-space:nowrap; overflow:hidden; border:1px solid var(--line); border-radius:9px; padding:10px 14px; color:var(--faint); background:var(--panel); }
+  .btn { white-space:nowrap; background:var(--gold); color:#1b120a; font-weight:600; padding:10px 16px; border-radius:9px; }
+  .kpis { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+  .kpi { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:16px 18px; }
+  .kpi b { display:block; font-size:28px; font-weight:500; margin:8px 0 4px; font-family:'Cormorant Garamond',serif; }
+  .kpi small { color:var(--muted); font-size:12px; }
+  .up { color:var(--ok); }
+  .bar { height:5px; background:#2a231d; border-radius:4px; margin-top:10px; overflow:hidden; }
+  .bar i { display:block; height:100%; width:65%; background:var(--gold); }
+  .grid { display:grid; grid-template-columns:1.55fr 1fr; gap:14px; min-height:0; }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:18px 20px; min-height:0; }
+  .card h2 { font-size:21px; display:flex; justify-content:space-between; align-items:baseline; }
+  .card h2 span { font:500 12px Inter; color:var(--muted); }
+  .chart { display:flex; align-items:end; gap:5px; height:150px; margin:18px 0 8px; border-bottom:1px solid var(--line); }
+  .chart i { flex:1; background:#3b3027; border-radius:3px 3px 0 0; }
+  .chart i.hi { background:var(--gold); }
+  .axis { display:flex; justify-content:space-between; color:var(--faint); font-size:11px; }
+  table { width:100%; border-collapse:collapse; margin-top:10px; }
+  td, th { text-align:left; padding:9px 0; border-bottom:1px solid var(--line); }
+  th { font-weight:600; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--faint); }
+  td.r, th.r { text-align:right; }
+  .tag { font-size:11px; padding:2px 8px; border-radius:20px; font-weight:500; }
+  .t-ok { background:rgba(127,180,138,.14); color:var(--ok); }
+  .t-wait { background:rgba(217,164,65,.14); color:var(--warn); }
+  .t-dim { background:#221c17; color:var(--muted); }
+  .best { display:grid; gap:10px; margin-top:14px; }
+  .best > div { display:grid; grid-template-columns:44px 1fr auto; gap:12px; align-items:center; }
+  .best img { width:44px; height:52px; object-fit:cover; border-radius:6px; }
+  .best p { font-size:12px; color:var(--muted); }
+  .best strong { font-weight:500; }
+  .best .n { text-align:right; }
+  .best .n b { display:block; font-size:15px; font-weight:500; }
+  .card:last-child { display:flex; flex-direction:column; }
+  .lot { margin-top:auto; border-top:1px solid var(--line); padding-top:14px; display:grid; gap:7px; }
+  .lotrow { display:flex; justify-content:space-between; color:var(--muted); }
+  .lotrow b { color:var(--ivory); font-weight:500; }
+  .lotrow.tot { border-top:1px solid var(--line); padding-top:8px; margin-top:2px; }
+  .lotrow.tot b { color:var(--gold2); font-size:15px; }
+  .lower { display:grid; grid-template-columns:1.55fr 1fr; gap:14px; }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside>
+    <img src="assets/nurea/wordmark-ivory.webp" alt="">
+    <nav>
+      <a class="on"><i></i>Tableau de bord</a>
+      <a><i></i>Vendre</a>
+      <a><i></i>Encaisser <em>3</em></a>
+      <a><i></i>Commandes <em>9</em></a>
+      <a><i></i>Clients</a>
+      <div class="sep"></div>
+      <a><i></i>Catalogue</a>
+      <a><i></i>Lots d’achat</a>
+      <a><i></i>Comptabilité</a>
+      <a><i></i>Statistiques</a>
+      <a><i></i>Réglages</a>
+    </nav>
+    <div class="day">
+      <p class="caps">Journée en cours</p>
+      <b class="serif num">412 €</b>
+      <span>5 ventes · 2 remises en main propre</span>
+    </div>
+  </aside>
+  <main>
+    <header>
+      <div>
+        <p class="caps">Lundi 29 septembre</p>
+        <h1 class="serif" style="margin-top:8px">Tableau de bord</h1>
+      </div>
+      <div class="tools">
+        <div class="search">Rechercher un parfum, un client, une commande…</div>
+        <div class="btn">Nouvelle vente</div>
+      </div>
+    </header>
+    <section class="kpis">
+      <div class="kpi"><p class="caps">Chiffre d’affaires · septembre</p><b class="num">6 840 €</b><small><span class="up">+12 %</span> par rapport à août</small></div>
+      <div class="kpi"><p class="caps">Marge brute</p><b class="num">2 915 €</b><small>42,6 % du chiffre d’affaires</small></div>
+      <div class="kpi"><p class="caps">Commandes du mois</p><b class="num">58</b><small>dont 9 à remettre</small></div>
+      <div class="kpi"><p class="caps">Lot n° 14 · arrivage du 12 sept.</p><b class="num">31 / 48</b><small>flacons vendus · lot remboursé</small><div class="bar"><i></i></div></div>
+    </section>
+    <section class="grid">
+      <div class="card">
+        <h2 class="serif">Ventes des 30 derniers jours <span>Total 6 840 € · panier moyen 118 €</span></h2>
+        <div class="chart">
+          <i style="height:32%"></i><i style="height:48%"></i><i style="height:26%"></i><i style="height:55%"></i><i style="height:61%"></i><i style="height:84%"></i><i style="height:40%"></i>
+          <i style="height:36%"></i><i style="height:52%"></i><i style="height:44%"></i><i style="height:58%"></i><i style="height:70%"></i><i style="height:92%"></i><i style="height:38%"></i>
+          <i style="height:30%"></i><i style="height:46%"></i><i style="height:50%"></i><i style="height:63%"></i><i style="height:66%"></i><i style="height:88%"></i><i style="height:42%"></i>
+          <i style="height:34%"></i><i style="height:57%"></i><i style="height:49%"></i><i style="height:60%"></i><i style="height:74%"></i><i class="hi" style="height:100%"></i><i style="height:45%"></i><i style="height:39%"></i><i class="hi" style="height:53%"></i>
+        </div>
+        <div class="axis"><span>31 août</span><span>7 sept.</span><span>14 sept.</span><span>21 sept.</span><span>Aujourd’hui</span></div>
+        <table>
+          <tr><th>Commande</th><th>Client</th><th>Parfum</th><th class="r">Montant</th><th class="r">Statut</th></tr>
+          <tr><td class="num">N° 1284</td><td>Inès B.</td><td>Chanel · Bleu de Chanel 100 ml</td><td class="r num">118 €</td><td class="r"><span class="tag t-wait">À remettre</span></td></tr>
+          <tr><td class="num">N° 1283</td><td>Karim M.</td><td>Armani · Stronger With You 100 ml</td><td class="r num">89 €</td><td class="r"><span class="tag t-ok">Remise</span></td></tr>
+          <tr><td class="num">N° 1282</td><td>Sarah L.</td><td>Lancôme · La Nuit Trésor 50 ml</td><td class="r num">76 €</td><td class="r"><span class="tag t-ok">Remise</span></td></tr>
+          <tr><td class="num">N° 1281</td><td>Mehdi A.</td><td>Tom Ford · Bitter Peach 50 ml</td><td class="r num">214 €</td><td class="r"><span class="tag t-dim">Acompte</span></td></tr>
+          <tr><td class="num">N° 1280</td><td>Léa P.</td><td>Dior · Gris Dior 125 ml</td><td class="r num">162 €</td><td class="r"><span class="tag t-ok">Remise</span></td></tr>
+          <tr><td class="num">N° 1279</td><td>Nassim K.</td><td>Burberry · Brit Red 100 ml</td><td class="r num">58 €</td><td class="r"><span class="tag t-ok">Remise</span></td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <h2 class="serif">Meilleures ventes <span>septembre</span></h2>
+        <div class="best">
+          <div><img src="assets/nurea/p-louis-vuitton-afternoon-swim.jpg" alt=""><div><strong>Afternoon Swim</strong><p>Louis Vuitton · 100 ml</p></div><div class="n"><b class="num">14</b><p>ventes</p></div></div>
+          <div><img src="assets/nurea/p-giorgio-armani-stronger-with-you.jpg" alt=""><div><strong>Stronger With You</strong><p>Giorgio Armani · 100 ml</p></div><div class="n"><b class="num">11</b><p>ventes</p></div></div>
+          <div><img src="assets/nurea/p-tom-ford-bitter-peach.jpg" alt=""><div><strong>Bitter Peach</strong><p>Tom Ford · 50 ml</p></div><div class="n"><b class="num">9</b><p>ventes</p></div></div>
+          <div><img src="assets/nurea/p-lanc-me-la-nuit-tr-sor.jpg" alt=""><div><strong>La Nuit Trésor</strong><p>Lancôme · 50 ml</p></div><div class="n"><b class="num">8</b><p>ventes</p></div></div>
+          <div><img src="assets/nurea/p-louis-vuitton-symphony.jpg" alt=""><div><strong>Symphony</strong><p>Louis Vuitton · 100 ml</p></div><div class="n"><b class="num">6</b><p>ventes</p></div></div>
+        </div>
+        <div class="lot">
+          <p class="caps">Lot n° 14 · rentabilité</p>
+          <div class="lotrow"><span>Achat du lot</span><b class="num">2 480 €</b></div>
+          <div class="lotrow"><span>Frais rattachés</span><b class="num">136 €</b></div>
+          <div class="lotrow"><span>Ventes rattachées</span><b class="num">3 912 €</b></div>
+          <div class="lotrow tot"><span>Résultat du lot</span><b class="num">+ 1 296 €</b></div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+</body>
+</html>

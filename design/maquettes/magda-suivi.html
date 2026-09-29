@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=block" rel="stylesheet">
+<style>
+  :root { --night:#0d1330; --pink:#f50054; --pink50:#fff0f5; --ink:#12152b; --muted:#6b7089; --line:#eceef5; --bg:#f6f7fb; --ok:#16a34a; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html,body { width:390px; height:844px; overflow:hidden; background:var(--bg); color:var(--ink); font:14px/1.4 'Plus Jakarta Sans', sans-serif; -webkit-font-smoothing:antialiased; }
+  .d { font-family:Fredoka, sans-serif; }
+  .status { height:46px; display:flex; justify-content:space-between; align-items:center; padding:0 26px; font-weight:700; font-size:15px; }
+  .notif { margin:6px 10px 0; background:rgba(255,255,255,.92); border-radius:22px; padding:12px 14px; display:grid; grid-template-columns:38px 1fr; gap:11px; box-shadow:0 12px 30px rgba(13,19,48,.16); border:1px solid #fff; }
+  .notif img { width:38px; height:38px; border-radius:10px; }
+  .notif .h { display:flex; justify-content:space-between; font-size:12px; color:var(--muted); }
+  .notif b { font-size:14px; display:block; margin-top:1px; }
+  .notif p { font-size:13px; color:#3b3f57; }
+  .card { margin:16px 16px 0; background:var(--night); color:#fff; border-radius:24px; padding:22px; text-align:center; position:relative; overflow:hidden; }
+  .card::before { content:''; position:absolute; left:50%; top:-80px; transform:translateX(-50%); width:260px; height:260px; border-radius:50%; background:radial-gradient(circle, rgba(245,0,84,.35), transparent 70%); }
+  .card * { position:relative; }
+  .card small { font-size:12px; letter-spacing:.12em; text-transform:uppercase; opacity:.7; font-weight:600; }
+  .card .no { font-size:64px; line-height:1; margin:8px 0 6px; }
+  .ready { display:inline-flex; align-items:center; gap:8px; background:var(--pink); padding:8px 16px; border-radius:30px; font-weight:700; }
+  .card p { font-size:13px; opacity:.8; margin-top:12px; }
+  .steps { margin:18px 16px 0; background:#fff; border:1px solid var(--line); border-radius:20px; padding:16px 18px; }
+  .st { display:grid; grid-template-columns:26px 1fr auto; gap:12px; align-items:center; padding:9px 0; position:relative; }
+  .st i { width:24px; height:24px; border-radius:50%; background:var(--ok); color:#fff; display:grid; place-items:center; font-style:normal; font-size:13px; font-weight:700; }
+  .st.now i { background:var(--pink); box-shadow:0 0 0 5px rgba(245,0,84,.15); }
+  .st span { color:var(--muted); font-size:13px; }
+  .st b { font-weight:600; }
+  .items { margin:14px 16px 0; background:#fff; border:1px solid var(--line); border-radius:20px; padding:14px 18px; }
+  .it { display:flex; justify-content:space-between; padding:7px 0; }
+  .it p { color:var(--muted); font-size:12px; }
+  .tot { border-top:1px dashed #d9dce8; margin-top:6px; padding-top:10px; display:flex; justify-content:space-between; font-weight:700; }
+  .tot span { color:var(--ok); font-size:12px; font-weight:600; }
+  .sb-i { display:inline-flex; gap:6px; align-items:center; }
+</style>
+</head>
+<body>
+  <div class="status"><span>16:46</span><span class="sb-i"><svg width="18" height="11" viewBox="0 0 18 11"><rect x="0" y="7" width="3" height="4" rx="1" fill="currentColor"/><rect x="5" y="5" width="3" height="6" rx="1" fill="currentColor"/><rect x="10" y="2.5" width="3" height="8.5" rx="1" fill="currentColor"/><rect x="15" y="0" width="3" height="11" rx="1" fill="currentColor"/></svg><svg width="16" height="11" viewBox="0 0 16 11"><path d="M8 2.2c2.3 0 4.4.9 6 2.4l1.2-1.3A10.3 10.3 0 0 0 8 .4 10.3 10.3 0 0 0 .8 3.3L2 4.6a8.5 8.5 0 0 1 6-2.4Zm0 3.4c1.4 0 2.6.5 3.6 1.4l1.2-1.3A7 7 0 0 0 8 3.8a7 7 0 0 0-4.8 1.9L4.4 7c1-.9 2.2-1.4 3.6-1.4Zm0 3.4c.5 0 1 .2 1.3.5L8 10.9 6.7 9.5c.3-.3.8-.5 1.3-.5Z" fill="currentColor"/></svg><svg width="26" height="12" viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.5" fill="none" stroke="currentColor" opacity=".4"/><rect x="2" y="2" width="16" height="8" rx="2" fill="currentColor"/><rect x="23.5" y="4" width="1.8" height="4" rx=".9" fill="currentColor" opacity=".5"/></svg></span></div>
+  <div class="notif">
+    <img src="assets/magda/logo.webp" alt="">
+    <div><div class="h"><span>MAGDA MANIA</span><span>maintenant</span></div><b>Ta commande n° 47 est prête</b><p>Passe la récupérer au stand, elle est encore chaude.</p></div>
+  </div>
+  <div class="card">
+    <small>Commande</small>
+    <div class="no d">n° 47</div>
+    <span class="ready">● Prête au stand</span>
+    <p>Montre ce numéro au comptoir, c’est tout.</p>
+  </div>
+  <div class="steps">
+    <div class="st"><i>✓</i><b>Payée en ligne</b><span>16:38</span></div>
+    <div class="st"><i>✓</i><b>En préparation</b><span>16:40</span></div>
+    <div class="st now"><i>✓</i><b>Prête à récupérer</b><span>16:46</span></div>
+  </div>
+  <div class="items">
+    <div class="it"><div><b>1 × Menu Panini poulet</b><p>Frites · Coca-Cola</p></div><b>7,90 €</b></div>
+    <div class="it"><div><b>1 × Crêpe Nutella banane</b><p>Supplément chantilly</p></div><b>4,50 €</b></div>
+    <div class="tot">Total<div style="text-align:right">12,40 €<br><span>Payé par carte</span></div></div>
+  </div>
+</body>
+</html>
