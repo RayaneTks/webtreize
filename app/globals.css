@@ -291,6 +291,46 @@
     padding: 5%;
   }
 
+  /* — Couverture en tête d’étude de cas : 16/9 sur grand écran, 4/3 sur téléphone — */
+  .projet-couverture {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    border-radius: theme('borderRadius.plate-lg');
+    background: var(--color-sand);
+  }
+
+  @media (min-width: 768px) {
+    .projet-couverture {
+      aspect-ratio: 16 / 9;
+    }
+  }
+
+  /* — Carte de projet : la couverture, le nom, les catégories — */
+  .projet-carte__couverture {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    border-radius: theme('borderRadius.plate');
+    background: var(--color-sand);
+  }
+
+  .projet-carte__couverture img {
+    transition: transform var(--dur-long) var(--ease-out);
+  }
+
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .group:hover .projet-carte__couverture img,
+    .group:focus-visible .projet-carte__couverture img {
+      transform: scale(1.03);
+    }
+  }
+
+  .group:hover .link-draw,
+  .group:focus-visible .link-draw {
+    background-size: 100% 1px;
+  }
+
   /* — Le cartel d’un projet — */
   .projet__num {
     display: block;

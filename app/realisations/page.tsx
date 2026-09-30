@@ -1,13 +1,11 @@
 import type { Metadata } from 'next';
-import { PageShell } from '@/components/layout/PageShell';
-import { ProjectList } from '@/components/realisations/ProjectRow';
+import { ClientShell } from '@/components/ClientShell';
+import { Footer } from '@/components/layout/Footer';
+import { Reveal } from '@/components/motion/Reveal';
+import { ProjectCard } from '@/components/realisations/ProjectCard';
+import { ProjectIndex } from '@/components/realisations/ProjectIndex';
 import { PageCtaBand } from '@/components/sections/PageCtaBand';
-import {
-  livrablesEnPhrase,
-  MENTION_DONNEES_EXEMPLE,
-  metierEtLieu,
-  REALISATIONS,
-} from '@/lib/data/realisations';
+import { CATEGORIES, MENTION_DONNEES_EXEMPLE, REALISATIONS } from '@/lib/data/realisations';
 import { breadcrumbJsonLd, pageMetadata, webPageJsonLd } from '@/lib/seo';
 
 export const metadata: Metadata = pageMetadata('realisations');
@@ -20,12 +18,12 @@ const JSON_LD = [
   ]),
 ];
 
+/** Deux cartes par rang à partir de `md`. */
+const SIZES = '(min-width: 1120px) 540px, (min-width: 768px) 46vw, 92vw';
+
 /**
- * Les réalisations, au complet.
- *
- * Un index d’abord — le sommaire d’un catalogue : en quatre lignes, le prospect
- * voit s’il y a un métier proche du sien. Puis les mêmes lignes de projet que
- * l’accueil (`ProjectList`), titrées en `h2`.
+ * L’index des réalisations : un titre, des filtres par type de projet, puis
+ * toutes les cartes. Le détail vit dans chaque étude de cas.
  *
  * Aucun chiffre de résultat n’est affiché — voir la doctrine en tête de
  * `lib/data/realisations.ts`.
@@ -33,47 +31,49 @@ const JSON_LD = [
 export default function RealisationsPage() {
   return (
     <>
-      <PageShell
-        eyebrow="Réalisations"
-        title="Ce que nous avons livré."
-        description="Une parfumerie, un snack, une pâtisserie, une conciergerie. Pour chacun, ce qu’il fallait résoudre, et ce qui a été construit, écran par écran."
-      >
-        <nav aria-label="Index des réalisations" className="site-container">
-          <ol role="list" className="border-b border-line">
-            {REALISATIONS.map((projet, index) => (
-              <li key={projet.id} className="border-t border-line">
-                <a
-                  href={`#projet-${projet.id}`}
-                  className="group grid items-baseline gap-x-gap-md py-3 md:grid-cols-12"
-                >
-                  <span aria-hidden="true" className="projet__num md:col-span-1 md:mb-0">
-                    {String(index + 1).padStart(2, '0')}
-                  </span>
-                  <span className="text-title font-extrabold text-ink md:col-span-4">
-                    <span className="link-draw">{projet.nom}</span>
-                  </span>
-                  <span className="text-note text-ink-muted md:col-span-3">{metierEtLieu(projet)}</span>
-                  <span className="hidden text-note text-ink-muted md:col-span-4 md:block">
-                    {livrablesEnPhrase(projet)}
-                  </span>
-                </a>
-              </li>
-            ))}
-          </ol>
-        </nav>
+      <div className="min-h-screen bg-canvas text-ink">
+        <ClientShell footer={<Footer />}>
+          <section className="pb-section pt-gap-xl">
+            <div className="site-container">
+              <Reveal>
+                <p className="eyebrow">Réalisations</p>
+                <h1 className="mt-gap-sm text-display-lg font-extrabold">
+                  Index des projets
+                  <sup className="ml-1 align-super font-serif text-title font-light tracking-normal text-ink-muted">
+                    {REALISATIONS.length}
+                  </sup>
+                </h1>
+                <p className="lede mt-gap-sm max-w-[52ch]">
+                  Sites, applications métier, outils de commande et de gestion. Chaque projet
+                  s’ouvre sur son étude de cas.
+                </p>
+              </Reveal>
 
-        <section aria-label="Projets" className="section-pad">
-          <ProjectList projets={REALISATIONS} headingLevel="h2" />
-          <p className="site-container mt-gap-lg border-t border-line pt-gap-md text-note text-ink-muted">
-            {MENTION_DONNEES_EXEMPLE}
-          </p>
-        </section>
+              <div className="mt-gap-lg">
+                <ProjectIndex
+                  categories={CATEGORIES}
+                  entrees={REALISATIONS.map((projet, index) => ({
+                    id: projet.id,
+                    categories: projet.categories,
+                    carte: (
+                      <ProjectCard projet={projet} sizes={SIZES} priority={index < 2} headingLevel="h2" />
+                    ),
+                  }))}
+                />
+              </div>
 
-        <PageCtaBand
-          title="Le vôtre ressemblerait à quoi&#8239;?"
-          description="Décrivez votre activité en quelques lignes. Nous vous répondons par écrit, avec ce que nous ferions et dans quel ordre."
-        />
-      </PageShell>
+              <p className="mt-gap-xl max-w-[60ch] border-t border-line pt-gap-md text-note text-ink-muted">
+                {MENTION_DONNEES_EXEMPLE}
+              </p>
+            </div>
+          </section>
+
+          <PageCtaBand
+            title="Le vôtre ressemblerait à quoi&#8239;?"
+            description="Décrivez votre activité en quelques lignes. Nous vous répondons par écrit, avec ce que nous ferions et dans quel ordre."
+          />
+        </ClientShell>
+      </div>
 
       {JSON_LD.map((node, index) => (
         <script

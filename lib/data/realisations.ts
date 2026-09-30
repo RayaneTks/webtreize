@@ -69,10 +69,19 @@ export type EtudeDeCas = {
   readonly technique: readonly string[];
 };
 
+/** L’image d’un projet dans les listes : une composition 4:3 à ses couleurs. */
+export type Couverture = {
+  readonly src: string;
+  readonly alt: string;
+};
+
 export type Realisation = {
   /** Sert aussi de segment d’URL : `/realisations/<id>`. */
   readonly id: string;
   readonly nom: string;
+  /** Ce qui a été fait, en deux ou trois catégories : sert de filtre sur /realisations. */
+  readonly categories: readonly string[];
+  readonly couverture: Couverture;
   /** « Parfumerie », « Snack de skatepark »… */
   readonly metier: string;
   readonly lieu?: string;
@@ -271,6 +280,8 @@ export const REALISATIONS: readonly Realisation[] = [
   {
     id: 'nurea-parfums',
     nom: 'Nuréa Parfums',
+    categories: ['Site web', 'Application métier'],
+    couverture: { src: img('nurea-parfums', 'couverture'), alt: 'La boutique en ligne Nuréa Parfums sur un écran d’ordinateur, accueil sombre avec trois flacons du catalogue, et devant elle un téléphone affichant l’outil de gestion qui encaisse une vente de 85 €, sur fond bordeaux.' },
     metier: 'Parfumerie',
     lieu: 'Marseille',
     promesse:
@@ -336,6 +347,8 @@ export const REALISATIONS: readonly Realisation[] = [
   {
     id: 'magda-mania',
     nom: 'Magda Mania',
+    categories: ['Commande en ligne', 'Application métier'],
+    couverture: { src: img('magda-mania', 'couverture'), alt: 'Le logo Magda Mania sur fond rose, l’écran cuisine sur tablette avec ses tickets de commande colorés, et un téléphone affichant la carte client avec les menus en photo.' },
     metier: 'Snack de skatepark',
     lieu: 'Marseille',
     promesse:
@@ -411,6 +424,8 @@ export const REALISATIONS: readonly Realisation[] = [
   {
     id: 'encore-un-dessert',
     nom: 'Encore 1 Dessert',
+    categories: ['Application mobile', 'Application métier'],
+    couverture: { src: img('encore-un-dessert', 'couverture'), alt: 'Trois écrans de l’application Encore 1 Dessert sur fond caramel : la recette de la tarte cacahuète caramel et ses marges, la vue Cuisine avec 10 pièces faites sur 22, et le tableau de bord du mois.' },
     metier: 'Pâtisserie',
     promesse:
       'Le coût de revient de chaque tarte, les commandes des particuliers et des restaurants, la comptabilité : toute la pâtisserie tient dans un téléphone.',
@@ -477,6 +492,8 @@ export const REALISATIONS: readonly Realisation[] = [
   {
     id: 'conciergerie-nurea',
     nom: 'Conciergerie Nuréa',
+    categories: ['Site web', 'Simulateur de revenus'],
+    couverture: { src: img('conciergerie-nurea', 'couverture'), alt: 'Le simulateur de revenus du site, qui estime 1 755 € nets par mois pour 130 € la nuit et 24 nuits, et sur téléphone l’e-mail de demande d’étude reçu par la conciergerie avec les mêmes chiffres, sur fond azur.' },
     metier: 'Conciergerie de location courte durée',
     lieu: 'Marseille',
     promesse:
@@ -539,6 +556,17 @@ export const REALISATIONS: readonly Realisation[] = [
 ];
 
 export const REALISATIONS_HREF = '/realisations' satisfies Route;
+
+/**
+ * Les projets montrés sur l’accueil : trois, pas davantage. L’accueil donne
+ * envie ; /realisations montre tout ; l’étude de cas détaille.
+ */
+export const REALISATIONS_A_LA_UNE: readonly Realisation[] = ['nurea-parfums', 'magda-mania', 'encore-un-dessert']
+  .map((id) => REALISATIONS.find((projet) => projet.id === id))
+  .filter((projet): projet is Realisation => Boolean(projet));
+
+/** Les catégories présentes, dans l’ordre de première apparition. */
+export const CATEGORIES: readonly string[] = [...new Set(REALISATIONS.flatMap((projet) => projet.categories))];
 
 export function realisationHref(id: string): string {
   return `${REALISATIONS_HREF}/${id}`;

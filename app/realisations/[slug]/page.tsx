@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import type { Route } from 'next';
 import { notFound } from 'next/navigation';
@@ -144,7 +145,16 @@ export default async function EtudeDeCasPage({ params }: Props) {
             </div>
 
             <div className="plate-container tirage mt-gap-lg">
-              <Accrochage large={projet.accrochage.large} etroit={projet.accrochage.etroit} priority />
+              <div className="projet-couverture">
+                <Image
+                  src={projet.couverture.src}
+                  alt={projet.couverture.alt}
+                  fill
+                  priority
+                  sizes="(min-width: 1280px) 1224px, 94vw"
+                  className="object-cover"
+                />
+              </div>
             </div>
           </header>
         }
@@ -337,8 +347,8 @@ function Suivant({ projet }: { projet: Realisation }) {
           </p>
           <p className="mt-2 text-body text-ink-muted">{metierEtLieu(projet)}</p>
         </div>
-        <div className="hidden md:block">
-          <Accrochage large={projet.accrochage.large} decoratif className="accrochage--reduit" />
+        <div className="projet-carte__couverture hidden md:block">
+          <Image src={projet.couverture.src} alt="" fill sizes="(min-width: 1120px) 640px, 56vw" className="object-cover" />
         </div>
       </div>
     </nav>

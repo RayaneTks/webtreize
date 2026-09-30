@@ -97,10 +97,26 @@ test.describe('Prospection — études de cas', () => {
     }
   });
 
-  test('chaque réalisation de l’accueil mène à son étude de cas', async ({ page }) => {
+  test('l’accueil montre un aperçu, l’index montre toutes les études de cas', async ({ page }) => {
     await page.goto('/');
+    const liens = await page.locator('#realisations a[href^="/realisations/"]').count();
+    expect(liens, 'aperçu de l’accueil').toBeGreaterThanOrEqual(3);
+    await expect(page.locator('#realisations a[href="/realisations"]')).toHaveCount(1);
+
+    await page.goto('/realisations');
     for (const route of ETUDES) {
-      await expect(page.locator(`#realisations a[href="${route}"]`).first(), route).toBeAttached();
+      await expect(page.locator(`main a[href="${route}"]`).first(), route).toBeAttached();
+    }
+  });
+
+  test('les filtres de l’index gardent au moins une réalisation', async ({ page }) => {
+    await page.goto('/realisations');
+    const filtres = page.locator('[aria-label="Filtrer les réalisations"] button');
+    const total = await filtres.count();
+    for (let i = 1; i < total; i += 1) {
+      await filtres.nth(i).click();
+      await expect(filtres.nth(i)).toHaveAttribute('aria-pressed', 'true');
+      expect(await page.locator('main article').count()).toBeGreaterThan(0);
     }
   });
 

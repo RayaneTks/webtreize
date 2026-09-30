@@ -1,61 +1,54 @@
 import { Reveal } from '@/components/motion/Reveal';
-import { ProjectList } from '@/components/realisations/ProjectRow';
+import { ProjectCard } from '@/components/realisations/ProjectCard';
 import { Button } from '@/components/ui/Button';
-import { MENTION_DONNEES_EXEMPLE, REALISATIONS, REALISATIONS_HREF } from '@/lib/data/realisations';
+import {
+  MENTION_DONNEES_EXEMPLE,
+  REALISATIONS,
+  REALISATIONS_A_LA_UNE,
+  REALISATIONS_HREF,
+} from '@/lib/data/realisations';
+
+/** Trois cartes par rang à partir de `md` : une carte vaut un tiers du conteneur. */
+const SIZES = '(min-width: 1120px) 352px, (min-width: 768px) 31vw, 92vw';
 
 /**
- * « Réalisations » — la section qui fait basculer un visiteur hésitant.
+ * « Réalisations » — un aperçu, pas le portfolio.
  *
- * ## Montrer des outils, pas des pages d’accueil
- *
- * Un prospect ne doute pas qu’un studio sache faire une page d’accueil. Il doute
- * qu’on comprenne son métier. Chaque projet est donc accroché avec ce qui se
- * passe derrière la vitrine : la caisse d’une parfumerie, l’écran de la cuisine
- * d’un snack, le coût de revient d’une tarte, la demande chiffrée d’un
- * propriétaire.
- *
- * ## La mise en scène
- *
- * `design/maquettes/PRESENTATION.md` : des écrans nus sur le sable de la charte,
- * côte à côte et à la même hauteur, un projet par ligne. Aucun appareil dessiné,
- * aucune ombre, aucune couleur hors charte en dehors des écrans eux-mêmes — le
- * studio parle en sable, chaque client parle dans ses écrans.
+ * Trois projets, une couverture chacun, le nom et ce qui a été fait. L’accueil
+ * donne envie d’en voir plus ; /realisations montre tout ; l’étude de cas
+ * détaille. Sur le modèle des bons portfolios de studios : peu de texte, des
+ * images fortes, un seul chemin vers la suite.
  */
 export function WorkSection() {
+  const autres = REALISATIONS.length - REALISATIONS_A_LA_UNE.length;
+
   return (
     <section id="realisations" aria-labelledby="realisations-title" className="section-pad">
       <div className="site-container">
-        <Reveal className="grid items-end gap-gap-md md:grid-cols-[minmax(0,1fr)_auto]">
-          <div>
-            <p className="eyebrow">Réalisations</p>
-            <h2 id="realisations-title" className="mt-gap-xs max-w-[18ch] text-display-md font-extrabold">
-              Quatre métiers, quatre outils sur mesure.
-            </h2>
-            <p className="lede mt-gap-sm max-w-[56ch]">
-              Une parfumerie, un snack de skatepark, une pâtisserie, une conciergerie. Chaque fois,
-              la vitrine et ce qu’il y a derrière&#8239;: la caisse, la cuisine, les marges, les
-              demandes.
-            </p>
-          </div>
-          <div className="hidden md:block">
-            <Button href={REALISATIONS_HREF} variant="quiet" arrow>
-              Toutes les réalisations
-            </Button>
-          </div>
+        <Reveal className="mx-auto max-w-[40rem] text-center">
+          <p className="eyebrow">Nos travaux</p>
+          <h2 id="realisations-title" className="mt-gap-xs text-display-md font-extrabold">
+            Quelques réalisations.
+          </h2>
+          <p className="lede mx-auto mt-gap-sm max-w-[46ch]">
+            Des sites et des outils sur mesure, pour des commerces qui tournent tous les jours.
+          </p>
         </Reveal>
-      </div>
 
-      <div className="mt-gap-xl">
-        <ProjectList projets={REALISATIONS} />
-      </div>
+        <ul role="list" className="mt-gap-xl grid gap-x-gap-md gap-y-gap-lg md:grid-cols-3">
+          {REALISATIONS_A_LA_UNE.map((projet, index) => (
+            <Reveal key={projet.id} as="li" delay={index * 60}>
+              <ProjectCard projet={projet} sizes={SIZES} />
+            </Reveal>
+          ))}
+        </ul>
 
-      <div className="site-container mt-gap-lg flex flex-col gap-gap-md border-t border-line pt-gap-md md:flex-row md:items-center md:justify-between">
-        <p className="max-w-[60ch] text-note text-ink-muted">{MENTION_DONNEES_EXEMPLE}</p>
-        <div className="md:hidden">
+        <Reveal delay={60} className="mt-gap-lg flex flex-col items-center gap-gap-sm text-center">
           <Button href={REALISATIONS_HREF} variant="quiet" arrow>
-            Toutes les réalisations
+            {autres > 0 ? `Voir toutes les réalisations (${REALISATIONS.length})` : 'Voir les réalisations'}
           </Button>
-        </div>
+          <p className="max-w-[56ch] text-note text-ink-muted">{MENTION_DONNEES_EXEMPLE}</p>
+        </Reveal>
       </div>
     </section>
   );
