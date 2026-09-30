@@ -64,3 +64,4 @@ test-results
 # Aperçus locaux des maquettes (scripts/maquettes.mjs)
 design/maquettes/**/.apercu/
 design/maquettes/_presentation/captures/
+design/maquettes/_references/

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="format" content="couverture">
+<title>Nuréa Parfums — couverture</title>
+<style>
+  :root { --noir: #0A0508; --bordeaux: #7B0B1D; --cuivre: #C4956A; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1600px; height: 1200px; overflow: hidden; background: var(--bordeaux); }
+
+  .logo { position: absolute; left: 96px; top: 84px; height: 56px; }
+
+  .scene { position: absolute; inset: 0; perspective: 3200px; }
+
+  /* Ordinateur : la vitrine */
+  .ecran { position: absolute; left: 80px; top: 214px; width: 1240px; padding: 12px; background: #140E12; border-radius: 20px;
+    box-shadow: 0 40px 80px rgba(20, 2, 6, .45), 0 12px 24px rgba(20, 2, 6, .3), inset 0 0 0 1px rgba(196,149,106,.25);
+    transform: rotateY(9deg) rotateX(3deg); transform-origin: 0 50%; }
+  .ecran img { display: block; width: 100%; border-radius: 9px; }
+
+  /* Téléphones : la vitrine et la gestion */
+  .tel { position: absolute; width: 376px; padding: 12px; background: #0A0508; border-radius: 60px;
+    box-shadow: 0 40px 80px rgba(20, 2, 6, .5), 0 12px 24px rgba(20, 2, 6, .35), inset 0 0 0 1px rgba(196,149,106,.3); }
+  .tel img { display: block; width: 100%; border-radius: 49px; }
+  .tel.gestion { left: 1140px; top: 280px; transform: rotateY(-8deg) rotate(2deg); }
+</style>
+</head>
+<body>
+  <img class="logo" src="assets/nurea-logo-horizontal-dark-1024.webp" alt="Nuréa Parfums">
+  <div class="scene">
+    <div class="ecran"><img src="assets/ecran-boutique-accueil.jpg" alt="Accueil de la boutique Nuréa Parfums"></div>
+    <div class="tel gestion"><img src="assets/ecran-gestion-caisse.jpg" alt="Écran Vendre de la gestion"></div>
+  </div>
+</body>
+</html>

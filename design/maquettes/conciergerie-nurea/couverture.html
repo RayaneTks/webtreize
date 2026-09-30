@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="format" content="couverture">
+<title>Conciergerie Nuréa — couverture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@500;600&display=block" rel="stylesheet">
+<style>
+  :root {
+    --ink: #11313E;
+    --azur: #1E92B8;
+    --azur-deep: #0C617C;
+    --sky: #7BC4DD;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1600px; height: 1200px; overflow: hidden; }
+  body {
+    position: relative; font-family: 'Geist', system-ui, sans-serif; color: #fff;
+    background: var(--azur);
+    -webkit-font-smoothing: antialiased;
+  }
+  /* Lumière de fond très douce, dans la teinte de marque */
+  .fond { position: absolute; inset: 0; background: linear-gradient(160deg, #2A9CC1 0%, #1E92B8 45%, #177FA3 100%); }
+
+  .logo { position: absolute; left: 88px; top: 80px; display: flex; align-items: center; gap: 18px; }
+  .logo .mark { width: 60px; height: 60px; border-radius: 16px; background: rgba(255,255,255,.16); display: grid; place-items: center; }
+  .logo .nom { display: flex; flex-direction: column; line-height: 1; }
+  .logo .nom b { font-size: 34px; font-weight: 600; letter-spacing: -.02em; }
+  .logo .nom span { margin-top: 7px; font-size: 13px; font-weight: 500; letter-spacing: .32em; text-transform: uppercase; color: rgba(255,255,255,.78); }
+
+  .scene { position: absolute; inset: 0; perspective: 2600px; }
+  .ordinateur {
+    position: absolute; left: 80px; top: 250px; width: 1096px; height: 685px;
+    border-radius: 18px; overflow: hidden;
+    transform: rotateY(11deg) rotateX(3deg); transform-origin: 0% 50%;
+    box-shadow: 0 2px 0 rgba(255,255,255,.25) inset, 0 70px 120px -40px rgba(6,38,52,.6), 0 20px 40px -20px rgba(6,38,52,.35);
+  }
+  .ordinateur img { width: 100%; height: 100%; display: block; }
+
+  .telephone {
+    position: absolute; right: 140px; top: 282px; width: 392px; height: 818px;
+    padding: 13px; border-radius: 60px; background: #0E2530;
+    box-shadow: 0 0 0 2px rgba(255,255,255,.08) inset, 0 70px 110px -40px rgba(6,38,52,.7), 0 24px 44px -18px rgba(6,38,52,.45);
+    transform: rotateY(-6deg) rotateX(2deg); transform-origin: 100% 50%;
+  }
+  .telephone img { width: 366px; height: 792px; border-radius: 48px; display: block; object-fit: cover; }
+</style>
+</head>
+<body>
+  <div class="fond"></div>
+
+  <div class="logo">
+    <span class="mark"><svg viewBox="0 0 24 24" width="36" height="36" fill="none"><path d="M2 14c1.5 0 1.5-2 3-2s1.5 2 3 2 1.5-2 3-2 1.5 2 3 2 1.5-2 3-2 1.5 2 3 2" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="7.5" r="2.25" fill="#0C617C"/></svg></span>
+    <span class="nom"><b>Nuréa</b><span>Conciergerie</span></span>
+  </div>
+
+  <div class="scene">
+    <div class="ordinateur"><img src="assets/ecran-simulateur.jpg" alt=""></div>
+    <div class="telephone"><img src="assets/ecran-demande.jpg" alt=""></div>
+  </div>
+</body>
+</html>

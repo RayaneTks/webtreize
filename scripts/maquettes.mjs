@@ -10,6 +10,7 @@
  * Le format de l’écran est déclaré dans le fichier lui-même :
  *   <meta name="format" content="ordinateur">   1440 × 900, rendu 2x
  *   <meta name="format" content="telephone">    390 × 844, rendu 3x
+ *   <meta name="format" content="couverture">   1600 × 1200 (4:3), l’image d’un projet dans les listes
  *
  * Les écrans de gestion y sont montrés avec des données d’exemple : les
  * chiffres des clients ne sortent jamais de chez eux.
@@ -43,6 +44,7 @@ const OUT = path.join(ROOT, 'public', 'images', 'realisations');
 const FORMATS = {
   ordinateur: { width: 1440, height: 900, scale: 2, out: 2400 },
   telephone: { width: 390, height: 844, scale: 3, out: 900 },
+  couverture: { width: 1600, height: 1200, scale: 1.5, out: 2000 },
 };
 
 const MANIFESTE = path.join(ROOT, 'lib', 'data', 'ecrans-realisations.json');
@@ -68,7 +70,7 @@ for (const projet of indexSeul ? [] : projets) {
 
   for (const fichier of ecrans) {
     const html = await readFile(path.join(dossier, fichier), 'utf8');
-    const declare = html.match(/<meta name="format" content="(ordinateur|telephone)"/)?.[1];
+    const declare = html.match(/<meta name="format" content="(ordinateur|telephone|couverture)"/)?.[1];
     if (!declare) {
       console.warn(`⚠ ${projet}/${fichier} : <meta name="format"> manquant, ignoré`);
       continue;
