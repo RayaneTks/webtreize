@@ -42,18 +42,15 @@ test.describe('WebTreize - Smoke tests', () => {
 
   test('sections principales présentes', async ({ page }) => {
     await page.goto('/');
-    for (const id of ['#hero', '#approche', '#metier', '#promesses', '#methode', '#audit', '#questions']) {
+    for (const id of ['#hero', '#services', '#realisations', '#studio', '#questions', '#audit']) {
       await expect(page.locator(id)).toHaveCount(1);
     }
   });
 
-  test('CTA hero scrolle vers la section audit', async ({ page }) => {
+  test('le CTA du héros mène à la demande d’audit', async ({ page }) => {
     await page.goto('/');
-    await page.locator('#hero a', { hasText: 'Commencer par un audit' }).click();
-    await page.waitForTimeout(900);
-
-    const audit = page.locator('#audit');
-    await expect(audit).toBeInViewport();
+    const cta = page.locator('#hero a', { hasText: 'Demander mon audit' });
+    await expect(cta).toHaveAttribute('href', '/contact');
   });
 
   test('header sticky : la nav reste en haut au scroll', async ({ page }) => {
@@ -118,12 +115,11 @@ test.describe('WebTreize - Smoke tests', () => {
     }
   });
 
-  test('hors accueil, les ancres de l’accueil sont au footer et pointent vers la home', async ({
-    page,
-  }) => {
+  test('le pied de page dessert toutes les pages', async ({ page }) => {
     await page.goto('/services');
-    const link = page.locator('footer a', { hasText: 'Approche' }).first();
-    await expect(link).toHaveAttribute('href', '/#approche');
+    for (const href of ['/services', '/realisations', '/about', '/contact']) {
+      await expect(page.locator(`footer a[href="${href}"]`).first(), href).toBeAttached();
+    }
   });
 
   test('FAQ : les questions sont dépliables', async ({ page }) => {

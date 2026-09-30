@@ -31,7 +31,9 @@ export function ProjectIndex({
       <div role="group" aria-label="Filtrer les réalisations" className="flex flex-wrap gap-2">
         {[null, ...categories].map((categorie) => {
           const selectionne = actif === categorie;
-          const nombre = categorie ? entrees.filter((e) => e.categories.includes(categorie)).length : entrees.length;
+          const nombre = categorie
+            ? entrees.filter((e) => e.categories.includes(categorie)).length
+            : entrees.length;
           return (
             <button
               key={categorie ?? 'tout'}
@@ -40,7 +42,9 @@ export function ProjectIndex({
               onClick={() => setActif(categorie)}
               className={cn(
                 'inline-flex min-h-11 items-center gap-1.5 rounded-full border px-4 text-note font-semibold transition-colors',
-                selectionne ? 'border-ink bg-ink text-canvas' : 'border-line-strong text-ink hover:border-ink',
+                selectionne
+                  ? 'border-ink bg-ink text-canvas'
+                  : 'border-line-strong text-ink hover:border-ink',
               )}
             >
               {categorie ?? 'Tout'}

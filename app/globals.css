@@ -27,7 +27,7 @@
     /* Couleur de l’anneau de focus. Redéfinie par .on-ink sur la section sombre. */
     --focus-ring: var(--color-accent-deep);
 
-    --header-height: 3.75rem;
+    --header-height: 4.5rem;
 
     /* Rend les mots-clés de taille interpolables : ouverture animée des <details>
        sans une ligne de JavaScript. Ignoré par les navigateurs sans support. */
@@ -291,6 +291,59 @@
     padding: 5%;
   }
 
+  /* — Encarts (design/maquettes/NIVEAU-SUPERIEUR.md, P0-2) —
+     La surface de la charte (« blanc chaud : encarts, respiration ») posée sur
+     l’ivoire. Pas de bordure, pas d’ombre : un aplat, pas un cadre. Au survol
+     d’un encart lien, l’aplat passe au sable et la photo se rapproche ; rien ne
+     se soulève. */
+  .encart {
+    @apply relative flex flex-col rounded-plate bg-surface p-gap-md;
+  }
+
+  .encart--sable {
+    @apply bg-sand;
+  }
+
+  .encart--lien {
+    transition: background-color var(--dur-micro) var(--ease-out);
+  }
+
+  .encart .plate-in {
+    @apply -mx-gap-xs -mt-gap-xs mb-gap-sm overflow-hidden rounded-plate;
+  }
+
+  .encart .plate-in img {
+    transition: transform var(--dur-long) var(--ease-out);
+  }
+
+  .encart__suite {
+    display: inline-flex;
+    gap: 0.45em;
+    @apply text-note font-semibold text-ink;
+  }
+
+  .encart__suite i {
+    font-style: normal;
+    transition: transform var(--dur-state) var(--ease-out);
+  }
+
+  @media (hover: hover) {
+    .encart--lien:hover {
+      @apply bg-sand;
+    }
+
+
+    .encart--lien:hover .encart__suite i {
+      transform: translateX(3px);
+    }
+  }
+
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .encart--lien:hover .plate-in img {
+      transform: scale(1.035);
+    }
+  }
+
   /* — Couverture en tête d’étude de cas : 16/9 sur grand écran, 4/3 sur téléphone — */
   .projet-couverture {
     position: relative;
@@ -522,13 +575,33 @@
     block-size: auto;
   }
 
+  /* Un plus dessiné — deux barres de 1,5 px, sans caractère — qui tourne d’un
+     huitième de tour à l’ouverture : il se lit comme un dépliant, pas comme un
+     lien. */
   .faq-sign {
-    @apply shrink-0 text-title-sm font-semibold text-ink-muted;
+    position: relative;
+    flex-shrink: 0;
+    width: 1rem;
+    height: 1rem;
     transition: transform var(--dur-state) var(--ease-out);
   }
 
-  .faq-item[open] .faq-sign {
+  .faq-sign::before,
+  .faq-sign::after {
+    content: '';
+    position: absolute;
+    inset: 50% 0 auto;
+    height: 1.5px;
+    margin-top: -0.75px;
+    background: var(--color-ink-muted);
+  }
+
+  .faq-sign::after {
     transform: rotate(90deg);
+  }
+
+  .faq-item[open] .faq-sign {
+    transform: rotate(45deg);
   }
 
   /* — Navigation — */

@@ -100,7 +100,9 @@ export function Accrochage({
             {rang.ecrans.map(({ ecran, legende }, index) => (
               <figure
                 key={`${ecran.src}-${index}`}
-                className={ecran.format === 'telephone' ? 'ecran ecran--telephone' : 'ecran ecran--ordinateur'}
+                className={
+                  ecran.format === 'telephone' ? 'ecran ecran--telephone' : 'ecran ecran--ordinateur'
+                }
               >
                 <div className="ecran__dalle">
                   <Image

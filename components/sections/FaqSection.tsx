@@ -1,4 +1,5 @@
 import { Reveal } from '@/components/motion/Reveal';
+import { SectionHead } from '@/components/sections/SectionHead';
 import { Accordion } from '@/components/ui/Accordion';
 import { FAQ_ITEMS } from '@/lib/data/faq';
 
@@ -30,13 +31,9 @@ export function FaqSection() {
   return (
     <section id="questions" aria-labelledby="questions-title" className="section-pad">
       <div className="site-container">
-        <Reveal>
-          <h2 id="questions-title" className="sweep max-w-[16ch] text-display-sm font-extrabold">
-            Questions fréquentes
-          </h2>
-        </Reveal>
+        <SectionHead id="questions-title" title="Vos questions." />
 
-        <div className="mt-gap-lg max-w-[50rem]">
+        <div className="mx-auto mt-gap-lg max-w-[46rem]">
           {FAQ_ITEMS.map((item, index) => (
             <Reveal key={item.q} delay={index * 60}>
               <Accordion question={item.q}>

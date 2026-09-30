@@ -6,7 +6,8 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { clsx } from 'clsx';
 import { Button } from '@/components/ui/Button';
 import { LogoLink } from '@/components/ui/Logo';
-import { NAV_ITEMS } from '@/lib/data/site';
+import { CONTACT_EMAIL } from '@/lib/constants';
+import { HEADER_ITEMS, NAV_ITEMS } from '@/lib/data/site';
 
 /**
  * Barre de navigation du site.
@@ -24,11 +25,10 @@ import { NAV_ITEMS } from '@/lib/data/site';
  *
  * ## État de défilement
  *
- * Au-delà de {@link SCROLL_THRESHOLD} pixels, le header pose un filet `line` en
- * bas et passe son fond à `canvas/92`. Pas de rétraction, pas de masquage : la
- * charte est calme. Le flou d’arrière-plan n’est appliqué que dans cet état —
- * en haut de page il n’y a rien derrière la barre, et un `backdrop-filter`
- * permanent fait recomposer toute la largeur du viewport à chaque frame.
+ * Au-delà de {@link SCROLL_THRESHOLD} pixels, la barre se replie en pilule :
+ * 54 rem au plus, fond blanc chaud opaque, filet `line`. La hauteur du header
+ * reste constante (`--header-height`) : rien ne décale la page. Pas de flou,
+ * pas d’ombre (design/maquettes/NIVEAU-SUPERIEUR.md, P0-4).
  *
  * L’écoute est passive et ne lit `scrollY` que dans une frame d’animation :
  * aucune mesure de géométrie (`getBoundingClientRect`) n’est faite au
@@ -169,67 +169,70 @@ export function Header() {
   }, [close, open]);
 
   /** Une sous-page (une étude de cas) active la rubrique qui la contient. */
-  const isCurrent = (href: string) =>
-    pathname === href || (href !== '/' && pathname.startsWith(`${href}/`));
+  const isCurrent = (href: string) => pathname === href || (href !== '/' && pathname.startsWith(`${href}/`));
 
   return (
     <header
       ref={headerRef}
-      className={clsx(
-        'sticky inset-x-0 top-0 z-50 border-b transition-colors duration-state ease-out',
-        scrolled
-          ? 'border-line bg-canvas/[0.92] backdrop-blur-md'
-          : 'border-transparent bg-transparent',
-      )}
+      className="sticky inset-x-0 top-0 z-50 flex h-[var(--header-height)] items-center px-3 md:px-5"
     >
-      <nav aria-label="Navigation principale">
-        <div className="site-container">
-          <div className="flex h-[var(--header-height)] items-center justify-between gap-gap-sm">
-            <LogoLink />
+      {/* La barre se replie en pilule au défilement : fond blanc chaud opaque
+          et filet, sans flou ni ombre — le verre est dans le négatif de la
+          charte, l’ombre est interdite. Le header lui-même reste transparent :
+          la page se voit entre le haut de l’écran et la pilule. En mobile, la
+          pilule est toujours repliée. */}
+      <nav
+        aria-label="Navigation principale"
+        className={clsx(
+          'relative mx-auto flex h-14 w-full items-center justify-between gap-gap-sm rounded-full border pl-5 pr-2',
+          'transition-[max-width,background-color,border-color] duration-state ease-out',
+          scrolled
+            ? 'max-w-[54rem] border-line bg-surface'
+            : 'max-w-[54rem] border-line bg-surface md:max-w-site md:border-transparent md:bg-transparent md:pl-3',
+        )}
+      >
+        <LogoLink />
 
-            <ul className="hidden items-center gap-gap-md md:flex">
-              {NAV_ITEMS.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    aria-current={isCurrent(item.href) ? 'page' : undefined}
-                    className="nav-link inline-flex py-1"
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-
-            <div className="hidden md:block">
-              <Button href="/contact" size="sm" track="clic_audit">
-                Audit gratuit
-              </Button>
-            </div>
-
-            {/* Mobile : l’appel à l’audit reste visible sans ouvrir le menu.
-                Cibles de 44 px, le minimum recommandé pour un doigt. */}
-            <div className="flex items-center gap-2 md:hidden">
+        <ul className="hidden items-center gap-gap-md md:flex">
+          {HEADER_ITEMS.map((item) => (
+            <li key={item.href}>
               <Link
-                href="/contact"
-                data-track="clic_audit"
-                className="press inline-flex h-11 items-center rounded-full border border-line-strong px-4 text-note font-semibold text-ink transition"
+                href={item.href}
+                aria-current={isCurrent(item.href) ? 'page' : undefined}
+                className="nav-link inline-flex py-1"
               >
-                Audit gratuit
+                {item.label}
               </Link>
+            </li>
+          ))}
+        </ul>
 
-              <button
-                ref={triggerRef}
-                type="button"
-                aria-expanded={open}
-                aria-controls="mobile-menu"
-                onClick={() => (open ? close() : setOpen(true))}
-                className="press inline-flex h-11 items-center rounded-full bg-ink px-4 text-note font-semibold text-canvas transition"
-              >
-                {open ? 'Fermer' : 'Menu'}
-              </button>
-            </div>
-          </div>
+        <div className="hidden md:block">
+          <Button href="/contact" size="pill" track="clic_audit">
+            Audit gratuit
+          </Button>
+        </div>
+
+        {/* Mobile : l’appel à l’audit reste dans la pilule, visible sans ouvrir
+            le menu (exigence du brief de prospection). Cibles de 44 px. */}
+        <div className="flex items-center gap-1.5 md:hidden">
+          <Link
+            href="/contact"
+            data-track="clic_audit"
+            className="press inline-flex h-11 items-center rounded-full border border-line-strong px-4 text-note font-semibold text-ink transition"
+          >
+            Audit gratuit
+          </Link>
+          <button
+            ref={triggerRef}
+            type="button"
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            onClick={() => (open ? close() : setOpen(true))}
+            className="press inline-flex h-11 items-center rounded-full bg-ink px-4 text-note font-semibold text-canvas transition"
+          >
+            {open ? 'Fermer' : 'Menu'}
+          </button>
         </div>
 
         <div
@@ -237,16 +240,12 @@ export function Header() {
           ref={panelRef}
           inert={!open}
           className={clsx(
-            'absolute inset-x-0 top-full px-5 transition duration-state ease-out sm:px-6 md:hidden',
-            open
-              ? 'visible translate-y-0 opacity-100'
-              : 'invisible -translate-y-1.5 opacity-0',
+            'absolute inset-x-0 top-full pt-2 transition duration-state ease-out md:hidden',
+            open ? 'visible translate-y-0 opacity-100' : 'invisible -translate-y-1.5 opacity-0',
           )}
         >
-          {/* Un filet et un fond opaque détachent le panneau, jamais une ombre :
-              la charte §4 la range parmi les interdits du logotype et §5 demande
-              « des filets fins plutôt que des cadres ». */}
-          <div className="ml-auto w-full max-w-xs rounded-plate border border-line bg-surface p-2">
+          {/* Un filet et un fond opaque détachent le panneau, jamais une ombre. */}
+          <div className="rounded-plate border border-line bg-surface p-2">
             <ul className="grid gap-1">
               {NAV_ITEMS.map((item) => (
                 <li key={item.href}>
@@ -254,7 +253,7 @@ export function Header() {
                     href={item.href}
                     onClick={close}
                     aria-current={isCurrent(item.href) ? 'page' : undefined}
-                    className="block rounded-xl px-4 py-3 text-body font-medium text-ink transition-colors hover:bg-sand"
+                    className="block rounded-xl px-4 py-3 text-title font-bold text-ink transition-colors hover:bg-sand"
                   >
                     {item.label}
                   </Link>
@@ -262,10 +261,17 @@ export function Header() {
               ))}
             </ul>
 
-            <div className="mt-2">
+            <div className="mt-2 grid gap-2 px-2 pb-2">
               <Button href="/contact" className="w-full" track="clic_audit">
-                Audit gratuit
+                Demander mon audit
               </Button>
+              <a
+                href={`mailto:${CONTACT_EMAIL}`}
+                data-track="clic_email"
+                className="nav-link inline-flex justify-center py-2"
+              >
+                {CONTACT_EMAIL}
+              </a>
             </div>
           </div>
         </div>

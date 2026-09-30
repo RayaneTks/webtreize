@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Button } from '@/components/ui/Button';
 import { Logo } from '@/components/ui/Logo';
 import {
   CONTACT_EMAIL,
@@ -9,7 +10,7 @@ import {
   SOCIAL_PROFILES,
 } from '@/lib/constants';
 import { LEGAL_LINKS } from '@/lib/data/legal';
-import { HOME_SECTIONS, NAV_ITEMS } from '@/lib/data/site';
+import { NAV_ITEMS } from '@/lib/data/site';
 
 /**
  * Pied de page — carte complète du site.
@@ -22,10 +23,9 @@ import { HOME_SECTIONS, NAV_ITEMS } from '@/lib/data/site';
  *
  * ## Ce que le footer porte
  *
- * Les trois pages du site, les quatre ancres de l’accueil et les trois pages
- * légales. C’est le seul endroit où le maillage interne est complet : le header
- * ne montre que les routes, et une page sans lien entrant n’existe pas pour un
- * moteur de recherche.
+ * Une carte (design/maquettes/NIVEAU-SUPERIEUR.md, P0-6) : les coordonnées, la
+ * signature, et « Un projet ? » avec l’action. Dessous, toutes les pages et les
+ * pages légales : une page sans lien entrant n’existe pas pour un moteur.
  *
  * ## Sémantique
  *
@@ -50,79 +50,73 @@ const COPYRIGHT_YEAR = CONTENT_PUBLISHED_AT.slice(0, 4);
 
 export function Footer() {
   return (
-    <footer className="bg-surface pb-gap-md pt-gap-xl">
+    <footer className="bg-canvas pb-gap-md pt-gap-lg">
       <div className="site-container">
-        <div className="grid gap-gap-lg lg:grid-cols-2">
-          <div>
-            <Logo />
-
-            <p className="mt-gap-sm max-w-[38ch] text-body text-ink-muted">
-              Studio digital. Sites, visibilité locale et outils sur mesure pour les commerces et
-              les artisans.
-            </p>
-
-            <address className="mt-gap-sm grid gap-1 not-italic">
-              <p className="text-note text-ink-faint">{GEO_LINE}</p>
-
-              <a
-                href={`mailto:${CONTACT_EMAIL}`}
-                data-track="clic_email"
-                className="nav-link inline-flex w-fit py-2"
-              >
+        {/* La carte : l’action d’abord sur téléphone, au centre la signature. */}
+        <div className="grid gap-gap-lg rounded-plate-lg bg-surface p-gap-lg md:grid-cols-3 md:items-center">
+          <div className="order-1 md:order-3 md:text-right">
+            <p className="text-title font-extrabold text-ink">Un projet&#8239;?</p>
+            <div className="mt-gap-sm md:flex md:justify-end">
+              <Button href="/contact" size="pill" track="clic_audit">
+                Demander mon audit
+              </Button>
+            </div>
+            <p className="mt-gap-xs text-note text-ink-muted">
+              ou écrire à{' '}
+              <a href={`mailto:${CONTACT_EMAIL}`} data-track="clic_email" className="link-draw text-ink">
                 {CONTACT_EMAIL}
               </a>
-
-              {CONTACT_PHONE_HREF ? (
-                <a
-                  href={CONTACT_PHONE_HREF}
-                  data-track="clic_telephone"
-                  className="nav-link inline-flex w-fit py-2"
-                >
-                  {CONTACT_PHONE_DISPLAY}
-                </a>
-              ) : null}
-
-              <p className="flex flex-wrap gap-x-gap-sm">
-                {SOCIAL_PROFILES.map((profile) => (
-                  <a
-                    key={profile.href}
-                    href={profile.href}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    className="nav-link inline-flex w-fit py-2"
-                  >
-                    {profile.label}
-                    <span className="sr-only"> (nouvelle fenêtre)</span>
-                  </a>
-                ))}
-              </p>
-            </address>
+            </p>
           </div>
 
-          <div className="grid gap-gap-md sm:grid-cols-3">
-            <nav aria-labelledby="footer-nav-studio">
-              <p id="footer-nav-studio" className="eyebrow">
-                Le studio
+          <div className="order-2 md:text-center">
+            <div className="md:flex md:justify-center">
+              <Logo />
+            </div>
+            <p className="mt-gap-xs text-note text-ink-muted">Studio digital, Marseille</p>
+            <p className="mt-gap-xs flex flex-wrap gap-x-gap-sm md:justify-center">
+              {SOCIAL_PROFILES.map((profile) => (
+                <a
+                  key={profile.href}
+                  href={profile.href}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="nav-link inline-flex w-fit py-2"
+                >
+                  {profile.label}
+                  <span className="sr-only"> (nouvelle fenêtre)</span>
+                </a>
+              ))}
+            </p>
+          </div>
+
+          <address className="order-3 grid gap-1 not-italic md:order-1">
+            <p className="text-note text-ink-muted">{GEO_LINE}</p>
+            <p className="text-note text-ink-muted">Du lundi au vendredi, 9&#160;h – 18&#160;h.</p>
+            {CONTACT_PHONE_HREF ? (
+              <a
+                href={CONTACT_PHONE_HREF}
+                data-track="clic_telephone"
+                className="nav-link inline-flex w-fit py-2"
+              >
+                {CONTACT_PHONE_DISPLAY}
+              </a>
+            ) : null}
+          </address>
+        </div>
+
+        <div className="mt-gap-md flex flex-col-reverse gap-gap-sm md:flex-row md:items-center md:justify-between">
+          <p className="text-note text-ink-muted">{`© ${COPYRIGHT_YEAR} WebTreize`}</p>
+
+          <div className="flex flex-col gap-gap-xs md:flex-row md:gap-gap-md">
+            <nav aria-labelledby="footer-nav-plan">
+              <p id="footer-nav-plan" className="sr-only">
+                Plan du site
               </p>
-              <ul className="mt-gap-sm grid gap-1">
+              <ul className="flex flex-wrap gap-x-gap-sm">
                 {NAV_ITEMS.map((item) => (
                   <li key={item.href}>
-                    <Link href={item.href} className="nav-link inline-flex w-fit py-1">
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-
-            <nav aria-labelledby="footer-nav-accueil">
-              <p id="footer-nav-accueil" className="eyebrow">
-                L’accueil
-              </p>
-              <ul className="mt-gap-sm grid gap-1">
-                {HOME_SECTIONS.map((item) => (
-                  <li key={item.href}>
-                    <Link href={item.href} className="nav-link inline-flex w-fit py-1">
+                    <Link href={item.href} className="nav-link inline-flex py-2">
                       {item.label}
                     </Link>
                   </li>
@@ -131,13 +125,13 @@ export function Footer() {
             </nav>
 
             <nav aria-labelledby="footer-nav-legal">
-              <p id="footer-nav-legal" className="eyebrow">
+              <p id="footer-nav-legal" className="sr-only">
                 Informations légales
               </p>
-              <ul className="mt-gap-sm grid gap-1">
+              <ul className="flex flex-wrap gap-x-gap-sm">
                 {LEGAL_LINKS.map((item) => (
                   <li key={item.href}>
-                    <Link href={item.href} className="nav-link inline-flex w-fit py-1">
+                    <Link href={item.href} className="nav-link inline-flex py-2">
                       {item.label}
                     </Link>
                   </li>
@@ -145,13 +139,6 @@ export function Footer() {
               </ul>
             </nav>
           </div>
-        </div>
-
-        {/* `.rule-top` porte le filet et sa respiration. La classe `pt-5.5`
-            écrite ici ne produisait aucun CSS : le copyright touchait le filet
-            sur les sept pages du site. */}
-        <div className="rule-top mt-gap-lg">
-          <p className="text-note text-ink-faint">{`© ${COPYRIGHT_YEAR} WebTreize`}</p>
         </div>
       </div>
     </footer>

@@ -36,12 +36,15 @@ import { clsx } from 'clsx';
  */
 
 type ButtonVariant = 'primary' | 'inverse' | 'quiet' | 'text';
-type ButtonSize = 'sm' | 'md';
+type ButtonSize = 'sm' | 'md' | 'pill';
 
 type ButtonBaseProps = {
   /** Défaut « primary ». */
   variant?: ButtonVariant;
-  /** Défaut « md » (3,25 rem). Le CTA du header prend « sm » (2,25 rem). */
+  /**
+   * Défaut « md » (3,25 rem). « pill » (2,75 rem, 44 px) : suites de section et
+   * barre de navigation — la cible tactile minimale, au libellé de note.
+   */
   size?: ButtonSize;
   /** Ajoute la flèche « → », décalée de 3 px au survol et au focus. */
   arrow?: boolean;
@@ -87,11 +90,13 @@ const LOADING_LABEL = 'Envoi en cours…';
 const SHAPE: Record<ButtonSize, string> = {
   md: 'h-[3.25rem] px-8',
   sm: 'h-[2.25rem] px-5',
+  pill: 'h-11 px-6',
 };
 
 const LABEL_SIZE: Record<ButtonSize, string> = {
   md: 'text-body-lg',
   sm: 'text-note',
+  pill: 'text-note',
 };
 
 /**

@@ -28,7 +28,7 @@ export type NavItem = {
  * Ce tableau ne contenait que les quatre ancres de l’accueil : `/services`,
  * `/about` et `/contact` n’avaient alors **aucun lien entrant** dans tout le
  * site (finding critique « seo-pages-orphelines »). Les ancres sont descendues
- * dans `HOME_SECTIONS`, réservé au plan du footer.
+ * au pied de page, qui dessert toutes les pages.
  */
 export const NAV_ITEMS = [
   { label: 'Services', href: '/services' },
@@ -38,17 +38,30 @@ export const NAV_ITEMS = [
 ] as const satisfies readonly NavItem[];
 
 /**
- * Ancres des sections de l’accueil — colonne « L’accueil » du footer.
- *
- * Les liens sont préfixés par `/` : ils fonctionnent depuis n’importe quelle
- * page, sans que le composant ait à connaître la route courante.
+ * Les trois liens de la barre de navigation. « Contact » n’y figure pas : le
+ * bouton « Audit gratuit » y mène déjà. Il reste dans le menu mobile et dans le
+ * pied de page, qui utilisent `NAV_ITEMS`.
  */
-export const HOME_SECTIONS = [
-  { label: 'Approche', href: '/#approche' },
-  { label: 'Ce que nous faisons', href: '/#metier' },
-  { label: 'Promesses', href: '/#promesses' },
-  { label: 'Questions', href: '/#questions' },
+export const HEADER_ITEMS = [
+  { label: 'Services', href: '/services' },
+  { label: 'Réalisations', href: '/realisations' },
+  { label: 'Le studio', href: '/about' },
 ] as const satisfies readonly NavItem[];
+
+/**
+ * Le fondateur, pour l’accueil et la page du studio — absent tant que la photo
+ * n’existe pas. Aucune silhouette ni initiale de remplacement : la cellule
+ * montre l’atelier. La photo suit la charte §5 (mains au travail ou
+ * trois-quarts, lumière de côté, jamais un sourire face à l’objectif).
+ */
+export const FONDATEUR: { prenom: string; role: string; photo: string; alt: string } | undefined =
+  undefined;
+
+/**
+ * La note réelle de la fiche Google — absente tant qu’elle n’est pas relevée.
+ * Pas de données structurées `Review` : un site ne note pas son propre travail.
+ */
+export const AVIS_GOOGLE: { note: number; nombre: number; href: string } | undefined = undefined;
 
 /**
  * Section « Approche ».
@@ -78,6 +91,12 @@ export type CraftBlock = {
   imageSrc: string;
   /** Alternative textuelle définitive, écrite avant la photo (cf. docs/imagerie.md). */
   imageAlt: string;
+  /** Titre court de l’encart d’accueil (cinq mots au plus). */
+  teaserTitle: string;
+  /** Phrase de l’encart d’accueil (vingt mots au plus). */
+  teaserBody: string;
+  /** Section correspondante sur /services. */
+  serviceId: string;
 };
 
 /** Blocs texte / plaque alternés — un seul sujet par bloc. */
@@ -91,6 +110,9 @@ export const CRAFT_BLOCKS: readonly CraftBlock[] = [
     imageSrc: '/images/craft-site.jpg',
     imageAlt:
       'Les mains d’un commerçant tiennent un téléphone à l’écran éteint au-dessus d’un comptoir en bois clair, à côté d’un carnet ouvert et d’un stylo en laiton.',
+    teaserTitle: 'Un site qui fait appeler.',
+    teaserBody: 'Rapide sur téléphone, clair en trois secondes, et entièrement à vous.',
+    serviceId: 'web',
   },
   {
     id: 'visibilite',
@@ -101,6 +123,9 @@ export const CRAFT_BLOCKS: readonly CraftBlock[] = [
     imageSrc: '/images/craft-visibilite.jpg',
     imageAlt:
       'Devanture d’un petit commerce marseillais en fin d’après-midi, vue depuis le trottoir d’en face.',
+    teaserTitle: 'Trouvé près de chez vous.',
+    teaserBody: 'Fiche Google soignée, référencement local, avis suivis.',
+    serviceId: 'seo',
   },
   {
     id: 'outils',
@@ -111,6 +136,9 @@ export const CRAFT_BLOCKS: readonly CraftBlock[] = [
     imageSrc: '/images/craft-outils.jpg',
     imageAlt:
       'Établi d’artisan rangé : un carnet de notes, un mètre pliant et une tablette posés côte à côte sur du bois clair.',
+    teaserTitle: 'Votre quotidien, au même endroit.',
+    teaserBody: 'Devis, plannings, relances : un outil simple à la place du tableur.',
+    serviceId: 'apps',
   },
 ];
 

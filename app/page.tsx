@@ -1,13 +1,12 @@
 import type { Metadata } from 'next';
 import { ClientShell } from '@/components/ClientShell';
 import { Footer } from '@/components/layout/Footer';
-import { ApproachSection } from '@/components/sections/ApproachSection';
 import { AuditSection } from '@/components/sections/AuditSection';
-import { CraftSection } from '@/components/sections/CraftSection';
 import { FaqSection } from '@/components/sections/FaqSection';
 import { HeroSection } from '@/components/sections/HeroSection';
-import { ProcessSection } from '@/components/sections/ProcessSection';
-import { PromisesSection } from '@/components/sections/PromisesSection';
+import { ServicesTeaser } from '@/components/sections/ServicesTeaser';
+import { StudioBento } from '@/components/sections/StudioBento';
+import { TestimonialsSection } from '@/components/sections/TestimonialsSection';
 import { WorkSection } from '@/components/sections/WorkSection';
 import { FAQ_ITEMS } from '@/lib/data/faq';
 import {
@@ -52,14 +51,15 @@ export default function HomePage() {
       {/* Le pied de page part en prop : c’est la seule position où il se trouve
           hors de `<main>` et vaut donc le repère `contentinfo`. */}
       <ClientShell footer={<Footer />}>
+        {/* Une seule phrase, répétée : titre court centré, objet, suite
+            (design/maquettes/NIVEAU-SUPERIEUR.md, § 4). L’audit ferme la page. */}
         <HeroSection />
-        <ApproachSection />
-        <CraftSection />
+        <ServicesTeaser />
         <WorkSection />
-        <PromisesSection />
-        <ProcessSection />
-        <AuditSection />
+        <TestimonialsSection className="section-pad" />
+        <StudioBento />
         <FaqSection />
+        <AuditSection />
       </ClientShell>
 
       {JSON_LD.map((node, index) => (

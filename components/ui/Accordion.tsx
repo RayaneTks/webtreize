@@ -31,9 +31,7 @@ export function Accordion({ question, children, defaultOpen = false }: Accordion
           reste porté par le `h2` de la section. */}
       <summary>
         <span>{question}</span>
-        <span className="faq-sign" aria-hidden="true">
-          →
-        </span>
+        <span className="faq-sign" aria-hidden="true" />
       </summary>
 
       <div className="max-w-[62ch] pt-gap-xs text-body text-ink-muted">{children}</div>

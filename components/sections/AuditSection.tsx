@@ -2,7 +2,7 @@ import { Lamp } from '@/components/motion/Lamp';
 import { Reveal } from '@/components/motion/Reveal';
 import { AuditBrief } from '@/components/sections/AuditBrief';
 import { Button } from '@/components/ui/Button';
-import { CONTACT_EMAIL, GEO_LINE } from '@/lib/constants';
+import { CONTACT_EMAIL } from '@/lib/constants';
 import { AUDIT } from '@/lib/data/site';
 
 /**
@@ -80,7 +80,7 @@ export function AuditSection() {
             </Button>
           </div>
           <p className="mt-gap-md text-note text-canvas/60">
-            Ou écrivez-nous directement&#8239;:{' '}
+            Ou écrivez-nous&#8239;:{' '}
             <a
               href={`mailto:${CONTACT_EMAIL}`}
               data-track="clic_email"
@@ -88,9 +88,6 @@ export function AuditSection() {
             >
               {CONTACT_EMAIL}
             </a>
-          </p>
-          <p className="mt-gap-xs text-note text-canvas/60">
-            {GEO_LINE} Du lundi au vendredi, 9&#160;h – 18&#160;h.
           </p>
         </Reveal>
       </div>

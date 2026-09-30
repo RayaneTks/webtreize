@@ -1,5 +1,6 @@
 import { Reveal } from '@/components/motion/Reveal';
 import { ProjectCard } from '@/components/realisations/ProjectCard';
+import { SectionHead } from '@/components/sections/SectionHead';
 import { Button } from '@/components/ui/Button';
 import {
   MENTION_DONNEES_EXEMPLE,
@@ -25,17 +26,13 @@ export function WorkSection() {
   return (
     <section id="realisations" aria-labelledby="realisations-title" className="section-pad">
       <div className="site-container">
-        <Reveal className="mx-auto max-w-[40rem] text-center">
-          <p className="eyebrow">Nos travaux</p>
-          <h2 id="realisations-title" className="mt-gap-xs text-display-md font-extrabold">
-            Quelques réalisations.
-          </h2>
-          <p className="lede mx-auto mt-gap-sm max-w-[46ch]">
-            Des sites et des outils sur mesure, pour des commerces qui tournent tous les jours.
-          </p>
-        </Reveal>
+        <SectionHead
+          id="realisations-title"
+          title="Quelques réalisations."
+          lede="Des sites et des outils sur mesure, pour des commerces qui tournent tous les jours."
+        />
 
-        <ul role="list" className="mt-gap-xl grid gap-x-gap-md gap-y-gap-lg md:grid-cols-3">
+        <ul role="list" className="mt-gap-lg grid gap-x-gap-md gap-y-gap-lg md:grid-cols-3">
           {REALISATIONS_A_LA_UNE.map((projet, index) => (
             <Reveal key={projet.id} as="li" delay={index * 60}>
               <ProjectCard projet={projet} sizes={SIZES} />
@@ -44,8 +41,8 @@ export function WorkSection() {
         </ul>
 
         <Reveal delay={60} className="mt-gap-lg flex flex-col items-center gap-gap-sm text-center">
-          <Button href={REALISATIONS_HREF} variant="quiet" arrow>
-            {autres > 0 ? `Voir toutes les réalisations (${REALISATIONS.length})` : 'Voir les réalisations'}
+          <Button href={REALISATIONS_HREF} variant="quiet" size="pill" arrow>
+            {autres > 0 ? `Voir les ${REALISATIONS.length} réalisations` : 'Voir les réalisations'}
           </Button>
           <p className="max-w-[56ch] text-note text-ink-muted">{MENTION_DONNEES_EXEMPLE}</p>
         </Reveal>

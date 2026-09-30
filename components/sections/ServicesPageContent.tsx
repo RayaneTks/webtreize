@@ -46,6 +46,7 @@ export function ServicesPageContent() {
           return (
             <section
               key={service.id}
+              id={service.id}
               aria-labelledby={titleId}
               className={clsx(
                 'grid gap-x-gap-lg gap-y-gap-sm md:grid-cols-2',

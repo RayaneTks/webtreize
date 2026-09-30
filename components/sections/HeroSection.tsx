@@ -1,7 +1,11 @@
+import type { Route } from 'next';
+import Link from 'next/link';
 import { LineMask } from '@/components/motion/LineMask';
 import { Reveal } from '@/components/motion/Reveal';
 import { Button } from '@/components/ui/Button';
 import { Plate } from '@/components/ui/Plate';
+import { REALISATIONS, REALISATIONS_HREF, realisationHref } from '@/lib/data/realisations';
+import { AVIS_GOOGLE } from '@/lib/data/site';
 
 /** Largeurs servies pour la plaque 16/9 du héros — voir docs/imagerie.md. */
 const HERO_PLATE_SIZES = '(min-width: 1280px) 1224px, 100vw';
@@ -32,23 +36,23 @@ export function HeroSection() {
           id="hero-title"
           className="mx-auto mt-gap-sm max-w-[19ch] text-display-xl font-extrabold"
         >
-          Votre savoir-faire mérite d’être trouvé.
+          Votre <span className="whitespace-nowrap">savoir-faire</span> mérite d’être trouvé.
         </LineMask>
 
         <Reveal delay={60}>
-          <p className="lede mx-auto mt-gap-sm max-w-[52ch]">
-            Nous concevons des sites, des fiches Google et des outils sur mesure pour les commerces
-            et les artisans — avec le même soin que vous mettez à recevoir un client.
+          <p className="lede mx-auto mt-gap-sm max-w-[44ch]">
+            Sites, fiches Google et outils sur mesure pour les commerces et les artisans de
+            Marseille.
           </p>
         </Reveal>
 
         <Reveal delay={120}>
           <div className="mt-gap-md flex flex-wrap items-center justify-center gap-x-gap-sm gap-y-gap-xs">
-            <Button href="/#audit" track="clic_audit">
-              Commencer par un audit
+            <Button href="/contact" track="clic_audit">
+              Demander mon audit
             </Button>
-            <Button href="/#approche" variant="text" arrow>
-              Découvrir notre approche
+            <Button href={REALISATIONS_HREF} variant="quiet" arrow>
+              Voir les réalisations
             </Button>
           </div>
           {/* Le délai de 48 heures est annoncé une seule fois par page : il est
@@ -57,10 +61,38 @@ export function HeroSection() {
             Gratuit · Réponse écrite · Sans engagement
           </p>
         </Reveal>
+
+        {/* La preuve, tout de suite : les noms réels des projets livrés, tirés
+            des données des réalisations — jamais une liste écrite à la main, ni
+            des logos qui feraient mur. Chaque nom mène à son étude de cas. */}
+        <Reveal delay={180}>
+          <div className="mt-gap-lg">
+            <p className="eyebrow">Ils nous ont confié leur outil</p>
+            <ul className="mt-gap-xs flex flex-wrap items-center justify-center gap-x-gap-md gap-y-2">
+              {REALISATIONS.map((projet) => (
+                <li key={projet.id}>
+                  <Link
+                    href={realisationHref(projet.id) as Route}
+                    className="link-draw text-title-sm font-extrabold tracking-[-0.03em] text-ink-muted transition-colors hover:text-ink"
+                  >
+                    {projet.nom}
+                  </Link>
+                </li>
+              ))}
+              {AVIS_GOOGLE ? (
+                <li>
+                  <a href={AVIS_GOOGLE.href} className="link-draw text-note text-ink-muted">
+                    {`${AVIS_GOOGLE.note.toLocaleString('fr-FR')} sur Google · ${AVIS_GOOGLE.nombre} avis`}
+                  </a>
+                </li>
+              ) : null}
+            </ul>
+          </div>
+        </Reveal>
       </div>
 
       {/* Plaque principale — image LCP de la page d’accueil. */}
-      <Reveal delay={180}>
+      <Reveal delay={240}>
         <div className="plate-container tirage mt-gap-lg">
           <Plate
             src="/images/hero-atelier.jpg"

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { PageShell } from '@/components/layout/PageShell';
 import { PageCtaBand } from '@/components/sections/PageCtaBand';
+import { ProcessSection } from '@/components/sections/ProcessSection';
 import { ServicesPageContent } from '@/components/sections/ServicesPageContent';
 import { GOOGLE_BUSINESS_SERVICE, SERVICES } from '@/lib/data/site';
 import { breadcrumbJsonLd, pageMetadata, serviceListJsonLd, webPageJsonLd } from '@/lib/seo';
@@ -34,6 +35,7 @@ export default function ServicesPage() {
         description="Quatre chantiers, un seul objectif : que vos clients vous trouvent et sachent quoi faire ensuite."
       >
         <ServicesPageContent />
+        <ProcessSection />
         <PageCtaBand />
       </PageShell>
 

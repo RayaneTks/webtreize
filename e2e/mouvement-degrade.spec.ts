@@ -78,7 +78,8 @@ test.describe('Mouvement — dégradation', () => {
   });
 
   test('le pli des filets ne masque jamais de contenu', async ({ page }) => {
-    await page.goto('/');
+    // L’accueil n’a plus de filets (encarts) : les pages de services en portent.
+    await page.goto('/services');
 
     // Les parois du pli sont des pseudo-éléments décoratifs de 1 px : elles ne
     // portent rien, n’interceptent pas le pointeur, et ne changent pas la mise
