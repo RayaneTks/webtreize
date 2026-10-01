@@ -24,6 +24,7 @@ export function PageShell({
   title,
   description,
   header,
+  actions,
   children,
 }: {
   eyebrow?: string;
@@ -31,6 +32,8 @@ export function PageShell({
   description?: string;
   /** Remplace l’en-tête par défaut — une étude de cas compose le sien. */
   header?: ReactNode;
+  /** Boutons et liens posés sous le chapô. */
+  actions?: ReactNode;
   children: ReactNode;
 }) {
   return (
@@ -44,6 +47,7 @@ export function PageShell({
                 <h1 className="mt-gap-sm max-w-[16ch] text-display-lg font-extrabold">{title}</h1>
                 {description ? <p className="lede mt-gap-sm max-w-[52ch]">{description}</p> : null}
               </Reveal>
+              {actions ? <Reveal delay={60}>{actions}</Reveal> : null}
             </div>
           </section>
         )}

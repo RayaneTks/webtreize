@@ -1,5 +1,9 @@
 import { clsx } from 'clsx';
+import type { Route } from 'next';
+import Image from 'next/image';
+import Link from 'next/link';
 import { Reveal } from '@/components/motion/Reveal';
+import { REALISATIONS, realisationHref } from '@/lib/data/realisations';
 import { GOOGLE_BUSINESS_SERVICE, SERVICES } from '@/lib/data/site';
 
 const ALL_SERVICES = [...SERVICES, GOOGLE_BUSINESS_SERVICE];
@@ -11,6 +15,20 @@ const EYEBROWS: Record<string, string> = {
   apps: 'Les outils',
   google: 'La fiche Google',
 };
+
+/**
+ * Les projets livrés qui relèvent de chaque prestation, d’après leurs propres
+ * catégories. Une prestation sans projet correspondant n’affiche rien.
+ */
+const CATEGORIES_PAR_SERVICE: Record<string, readonly string[]> = {
+  web: ['Site web'],
+  apps: ['Application métier', 'Application mobile', 'Commande en ligne'],
+};
+
+function projetsPour(serviceId: string) {
+  const categories = CATEGORIES_PAR_SERVICE[serviceId] ?? [];
+  return REALISATIONS.filter((projet) => projet.categories.some((c) => categories.includes(c)));
+}
 
 /**
  * Corps de la page `/services` — composant serveur.
@@ -42,6 +60,7 @@ export function ServicesPageContent() {
       <div className="site-container grid gap-gap-xl">
         {ALL_SERVICES.map((service, index) => {
           const titleId = `service-${service.id}-title`;
+          const projets = projetsPour(service.id);
 
           return (
             <section
@@ -58,6 +77,31 @@ export function ServicesPageContent() {
                 <h2 id={titleId} className="mt-gap-xs max-w-[16ch] text-display-sm font-extrabold">
                   {service.title}
                 </h2>
+                {projets.length > 0 ? (
+                  <div className="mt-gap-md">
+                    <p className="eyebrow">Déjà livré</p>
+                    <ul role="list" className="mt-gap-xs grid max-w-md grid-cols-2 gap-gap-xs sm:grid-cols-3">
+                      {projets.map((projet) => (
+                        <li key={projet.id}>
+                          <Link href={realisationHref(projet.id) as Route} className="group press block">
+                            <span className="relative block aspect-[4/3] overflow-hidden rounded-xl bg-sand">
+                              <Image
+                                src={projet.couverture.src}
+                                alt=""
+                                fill
+                                sizes="(min-width: 640px) 9rem, 45vw"
+                                className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+                              />
+                            </span>
+                            <span className="link-draw mt-2 inline-block text-note font-semibold text-ink">
+                              {projet.nom}
+                            </span>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
               </Reveal>
 
               <Reveal delay={60}>
