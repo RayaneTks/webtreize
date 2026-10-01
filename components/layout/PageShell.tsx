@@ -25,6 +25,7 @@ export function PageShell({
   description,
   header,
   actions,
+  compact = false,
   children,
 }: {
   eyebrow?: string;
@@ -34,13 +35,15 @@ export function PageShell({
   header?: ReactNode;
   /** Boutons et liens posés sous le chapô. */
   actions?: ReactNode;
+  /** En-tête resserré : le contenu qui suit doit monter dans le premier écran. */
+  compact?: boolean;
   children: ReactNode;
 }) {
   return (
     <div className="min-h-screen bg-canvas text-ink">
       <ClientShell footer={<Footer />}>
         {header ?? (
-          <section className="pb-gap-lg pt-gap-xl">
+          <section className={compact ? 'pb-gap-md pt-gap-lg' : 'pb-gap-lg pt-gap-xl'}>
             <div className="site-container">
               <Reveal>
                 <p className="eyebrow">{eyebrow}</p>

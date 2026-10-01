@@ -3,6 +3,7 @@ import { ContactForm } from '@/components/forms/ContactForm';
 import { PageShell } from '@/components/layout/PageShell';
 import { Reveal } from '@/components/motion/Reveal';
 import { ContactChannels } from '@/components/ui/ContactChannels';
+import { AUDIT } from '@/lib/data/site';
 import { breadcrumbJsonLd, pageMetadata, webPageJsonLd } from '@/lib/seo';
 
 /**
@@ -33,11 +34,12 @@ export default function ContactPage() {
         eyebrow="Contact"
         title="Parlons de votre projet à Marseille."
         description="Décrivez votre activité en quelques lignes. Nous répondons par écrit, sans engagement."
+        compact
       >
         <section
           id="formulaire"
           aria-labelledby="formulaire-title"
-          className="section-pad border-t border-line bg-surface"
+          className="border-t border-line bg-surface pb-section pt-gap-lg"
         >
           <div className="site-container grid gap-x-gap-lg gap-y-gap-md md:grid-cols-2">
             <Reveal>
@@ -57,8 +59,21 @@ export default function ContactPage() {
               </p>
             </Reveal>
 
-            <Reveal delay={60}>
+            <Reveal delay={60} className="md:col-start-2 md:row-span-2 md:row-start-1">
               <ContactForm />
+            </Reveal>
+
+            <Reveal delay={60} className="max-w-[40ch] md:col-start-1 md:row-start-2">
+              <p className="eyebrow">Ce que vous recevez, par écrit</p>
+              <ol className="mt-gap-xs grid list-none gap-gap-xs">
+                {AUDIT.brief.map((ligne, index) => (
+                  <li key={ligne} className="rule-top flex items-baseline gap-gap-xs pt-gap-xs text-body text-ink">
+                    <span className="eyebrow tabular-nums">{String(index + 1).padStart(2, '0')}</span>
+                    {ligne}
+                  </li>
+                ))}
+              </ol>
+              <p className="mt-gap-sm text-note text-ink-muted">Gratuit, sans engagement.</p>
             </Reveal>
           </div>
         </section>
