@@ -26,9 +26,9 @@ import { HEADER_ITEMS, NAV_ITEMS } from '@/lib/data/site';
  * ## État de défilement
  *
  * Au-delà de {@link SCROLL_THRESHOLD} pixels, la barre se replie en pilule :
- * 54 rem au plus, fond blanc chaud opaque, filet `line`. La hauteur du header
- * reste constante (`--header-height`) : rien ne décale la page. Pas de flou,
- * pas d’ombre (design/maquettes/NIVEAU-SUPERIEUR.md, P0-4).
+ * 54 rem au plus, matériau blanc chaud translucide, filet `line`. La hauteur du header
+ * reste constante (`--header-height`) : rien ne décale la page. Le flou reste
+ * contenu dans le matériau chaud et aucune ombre n’est ajoutée.
  *
  * L’écoute est passive et ne lit `scrollY` que dans une frame d’animation :
  * aucune mesure de géométrie (`getBoundingClientRect`) n’est faite au
@@ -176,19 +176,19 @@ export function Header() {
       ref={headerRef}
       className="sticky inset-x-0 top-0 z-50 flex h-[var(--header-height)] items-center px-3 md:px-5"
     >
-      {/* La barre se replie en pilule au défilement : fond blanc chaud opaque
-          et filet, sans flou ni ombre — le verre est dans le négatif de la
-          charte, l’ombre est interdite. Le header lui-même reste transparent :
+      {/* La barre se replie en pilule au défilement : matériau blanc chaud
+          translucide et filet, sans ombre. Le header lui-même reste transparent :
           la page se voit entre le haut de l’écran et la pilule. En mobile, la
           pilule est toujours repliée. */}
       <nav
         aria-label="Navigation principale"
+        data-scrolled={scrolled ? '' : undefined}
         className={clsx(
-          'relative mx-auto flex h-14 w-full items-center justify-between gap-gap-sm rounded-full border pl-5 pr-2',
+          'nav-material relative mx-auto flex h-14 w-full items-center justify-between gap-gap-sm rounded-full border pl-5 pr-2',
           'transition-[max-width,background-color,border-color] duration-state ease-out',
           scrolled
-            ? 'max-w-[54rem] border-line bg-surface'
-            : 'max-w-[54rem] border-line bg-surface md:max-w-site md:border-transparent md:bg-transparent md:pl-3',
+            ? 'max-w-[54rem]'
+            : 'max-w-[54rem] md:max-w-site md:pl-3',
         )}
       >
         <LogoLink />

@@ -32,7 +32,11 @@ export function WorkSection() {
           lede="Des sites et des outils sur mesure, pour des commerces qui tournent tous les jours."
         />
 
-        <ul role="list" className="mt-gap-lg grid gap-x-gap-md gap-y-gap-lg md:grid-cols-3">
+        <p className="mt-gap-md text-center text-note font-semibold text-ink-muted md:hidden">
+          Faites glisser pour parcourir <span aria-hidden="true">→</span>
+        </p>
+
+        <ul role="list" className="projet-rail mt-gap-sm md:mt-gap-lg">
           {REALISATIONS_A_LA_UNE.map((projet, index) => (
             <Reveal key={projet.id} as="li" delay={index * 60}>
               <ProjectCard projet={projet} sizes={SIZES} />
