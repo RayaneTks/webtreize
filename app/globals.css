@@ -72,9 +72,8 @@
   p,
   li {
     text-wrap: pretty;
-    /* Le document porte lang="fr" : la césure suit les règles françaises. */
-    hyphens: auto;
-    -webkit-hyphens: auto;
+    /* Pas de césure : sur des textes courts, un mot coupé fait brouillon. */
+    overflow-wrap: break-word;
   }
 
   ::selection {
@@ -131,6 +130,7 @@
 
   .lede {
     @apply text-body-lg text-ink-muted;
+    text-wrap: balance;
   }
 
   /* Séparation par filet fin — jamais de carte bordée.

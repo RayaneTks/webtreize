@@ -4,10 +4,10 @@ import { Footer } from '@/components/layout/Footer';
 import { AuditSection } from '@/components/sections/AuditSection';
 import { FaqSection } from '@/components/sections/FaqSection';
 import { HeroSection } from '@/components/sections/HeroSection';
+import { ProcessSection } from '@/components/sections/ProcessSection';
 import { ServicesTeaser } from '@/components/sections/ServicesTeaser';
 import { StudioBento } from '@/components/sections/StudioBento';
 import { TestimonialsSection } from '@/components/sections/TestimonialsSection';
-import { WorkSection } from '@/components/sections/WorkSection';
 import { FAQ_ITEMS } from '@/lib/data/faq';
 import {
   breadcrumbJsonLd,
@@ -51,13 +51,13 @@ export default function HomePage() {
       {/* Le pied de page part en prop : c’est la seule position où il se trouve
           hors de `<main>` et vaut donc le repère `contentinfo`. */}
       <ClientShell footer={<Footer />}>
-        {/* Une seule phrase, répétée : titre court centré, objet, suite
-            (design/maquettes/NIVEAU-SUPERIEUR.md, § 4). L’audit ferme la page. */}
+        {/* La promesse et la preuve d’abord, puis l’offre, la méthode et le
+            studio. L’audit ferme la page. */}
         <HeroSection />
         <ServicesTeaser />
-        <WorkSection />
-        <TestimonialsSection className="section-pad" />
+        <ProcessSection centered />
         <StudioBento />
+        <TestimonialsSection className="section-pad" />
         <FaqSection />
         <AuditSection />
       </ClientShell>

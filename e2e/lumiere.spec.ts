@@ -41,9 +41,9 @@ test.describe('La lumière de l’atelier', () => {
     await expect(titre).toBeVisible();
   });
 
-  test('la plaque du héros est posée à plat sous prefers-reduced-motion', async ({ page }) => {
+  test('la plaque d’une étude de cas est posée à plat sous prefers-reduced-motion', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
-    await page.goto('/');
+    await page.goto('/realisations/nurea-parfums');
     await page.waitForTimeout(300);
 
     const plaque = page.locator('.tirage > *').first();

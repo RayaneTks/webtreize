@@ -1,4 +1,5 @@
 import { Reveal } from '@/components/motion/Reveal';
+import { SectionHead } from '@/components/sections/SectionHead';
 import { PROCESS_STEPS } from '@/lib/data/site';
 
 /**
@@ -29,16 +30,24 @@ import { PROCESS_STEPS } from '@/lib/data/site';
  * c’est exactement le rôle — une étiquette discrète —, en chiffres tabulaires
  * pour que « 01 » et « 04 » aient la même chasse.
  */
-export function ProcessSection() {
+export function ProcessSection({ centered = false }: { centered?: boolean }) {
   return (
     <section id="methode" aria-labelledby="methode-title" className="section-pad bg-surface">
       <div className="site-container">
-        <Reveal>
-          <p className="eyebrow">Comment ça se passe</p>
-          <h2 id="methode-title" className="sweep mt-gap-xs max-w-[20ch] text-display-md font-extrabold">
-            Quatre temps, sans mauvaise surprise.
-          </h2>
-        </Reveal>
+        {centered ? (
+          <SectionHead
+            id="methode-title"
+            title="Comment ça se passe."
+            lede="Quatre temps, sans mauvaise surprise. Vous validez chaque étape avant la suivante."
+          />
+        ) : (
+          <Reveal>
+            <p className="eyebrow">Comment ça se passe</p>
+            <h2 id="methode-title" className="sweep mt-gap-xs max-w-[20ch] text-display-md font-extrabold">
+              Quatre temps, sans mauvaise surprise.
+            </h2>
+          </Reveal>
+        )}
 
         <ol className="mt-gap-lg grid list-none gap-gap-md sm:grid-cols-2 lg:grid-cols-4">
           {PROCESS_STEPS.map((step, index) => (

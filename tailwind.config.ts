@@ -61,7 +61,7 @@ const config: Config = {
         'gap-md': 'clamp(1.75rem, 3.4vw, 2.75rem)',
         'gap-lg': 'clamp(2.5rem, 5vw, 4rem)',
         'gap-xl': 'clamp(3.5rem, 7vw, 6rem)',
-        section: 'clamp(4.75rem, 11vw, 10.5rem)',
+        section: 'clamp(4.25rem, 8.5vw, 8rem)',
         'section-lg': 'clamp(5.25rem, 12vw, 11rem)',
       },
       borderRadius: {
