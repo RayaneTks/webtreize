@@ -44,7 +44,7 @@ const config: Config = {
       fontSize: {
         // Une seule échelle. Aucune taille littérale ailleurs dans le code.
         label: ['0.8125rem', { lineHeight: '1.4', letterSpacing: '0.1em' }],
-        note: ['0.875rem', { lineHeight: '1.6' }],
+        note: ['0.875rem', { lineHeight: '1.6', letterSpacing: '0.005em' }],
         body: ['1rem', { lineHeight: '1.7' }],
         'body-lg': ['1.0625rem', { lineHeight: '1.72' }],
         'title-sm': ['1.1875rem', { lineHeight: '1.35', letterSpacing: '-0.025em' }],

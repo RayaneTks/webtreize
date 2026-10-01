@@ -240,8 +240,8 @@ export function Header() {
           ref={panelRef}
           inert={!open}
           className={clsx(
-            'absolute inset-x-0 top-full pt-2 transition duration-state ease-out md:hidden',
-            open ? 'visible translate-y-0 opacity-100' : 'invisible -translate-y-1.5 opacity-0',
+            'menu-panneau absolute inset-x-0 top-full pt-2 md:hidden',
+            open && 'menu-panneau--ouvert',
           )}
         >
           {/* Un filet et un fond opaque détachent le panneau, jamais une ombre. */}

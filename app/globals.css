@@ -579,6 +579,72 @@
   }
 
   /* Retour d’appui immédiat : la surface réagit dès le pointer-down. */
+  /* — Panneau du menu mobile (apple-design §7) —
+     Il naît du bouton « Menu » (origine en haut à droite) et repart par le même
+     chemin : la fermeture est animée comme l’ouverture. `visibility` bascule à
+     la fin de la sortie seulement, et une transition CSS repart toujours de la
+     valeur affichée : un appui en plein mouvement inverse sans saut. */
+  .menu-panneau {
+    transform-origin: top right;
+    opacity: 0;
+    transform: translateY(-6px) scale(0.96);
+    visibility: hidden;
+    transition:
+      opacity 180ms var(--ease-out),
+      transform 260ms var(--ease-out),
+      visibility 0s linear 260ms;
+  }
+
+  .menu-panneau--ouvert {
+    opacity: 1;
+    transform: none;
+    visibility: visible;
+    transition:
+      opacity 180ms var(--ease-out),
+      transform 260ms var(--ease-out),
+      visibility 0s;
+  }
+
+  /* — Index des réalisations : un filtre change la liste par un fondu court — */
+  @keyframes index-apparition {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+  }
+
+  .index-apparition {
+    animation: index-apparition 260ms var(--ease-out);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .menu-panneau {
+      transform: none;
+    }
+
+    .index-apparition {
+      animation-name: none;
+    }
+  }
+
+  /* Retour d’appui sur les contrôles qui n’en avaient pas : question de la FAQ,
+     liens du menu mobile, filtres (apple-design §1). */
+  .faq-item summary,
+  .menu-panneau a {
+    transition: transform 100ms var(--ease-out);
+  }
+
+  .faq-item summary:active,
+  .menu-panneau a:active {
+    transform: scale(0.985);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .faq-item::details-content {
+      transition: none;
+    }
+  }
+
   .press {
     transition: transform 100ms var(--ease-out);
   }

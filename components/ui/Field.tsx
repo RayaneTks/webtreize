@@ -36,6 +36,8 @@ export type FieldProps = {
   rows?: number;
   value: string;
   onChange: (value: string) => void;
+  /** Sortie du champ : déclenche la validation en ligne du formulaire. */
+  onBlur?: () => void;
 };
 
 export function Field({
@@ -50,6 +52,7 @@ export function Field({
   rows = 5,
   value,
   onChange,
+  onBlur,
 }: FieldProps) {
   const hintId = `${id}-hint`;
   const errorId = `${id}-error`;
@@ -87,6 +90,7 @@ export function Field({
           required={required}
           value={value}
           onChange={(event) => onChange(event.target.value)}
+          onBlur={onBlur}
           autoComplete={autoComplete}
           aria-invalid={error ? true : undefined}
           aria-describedby={describedBy}
@@ -100,6 +104,7 @@ export function Field({
           required={required}
           value={value}
           onChange={(event) => onChange(event.target.value)}
+          onBlur={onBlur}
           autoComplete={autoComplete}
           inputMode={inputMode}
           aria-invalid={error ? true : undefined}

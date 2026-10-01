@@ -41,7 +41,7 @@ export function ProjectIndex({
               aria-pressed={selectionne}
               onClick={() => setActif(categorie)}
               className={cn(
-                'inline-flex min-h-11 items-center gap-1.5 rounded-full border px-4 text-note font-semibold transition-colors',
+                'press inline-flex min-h-11 items-center gap-1.5 rounded-full border px-4 text-note font-semibold transition-colors',
                 selectionne
                   ? 'border-ink bg-ink text-canvas'
                   : 'border-line-strong text-ink hover:border-ink',
@@ -58,7 +58,7 @@ export function ProjectIndex({
         {visibles.length} réalisation{visibles.length > 1 ? 's' : ''} affichée{visibles.length > 1 ? 's' : ''}
       </p>
 
-      <ul role="list" className="mt-gap-lg grid gap-x-gap-md gap-y-gap-lg md:grid-cols-2">
+      <ul key={actif ?? 'tout'} role="list" className="index-apparition mt-gap-lg grid gap-x-gap-md gap-y-gap-lg md:grid-cols-2">
         {visibles.map((entree) => (
           <li key={entree.id}>{entree.carte}</li>
         ))}

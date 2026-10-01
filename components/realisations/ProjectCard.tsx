@@ -19,6 +19,14 @@ type CardMotion = {
   shiftY: MotionValue;
 };
 
+/**
+ * Ressort critique (amortissement 1,0) de réponse 0,35 s, pour une masse 1 :
+ * raideur (2π / réponse)², amortissement 4π · ratio / réponse.
+ */
+const SPRING_RESPONSE = 0.35;
+const SPRING_STIFFNESS = ((2 * Math.PI) / SPRING_RESPONSE) ** 2;
+const SPRING_DAMPING = (4 * Math.PI * 1) / SPRING_RESPONSE;
+
 const AT_REST: CardMotion = {
   rotateX: { value: 0, velocity: 0 },
   rotateY: { value: 0, velocity: 0 },
@@ -62,7 +70,6 @@ export function ProjectCard({
   const frameRef = useRef<number>(0);
   const lastFrameRef = useRef<number>(0);
   const motionRef = useRef<CardMotion>(freshMotion());
-  const previousPointerTimeRef = useRef(0);
 
   const paint = useCallback(() => {
     const cover = coverRef.current;
@@ -80,8 +87,24 @@ export function ProjectCard({
     lastFrameRef.current = 0;
   }, []);
 
-  const settle = useCallback(() => {
-    stopAnimation();
+  /** Où le ressort doit aller : sous le pointeur, ou au repos. */
+  const targetRef = useRef<Record<keyof CardMotion, number>>({
+    rotateX: 0,
+    rotateY: 0,
+    shiftX: 0,
+    shiftY: 0,
+  });
+  /** Le rectangle de la couverture, mesuré une fois à l’entrée du pointeur. */
+  const rectRef = useRef<DOMRect | null>(null);
+
+  /**
+   * Un seul ressort porte tout le mouvement, entrée comme sortie
+   * (apple-design §3-4) : amortissement 1,0 (aucun rebond), réponse 0,35 s.
+   * Chaque frame part de la valeur affichée et de la vitesse courante : un
+   * pointeur qui revient en plein retour au repos est suivi sans saut.
+   */
+  const run = useCallback(() => {
+    if (frameRef.current) return;
 
     const step = (now: number) => {
       const previous = lastFrameRef.current || now;
@@ -89,28 +112,42 @@ export function ProjectCard({
       lastFrameRef.current = now;
 
       let moving = false;
-      for (const channel of Object.values(motionRef.current)) {
-        const acceleration = -190 * channel.value - 25 * channel.velocity;
+      for (const key of Object.keys(motionRef.current) as (keyof CardMotion)[]) {
+        const channel = motionRef.current[key];
+        const target = targetRef.current[key];
+        const acceleration = -SPRING_STIFFNESS * (channel.value - target) - SPRING_DAMPING * channel.velocity;
         channel.velocity += acceleration * dt;
         channel.value += channel.velocity * dt;
 
-        if (Math.abs(channel.value) > 0.002 || Math.abs(channel.velocity) > 0.002) {
+        if (Math.abs(channel.value - target) > 0.002 || Math.abs(channel.velocity) > 0.002) {
           moving = true;
         } else {
-          channel.value = 0;
+          channel.value = target;
           channel.velocity = 0;
         }
       }
 
       paint();
-      if (moving) frameRef.current = requestAnimationFrame(step);
-      else stopAnimation();
+      if (moving) {
+        frameRef.current = requestAnimationFrame(step);
+      } else {
+        frameRef.current = 0;
+        lastFrameRef.current = 0;
+        if (Object.values(targetRef.current).every((v) => v === 0)) {
+          coverRef.current?.removeAttribute('data-moving');
+        }
+      }
     };
 
     frameRef.current = requestAnimationFrame(step);
-  }, [paint, stopAnimation]);
+  }, [paint]);
 
   useEffect(() => stopAnimation, [stopAnimation]);
+
+  const onPointerEnter = useCallback((event: React.PointerEvent<HTMLAnchorElement>) => {
+    if (event.pointerType === 'touch') return;
+    rectRef.current = coverRef.current?.getBoundingClientRect() ?? null;
+  }, []);
 
   const onPointerMove = useCallback(
     (event: React.PointerEvent<HTMLAnchorElement>) => {
@@ -118,46 +155,32 @@ export function ProjectCard({
         return;
       }
 
-      stopAnimation();
       const cover = coverRef.current;
       if (!cover) return;
+      const rect = rectRef.current ?? (rectRef.current = cover.getBoundingClientRect());
 
-      const rect = cover.getBoundingClientRect();
       const x = Math.max(-1, Math.min(1, ((event.clientX - rect.left) / rect.width - 0.5) * 2));
       const y = Math.max(-1, Math.min(1, ((event.clientY - rect.top) / rect.height - 0.5) * 2));
-      const now = event.timeStamp;
-      const elapsed = Math.max((now - previousPointerTimeRef.current) / 1000, 1 / 120);
-      const targets = {
-        rotateX: -y * 1.8,
-        rotateY: x * 2.2,
-        shiftX: x * 2.5,
-        shiftY: y * 2,
-      };
+      targetRef.current = { rotateX: -y * 1.8, rotateY: x * 2.2, shiftX: x * 2.5, shiftY: y * 2 };
 
-      for (const [key, target] of Object.entries(targets) as [keyof CardMotion, number][]) {
-        const channel = motionRef.current[key];
-        channel.velocity = Math.max(-60, Math.min(60, (target - channel.value) / elapsed));
-        channel.value = target;
-      }
-
-      previousPointerTimeRef.current = now;
       cover.dataset.moving = '';
-      paint();
+      run();
     },
-    [paint, stopAnimation],
+    [run],
   );
 
   const onPointerLeave = useCallback(() => {
-    coverRef.current?.removeAttribute('data-moving');
-    previousPointerTimeRef.current = 0;
-    settle();
-  }, [settle]);
+    rectRef.current = null;
+    targetRef.current = { rotateX: 0, rotateY: 0, shiftX: 0, shiftY: 0 };
+    run();
+  }, [run]);
 
   return (
     <article className={cn('projet-carte', className)}>
       <Link
         href={realisationHref(projet.id) as Route}
         className="group press block"
+        onPointerEnter={onPointerEnter}
         onPointerMove={onPointerMove}
         onPointerLeave={onPointerLeave}
         onBlur={onPointerLeave}

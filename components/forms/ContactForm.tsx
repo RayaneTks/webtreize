@@ -105,6 +105,9 @@ export function ContactForm() {
     formState: { isSubmitting },
   } = useForm<ContactFormValues>({
     resolver: zodResolver(contactFormSchema),
+    // Validation au fil de la saisie : un champ est vérifié dès qu’on le quitte,
+    // puis à chaque frappe — l’erreur n’attend pas l’envoi (apple-design §16).
+    mode: 'onTouched',
     defaultValues: EMPTY_FORM,
   });
 
@@ -265,6 +268,7 @@ export function ContactForm() {
                 autoComplete="name"
                 value={field.value ?? ''}
                 onChange={field.onChange}
+                onBlur={field.onBlur}
                 error={fieldState.error?.message}
               />
             )}
@@ -284,6 +288,7 @@ export function ContactForm() {
                 hint="C’est là que nous répondons."
                 value={field.value ?? ''}
                 onChange={field.onChange}
+                onBlur={field.onBlur}
                 error={fieldState.error?.message}
               />
             )}
@@ -302,6 +307,7 @@ export function ContactForm() {
                 hint="Facultatif, si vous préférez que nous vous rappelions."
                 value={field.value ?? ''}
                 onChange={field.onChange}
+                onBlur={field.onBlur}
                 error={fieldState.error?.message}
               />
             )}
@@ -320,6 +326,7 @@ export function ContactForm() {
                 hint="Votre activité, ce qui bloque aujourd’hui. Deux phrases suffisent."
                 value={field.value ?? ''}
                 onChange={field.onChange}
+                onBlur={field.onBlur}
                 error={fieldState.error?.message}
               />
             )}
