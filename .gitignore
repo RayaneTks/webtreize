@@ -65,3 +65,6 @@ test-results
 design/maquettes/**/.apercu/
 design/maquettes/_presentation/captures/
 design/maquettes/_references/
+
+# graphify
+graphify-out/
