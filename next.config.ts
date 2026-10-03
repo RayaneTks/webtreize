@@ -56,13 +56,13 @@ const nextConfig: NextConfig = {
     // Les photos d’un site vitrine ne changent pas : un an de cache.
     minimumCacheTTL: 31536000,
   },
-  // Les images OpenGraph lisent les polices dans `assets/fonts` : on garde ces
-  // fichiers dans la trace de sortie des quatre routes concernées.
+  // Les images OpenGraph lisent les polices dans `assets/fonts` et leur fond : on
+  // garde ces fichiers dans la trace de sortie des quatre routes concernées.
   outputFileTracingIncludes: {
-    '/opengraph-image': ['./assets/fonts/**'],
-    '/services/opengraph-image': ['./assets/fonts/**'],
-    '/about/opengraph-image': ['./assets/fonts/**'],
-    '/contact/opengraph-image': ['./assets/fonts/**'],
+    '/opengraph-image': ['./assets/fonts/**', './public/images/og-fond.jpg'],
+    '/services/opengraph-image': ['./assets/fonts/**', './public/images/og-fond.jpg'],
+    '/about/opengraph-image': ['./assets/fonts/**', './public/images/og-fond.jpg'],
+    '/contact/opengraph-image': ['./assets/fonts/**', './public/images/og-fond.jpg'],
   },
   /**
    * Redirections permanentes (308), au niveau du routeur.

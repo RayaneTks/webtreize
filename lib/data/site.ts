@@ -107,9 +107,8 @@ export const CRAFT_BLOCKS: readonly CraftBlock[] = [
     title: 'Fait pour votre métier, pas pour un portfolio.',
     body:
       'Nous partons de votre activité et de la façon dont vos clients vous appellent. Rapide sur téléphone, clair en trois secondes, et entièrement à vous : code, accès, nom de domaine.',
-    imageSrc: '/images/craft-site.jpg',
-    imageAlt:
-      'Les mains d’un commerçant tiennent un téléphone à l’écran éteint au-dessus d’un comptoir en bois clair, à côté d’un carnet ouvert et d’un stylo en laiton.',
+    imageSrc: '/images/site-telephone.jpg',
+    imageAlt: 'Un téléphone debout, écran éteint, sur un fond ivoire traversé par la lumière d’une fenêtre.',
     teaserTitle: 'Un site qui fait appeler.',
     teaserBody: 'Rapide sur téléphone, clair en trois secondes, et entièrement à vous.',
     serviceId: 'web',
@@ -120,9 +119,8 @@ export const CRAFT_BLOCKS: readonly CraftBlock[] = [
     title: 'Être là quand quelqu’un cherche votre métier.',
     body:
       'Fiche Google soignée, référencement local, avis suivis. Quand un client cherche votre métier près de chez lui, ce qu’il trouve à ce moment-là décide souvent de l’appel — c’est là que nous travaillons.',
-    imageSrc: '/images/craft-visibilite.jpg',
-    imageAlt:
-      'Devanture d’un petit commerce marseillais en fin d’après-midi, vue depuis le trottoir d’en face.',
+    imageSrc: '/images/visibilite-calanques.jpg',
+    imageAlt: 'Une carte en relief de papier ivoire dessinant des calanques, une épingle terre cuite plantée au bord d’une crique.',
     teaserTitle: 'Trouvé près de chez vous.',
     teaserBody: 'Fiche Google soignée, référencement local, avis suivis.',
     serviceId: 'seo',
@@ -133,9 +131,8 @@ export const CRAFT_BLOCKS: readonly CraftBlock[] = [
     title: 'Votre quotidien, en un seul endroit.',
     body:
       'Devis, plannings, suivi de chantier, relances. Nous remplaçons le tableur et les notes éparpillées par un outil simple, taillé pour votre façon de travailler.',
-    imageSrc: '/images/craft-outils.jpg',
-    imageAlt:
-      'Établi d’artisan rangé : un carnet de notes, un mètre pliant et une tablette posés côte à côte sur du bois clair.',
+    imageSrc: '/images/outils-tablette.jpg',
+    imageAlt: 'Une tablette posée à plat, écran éteint, à côté d’un trousseau de trois clés en laiton.',
     teaserTitle: 'Votre quotidien, au même endroit.',
     teaserBody: 'Devis, plannings, relances : un outil simple à la place du tableur.',
     serviceId: 'apps',

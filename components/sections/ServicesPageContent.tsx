@@ -3,8 +3,9 @@ import type { Route } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Reveal } from '@/components/motion/Reveal';
+import { Plate } from '@/components/ui/Plate';
 import { REALISATIONS, realisationHref } from '@/lib/data/realisations';
-import { GOOGLE_BUSINESS_SERVICE, SERVICES } from '@/lib/data/site';
+import { CRAFT_BLOCKS, GOOGLE_BUSINESS_SERVICE, SERVICES } from '@/lib/data/site';
 
 const ALL_SERVICES = [...SERVICES, GOOGLE_BUSINESS_SERVICE];
 
@@ -24,6 +25,17 @@ const CATEGORIES_PAR_SERVICE: Record<string, readonly string[]> = {
   web: ['Site web'],
   apps: ['Application métier', 'Application mobile', 'Commande en ligne'],
 };
+
+/** Le visuel de chaque prestation : celui de l’accueil, plus la plaque pour la fiche Google. */
+const VISUELS: Record<string, { src: string; alt: string }> = {
+  ...Object.fromEntries(CRAFT_BLOCKS.map((b) => [b.serviceId, { src: b.imageSrc, alt: b.imageAlt }])),
+  google: {
+    src: '/images/google-plaque.jpg',
+    alt: 'Une plaque en laiton vierge fixée sur un mur de calcaire ensoleillé.',
+  },
+};
+
+const VISUEL_SIZES = '(min-width: 1120px) 480px, (min-width: 768px) 44vw, 100vw';
 
 function projetsPour(serviceId: string) {
   const categories = CATEGORIES_PAR_SERVICE[serviceId] ?? [];
@@ -77,6 +89,16 @@ export function ServicesPageContent() {
                 <h2 id={titleId} className="mt-gap-xs max-w-[16ch] text-display-sm font-extrabold">
                   {service.title}
                 </h2>
+                {VISUELS[service.id] ? (
+                  <div className="mt-gap-md max-w-md">
+                    <Plate
+                      src={VISUELS[service.id].src}
+                      alt={VISUELS[service.id].alt}
+                      ratio="4/3"
+                      sizes={VISUEL_SIZES}
+                    />
+                  </div>
+                ) : null}
                 {projets.length > 0 ? (
                   <div className="mt-gap-md">
                     <p className="eyebrow">Déjà livré</p>

@@ -49,7 +49,7 @@ const JSON_LD = [
 const ATELIER_SIZES = '(min-width: 1120px) 420px, (min-width: 700px) 40vw, 100vw';
 
 const ATELIER_ALT =
-  'Le plan de travail du studio : un carnet ouvert, un crayon et une tasse en céramique, éclairés par la fenêtre.';
+  'Un bureau en chêne clair dans une pièce vide aux murs de calcaire, un ordinateur portable fermé posé dessus, traversé par la lumière d’une fenêtre.';
 
 /**
  * Ce que le studio ne fait pas — la seule liste du site qui se lit en creux.
@@ -129,7 +129,7 @@ export default function AboutPage() {
             </Reveal>
 
             <Reveal delay={60}>
-              <Plate src="/images/about-atelier.jpg" alt={ATELIER_ALT} ratio="3/4" sizes={ATELIER_SIZES} />
+              <Plate src="/images/studio-bureau.jpg" alt={ATELIER_ALT} ratio="3/4" sizes={ATELIER_SIZES} />
             </Reveal>
           </div>
         </section>

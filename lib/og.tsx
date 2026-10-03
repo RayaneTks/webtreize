@@ -45,8 +45,13 @@ async function loadJakarta() {
  * Rend l’image sociale d’une page. `title` tient sur deux lignes au maximum
  * à cette taille de corps, `subtitle` sur deux également.
  */
+async function loadBackground() {
+  const data = await readFile(path.join(process.cwd(), 'public', 'images', 'og-fond.jpg'));
+  return `data:image/jpeg;base64,${data.toString('base64')}`;
+}
+
 export async function ogImage({ title, subtitle }: { title: string; subtitle: string }) {
-  const fonts = await loadJakarta();
+  const [fonts, background] = await Promise.all([loadJakarta(), loadBackground()]);
 
   return new ImageResponse(
     (
@@ -60,8 +65,16 @@ export async function ogImage({ title, subtitle }: { title: string; subtitle: st
           backgroundColor: CANVAS,
           padding: '76px 84px',
           fontFamily: 'Jakarta',
+          position: 'relative',
         }}
       >
+        <img
+          src={background}
+          alt=""
+          width={OG_SIZE.width}
+          height={OG_SIZE.height}
+          style={{ position: 'absolute', top: 0, left: 0 }}
+        />
         {/* Logotype — le point terre cuite ferme le mot comme une phrase. */}
         <div
           style={{

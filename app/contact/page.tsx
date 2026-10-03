@@ -3,6 +3,7 @@ import { ContactForm } from '@/components/forms/ContactForm';
 import { PageShell } from '@/components/layout/PageShell';
 import { Reveal } from '@/components/motion/Reveal';
 import { ContactChannels } from '@/components/ui/ContactChannels';
+import { Plate } from '@/components/ui/Plate';
 import { AUDIT } from '@/lib/data/site';
 import { breadcrumbJsonLd, pageMetadata, webPageJsonLd } from '@/lib/seo';
 
@@ -88,6 +89,14 @@ export default function ContactPage() {
               >
                 Du lundi au vendredi, de 9&#160;h à 18&#160;h.
               </h2>
+            </Reveal>
+            <Reveal delay={60} className="mt-gap-lg">
+              <Plate
+                src="/images/contact-porte.jpg"
+                alt="Une porte ouverte dans un mur de pierre calcaire, la lumière du jour entre sur le seuil."
+                ratio="16/9"
+                sizes="(min-width: 1280px) 1056px, 100vw"
+              />
             </Reveal>
             <Reveal delay={60}>
               <ContactChannels className="mt-gap-lg" />

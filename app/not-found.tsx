@@ -1,8 +1,9 @@
-import type { Metadata, Route } from 'next';
-import Link from 'next/link';
-import { ClientShell } from '@/components/ClientShell';
-import { Footer } from '@/components/layout/Footer';
-import { Button } from '@/components/ui/Button';
+import type { Metadata, Route } from "next";
+import Link from "next/link";
+import { ClientShell } from "@/components/ClientShell";
+import { Footer } from "@/components/layout/Footer";
+import { Button } from "@/components/ui/Button";
+import { Plate } from "@/components/ui/Plate";
 
 /**
  * Page 404.
@@ -26,50 +27,61 @@ import { Button } from '@/components/ui/Button';
  * qui est bien ce que l’on veut : les liens de cette page doivent circuler.
  */
 export const metadata: Metadata = {
-  title: 'Page introuvable',
-  description: 'Cette adresse n’existe pas, ou plus. Voici les pages du site.',
+  title: "Page introuvable",
+  description: "Cette adresse n’existe pas, ou plus. Voici les pages du site.",
 };
 
 /** Les trois routes réelles du site, dans l’ordre où elles servent ici. */
 const EXITS: readonly { readonly label: string; readonly href: Route }[] = [
-  { label: 'Ce que nous faisons', href: '/services' },
-  { label: 'Qui vous répondra', href: '/about' },
-  { label: 'Retour à l’accueil', href: '/' },
+  { label: "Ce que nous faisons", href: "/services" },
+  { label: "Qui vous répondra", href: "/about" },
+  { label: "Retour à l’accueil", href: "/" },
 ];
 
 export default function NotFound() {
   return (
     <div className="min-h-screen bg-canvas text-ink">
       <ClientShell footer={<Footer />}>
-        <section className="site-container py-section-lg">
-          <p className="eyebrow">Erreur 404</p>
-          <h1 className="mt-gap-sm max-w-[14ch] text-display-lg font-extrabold">
-            Cette page n’existe pas.
-          </h1>
-          <p className="lede mt-gap-sm max-w-[46ch]">
-            L’adresse est fausse, ou la page a été déplacée. Voici ce que vous cherchiez
-            probablement.
-          </p>
+        <section className="site-container grid items-center gap-gap-lg py-section-lg md:grid-cols-2">
+          <div>
+            <p className="eyebrow">Erreur 404</p>
+            <h1 className="mt-gap-sm max-w-[14ch] text-display-lg font-extrabold">
+              Cette page n’existe pas.
+            </h1>
+            <p className="lede mt-gap-sm max-w-[46ch]">
+              L’adresse est fausse, ou la page a été déplacée. Voici ce que vous
+              cherchiez probablement.
+            </p>
 
-          {/* Trois liens en `.link-draw` et non trois `Button variant="text"` :
+            {/* Trois liens en `.link-draw` et non trois `Button variant="text"` :
               la variante « text » est en terre cuite, et trois d’entre elles sur
               un écran aussi court en feraient quatre avec le point du logotype —
               une de plus que ce que la charte autorise (§ 2). Le soulignement
               dessiné suffit à les désigner comme des liens. */}
-          <ul className="mt-gap-md grid max-w-[32ch] gap-gap-xs text-body-lg font-semibold">
-            {EXITS.map((exit) => (
-              <li key={exit.href}>
-                <Link href={exit.href} className="link-draw inline-flex items-center gap-2">
-                  {exit.label}
-                  <span aria-hidden="true">→</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
+            <ul className="mt-gap-md grid max-w-[32ch] gap-gap-xs text-body-lg font-semibold">
+              {EXITS.map((exit) => (
+                <li key={exit.href}>
+                  <Link
+                    href={exit.href}
+                    className="link-draw inline-flex items-center gap-2"
+                  >
+                    {exit.label}
+                    <span aria-hidden="true">→</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
 
-          <div className="mt-gap-lg">
-            <Button href="/contact">Nous écrire</Button>
+            <div className="mt-gap-lg">
+              <Button href="/contact">Nous écrire</Button>
+            </div>
           </div>
+          <Plate
+            src="/images/introuvable-escalier.jpg"
+            alt="Un escalier de pierre qui s’arrête contre un mur."
+            ratio="4/3"
+            sizes="(min-width: 768px) 46vw, 100vw"
+          />
         </section>
       </ClientShell>
     </div>

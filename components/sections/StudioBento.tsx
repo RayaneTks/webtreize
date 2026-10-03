@@ -27,10 +27,10 @@ export function StudioBento() {
           <Reveal className="encart p-gap-xs lg:col-span-2 lg:row-span-2">
             <div className="relative aspect-[4/3] overflow-hidden rounded-plate bg-sand lg:aspect-auto lg:flex-1">
               <Image
-                src={FONDATEUR?.photo ?? '/images/about-atelier.jpg'}
+                src={FONDATEUR?.photo ?? '/images/studio-bureau.jpg'}
                 alt={
                   FONDATEUR?.alt ??
-                  'Le plan de travail du studio : un carnet ouvert, un crayon et une tasse en céramique, éclairés par la fenêtre.'
+                  'Un bureau en chêne clair dans une pièce vide aux murs de calcaire, un ordinateur portable fermé posé dessus, traversé par la lumière d’une fenêtre.'
                 }
                 fill
                 sizes="(min-width: 1024px) 540px, (min-width: 768px) 46vw, 100vw"
