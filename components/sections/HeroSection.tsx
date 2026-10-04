@@ -11,7 +11,7 @@ import {
 import { AVIS_GOOGLE } from '@/lib/data/site';
 
 /** Trois cartes par rang à partir de `md` : une carte vaut un tiers du conteneur. */
-const SIZES = '(min-width: 1120px) 352px, (min-width: 768px) 31vw, 82vw';
+const SIZES = '(min-width: 1120px) 352px, (min-width: 768px) 31vw, 74vw';
 
 /**
  * Héros de l’accueil — composant serveur.
@@ -73,11 +73,17 @@ export function HeroSection() {
             <h2 className="eyebrow text-center">Derniers projets livrés</h2>
           </Reveal>
 
+          <p className="mt-gap-xs text-center text-note font-semibold text-ink-muted md:hidden">
+            Faites glisser pour voir les trois projets <span aria-hidden="true">→</span>
+          </p>
+
+          {/* Pas de `Reveal` sur les cartes : hors écran, il les garde invisibles
+              et rien n'indiquerait, sur mobile, que la galerie se fait glisser. */}
           <ul role="list" className="projet-rail mt-gap-sm">
             {REALISATIONS_A_LA_UNE.map((projet, index) => (
-              <Reveal key={projet.id} as="li" delay={180 + index * 60}>
+              <li key={projet.id}>
                 <ProjectCard projet={projet} sizes={SIZES} priority={index === 0} />
-              </Reveal>
+              </li>
             ))}
           </ul>
 
