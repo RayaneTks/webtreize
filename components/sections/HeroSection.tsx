@@ -73,12 +73,8 @@ export function HeroSection() {
             <h2 className="eyebrow text-center">Derniers projets livrés</h2>
           </Reveal>
 
-          <p className="mt-gap-xs text-center text-note font-semibold text-ink-muted md:hidden">
-            Faites glisser pour voir les trois projets <span aria-hidden="true">→</span>
-          </p>
-
-          {/* Pas de `Reveal` sur les cartes : hors écran, il les garde invisibles
-              et rien n'indiquerait, sur mobile, que la galerie se fait glisser. */}
+          {/* Pas de `Reveal` sur les cartes : hors écran, il les garde invisibles,
+              or c'est la carte qui dépasse qui dit, sans texte, qu'on peut glisser. */}
           <ul role="list" className="projet-rail mt-gap-sm">
             {REALISATIONS_A_LA_UNE.map((projet, index) => (
               <li key={projet.id}>
