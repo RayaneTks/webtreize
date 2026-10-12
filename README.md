@@ -20,8 +20,8 @@ L’envoi du formulaire utilise Resend via une route serveur.
 ## Installation
 
 ```bash
-git clone https://github.com/RayaneTks/WebTreize.git
-cd WebTreize
+git clone https://github.com/RayaneTks/webtreize.git
+cd webtreize
 npm ci
 cp .env.example .env.local
 npm run dev
