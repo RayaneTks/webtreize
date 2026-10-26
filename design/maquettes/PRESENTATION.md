@@ -14,7 +14,7 @@ une légende sous chacun, et le nom du client composé en grand dessous.
 
 ## 1 · Audit de l’existant
 
-### Ce qui fait « template / AI slop »
+### Ce qui fait « template »
 
 1. **La composition est le visuel de Dribbble par défaut.** Un aplat coloré à grands coins arrondis,
    une fenêtre de navigateur avec ses trois pastilles et sa barre d’adresse en gélule, un téléphone
@@ -36,7 +36,7 @@ une légende sous chacun, et le nom du client composé en grand dessous.
 4. **Les pastilles et le triple lien.** Quatre « livrables » en gélules par projet (seize sur la
    page), plus une gélule « Voir l’étude de cas », plus un lien sur le titre, plus un lien sur
    l’image : trois liens vers la même page, et le motif « chips » que le brief commun
-   (`design/maquettes/BRIEF.md`) désigne lui-même comme un marqueur de slop.
+   (`design/maquettes/BRIEF.md`) désigne lui-même comme un marqueur de site générique.
 5. **Le rythme est un effet, pas une décision.** « Un grand, deux petits, un grand » ne répond à
    rien dans le contenu : il rétrograde Encore 1 Dessert (l’outil le plus convaincant pour un
    artisan) en demi-carte, et sur `/realisations` les quatre projets redeviennent identiques. Le

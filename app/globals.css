@@ -293,7 +293,7 @@
     padding: 5%;
   }
 
-  /* — Encarts (design/maquettes/NIVEAU-SUPERIEUR.md, P0-2) —
+  /* — Encarts —
      La surface de la charte (« blanc chaud : encarts, respiration ») posée sur
      l’ivoire. Pas de bordure, pas d’ombre : un aplat, pas un cadre. Au survol
      d’un encart lien, l’aplat passe au sable et la photo se rapproche ; rien ne
@@ -579,7 +579,7 @@
   }
 
   /* Retour d’appui immédiat : la surface réagit dès le pointer-down. */
-  /* — Panneau du menu mobile (apple-design §7) —
+  /* — Panneau du menu mobile —
      Il naît du bouton « Menu » (origine en haut à droite) et repart par le même
      chemin : la fermeture est animée comme l’ouverture. `visibility` bascule à
      la fin de la sortie seulement, et une transition CSS repart toujours de la
@@ -628,7 +628,7 @@
   }
 
   /* Retour d’appui sur les contrôles qui n’en avaient pas : question de la FAQ,
-     liens du menu mobile, filtres (apple-design §1). */
+     liens du menu mobile, filtres. */
   .faq-item summary,
   .menu-panneau a {
     transition: transform 100ms var(--ease-out);

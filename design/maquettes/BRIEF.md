@@ -33,7 +33,7 @@ Ce qu’on améliore :
   bien réglée (interlignage, graisse, chiffres tabulaires pour les montants),
   icônes d’un même jeu et d’une même épaisseur, photos produit bien cadrées.
 
-## Ce qu’on évite (« AI slop »)
+## Ce qu’on évite (le déjà-vu des sites génériques)
 
 - une identité inventée qui ne ressemble plus au client ;
 - les dégradés et halos décoratifs, fonds « aurora », effets de verre gratuits ;

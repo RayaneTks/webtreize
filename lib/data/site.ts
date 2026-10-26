@@ -89,7 +89,7 @@ export type CraftBlock = {
    * pas, et aucun cadrage d’attente ne peut apparaître sur l’accueil.
    */
   imageSrc: string;
-  /** Alternative textuelle définitive, écrite avant la photo (cf. docs/imagerie.md). */
+  /** Alternative textuelle définitive, écrite avant la photo. */
   imageAlt: string;
   /** Titre court de l’encart d’accueil (cinq mots au plus). */
   teaserTitle: string;

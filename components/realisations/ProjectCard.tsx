@@ -99,7 +99,7 @@ export function ProjectCard({
 
   /**
    * Un seul ressort porte tout le mouvement, entrée comme sortie
-   * (apple-design §3-4) : amortissement 1,0 (aucun rebond), réponse 0,35 s.
+   * : amortissement 1,0 (aucun rebond), réponse 0,35 s.
    * Chaque frame part de la valeur affichée et de la vitesse courante : un
    * pointeur qui revient en plein retour au repos est suivi sans saut.
    */

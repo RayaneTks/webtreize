@@ -45,7 +45,7 @@ const JSON_LD = [
   ]),
 ];
 
-/** Cadrage vertical du plan de travail — voir docs/imagerie.md. */
+/** Cadrage vertical du plan de travail. */
 const ATELIER_SIZES = '(min-width: 1120px) 420px, (min-width: 700px) 40vw, 100vw';
 
 const ATELIER_ALT =

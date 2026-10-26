@@ -106,7 +106,7 @@ export function ContactForm() {
   } = useForm<ContactFormValues>({
     resolver: zodResolver(contactFormSchema),
     // Validation au fil de la saisie : un champ est vérifié dès qu’on le quitte,
-    // puis à chaque frappe — l’erreur n’attend pas l’envoi (apple-design §16).
+    // puis à chaque frappe — l’erreur n’attend pas l’envoi.
     mode: 'onTouched',
     defaultValues: EMPTY_FORM,
   });

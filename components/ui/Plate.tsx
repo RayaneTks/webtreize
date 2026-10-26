@@ -12,7 +12,7 @@ type PlateCommonProps = {
   ratio?: PlateRatio;
   /** Réservé au LCP — une seule plaque du site doit le porter. */
   priority?: boolean;
-  /** Largeurs servies, à recopier depuis docs/imagerie.md. */
+  /** Largeurs servies (attribut sizes de next/image). */
   sizes?: string;
   /** Libellé du cadrage en attente, visible uniquement sans photo. */
   caption?: string;

@@ -49,12 +49,11 @@ Installer le navigateur nécessaire aux tests avec `npx playwright install chrom
 | `app/` | Pages, routes API et métadonnées. |
 | `components/` | Sections, formulaires et composants d’interface. |
 | `lib/data/` | Contenus éditoriaux, réalisations et informations légales. |
-| `design/` | Briefs et maquettes de projets. |
-| `docs/` | Charte graphique et documentation visuelle. |
+| `design/` | Maquettes et directions artistiques des projets. |
+| `docs/` | Charte graphique. |
 | `e2e/` | Tests de navigation et d’interface. |
 
 ## Documentation
 
 - [Direction visuelle](DESIGN.md)
 - [Charte graphique](docs/charte-graphique.md)
-- [Principes d’imagerie](docs/imagerie.md)

@@ -29,7 +29,6 @@ debug.log
 # IDE & OS
 .idea
 .vscode
-.claude/
 *.swp
 *.swo
 .DS_Store
@@ -66,5 +65,3 @@ design/maquettes/**/.apercu/
 design/maquettes/_presentation/captures/
 design/maquettes/_references/
 
-# graphify
-graphify-out/

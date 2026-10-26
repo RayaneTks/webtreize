@@ -23,7 +23,7 @@ import { NAV_ITEMS } from '@/lib/data/site';
  *
  * ## Ce que le footer porte
  *
- * Une carte (design/maquettes/NIVEAU-SUPERIEUR.md, P0-6) : les coordonnées, la
+ * Une carte : les coordonnées, la
  * signature, et « Un projet ? » avec l’action. Dessous, toutes les pages et les
  * pages légales : une page sans lien entrant n’existe pas pour un moteur.
  *

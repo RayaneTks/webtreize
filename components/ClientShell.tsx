@@ -45,7 +45,7 @@ export function ClientShell({
 }) {
   // Safari iOS n’applique `:active` au toucher que si un écouteur `touchstart`
   // existe : sans lui, aucun bouton du site ne réagit à l’appui sur iPhone
-  // (apple-design §1 — le retour vit sur le pointer-down).
+  // (le retour vit sur le pointer-down).
   useEffect(() => {
     const noop = () => {};
     document.addEventListener('touchstart', noop, { passive: true });

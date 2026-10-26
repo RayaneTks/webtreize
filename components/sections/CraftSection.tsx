@@ -2,7 +2,7 @@ import { Reveal } from '@/components/motion/Reveal';
 import { Plate } from '@/components/ui/Plate';
 import { CRAFT_BLOCKS, type CraftBlock } from '@/lib/data/site';
 
-/** Largeurs servies pour les plaques 4/3 — voir docs/imagerie.md. */
+/** Largeurs servies pour les plaques 4/3. */
 const CRAFT_PLATE_SIZES = '(min-width: 1120px) 520px, (min-width: 700px) 46vw, 100vw';
 
 /**

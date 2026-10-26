@@ -2,7 +2,7 @@ import { Reveal } from '@/components/motion/Reveal';
 import { cn } from '@/lib/utils';
 
 /**
- * L’en-tête de section, unique sur tout le site (design/maquettes/NIVEAU-SUPERIEUR.md, P0-1).
+ * L’en-tête de section, unique sur tout le site.
  *
  * Un titre court, centré, à une seule taille (`text-display-sm`), un chapô
  * facultatif. Le rythme de la page naît de cette répétition : titre, objet,
