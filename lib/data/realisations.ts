@@ -6,10 +6,12 @@ import ECRANS from './ecrans-realisations.json';
  *
  * ## Les écrans
  *
- * Chaque projet a sa propre direction artistique, écrite avant de dessiner
- * (`design/maquettes/<projet>/DA.md`). Les écrans montrés sont des **versions
- * de présentation** : fidèles à ce que le produit fait réellement, épurées pour
- * être montrées. Aucun lien vers les sites des clients n’est publié.
+ * Chaque projet a son dossier `design/maquettes/<projet>/` et sa note
+ * `DA.md`. Les écrans montrés sont soit des **captures du produit réel**, lancé
+ * en local avec des données d’exemple (Nuréa Parfums, Encore 1 Dessert), soit
+ * des **versions de présentation** fidèles à ce que le produit fait, refaites
+ * dans sa direction artistique. Aucun lien vers les sites des clients n’est
+ * publié.
  *
  * `donnees: 'exemple'` signale un écran rempli de données d’exemple : les
  * chiffres d’un client (ventes, marges, commandes) ne sortent jamais de chez
@@ -114,45 +116,45 @@ function img(projet: string, ecran: string): string {
 const NUREA = {
   accueil: {
     src: img('nurea-parfums', 'boutique-accueil'),
-    alt: 'L’accueil sombre de Nuréa Parfums : le titre « Les grands parfums, choisis un par un. », deux boutons cuivre et trois parfums de la sélection du moment.',
+    alt: 'L’accueil sombre de Nuréa Parfums : la barre de recherche, le titre « Nuréa, votre parfum sans le prix des grandes marques. », les boutons « Voir le catalogue » et « Commander sur Snapchat », et la photographie d’un flacon Nuréa dans une lumière dorée.',
     format: 'ordinateur',
     donnees: 'reelles',
-    legende: 'L’accueil de la boutique : l’accroche, la commande et trois parfums du catalogue.',
+    legende: 'L’accueil de la vitrine : la marque, le catalogue et Snapchat en un geste.',
   },
   fiche: {
     src: img('nurea-parfums', 'boutique-fiche'),
-    alt: 'La fiche « Contre Moi » de Louis Vuitton : la photo du flacon, les formats 10, 50 et 80 ml et le bouton cuivre « Commander sur Snapchat ».',
+    alt: 'La fiche « Contre Moi » de Louis Vuitton ouverte par-dessus l’accueil : la photo du flacon, « Prix et disponibilité : écrivez-nous », le bouton « Commander sur Snapchat » et la mention qui précise que le parfum est remis dans un flacon Nuréa.',
     format: 'ordinateur',
     donnees: 'reelles',
-    legende: 'Une fiche par parfum : le flacon, les formats, la commande en un geste.',
+    legende: 'Une fiche par parfum, qui s’ouvre sans quitter le catalogue.',
   },
   ficheMobile: {
     src: img('nurea-parfums', 'boutique-fiche-mobile'),
-    alt: 'La fiche « Tobacco Vanille » de Tom Ford sur téléphone, avec le bouton « Commander sur Snapchat » fixé en bas.',
+    alt: 'La fiche « Tobacco Vanille » de Tom Ford sur téléphone, avec des flèches vers les parfums voisins et le bouton « Commander sur Snapchat » en bas de l’écran.',
     format: 'telephone',
     donnees: 'reelles',
-    legende: 'Sur téléphone, le bouton de commande toujours visible.',
-  },
-  tableau: {
-    src: img('nurea-parfums', 'gestion-tableau'),
-    alt: 'Le tableau de bord de la gestion : l’encaissé du mois en grand avec la marge nette, ce qu’il reste à faire, la journée, les parfums les plus vendus et les lots ouverts.',
-    format: 'ordinateur',
-    donnees: 'exemple',
-    legende: 'L’accueil de la gestion : le mois, ce qu’il reste à faire, les parfums qui se vendent.',
-  },
-  caisse: {
-    src: img('nurea-parfums', 'gestion-caisse'),
-    alt: 'L’écran « Vendre » sur téléphone : un parfum en 50 ml à 85 €, le montant reçu en espèces et le bouton bordeaux « Encaisser 85 € ».',
-    format: 'telephone',
-    donnees: 'exemple',
-    legende: 'La vente au comptoir : l’article, le montant reçu, puis « Encaisser ».',
+    legende: 'Sur téléphone, on passe d’un parfum à l’autre du doigt, la commande toujours à portée.',
   },
   gestionAccueil: {
     src: img('nurea-parfums', 'gestion-accueil'),
-    alt: 'L’accueil de la gestion sur téléphone : les commandes en retard, les clients à relancer, l’encaissé du mois et de la journée.',
+    alt: 'L’accueil de la gestion sur téléphone : six choses à faire (une commande en retard, des clients à relancer, des coûts d’achat à compléter, des parfums en rupture), puis l’encaissé du jour et les livraisons du jour et du lendemain.',
     format: 'telephone',
     donnees: 'exemple',
-    legende: 'La gestion sur téléphone : ce qu’il reste à faire, le mois, la journée.',
+    legende: 'L’accueil de la gestion : ce qu’il reste à faire, puis la journée.',
+  },
+  caisse: {
+    src: img('nurea-parfums', 'gestion-caisse'),
+    alt: 'L’écran « Vendre » sur téléphone : le choix entre vente et commande, un flacon déjà en stock, la recherche d’un parfum et les parfums vendus récemment avec leur contenance et leur prix.',
+    format: 'telephone',
+    donnees: 'exemple',
+    legende: 'Vendre : le parfum, la contenance, puis l’encaissement.',
+  },
+  lot: {
+    src: img('nurea-parfums', 'gestion-lot'),
+    alt: 'Un lot d’achat dans la gestion : 580 € encaissés, 155,35 € de marge nette, le coût d’achat des parfums, les frais du lot et les ventes qui y sont rattachées.',
+    format: 'telephone',
+    donnees: 'exemple',
+    legende: 'Un lot d’achat : ce qu’il a coûté, ce qu’il a rapporté, ce qu’il reste à encaisser.',
   },
 } as const satisfies Record<string, Ecran>;
 
@@ -201,38 +203,45 @@ const MAGDA = {
 const E1D = {
   fiche: {
     src: img('encore-un-dessert', 'fiche-dessert'),
-    alt: 'La recette de la tarte cacahuète caramel : coût de revient de 5,99 €, soit 0,75 € la part, la composition en cinq lignes avec grammages et coûts, puis le prix particulier (44 €, 86,4 % de marge) et pro (38 €, 84,2 %).',
+    alt: 'L’atelier, onglet Desserts : la tarte cacahuète caramel dépliée, avec son coût de revient de 4,71 € (0,59 € la part), son bénéfice particulier (39,29 €, 89 %) et pro (33,29 €, 88 %), puis sa composition.',
     format: 'telephone',
     donnees: 'exemple',
-    legende: 'La fiche d’une tarte : sa composition, son coût de revient, sa marge particulier et pro.',
+    legende: 'La fiche d’une tarte : son coût de revient, ce qu’elle rapporte en particulier et en pro, sa composition.',
+  },
+  caisse: {
+    src: img('encore-un-dessert', 'caisse'),
+    alt: 'La caisse : les livraisons du jour en rappel, les desserts en cartes, trois articles touchés et en bas le total de 128 €, le bénéfice de 113,03 € et le bouton « Encaisser 128,00 € ».',
+    format: 'telephone',
+    donnees: 'exemple',
+    legende: 'La caisse : on touche les desserts, le total et le bénéfice s’affichent, on encaisse.',
   },
   commandes: {
     src: img('encore-un-dessert', 'commandes'),
-    alt: 'Les commandes du mercredi 30 septembre : restaurants et particuliers, leurs desserts, leurs notes de livraison, leur statut et leur avancement en cuisine.',
+    alt: 'Les commandes rangées par échéance, aujourd’hui puis demain : restaurants et particuliers, leurs desserts, leur avancement en cuisine, leurs notes de livraison et leur statut.',
     format: 'telephone',
     donnees: 'exemple',
-    legende: 'Les commandes du jour, leur statut et leur avancement en cuisine.',
+    legende: 'Les commandes par échéance, avec leur avancement en cuisine.',
   },
-  production: {
-    src: img('encore-un-dessert', 'production'),
-    alt: 'La vue Cuisine : 10 pièces faites sur 22 ; la tarte cacahuète caramel est dépliée, avec une pastille par tarte pour chaque client.',
+  cuisine: {
+    src: img('encore-un-dessert', 'cuisine'),
+    alt: 'L’onglet Cuisine : 8 desserts faits sur 25, et la liste des desserts à produire, chacun avec son avancement, un bouton pour adapter la recette et un bouton pour le marquer fait.',
     format: 'telephone',
     donnees: 'exemple',
-    legende: 'La cuisine : toutes les commandes regroupées par dessert, cochées tarte par tarte.',
+    legende: 'La cuisine : toutes les commandes regroupées par dessert, cochées au fil de la production.',
   },
-  ingredients: {
-    src: img('encore-un-dessert', 'ingredients'),
-    alt: 'Les matières premières classées par rayon : pour chacune, le conditionnement acheté et le prix au kilo, au litre ou à l’unité.',
+  courses: {
+    src: img('encore-un-dessert', 'courses'),
+    alt: 'L’onglet Courses : 19 ingrédients à acheter pour 17 desserts, environ 87 €, classés par rayon avec la quantité et le coût de chacun, et un bouton « Copier ».',
     format: 'telephone',
     donnees: 'exemple',
-    legende: 'Les matières premières par rayon, avec leur prix au kilo, au litre ou à l’unité.',
+    legende: 'La liste de courses, calculée à partir des commandes à préparer.',
   },
-  compta: {
-    src: img('encore-un-dessert', 'compta'),
-    alt: 'Le tableau de bord des 30 derniers jours : chiffre d’affaires, bénéfice net, coût matières, marge globale, puis les desserts les plus rentables.',
+  ventes: {
+    src: img('encore-un-dessert', 'ventes'),
+    alt: 'Les ventes des 30 derniers jours : l’argent encaissé, le bénéfice, le coût des ingrédients et le pourcentage de bénéfice, puis les desserts les plus rentables.',
     format: 'telephone',
     donnees: 'exemple',
-    legende: 'Le bilan du mois : chiffre d’affaires, bénéfice, marge et desserts les plus rentables.',
+    legende: 'Le bilan : argent encaissé, bénéfice et desserts les plus rentables.',
   },
 } as const satisfies Record<string, Ecran>;
 
@@ -281,40 +290,40 @@ export const REALISATIONS: readonly Realisation[] = [
     id: 'nurea-parfums',
     nom: 'Nuréa Parfums',
     categories: ['Site web', 'Application métier'],
-    couverture: { src: img('nurea-parfums', 'couverture'), alt: 'La boutique en ligne Nuréa Parfums sur un écran d’ordinateur, accueil sombre avec trois flacons du catalogue, et devant elle un téléphone affichant l’outil de gestion qui encaisse une vente de 85 €, sur fond bordeaux.' },
+    couverture: { src: img('nurea-parfums', 'couverture'), alt: 'La vitrine Nuréa Parfums sur un écran d’ordinateur, accueil sombre avec la photographie d’un flacon Nuréa, et devant elle un téléphone affichant un lot d’achat dans l’outil de gestion, sur fond bordeaux.' },
     metier: 'Parfumerie',
     lieu: 'Marseille',
     promesse:
-      'Un catalogue de plus de cent parfums à la hauteur des maisons représentées, et derrière, la caisse, les lots d’achat et la comptabilité.',
+      'Un catalogue de plus de deux cents parfums qu’on parcourt seul et qu’on commande en un message, et derrière, la caisse, les lots d’achat et la comptabilité.',
     livrables: ['site catalogue', 'espace de gestion', 'caisse sur téléphone', 'comptabilité'],
     accrochage: {
       large: [
-        { ecran: NUREA.accueil, legende: 'La boutique, côté client' },
-        { ecran: NUREA.caisse, legende: 'La caisse, derrière le comptoir' },
+        { ecran: NUREA.accueil, legende: 'La vitrine, côté client' },
+        { ecran: NUREA.lot, legende: 'La gestion, derrière le comptoir' },
       ],
       etroit: [
-        { ecran: NUREA.ficheMobile, legende: 'La boutique' },
-        { ecran: NUREA.caisse, legende: 'La caisse' },
+        { ecran: NUREA.ficheMobile, legende: 'La vitrine' },
+        { ecran: NUREA.lot, legende: 'La gestion' },
       ],
     },
     metaDescription:
-      'Étude de cas Nuréa Parfums : une boutique de parfums en ligne, et derrière, une caisse, des lots d’achat et une comptabilité pour une parfumerie de Marseille.',
+      'Étude de cas Nuréa Parfums : un catalogue de parfums commandé sur Snapchat, une caisse, des lots d’achat et une comptabilité pour une parfumerie de Marseille.',
     etude: {
       contexte: [
-        'Nuréa Parfums vend à Marseille des parfums de grandes maisons, pour homme et pour femme. Les commandes se passent en direct, par message, et les flacons sont remis en main propre ou envoyés.',
+        'Nuréa Parfums propose à Marseille un catalogue de parfums de marque, pour homme et pour femme, servis dans un flacon Nuréa personnalisé. Les commandes se passent en direct, sur Snapchat, et les flacons sont remis en main propre ou envoyés.',
       ],
       probleme: [
-        'Vendre par messages fonctionne tant que le catalogue tient dans une conversation. Au-delà de cent références, un client ne peut plus parcourir l’offre seul, et chaque question sur un parfum devient un échange de plus.',
+        'Vendre par messages fonctionne tant que le catalogue tient dans une conversation. Au-delà de deux cents références, un client ne peut plus parcourir l’offre seul, et chaque question sur un parfum devient un échange de plus.',
         'Côté gestion, le même canal ne dit rien de ce qui a été vendu, encaissé ou dépensé : il fallait un outil pour tenir les chiffres de l’activité, pas seulement une vitrine.',
       ],
       reponse: [
-        'Une boutique qui présente toute l’offre, par marque et par parfum, avec une fiche par référence et une commande qui nomme déjà le parfum voulu.',
-        'Derrière, un espace de gestion privé, installable sur téléphone, qui suit l’activité de bout en bout : le client, la vente, le lot d’achat auquel elle se rattache, l’encaissement, et la comptabilité qui en découle.',
+        'Une vitrine qui présente toute l’offre, par marque et par parfum, en clair comme en sombre. Le client cherche, garde ses parfums dans une sélection, et l’envoie en un seul message qui nomme déjà chaque parfum.',
+        'Derrière, un espace de gestion privé, installable sur téléphone, qui suit l’activité de bout en bout : le client, la vente ou la commande, le lot d’achat auquel elle se rattache, l’encaissement, et la comptabilité qui en découle.',
       ],
       changements: [
-        'Un client parcourt tout le catalogue seul, et arrive avec une demande qui nomme déjà le parfum voulu.',
+        'Un client parcourt tout le catalogue seul, et arrive avec une demande qui nomme déjà les parfums voulus.',
         'Chaque vente est rattachée à un lot d’achat : ce que coûte un lot et ce qu’il a rapporté se lisent au même endroit.',
-        'Une vente, un encaissement et une dépense sont saisis au moment où ils ont lieu, depuis le téléphone.',
+        'L’accueil de la gestion dit ce qu’il reste à faire : commandes en retard, clients à relancer, parfums en rupture.',
         'Une référence ajoutée ou retirée l’est par le commerçant, directement.',
       ],
       resultatsMesures: [],
@@ -322,9 +331,9 @@ export const REALISATIONS: readonly Realisation[] = [
         {
           titre: 'Côté client',
           fonctionnalites: [
-            'Catalogue complet, avec recherche, filtres par gamme et tri',
-            'Une page par marque et une fiche par parfum',
-            'Commande depuis chaque fiche, le parfum déjà nommé',
+            'Catalogue complet, avec recherche en direct et index des marques',
+            'Une fiche par parfum, qui s’ouvre sans quitter le catalogue',
+            'Une sélection gardée sur le téléphone, envoyée en un seul message',
             'Affichage clair ou sombre, au choix du visiteur',
           ],
           ecrans: [NUREA.accueil, NUREA.fiche, NUREA.ficheMobile],
@@ -332,13 +341,13 @@ export const REALISATIONS: readonly Realisation[] = [
         {
           titre: 'Côté gestion',
           fonctionnalites: [
-            'Caisse sur téléphone : vendre, encaisser, suivre la journée',
-            'Fiches clients et historique de leurs commandes',
-            'Lots d’achat, avec leurs dépenses et les ventes rattachées',
+            'Caisse sur téléphone : vendre, prendre une commande, encaisser',
+            'Fiches clients, historique et relances',
+            'Lots d’achat, avec leurs frais, leur marge et les ventes rattachées',
             'Comptabilité, journal et export, statistiques de vente',
-            'Catalogue, marques et publication des références',
+            'Catalogue, stock et publication des références',
           ],
-          ecrans: [NUREA.tableau, NUREA.gestionAccueil, NUREA.caisse],
+          ecrans: [NUREA.gestionAccueil, NUREA.caisse, NUREA.lot],
         },
       ],
       technique: ['Next.js', 'PostgreSQL', 'Prisma', 'Application installable'],
@@ -425,68 +434,68 @@ export const REALISATIONS: readonly Realisation[] = [
     id: 'encore-un-dessert',
     nom: 'Encore 1 Dessert',
     categories: ['Application mobile', 'Application métier'],
-    couverture: { src: img('encore-un-dessert', 'couverture'), alt: 'Trois écrans de l’application Encore 1 Dessert sur fond caramel : la recette de la tarte cacahuète caramel et ses marges, la vue Cuisine avec 10 pièces faites sur 22, et le tableau de bord du mois.' },
+    couverture: { src: img('encore-un-dessert', 'couverture'), alt: 'Trois écrans de l’application Encore 1 Dessert sur fond caramel : la cuisine avec 8 desserts faits sur 25, la fiche de la tarte cacahuète caramel et ses bénéfices, et le bilan des ventes du mois.' },
     metier: 'Pâtisserie',
     promesse:
-      'Le coût de revient de chaque tarte, les commandes des particuliers et des restaurants, la comptabilité : toute la pâtisserie tient dans un téléphone.',
-    livrables: ['application mobile de production', 'fiches techniques', 'commandes', 'comptabilité'],
+      'Le coût de revient de chaque tarte, la caisse, les commandes des particuliers et des restaurants, la liste de courses : toute la pâtisserie tient dans un téléphone.',
+    livrables: ['application mobile', 'caisse', 'commandes et production', 'liste de courses', 'suivi des ventes'],
     accrochage: {
       large: [
         { ecran: E1D.fiche, legende: 'La fiche d’une tarte' },
-        { ecran: E1D.production, legende: 'La production du jour' },
-        { ecran: E1D.compta, legende: 'Le bilan du mois' },
+        { ecran: E1D.cuisine, legende: 'La production du jour' },
+        { ecran: E1D.ventes, legende: 'Le bilan du mois' },
       ],
       etroit: [
-        { ecran: E1D.fiche, legende: 'La fiche technique' },
-        { ecran: E1D.production, legende: 'La production' },
+        { ecran: E1D.fiche, legende: 'La fiche d’une tarte' },
+        { ecran: E1D.caisse, legende: 'La caisse' },
       ],
     },
     metaDescription:
-      'Étude de cas Encore 1 Dessert : fiches techniques, coût de revient, commandes et comptabilité dans une application mobile sur mesure pour une pâtisserie.',
+      'Étude de cas Encore 1 Dessert : coût de revient, caisse, commandes, courses et ventes dans une application mobile sur mesure pour une pâtisserie.',
     etude: {
       contexte: [
-        'Encore 1 Dessert fabrique des tartes et des desserts, vendus à des particuliers et à des restaurants, avec un prix pour chacun.',
-        'La production se décide chaque matin en fonction des commandes, et les matières premières changent de prix d’un achat à l’autre.',
+        'Encore 1 Dessert fabrique des tartes, des flans et des tiramisus, vendus à des particuliers et à des restaurants, avec un prix pour chacun.',
+        'La production se décide chaque matin en fonction des commandes, et les ingrédients changent de prix d’un achat à l’autre.',
       ],
       probleme: [
         'Dans une pâtisserie, la marge se perd sans bruit : le beurre augmente, une recette s’alourdit de quelques grammes, et personne ne sait plus ce que coûte vraiment une tarte vendue à un restaurant.',
-        'Les commandes, elles, vivaient entre des messages et un carnet. Il fallait un seul outil pour savoir quoi produire, à quel coût, et ce que le mois a rapporté.',
+        'Les commandes, elles, vivaient entre des messages et un carnet. Il fallait un seul outil pour savoir quoi produire, quoi acheter, à quel coût, et ce que le mois a rapporté.',
       ],
       reponse: [
-        'Une application mobile, installable, construite autour de la fiche technique : des ingrédients avec leur prix d’achat, des bases maison (pâte sucrée, caramel, crème d’amande) assemblées en desserts, et un coût de revient recalculé à chaque changement.',
-        'Autour, les commandes avec leur statut, et une comptabilité qui enregistre chaque vente au moment de la livraison, figée à son prix du jour.',
+        'Une application mobile, installable, construite autour de la fiche technique : des ingrédients avec leur prix d’achat, des préparations maison (pâte sucrée, caramel, appareil à flan) assemblées en desserts, et un coût de revient recalculé à chaque changement.',
+        'Autour, une caisse au centre de l’écran, les commandes avec leur production et la liste de courses qui en découle, et un suivi des ventes qui enregistre chaque vente à son prix du jour.',
       ],
       changements: [
-        'Avant de fixer un prix, on voit la marge qu’il laisse, pour un particulier comme pour un restaurant.',
-        'Quand un ingrédient augmente, chaque fiche qui l’utilise est recalculée : l’effet sur la marge se voit tout de suite.',
-        'Une commande livrée devient une vente comptable, avec le prix du jour : l’historique ne bouge plus.',
-        'Le bilan du mois se lit sur le téléphone, sans tableur.',
+        'Avant de fixer un prix, on voit ce qu’il rapporte, pour un particulier comme pour un restaurant.',
+        'Quand un ingrédient augmente, chaque dessert qui l’utilise est recalculé : l’effet sur le bénéfice se voit tout de suite.',
+        'La liste de courses se fait seule, à partir des commandes à préparer.',
+        'Une vente encaissée ou une commande livrée est enregistrée avec le prix du jour : l’historique ne bouge plus.',
       ],
       resultatsMesures: [],
       cotes: [
         {
-          titre: 'La production',
+          titre: 'L’atelier',
           fonctionnalites: [
-            'Ingrédients avec prix d’achat, par catégorie',
-            'Bases maison assemblées en fiches desserts',
-            'Coût de revient et marge recalculés à chaque grammage',
+            'Ingrédients avec prix d’achat, par rayon',
+            'Préparations maison, avec leurs variantes et leur rendement',
+            'Coût de revient et bénéfice recalculés à chaque grammage',
             'Prix particulier et prix professionnel par dessert',
           ],
-          ecrans: [E1D.fiche, E1D.ingredients],
+          ecrans: [E1D.fiche, E1D.caisse],
         },
         {
-          titre: 'Les commandes et la compta',
+          titre: 'Les commandes et les ventes',
           fonctionnalites: [
-            'Commandes avec statut : en attente, prête, livrée',
+            'Commandes rangées par échéance, avec leur statut',
+            'Production cochée dessert par dessert',
+            'Liste de courses calculée depuis les commandes',
             'Rappels sur le téléphone avant une livraison',
-            'La livraison enregistre la vente en comptabilité',
-            'Chiffre d’affaires, bénéfice net et marges par période',
-            'Données synchronisées, installable comme une application',
+            'Argent encaissé, bénéfice et desserts les plus rentables par période',
           ],
-          ecrans: [E1D.commandes, E1D.production, E1D.compta],
+          ecrans: [E1D.commandes, E1D.cuisine, E1D.courses, E1D.ventes],
         },
       ],
-      technique: ['React', 'TypeScript', 'Supabase', 'Application installable'],
+      technique: ['React', 'TypeScript', 'PostgreSQL', 'Application installable'],
     },
   },
   {

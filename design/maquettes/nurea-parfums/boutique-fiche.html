@@ -3,91 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="format" content="ordinateur">
-<title>Nuréa Parfums — fiche parfum</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Instrument+Sans:wght@400;500;600&display=block" rel="stylesheet">
+<title>Nuréa Parfums — boutique-fiche</title>
 <style>
-  :root {
-    --bg: #0A0508; --surface: #140E12; --text: #FDF8F4; --muted: #E4D2DA; --subtle: #B49FAB; --disabled: #6E5A64;
-    --accent: #C4956A; --border: rgba(196,149,106,.16); --border-strong: rgba(196,149,106,.4);
-    --serif: 'Newsreader', Georgia, serif; --sans: 'Instrument Sans', system-ui, sans-serif;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { width: 1440px; height: 900px; overflow: hidden; background: var(--bg); color: var(--text);
-    font: 400 16px/1.7 var(--sans); -webkit-font-smoothing: antialiased; }
-  .label { font: 600 12px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
-
-  header { height: 80px; padding: 0 72px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; border-bottom: 1px solid var(--border); }
-  header .logo { height: 36px; }
-  nav { display: flex; gap: 40px; }
-  nav span { font: 600 12px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
-  nav .ici { color: var(--accent); }
-  .outils { justify-self: end; display: flex; align-items: center; gap: 8px; color: var(--muted); font: 500 14px var(--sans); }
-  .outils svg { width: 20px; height: 20px; }
-
-  .ariane { padding: 28px 72px 0; font-size: 14px; color: var(--subtle); display: flex; gap: 10px; }
-  .ariane b { color: var(--text); font-weight: 500; }
-
-  .fiche { margin: 20px 72px 0; display: grid; grid-template-columns: 480px 1fr; border: 1px solid var(--border); height: 722px; }
-  .visuel { border-right: 1px solid var(--border); overflow: hidden; }
-  .visuel img { width: 100%; height: 100%; object-fit: cover; display: block; }
-
-  .infos { padding: 56px 64px; display: flex; flex-direction: column; }
-  h1 { margin-top: 16px; font: 500 60px/1.05 var(--serif); letter-spacing: -0.015em; }
-  .texte { margin-top: 20px; font-size: 17px; color: var(--muted); max-width: 520px; }
-
-  .formats-titre { margin-top: 48px; font-size: 14px; color: var(--subtle); }
-  .formats { margin-top: 10px; display: flex; gap: 20px; align-items: baseline; font: 500 30px/1 var(--serif); }
-  .formats i { font-style: normal; color: var(--accent); font-size: 20px; }
-  .formats small { font: 400 15px var(--sans); color: var(--subtle); margin-left: 4px; }
-
-  .commande { margin-top: auto; }
-  .commande .invite { font-size: 14px; color: var(--subtle); }
-  .btn { margin-top: 12px; height: 56px; width: 440px; display: flex; align-items: center; justify-content: center; gap: 12px; background: var(--accent); color: var(--bg);
-    font: 600 13px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; }
-  .btn img { width: 20px; height: 20px; }
-  .aide { margin-top: 10px; width: 440px; text-align: center; font-size: 13px; color: var(--subtle); }
-  .autres { margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--border); display: flex; align-items: center; gap: 32px; font-size: 15px; }
-  .autres .lien { color: var(--accent); font-weight: 500; border-bottom: 1px solid var(--border-strong); padding-bottom: 3px; }
-  .autres .off { display: flex; align-items: center; gap: 8px; color: var(--subtle); }
-  .autres .off img { width: 18px; height: 18px; filter: invert(72%) sepia(8%) saturate(420%) hue-rotate(270deg); }
-  .autres .note { margin-left: auto; font-size: 13px; color: var(--subtle); max-width: 250px; line-height: 1.5; text-align: right; }
+  /* Capture du site réel lancé en local (données d’exemple), voir DA.md § 4. */
+  * { margin: 0; padding: 0; }
+  html, body { width: 1440px; height: 900px; overflow: hidden; background: #140E12; }
+  img { display: block; width: 1440px; height: 900px; }
 </style>
 </head>
-<body>
-  <header>
-    <img class="logo" src="assets/nurea-logo-horizontal-dark-1024.webp" alt="Nuréa Parfums">
-    <nav><span>Catalogue</span><span class="ici">Marques</span><span>La parfumerie</span><span>Contact</span></nav>
-    <div class="outils">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-      Rechercher
-    </div>
-  </header>
-
-  <p class="ariane"><span>Accueil</span><span>/</span><span>Les marques</span><span>/</span><span>Louis Vuitton</span><span>/</span><b>Contre Moi</b></p>
-
-  <section class="fiche">
-    <div class="visuel"><img src="assets/lv-contre-moi.webp" alt="Louis Vuitton — Contre Moi"></div>
-    <div class="infos">
-      <span class="label">Louis Vuitton</span>
-      <h1>Contre Moi</h1>
-      <p class="texte">Remise en main propre à Marseille, ou envoi partout en France.</p>
-
-      <p class="formats-titre">Remis dans un flacon Nuréa personnalisé, au format de votre choix</p>
-      <div class="formats"><span>10<small>ml</small></span><i>·</i><span>50<small>ml</small></span><i>·</i><span>80<small>ml</small></span></div>
-
-      <div class="commande">
-        <p class="invite">Écrivez-nous pour le prix et la disponibilité</p>
-        <div class="btn"><img src="assets/snapchat.svg" alt="">Commander sur Snapchat</div>
-        <p class="aide">Le bouton copie aussi le nom du parfum.</p>
-        <div class="autres">
-          <span class="lien">Passer par le formulaire</span>
-          <span class="off"><img src="assets/whatsapp.svg" alt="">WhatsApp, bientôt</span>
-          <span class="note">Photo&#8239;: le flacon d’origine de la marque, pour reconnaître la référence.</span>
-        </div>
-      </div>
-    </div>
-  </section>
-</body>
+<body><img src="assets/boutique-fiche.jpg" alt=""></body>
 </html>

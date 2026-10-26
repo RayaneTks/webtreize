@@ -16,7 +16,8 @@
 
   .tel { position: absolute; width: 500px; aspect-ratio: 390 / 844; padding: 12px; border-radius: 72px;
     background: #120904; box-shadow: 0 0 0 1.5px #4a3326 inset, 0 60px 110px rgba(60, 20, 4, .45), 0 18px 36px rgba(60, 20, 4, .3); }
-  .tel img { display: block; width: 100%; height: 100%; border-radius: 60px; object-fit: cover; }
+  .tel .ecran { width: 100%; height: 100%; border-radius: 60px; overflow: hidden; background: #FDF8F2; padding-top: 52px; }
+  .tel img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
   .tel::after { content: ''; position: absolute; top: 25px; left: 50%; width: 132px; height: 38px; margin-left: -66px;
     border-radius: 20px; background: #120904; }
 
@@ -25,15 +26,15 @@
     transform: rotateY(12deg) rotateZ(-4deg); transform-origin: 100% 50%; }
   .droite { left: 1046px; top: 262px; z-index: 2; width: 450px; padding: 11px; border-radius: 65px;
     transform: rotateY(-12deg) rotateZ(4deg); transform-origin: 0% 50%; }
-  .gauche img, .droite img { border-radius: 54px; }
+  .gauche .ecran, .droite .ecran { border-radius: 54px; padding-top: 47px; }
   .gauche::after, .droite::after { top: 23px; width: 118px; height: 34px; margin-left: -59px; }
 </style>
 </head>
 <body>
   <div class="scene">
-    <div class="tel gauche"><img src="assets/production.jpg" alt=""></div>
-    <div class="tel droite"><img src="assets/compta.jpg" alt=""></div>
-    <div class="tel centre"><img src="assets/fiche-dessert.jpg" alt=""></div>
+    <div class="tel gauche"><div class="ecran"><img src="assets/cuisine.jpg" alt=""></div></div>
+    <div class="tel droite"><div class="ecran"><img src="assets/ventes.jpg" alt=""></div></div>
+    <div class="tel centre"><div class="ecran"><img src="assets/fiche-dessert.jpg" alt=""></div></div>
   </div>
 </body>
 </html>
