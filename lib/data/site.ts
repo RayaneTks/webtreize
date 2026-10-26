@@ -257,7 +257,7 @@ export const SERVICES = [
       'Un site pensé pour la façon dont vos clients vous appellent. Rapide sur téléphone, clair en trois secondes, et sans modèle recyclé.',
     points: [
       'Une seule action évidente sur chaque page',
-      'Objectif de performance : les Core Web Vitals de Google dans le vert sur mobile, mesurés avant la mise en ligne',
+      'La vitesse sur téléphone, mesurée avant la mise en ligne',
       'Le code, les accès et le domaine sont à vous',
     ],
   },
